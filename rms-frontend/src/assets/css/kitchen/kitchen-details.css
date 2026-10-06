@@ -1,0 +1,648 @@
+/* =========================================================
+   KITCHEN ORDER DETAILS
+   Compact POS / Admin UI
+
+   Sidebar Expanded  : 150px
+   Sidebar Collapsed : 48px
+   Dashboard Gap     : 8px
+========================================================= */
+
+.kitchen-details-page {
+  --kitchen-primary: #ea580c;
+  --kitchen-primary-dark: #c2410c;
+  --kitchen-primary-soft: #fff7ed;
+
+  --kitchen-blue: #2563eb;
+  --kitchen-blue-dark: #1d4ed8;
+  --kitchen-blue-soft: #eff6ff;
+
+  --kitchen-success: #15803d;
+  --kitchen-success-soft: #f0fdf4;
+
+  --kitchen-warning: #b45309;
+  --kitchen-warning-soft: #fffbeb;
+
+  --kitchen-danger: #b91c1c;
+  --kitchen-danger-dark: #991b1b;
+  --kitchen-danger-soft: #fef2f2;
+
+  --kitchen-text: #111827;
+  --kitchen-text-secondary: #374151;
+  --kitchen-muted: #6b7280;
+  --kitchen-muted-light: #9ca3af;
+
+  --kitchen-border: #e5e7eb;
+  --kitchen-border-soft: #f0f1f3;
+
+  --kitchen-card: #ffffff;
+
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  min-height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  background: transparent;
+
+  color: var(--kitchen-text-secondary);
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   DETAILS HEADER
+========================================================= */
+
+.kitchen-details-header {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  margin-bottom: 8px;
+
+  padding: 7px 8px;
+
+  border: 1px solid var(--kitchen-border);
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  box-shadow: none;
+}
+
+.kitchen-details-heading {
+  display: flex;
+
+  min-width: 0;
+
+  align-items: center;
+
+  gap: 6px;
+}
+
+.kitchen-details-title {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.kitchen-details-back-button {
+  display: inline-flex;
+
+  width: 28px;
+  height: 28px;
+
+  flex: 0 0 28px;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid var(--kitchen-border);
+  border-radius: 4px;
+
+  background: #ffffff;
+
+  color: var(--kitchen-text-secondary);
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.kitchen-details-back-button:hover {
+  transform: none;
+
+  border-color: #fdba74;
+
+  background: var(--kitchen-primary-soft);
+
+  color: var(--kitchen-primary);
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.kitchen-details-eyebrow {
+  margin: 0 0 1px;
+
+  color: var(--kitchen-primary);
+
+  font-size: 10px;
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  text-transform: uppercase;
+}
+
+.kitchen-details-title h1 {
+  margin: 0;
+
+  color: var(--kitchen-text);
+
+  font-size: 15px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  overflow-wrap: anywhere;
+}
+
+.kitchen-details-title > p:last-child {
+  max-width: 650px;
+
+  margin: 2px 0 0;
+
+  overflow: hidden;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+
+  line-height: 1.25;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   HEADER ACTIONS
+========================================================= */
+
+.kitchen-details-actions {
+  position: relative;
+
+  z-index: 10;
+
+  display: flex;
+
+  flex: 0 0 auto;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 4px;
+}
+
+.kitchen-details-action-button {
+  position: relative;
+
+  z-index: 11;
+
+  display: inline-flex;
+
+  min-height: 28px;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  padding: 0 7px;
+
+  border: 1px solid transparent;
+  border-radius: 4px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.kitchen-details-action-button:hover:not(:disabled) {
+  transform: none;
+}
+
+.kitchen-details-action-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+
+/* =========================================================
+   INVOICE
+========================================================= */
+
+.invoice-button {
+  border-color: #dc2626;
+
+  background: #dc2626;
+
+  color: #ffffff;
+
+  box-shadow: none;
+}
+
+.invoice-button:hover:not(:disabled) {
+  border-color: var(--kitchen-danger);
+
+  background: var(--kitchen-danger);
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+.print-button {
+  border-color: var(--kitchen-blue);
+
+  background: var(--kitchen-blue);
+
+  color: #ffffff;
+
+  box-shadow: none;
+}
+
+.print-button:hover:not(:disabled) {
+  border-color: var(--kitchen-blue-dark);
+
+  background: var(--kitchen-blue-dark);
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.kitchen-details-content {
+  display: flex;
+
+  width: 100%;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.kitchen-details-alert {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 5px;
+
+  margin-bottom: 7px;
+
+  padding: 5px 6px;
+
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.kitchen-details-alert-icon {
+  display: inline-flex;
+
+  width: 23px;
+  height: 23px;
+
+  flex: 0 0 23px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 4px;
+
+  font-size: 12px;
+}
+
+.kitchen-details-alert-content {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.kitchen-details-alert-content strong {
+  display: block;
+
+  margin-bottom: 1px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.kitchen-details-alert-content p {
+  margin: 0;
+
+  font-size: 12px;
+
+  line-height: 1.3;
+
+  overflow-wrap: anywhere;
+}
+
+.kitchen-details-alert-close {
+  display: inline-flex;
+
+  width: 20px;
+  height: 20px;
+
+  flex: 0 0 20px;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 3px;
+
+  background: transparent;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   SUCCESS ALERT
+========================================================= */
+
+.success-alert {
+  border-color: #bbf7d0;
+
+  background: var(--kitchen-success-soft);
+}
+
+.success-alert .kitchen-details-alert-icon {
+  background: #dcfce7;
+
+  color: var(--kitchen-success);
+}
+
+.success-alert .kitchen-details-alert-content strong,
+.success-alert .kitchen-details-alert-content p,
+.success-alert .kitchen-details-alert-close {
+  color: #166534;
+}
+
+
+/* =========================================================
+   ERROR ALERT
+========================================================= */
+
+.error-alert {
+  border-color: #fecaca;
+
+  background: var(--kitchen-danger-soft);
+}
+
+.error-alert .kitchen-details-alert-icon {
+  background: #fee2e2;
+
+  color: #dc2626;
+}
+
+.error-alert .kitchen-details-alert-content strong,
+.error-alert .kitchen-details-alert-content p,
+.error-alert .kitchen-details-alert-close {
+  color: var(--kitchen-danger-dark);
+}
+
+
+/* =========================================================
+   INITIAL ERROR
+========================================================= */
+
+.kitchen-details-error {
+  display: flex;
+
+  min-height: 180px;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px;
+
+  border: 1px solid #fecaca;
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  text-align: center;
+
+  box-shadow: none;
+}
+
+.kitchen-details-error-icon {
+  display: inline-flex;
+
+  width: 38px;
+  height: 38px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 6px;
+
+  background: #fee2e2;
+
+  color: #dc2626;
+
+  font-size: 15px;
+}
+
+.kitchen-details-error h2 {
+  margin: 7px 0 3px;
+
+  color: #7f1d1d;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.kitchen-details-error p {
+  max-width: 430px;
+
+  margin: 0;
+
+  color: var(--kitchen-danger-dark);
+
+  font-size: 12px;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   ERROR ACTIONS
+========================================================= */
+
+.kitchen-details-error-actions {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  margin-top: 8px;
+}
+
+.kitchen-details-primary-button,
+.kitchen-details-secondary-button {
+  display: inline-flex;
+
+  min-height: 27px;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  padding: 0 7px;
+
+  border-radius: 4px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.kitchen-details-primary-button {
+  border: 1px solid var(--kitchen-primary);
+
+  background: var(--kitchen-primary);
+
+  color: #ffffff;
+}
+
+.kitchen-details-secondary-button {
+  border: 1px solid var(--kitchen-border);
+
+  background: #ffffff;
+
+  color: var(--kitchen-text-secondary);
+}
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.kitchen-details-back-button:focus-visible,
+.kitchen-details-action-button:focus-visible,
+.kitchen-details-alert-close:focus-visible,
+.kitchen-details-primary-button:focus-visible,
+.kitchen-details-secondary-button:focus-visible {
+  outline:
+    2px solid
+    rgba(37, 99, 235, 0.15);
+
+  outline-offset: 1px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+  .kitchen-details-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .kitchen-details-actions {
+    width: 100%;
+  }
+
+  .kitchen-details-action-button {
+    flex: 1;
+  }
+
+  .kitchen-details-title > p:last-child {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 480px) {
+  .kitchen-details-actions {
+    display: grid;
+
+    grid-template-columns: 1fr;
+  }
+
+  .kitchen-details-action-button {
+    width: 100%;
+  }
+
+  .kitchen-details-error-actions {
+    width: 100%;
+
+    flex-direction: column;
+  }
+
+  .kitchen-details-primary-button,
+  .kitchen-details-secondary-button {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+  .kitchen-details-page {
+    padding: 0;
+
+    background: #ffffff;
+  }
+
+  .kitchen-details-header {
+    padding:
+      0
+      0
+      8px;
+
+    border: 0;
+    border-bottom: 1px solid #dbe2ea;
+    border-radius: 0;
+
+    box-shadow: none;
+  }
+
+  .kitchen-details-back-button,
+  .kitchen-details-actions,
+  .kitchen-details-alert,
+  .kitchen-action-error,
+  .kitchen-order-actions {
+    display: none !important;
+  }
+
+  .kitchen-order-card {
+    border: 0 !important;
+
+    box-shadow: none !important;
+  }
+}

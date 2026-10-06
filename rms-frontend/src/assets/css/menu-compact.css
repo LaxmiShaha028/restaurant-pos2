@@ -1,0 +1,1291 @@
+/* ==========================================================================
+   MENU MANAGEMENT — COMPACT + READABLE OVERRIDE
+   ========================================================================== */
+
+
+/* ==========================================================================
+   MAIN PAGE
+   ========================================================================== */
+
+.menu-management-page {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  min-height: 100%;
+
+  padding: 12px;
+
+  overflow-x: hidden;
+
+  background: #f6f8fb;
+}
+
+
+/* ==========================================================================
+   PAGE HEADER
+   ========================================================================== */
+
+.menu-management-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 12px;
+}
+
+.menu-management-eyebrow {
+  margin: 0 0 3px;
+
+  color: #6366f1;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.menu-management-title {
+  margin: 0 0 3px;
+
+  color: #0f172a;
+
+  font-size: 22px;
+  font-weight: 800;
+
+  line-height: 1.2;
+}
+
+.menu-management-description {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.menu-management-description strong {
+  color: #334155;
+
+  font-weight: 750;
+}
+
+
+/* ==========================================================================
+   MAIN CARD
+   ========================================================================== */
+
+.menu-management-card {
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 11px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 5px 16px
+    rgb(15 23 42 / 4%);
+}
+
+
+/* ==========================================================================
+   MAIN TABS
+   ========================================================================== */
+
+.menu-management-tabs {
+  display: flex;
+
+  gap: 2px;
+
+  overflow-x: auto;
+
+  padding:
+    6px
+    9px
+    0;
+
+  border-bottom:
+    1px solid #e5e7eb;
+
+  scrollbar-width: thin;
+}
+
+.menu-management-tab {
+  display: inline-flex;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  min-height: 36px;
+
+  padding:
+    7px
+    11px;
+
+  border: 0;
+  border-bottom:
+    2px solid transparent;
+
+  background: transparent;
+  color: #64748b;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.menu-management-tab i {
+  font-size: 12px;
+}
+
+.menu-management-tab:hover {
+  color: #4f46e5;
+}
+
+.menu-management-tab.active {
+  border-bottom-color: #4f46e5;
+
+  color: #4f46e5;
+}
+
+
+/* ==========================================================================
+   COMMON MENU SECTIONS
+   ========================================================================== */
+
+.menu-section,
+.menu-category-section {
+  width: 100%;
+  min-width: 0;
+
+  padding: 12px;
+}
+
+
+/* ==========================================================================
+   SECTION HEADERS
+   ========================================================================== */
+
+.menu-section-header,
+.menu-category-section-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 10px;
+}
+
+.menu-section-header h2,
+.menu-category-section-header h2 {
+  margin: 0 0 2px;
+
+  color: #0f172a;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  line-height: 1.3;
+}
+
+.menu-section-header p,
+.menu-category-section-header p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+
+/* ==========================================================================
+   SECTION HEADER BUTTON
+   ========================================================================== */
+
+.menu-section-header .btn,
+.menu-category-section-header .btn {
+  min-height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    0
+    10px;
+
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.menu-section-header .btn i,
+.menu-category-section-header .btn i {
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   ALERTS
+   ========================================================================== */
+
+.menu-management-card .alert {
+  margin-bottom: 9px;
+
+  padding:
+    8px
+    10px;
+
+  border-radius: 7px;
+
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+
+/* ==========================================================================
+   FILTER PANELS
+   ========================================================================== */
+
+.menu-filter-panel,
+.menu-category-filter-panel {
+  margin-bottom: 10px;
+
+  padding: 10px;
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius: 8px;
+
+  background: #f8fafc;
+}
+
+
+/* ==========================================================================
+   BOOTSTRAP ROW COMPACT
+   ========================================================================== */
+
+.menu-filter-panel .row,
+.menu-category-filter-panel .row {
+  --bs-gutter-x: 0.55rem;
+  --bs-gutter-y: 0.55rem;
+}
+
+
+/* ==========================================================================
+   FILTER LABELS
+   ========================================================================== */
+
+.menu-filter-panel .form-label,
+.menu-category-filter-panel .form-label {
+  margin-bottom: 4px;
+
+  color: #334155;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+
+/* ==========================================================================
+   INPUT / SELECT
+   ========================================================================== */
+
+.menu-filter-panel .form-control,
+.menu-filter-panel .form-select,
+.menu-category-filter-panel .form-control,
+.menu-category-filter-panel .form-select {
+  min-height: 34px;
+  height: 34px;
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  border-color: #dbe2ea;
+  border-radius: 7px;
+
+  color: #334155;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* ==========================================================================
+   CATEGORY SEARCH
+   ========================================================================== */
+
+.menu-category-search-wrapper > i {
+  left: 10px;
+
+  font-size: 12px;
+}
+
+.menu-category-search-wrapper
+  .form-control {
+  padding-left: 30px;
+}
+
+
+/* ==========================================================================
+   FILTER BUTTONS
+   ========================================================================== */
+
+.menu-filter-panel .btn,
+.menu-category-filter-panel .btn {
+  min-height: 34px;
+
+  padding:
+    0
+    10px;
+
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* ==========================================================================
+   TABLE WRAPPERS
+   ========================================================================== */
+
+.menu-management-card
+  .table-responsive {
+  width: 100%;
+  min-width: 0;
+
+  overflow-x: hidden;
+}
+
+.menu-category-table-card {
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+
+  border-radius: 8px;
+}
+
+
+/* ==========================================================================
+   CATEGORY TABLE
+   ========================================================================== */
+
+.menu-category-table {
+  width: 100%;
+  min-width: 0;
+
+  margin: 0;
+
+  table-layout: fixed;
+}
+
+.menu-category-table th:nth-child(1),
+.menu-category-table td:nth-child(1) {
+  width: 40%;
+}
+
+.menu-category-table th:nth-child(2),
+.menu-category-table td:nth-child(2) {
+  width: 30%;
+}
+
+.menu-category-table th:nth-child(3),
+.menu-category-table td:nth-child(3) {
+  width: 30%;
+}
+
+
+/* ==========================================================================
+   GENERAL MENU TABLE
+   ========================================================================== */
+
+.menu-section-table {
+  width: 100%;
+
+  min-width: 0 !important;
+
+  margin: 0;
+
+  table-layout: fixed;
+}
+
+
+/* ==========================================================================
+   TABLE HEADER
+   ========================================================================== */
+
+.menu-section-table thead th,
+.menu-category-table thead th {
+  padding:
+    8px
+    7px;
+
+  border-bottom:
+    1px solid #e5e7eb;
+
+  background: #f8fafc;
+
+  color: #64748b;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* ==========================================================================
+   TABLE BODY
+   ========================================================================== */
+
+.menu-section-table tbody td,
+.menu-category-table tbody td {
+  min-width: 0;
+
+  padding:
+    8px
+    7px;
+
+  border-color: #eef2f7;
+
+  color: #334155;
+
+  font-size: 12px;
+  line-height: 1.4;
+
+  vertical-align: middle;
+}
+
+
+/* ==========================================================================
+   CATEGORY RECORD
+   ========================================================================== */
+
+.menu-category-record {
+  min-width: 0;
+
+  gap: 7px;
+}
+
+.menu-category-icon {
+  width: 32px;
+  height: 32px;
+
+  flex: 0 0 32px;
+
+  border-radius: 7px;
+
+  font-size: 12px;
+}
+
+.menu-category-record > div:last-child {
+  min-width: 0;
+}
+
+.menu-category-record strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: #263142;
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-category-record small {
+  margin-top: 1px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   MENU ITEM RECORD
+   ========================================================================== */
+
+.menu-record-title {
+  min-width: 0;
+
+  gap: 7px;
+}
+
+.menu-record-icon {
+  width: 34px;
+  height: 34px;
+
+  flex: 0 0 34px;
+
+  border-radius: 7px;
+}
+
+.menu-record-title > div:last-child {
+  min-width: 0;
+}
+
+.menu-record-title strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: #0f172a;
+
+  font-size: 12px;
+  font-weight: 750;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-record-title small {
+  display: block;
+
+  overflow: hidden;
+
+  margin-top: 1px;
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   DESCRIPTION
+   ========================================================================== */
+
+.menu-description-cell {
+  max-width: none;
+
+  overflow: hidden;
+
+  color: #64748b !important;
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+}
+
+
+/* ==========================================================================
+   PRICE
+   ========================================================================== */
+
+.menu-price-cell {
+  overflow: hidden;
+
+  color: #0f172a !important;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   TYPE BADGE
+   ========================================================================== */
+
+.menu-type-badge {
+  padding:
+    3px
+    6px;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   AVAILABILITY BUTTON
+   ========================================================================== */
+
+.menu-availability-button,
+.menu-category-status-button {
+  min-width: 86px;
+  min-height: 27px;
+
+  gap: 4px;
+
+  padding:
+    3px
+    7px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 750;
+
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   FEATURED BUTTON
+   ========================================================================== */
+
+.menu-featured-button {
+  width: 28px;
+  height: 28px;
+
+  border-radius: 6px;
+
+  font-size: 10px;
+}
+
+
+/* ==========================================================================
+   ACTION BUTTONS
+   ========================================================================== */
+
+.menu-category-actions {
+  gap: 4px;
+}
+
+.menu-category-actions .btn,
+.menu-section-table
+  .btn.btn-sm {
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   MENU ITEM TABLE COLUMN WIDTHS
+   7 columns
+   ========================================================================== */
+
+.menu-section-table th:nth-child(1),
+.menu-section-table td:nth-child(1) {
+  width: 20%;
+}
+
+.menu-section-table th:nth-child(2),
+.menu-section-table td:nth-child(2) {
+  width: 15%;
+}
+
+.menu-section-table th:nth-child(3),
+.menu-section-table td:nth-child(3) {
+  width: 15%;
+}
+
+.menu-section-table th:nth-child(4),
+.menu-section-table td:nth-child(4) {
+  width: 15%;
+}
+
+.menu-section-table th:nth-child(5),
+.menu-section-table td:nth-child(5) {
+  width: 15%;
+}
+
+.menu-section-table th:nth-child(6),
+.menu-section-table td:nth-child(6) {
+  width: 15%;
+}
+
+.menu-section-table th:nth-child(7),
+.menu-section-table td:nth-child(7) {
+  width: 20%;
+}
+
+
+/* ==========================================================================
+   IMPORTANT:
+   Variant table only has 5 columns.
+   Give variant rows their own flexible sizing.
+   ========================================================================== */
+
+.menu-section-table
+  th:first-child:nth-last-child(5),
+.menu-section-table
+  th:first-child:nth-last-child(5)
+  ~ th {
+  width: auto;
+}
+
+
+/* ==========================================================================
+   LOADING / EMPTY
+   ========================================================================== */
+
+.menu-loading-state,
+.menu-category-loading {
+  min-height: 170px;
+
+  gap: 7px;
+
+  font-size: 10px;
+}
+
+.menu-empty-state {
+  padding:
+    25px
+    10px !important;
+
+  font-size: 10px;
+}
+
+.menu-empty-state i {
+  margin-bottom: 5px;
+
+  font-size: 20px;
+}
+
+.menu-category-empty {
+  height: 150px;
+
+  font-size: 10px;
+}
+
+.menu-category-empty i {
+  margin-bottom: 5px;
+
+  font-size: 20px;
+}
+
+.menu-category-empty strong {
+  margin-bottom: 2px;
+
+  font-size: 11px;
+}
+
+.menu-category-empty span {
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   PAGINATION
+   ========================================================================== */
+
+.menu-pagination,
+.menu-category-pagination {
+  gap: 8px;
+
+  margin-top: 0;
+  padding-top: 9px;
+}
+
+.menu-pagination p,
+.menu-category-pagination p {
+  font-size: 12px;
+}
+
+.menu-pagination-controls,
+.menu-category-pagination-controls {
+  gap: 5px;
+}
+
+.menu-pagination-controls span,
+.menu-category-pagination-controls span {
+  font-size: 12px;
+}
+
+.menu-pagination-controls .btn,
+.menu-category-pagination-controls .btn {
+  min-height: 29px;
+
+  padding:
+    0
+    8px;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   COMMON MODAL
+   ========================================================================== */
+
+.menu-category-modal-dialog {
+  max-width: 500px;
+}
+
+.variant-modal-dialog {
+  max-width: 560px;
+}
+
+.add-on-modal-dialog {
+  max-width: 590px;
+}
+
+.menu-item-modal-dialog {
+  max-width: 780px;
+}
+
+
+/* ==========================================================================
+   MODAL BACKDROP
+   ========================================================================== */
+
+.menu-category-modal-backdrop,
+.menu-item-modal-backdrop,
+.variant-modal-backdrop,
+.add-on-modal-backdrop {
+  padding: 10px;
+}
+
+
+/* ==========================================================================
+   MODAL CONTENT
+   ========================================================================== */
+
+.menu-category-modal-content,
+.menu-item-modal-content,
+.variant-modal-content,
+.add-on-modal-content {
+  border-radius: 11px;
+}
+
+
+/* ==========================================================================
+   MODAL HEADER
+   ========================================================================== */
+
+.menu-category-modal-header,
+.menu-item-modal-header,
+.variant-modal-header,
+.add-on-modal-header {
+  gap: 10px;
+
+  padding:
+    12px
+    14px;
+}
+
+.menu-category-modal-header h2,
+.menu-item-modal-header h2,
+.variant-modal-header h2,
+.add-on-modal-header h2 {
+  margin:
+    0
+    0
+    2px;
+
+  color: #0f172a;
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.menu-category-modal-header p,
+.menu-item-modal-header p,
+.variant-modal-header p,
+.add-on-modal-header p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+
+/* ==========================================================================
+   MODAL BODY
+   ========================================================================== */
+
+.menu-category-modal-body,
+.menu-item-modal-body,
+.variant-modal-body,
+.add-on-modal-body {
+  padding:
+    13px
+    14px;
+}
+
+.menu-item-modal-body {
+  max-height:
+    calc(100vh - 150px);
+}
+
+
+/* ==========================================================================
+   MODAL FORM SPACING
+   ========================================================================== */
+
+.menu-category-modal-body .row,
+.menu-item-modal-body .row,
+.variant-modal-body .row,
+.add-on-modal-body .row {
+  --bs-gutter-x: 0.65rem;
+  --bs-gutter-y: 0.65rem;
+}
+
+
+/* ==========================================================================
+   MODAL LABELS
+   ========================================================================== */
+
+.menu-category-modal-body .form-label,
+.menu-item-modal-body .form-label,
+.variant-modal-body .form-label,
+.add-on-modal-body .form-label {
+  margin-bottom: 4px;
+
+  color: #334155;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* ==========================================================================
+   MODAL CONTROLS
+   ========================================================================== */
+
+.menu-category-modal-body
+  .form-control,
+.menu-category-modal-body
+  .form-select,
+.menu-item-modal-body
+  .form-control,
+.menu-item-modal-body
+  .form-select,
+.variant-modal-body
+  .form-control,
+.variant-modal-body
+  .form-select,
+.add-on-modal-body
+  .form-control,
+.add-on-modal-body
+  .form-select,
+.add-on-modal-body
+  .input-group-text,
+.menu-item-modal-body
+  .input-group-text,
+.variant-modal-body
+  .input-group-text {
+  min-height: 36px;
+
+  border-radius: 7px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   TEXTAREA
+   ========================================================================== */
+
+.menu-item-modal-body textarea.form-control,
+.add-on-modal-body textarea.form-control {
+  min-height: 80px;
+
+  line-height: 1.45;
+}
+
+
+/* ==========================================================================
+   INVALID FEEDBACK
+   ========================================================================== */
+
+.menu-category-modal-body
+  .invalid-feedback,
+.menu-item-modal-body
+  .invalid-feedback,
+.variant-modal-body
+  .invalid-feedback,
+.add-on-modal-body
+  .invalid-feedback {
+  margin-top: 3px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   MODAL STATUS / SWITCH BOX
+   ========================================================================== */
+
+.menu-category-status-box,
+.menu-item-switch-box,
+.variant-switch-box,
+.add-on-availability-box {
+  gap: 10px;
+
+  padding:
+    9px
+    10px;
+
+  border-radius: 8px;
+}
+
+.menu-category-status-box strong,
+.menu-item-switch-box strong,
+.variant-switch-box strong,
+.add-on-availability-box strong {
+  font-size: 12px;
+}
+
+.menu-category-status-box small,
+.menu-item-switch-box small,
+.variant-switch-box small,
+.add-on-availability-box small {
+  margin-top: 2px;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.menu-category-status-box
+  .form-check-label,
+.menu-item-switch-box
+  .form-check-label,
+.variant-switch-box
+  .form-check-label,
+.add-on-availability-box
+  .form-check-label {
+  font-size: 10px;
+}
+
+
+/* ==========================================================================
+   IMAGE PREVIEW
+   ========================================================================== */
+
+.menu-item-image-preview {
+  gap: 9px;
+
+  padding: 8px;
+
+  border-radius: 8px;
+}
+
+.menu-item-image-preview img {
+  width: 105px;
+  height: 78px;
+
+  border-radius: 7px;
+}
+
+
+/* ==========================================================================
+   MODAL FOOTER
+   ========================================================================== */
+
+.menu-category-modal-footer,
+.menu-item-modal-footer,
+.variant-modal-footer,
+.add-on-modal-footer {
+  gap: 6px;
+
+  padding:
+    9px
+    14px;
+}
+
+.menu-category-modal-footer .btn,
+.menu-item-modal-footer .btn,
+.variant-modal-footer .btn,
+.add-on-modal-footer .btn {
+  min-height: 34px;
+
+  padding:
+    0
+    11px;
+
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+  .menu-management-page {
+    padding: 10px;
+  }
+
+  .menu-management-card
+    .table-responsive {
+    overflow-x: auto;
+  }
+
+  .menu-section-table {
+    min-width: 780px !important;
+
+    table-layout: auto;
+  }
+
+  .menu-section-table th,
+  .menu-section-table td {
+    width: auto !important;
+  }
+
+  .menu-management-title {
+    font-size: 20px;
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 767.98px) {
+
+  .menu-management-page {
+    padding: 8px;
+  }
+
+  .menu-management-header {
+    margin-bottom: 9px;
+  }
+
+  .menu-management-title {
+    font-size: 19px;
+  }
+
+  .menu-management-description {
+    font-size: 12px;
+  }
+
+  .menu-management-tabs {
+    padding:
+      5px
+      6px
+      0;
+  }
+
+  .menu-management-tab {
+    min-height: 34px;
+
+    padding:
+      6px
+      9px;
+  }
+
+  .menu-section,
+  .menu-category-section {
+    padding: 9px;
+  }
+
+  .menu-section-header,
+  .menu-category-section-header {
+    align-items: stretch;
+
+    flex-direction: column;
+  }
+
+  .menu-section-header .btn,
+  .menu-category-section-header .btn {
+    width: 100%;
+  }
+
+  .menu-pagination,
+  .menu-category-pagination {
+    align-items: stretch;
+
+    flex-direction: column;
+  }
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 575.98px) {
+
+  .menu-category-modal-backdrop,
+  .menu-item-modal-backdrop,
+  .variant-modal-backdrop,
+  .add-on-modal-backdrop {
+    padding: 6px;
+  }
+
+  .menu-category-modal-header,
+  .menu-category-modal-body,
+  .menu-category-modal-footer,
+  .menu-item-modal-header,
+  .menu-item-modal-body,
+  .menu-item-modal-footer,
+  .variant-modal-header,
+  .variant-modal-body,
+  .variant-modal-footer,
+  .add-on-modal-header,
+  .add-on-modal-body,
+  .add-on-modal-footer {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .menu-category-modal-footer,
+  .menu-item-modal-footer,
+  .variant-modal-footer,
+  .add-on-modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .menu-category-modal-footer .btn,
+  .menu-item-modal-footer .btn,
+  .variant-modal-footer .btn,
+  .add-on-modal-footer .btn {
+    width: 100%;
+  }
+
+  .menu-category-status-box,
+  .menu-item-switch-box,
+  .variant-switch-box,
+  .add-on-availability-box {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+}

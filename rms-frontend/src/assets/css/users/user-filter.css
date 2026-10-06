@@ -1,0 +1,234 @@
+/* ==========================================================================
+   USERS – HEADER + FILTERS
+   Same system as Kitchen / Order / Expense / Reports
+   ========================================================================== */
+
+.users-page {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  color: #172033;
+  font-size: 9px;
+}
+
+/* --------------------------------------------------------------------------
+   HEADER
+   -------------------------------------------------------------------------- */
+
+.users-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 7px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.header-left {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+}
+
+.header-icon {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  flex: 0 0 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 11px;
+  box-shadow: none;
+}
+
+.users-page-eyebrow {
+  margin: 0 0 1px;
+  color: #2563eb;
+  font-size: 7px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.header-left h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.header-left p {
+  max-width: 580px;
+  margin: 2px 0 0;
+  overflow: hidden;
+  color: #667085;
+  font-size: 8px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.add-user-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid #2563eb;
+  border-radius: 4px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.add-user-btn:hover {
+  border-color: #1d4ed8;
+  background: #1d4ed8;
+}
+
+/* --------------------------------------------------------------------------
+   FILTERS
+   -------------------------------------------------------------------------- */
+
+.user-filters,
+.filter-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding: 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.filter-search {
+  position: relative;
+  min-width: 140px;
+  flex: 1 1 160px;
+}
+
+.filter-search i {
+  position: absolute;
+  top: 50%;
+  left: 7px;
+  color: #9ca3af;
+  font-size: 9px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.filter-search input,
+.filter-card input {
+  width: 100%;
+  min-height: 28px;
+  height: 28px;
+  padding: 0 6px 0 22px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #172033;
+  font-size: 8px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.filter-search input:focus,
+.filter-card input:focus,
+.filter-select:focus,
+.filter-card select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.08);
+}
+
+.filter-select,
+.filter-card select {
+  min-width: 100px;
+  min-height: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #172033;
+  font-size: 8px;
+  outline: none;
+}
+
+.reset-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #667085;
+  font-size: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.reset-filter-btn:hover {
+  background: #f8fafc;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 767.98px) {
+  .users-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header-left p {
+    white-space: normal;
+  }
+
+  .add-user-btn {
+    width: 100%;
+  }
+
+  .user-filters,
+  .filter-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-search {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .filter-select,
+  .filter-card select,
+  .reset-filter-btn {
+    width: 100%;
+  }
+}

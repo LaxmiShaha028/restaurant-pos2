@@ -1,0 +1,734 @@
+/* =========================================================
+   USER EDIT MODAL
+========================================================= */
+
+
+.user-edit-overlay {
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(
+        15,
+        23,
+        42,
+        .60
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+    z-index:9999;
+
+    backdrop-filter:blur(4px);
+
+}
+
+
+
+
+
+
+
+
+.user-edit-modal {
+
+
+    width:100%;
+
+    max-width:720px;
+
+    max-height:90vh;
+
+    background:white;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    display:flex;
+
+    flex-direction:column;
+
+    box-shadow:
+
+        0 25px 70px rgba(
+            0,
+            0,
+            0,
+            .25
+        );
+
+
+    animation:
+
+        editModalShow .25s ease;
+
+
+}
+
+
+
+
+
+
+
+@keyframes editModalShow {
+
+
+    from {
+
+        opacity:0;
+
+        transform:
+
+            translateY(-20px)
+            scale(.96);
+
+    }
+
+
+    to {
+
+        opacity:1;
+
+        transform:
+
+            translateY(0)
+            scale(1);
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+/* Header */
+
+
+.user-edit-header {
+
+
+    padding:20px 25px;
+
+
+    background:#2563eb;
+
+
+    color:white;
+
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+
+}
+
+
+
+
+
+.user-edit-header h3 {
+
+
+    margin:0;
+
+    font-size:20px;
+
+    font-weight:700;
+
+
+}
+
+
+
+
+
+.user-edit-header p {
+
+
+    margin:5px 0 0;
+
+    font-size:13px;
+
+    opacity:.85;
+
+
+}
+
+
+
+
+
+
+
+.edit-close-btn {
+
+
+    width:36px;
+
+    height:36px;
+
+
+    border:none;
+
+    border-radius:50%;
+
+
+    background:
+
+        rgba(
+            255,
+            255,
+            255,
+            .15
+        );
+
+
+    color:white;
+
+
+    font-size:24px;
+
+
+    cursor:pointer;
+
+
+}
+
+
+
+.edit-close-btn:hover {
+
+
+    background:white;
+
+    color:#2563eb;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* Body */
+
+
+.user-edit-body {
+
+
+    padding:25px;
+
+    overflow-y:auto;
+
+}
+
+
+
+
+
+
+
+
+/* Error */
+
+
+.edit-error {
+
+
+    padding:12px 15px;
+
+    margin-bottom:15px;
+
+    background:#fef2f2;
+
+    border:1px solid #fecaca;
+
+    color:#991b1b;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* Section */
+
+
+.edit-section {
+
+
+    padding:18px;
+
+    margin-bottom:18px;
+
+
+    border:
+
+        1px solid #e2e8f0;
+
+
+    border-radius:14px;
+
+
+}
+
+
+
+
+
+.edit-section h4 {
+
+
+    margin:0 0 18px;
+
+
+    color:#0f172a;
+
+
+    font-size:15px;
+
+
+}
+
+
+
+
+
+
+
+
+/* Grid */
+
+
+.edit-grid {
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+        repeat(
+            2,
+            1fr
+        );
+
+
+    gap:18px;
+
+
+}
+
+
+
+
+
+
+
+
+/* Field */
+
+
+.edit-field {
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    gap:7px;
+
+
+}
+
+
+
+
+.edit-field label {
+
+
+    color:#475569;
+
+
+    font-size:13px;
+
+
+    font-weight:600;
+
+
+}
+
+
+
+
+
+
+
+.edit-field input,
+.edit-field select {
+
+
+    width:100%;
+
+
+    height:42px;
+
+
+    padding:0 13px;
+
+
+    border:
+
+        1px solid #cbd5e1;
+
+
+    border-radius:9px;
+
+
+    outline:none;
+
+
+    font-size:14px;
+
+
+    color:#0f172a;
+
+
+    transition:.2s;
+
+
+}
+
+
+
+
+
+.edit-field input:focus,
+.edit-field select:focus {
+
+
+    border-color:#2563eb;
+
+
+    box-shadow:
+
+
+        0 0 0 3px rgba(
+            37,
+            99,
+            235,
+            .12
+        );
+
+
+}
+
+
+
+
+
+
+
+
+
+/* Switch */
+
+
+.switch-row {
+
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#334155;
+
+
+}
+
+
+
+
+
+.switch-row input {
+
+
+    width:18px;
+
+    height:18px;
+
+
+    accent-color:#2563eb;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* Footer */
+
+
+.user-edit-footer {
+
+
+    padding:18px 25px;
+
+
+    background:#f8fafc;
+
+
+    border-top:
+
+        1px solid #e2e8f0;
+
+
+    display:flex;
+
+
+    justify-content:flex-end;
+
+
+    gap:12px;
+
+
+}
+
+
+
+
+
+
+
+.cancel-edit-btn,
+.save-edit-btn {
+
+
+    padding:10px 22px;
+
+
+    border:none;
+
+
+    border-radius:9px;
+
+
+    font-weight:600;
+
+
+    cursor:pointer;
+
+
+}
+
+
+
+
+
+
+
+.cancel-edit-btn {
+
+
+    background:#e2e8f0;
+
+
+    color:#334155;
+
+
+}
+
+
+
+
+
+.cancel-edit-btn:hover {
+
+
+    background:#cbd5e1;
+
+
+}
+
+
+
+
+
+
+
+
+.save-edit-btn {
+
+
+    background:#2563eb;
+
+
+    color:white;
+
+
+}
+
+
+
+
+
+.save-edit-btn:hover {
+
+
+    background:#1d4ed8;
+
+
+}
+
+
+
+
+
+
+.save-edit-btn:disabled {
+
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+
+}
+
+
+
+
+
+
+
+
+/* Loader */
+
+
+.btn-loader {
+
+
+    display:inline-block;
+
+
+    width:14px;
+
+    height:14px;
+
+
+    margin-right:8px;
+
+
+    border:
+
+        2px solid rgba(
+            255,
+            255,
+            255,
+            .4
+        );
+
+
+    border-top-color:white;
+
+
+    border-radius:50%;
+
+
+    animation:
+
+        rotate .7s linear infinite;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* Responsive */
+
+
+@media(max-width:700px){
+
+
+    .edit-grid {
+
+
+        grid-template-columns:1fr;
+
+
+    }
+
+
+
+    .user-edit-body {
+
+
+        padding:18px;
+
+
+    }
+
+
+
+    .user-edit-footer {
+
+
+        padding:15px;
+
+
+    }
+
+
+}

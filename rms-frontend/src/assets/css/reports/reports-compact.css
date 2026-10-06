@@ -1,0 +1,515 @@
+
+/* ==========================================================================
+   REPORTS & ANALYTICS - COMPACT OVERRIDE
+   Use as a scoped external style in each Reports component.
+   ========================================================================== */
+
+/* Main Reports page */
+.reports-page {
+    width: 100%;
+    min-width: 0;
+    padding: 0 0 8px !important;
+    overflow-x: hidden;
+}
+
+.reports-page-header {
+    gap: 10px !important;
+    padding: 9px 11px !important;
+    margin-bottom: 8px !important;
+    border-radius: 9px !important;
+}
+
+.reports-header-content { gap: 7px !important; }
+.reports-header-icon {
+    width: 31px !important;
+    height: 31px !important;
+    border-radius: 7px !important;
+    font-size: 13px !important;
+}
+.reports-header-eyebrow {
+    margin-bottom: 1px !important;
+    font-size: 7px !important;
+    letter-spacing: .06em !important;
+}
+.reports-page-title {
+    font-size: 16px !important;
+    line-height: 1.15 !important;
+}
+.reports-page-subtitle {
+    margin-top: 2px !important;
+    font-size: 8.5px !important;
+    line-height: 1.25 !important;
+}
+.reports-header-meta-item {
+    gap: 4px !important;
+    padding: 5px 7px !important;
+    border-radius: 6px !important;
+    font-size: 8px !important;
+}
+
+/* Global report filter */
+.reports-filter-card {
+    padding: 8px !important;
+    margin-bottom: 8px !important;
+    border-radius: 9px !important;
+}
+.reports-section-heading {
+    gap: 6px !important;
+    margin-bottom: 7px !important;
+}
+.reports-section-icon {
+    width: 27px !important;
+    height: 27px !important;
+    border-radius: 6px !important;
+    font-size: 15px !important;
+}
+.reports-section-heading h2 {
+    margin: 0 !important;
+    font-size: 12px !important;
+}
+.reports-section-heading p {
+    margin: 1px 0 0 !important;
+    font-size: 10px !important;
+}
+.reports-filter-grid {
+    gap: 6px !important;
+    grid-template-columns: repeat(2, minmax(130px, 1fr)) auto !important;
+}
+.reports-filter-group label {
+    margin-bottom: 3px !important;
+    font-size: 12px !important;
+}
+.reports-input-wrapper input,
+.reports-filter-group input {
+    min-height: 29px !important;
+    height: 29px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    font-size: 10px !important;
+    border-radius: 6px !important;
+}
+.reports-input-wrapper i {
+    font-size: 12px !important;
+}
+.reports-filter-actions { gap: 4px !important; }
+.reports-primary-button,
+.reports-secondary-button {
+    min-height: 29px !important;
+    height: 29px !important;
+    padding: 0 8px !important;
+    gap: 4px !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+}
+.reports-filter-error {
+    margin-top: 6px !important;
+    padding: 6px 8px !important;
+    font-size: 8px !important;
+}
+
+/* KPI */
+.reports-summary-grid {
+    gap: 6px !important;
+    margin-bottom: 8px !important;
+}
+.reports-summary-card {
+    padding: 8px !important;
+    border-radius: 8px !important;
+}
+.reports-summary-top { gap: 5px !important; }
+.reports-summary-label { font-size: 12px !important; }
+.reports-summary-value {
+    margin-top: 2px !important;
+    font-size: 15px !important;
+}
+.reports-summary-icon {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 7px !important;
+    font-size: 15px !important;
+}
+.reports-summary-footer {
+    margin-top: 5px !important;
+    padding-top: 4px !important;
+    font-size: 7px !important;
+}
+
+/* Workspace */
+.reports-workspace { border-radius: 9px !important; }
+.reports-workspace-header {
+    gap: 8px !important;
+    padding: 8px 10px !important;
+}
+.reports-workspace-eyebrow { font-size: 7px !important; }
+.reports-workspace-header h2 {
+    margin: 1px 0 0 !important;
+    font-size: 12px !important;
+}
+.reports-workspace-header p {
+    margin: 1px 0 0 !important;
+    font-size: 8px !important;
+}
+.reports-current-range {
+    gap: 4px !important;
+    padding: 5px 7px !important;
+    border-radius: 6px !important;
+    font-size: 7.5px !important;
+}
+.reports-tabs-wrapper { padding: 6px 7px 0 !important; }
+.reports-tabs { gap: 4px !important; }
+.reports-tab {
+    gap: 4px !important;
+    min-height: 31px !important;
+    padding: 5px 6px !important;
+    border-radius: 6px !important;
+}
+.reports-tab-icon {
+    width: 23px !important;
+    height: 23px !important;
+    min-width: 23px !important;
+    border-radius: 5px !important;
+    font-size: 15px !important;
+}
+.reports-tab-content strong { font-size: 12px !important; }
+.reports-tab-content small,
+.reports-tab-arrow { display: none !important; }
+.reports-content { padding: 7px !important; }
+
+/* ==========================================================================
+   COMMON CHILD REPORTS
+   ========================================================================== */
+
+.report-wrapper { padding: 4px !important; }
+
+.report-header,
+section > .d-flex.justify-content-between.align-items-center.mb-3 {
+    gap: 8px !important;
+    margin-bottom: 7px !important;
+}
+
+.report-header h4,
+section > .d-flex.justify-content-between.align-items-center.mb-3 h5 {
+    font-size: 12px !important;
+    margin-bottom: 1px !important;
+}
+.report-header p,
+section > .d-flex.justify-content-between.align-items-center.mb-3 small {
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+}
+
+/* Bootstrap summary cards inside Attendance / Purchase */
+.row.g-3.mb-4,
+.row.g-4.mb-4 {
+    --bs-gutter-x: 6px !important;
+    --bs-gutter-y: 6px !important;
+    margin-bottom: 7px !important;
+}
+.summary-box {
+    min-height: 55px !important;
+    padding: 7px !important;
+    gap: 6px !important;
+    border-radius: 8px !important;
+}
+.summary-box span { font-size: 7.5px !important; }
+.summary-box h3 {
+    margin-top: 2px !important;
+    font-size: 12px !important;
+}
+.summary-icon {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    font-size: 15px !important;
+}
+.summary-card {
+    border-radius: 8px !important;
+}
+.summary-card .card-body {
+    min-height: 52px !important;
+    padding: 7px !important;
+}
+.summary-card small { font-size: 7.5px !important; }
+.summary-card h4 {
+    margin-top: 2px !important;
+    margin-bottom: 0 !important;
+    font-size: 12px !important;
+}
+
+/* Attendance filter bootstrap card */
+.card.mb-4 { margin-bottom: 7px !important; }
+.card-body { padding: 7px !important; }
+.row.g-3.align-items-end { --bs-gutter-x: 6px !important; --bs-gutter-y: 5px !important; }
+.form-label {
+    margin-bottom: 3px !important;
+    font-size: 8px !important;
+}
+.form-select,
+.form-control {
+    min-height: 33px !important;
+    height: 33px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    font-size: 12px !important;
+}
+.btn {
+    min-height: 29px;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+/* Tables */
+.table-card,
+.table-responsive {
+    border-radius: 8px !important;
+}
+.table-responsive {
+    width: 100%;
+    min-width: 0;
+    padding: 3px !important;
+}
+.table {
+    width: 100%;
+    margin-bottom: 0 !important;
+    font-size: 8.5px !important;
+}
+.table > :not(caption) > * > * {
+    padding: 5px 10px !important;
+    line-height: 1.15 !important;
+}
+.table thead th,
+table th {
+    font-size: 12px !important;
+    white-space: nowrap;
+    text-align: center;
+}
+.table td,
+table td {
+    font-size: 12px !important;
+    vertical-align: middle !important;
+}
+.sl-number {
+    padding: 2px 5px !important;
+    font-size: 7px !important;
+}
+.payment-badge,
+.supplier-badge,
+.status-badge,
+.badge {
+    padding: 3px 5px !important;
+    border-radius: 999px !important;
+    font-size: 7px !important;
+    white-space: nowrap;
+}
+.item-line,
+td:nth-child(4) .small {
+    font-size: 7.5px !important;
+    line-height: 1.2 !important;
+}
+.note-text {
+    display: block;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.loading-box {
+    height: 90px !important;
+    gap: 6px !important;
+    font-size: 8px !important;
+}
+.empty-state {
+    padding: 20px 8px !important;
+    font-size: 8px !important;
+}
+.empty-state i { font-size: 20px !important; }
+
+/* Pagination */
+.pagination-box,
+.card-body > .d-flex.justify-content-between.align-items-center.mt-3,
+section > .d-flex.justify-content-between.mt-3 {
+    gap: 6px !important;
+    margin-top: 7px !important;
+    padding-top: 6px !important;
+    font-size: 8px !important;
+}
+.page-btn,
+.btn.btn-sm {
+    min-height: 26px !important;
+    padding: 3px 7px !important;
+    border-radius: 5px !important;
+    margin-left: 3px !important;
+    font-size: 12px !important;
+}
+
+/* Export button component */
+.report-export-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.report-export-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 29px;
+    min-width: 29px;
+    height: 29px;
+    padding: 0;
+    border-radius: 6px;
+    font-size: 10px;
+}
+.report-export-error {
+    margin-top: 3px;
+    font-size: 7.5px;
+}
+
+/* Icon-only report statuses */
+.report-status-icon,
+.stock-status-icon {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 23px;
+    min-width: 23px;
+    height: 23px;
+    padding: 0 !important;
+    border-radius: 6px !important;
+    font-size: 9px !important;
+}
+
+/* Stock */
+.stock-report-header { margin-bottom: 7px; }
+.stock-report-title { font-size: 12px; }
+.stock-report-subtitle { font-size: 8px; }
+.stock-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 7px;
+    padding: 3px;
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+}
+.stock-tab-btn {
+    min-height: 28px;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    font-size: 8px;
+    font-weight: 700;
+}
+.stock-tab-btn.active {
+    color: #fff;
+    background: #2563eb;
+}
+.stock-table-heading {
+    margin-bottom: 5px;
+}
+.stock-table-heading h6 {
+    margin: 0;
+    font-size: 10px;
+}
+.stock-table-heading small { font-size: 7.5px; }
+
+/* Desktop no horizontal scroll for normal report tables */
+@media (min-width: 1100px) {
+    .table-responsive { overflow-x: hidden !important; }
+    .table { table-layout: fixed; }
+
+    /* Attendance 8 cols */
+    .attendance-report-table th:nth-child(1),
+    .attendance-report-table td:nth-child(1) { width: 5%; }
+    .attendance-report-table th:nth-child(2),
+    .attendance-report-table td:nth-child(2) { width: 18%; }
+    .attendance-report-table th:nth-child(3),
+    .attendance-report-table td:nth-child(3) { width: 8%; text-align:center; }
+    .attendance-report-table th:nth-child(4),
+    .attendance-report-table td:nth-child(4) { width: 13%; }
+    .attendance-report-table th:nth-child(5),
+    .attendance-report-table td:nth-child(5) { width: 13%; }
+    .attendance-report-table th:nth-child(6),
+    .attendance-report-table td:nth-child(6) { width: 13%; }
+    .attendance-report-table th:nth-child(7),
+    .attendance-report-table td:nth-child(7) { width: 15%; }
+    .attendance-report-table th:nth-child(8),
+    .attendance-report-table td:nth-child(8) { width: 15%; }
+
+    /* Purchase 9 cols */
+    .purchase-report-table th:nth-child(1),
+    .purchase-report-table td:nth-child(1) { width: 4%; }
+    .purchase-report-table th:nth-child(2),
+    .purchase-report-table td:nth-child(2) { width: 8%; }
+    .purchase-report-table th:nth-child(3),
+    .purchase-report-table td:nth-child(3) { width: 12%; }
+    .purchase-report-table th:nth-child(4),
+    .purchase-report-table td:nth-child(4) { width: 20%; }
+    .purchase-report-table th:nth-child(5),
+    .purchase-report-table td:nth-child(5) { width: 10%; }
+    .purchase-report-table th:nth-child(6),
+    .purchase-report-table td:nth-child(6) { width: 11%; }
+    .purchase-report-table th:nth-child(7),
+    .purchase-report-table td:nth-child(7) { width: 10%; }
+    .purchase-report-table th:nth-child(8),
+    .purchase-report-table td:nth-child(8) { width: 13%; }
+    .purchase-report-table th:nth-child(9),
+    .purchase-report-table td:nth-child(9) { width: 12%; text-align:center; }
+
+    /* Stock 7 cols */
+    .stock-table th:nth-child(1),
+    .stock-table td:nth-child(1) { width: 5%; }
+    .stock-table th:nth-child(2),
+    .stock-table td:nth-child(2) { width: 25%; }
+    .stock-table th:nth-child(3),
+    .stock-table td:nth-child(3) { width: 10%; }
+    .stock-table th:nth-child(4),
+    .stock-table td:nth-child(4) { width: 13%; }
+    .stock-table th:nth-child(5),
+    .stock-table td:nth-child(5) { width: 15%; }
+    .stock-table th:nth-child(6),
+    .stock-table td:nth-child(6) { width: 20%; }
+    .stock-table th:nth-child(7),
+    .stock-table td:nth-child(7) { width: 12%; text-align:center; }
+
+    .purchase-report-table td,
+    .attendance-report-table td,
+    .stock-table td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* Smaller screens keep safe scroll */
+@media (max-width: 1099px) {
+    .reports-page { overflow-x: visible; }
+    .table-responsive { overflow-x: auto !important; }
+    .attendance-report-table { min-width: 780px; table-layout: auto; }
+    .purchase-report-table { min-width: 900px; table-layout: auto; }
+    .stock-table { min-width: 720px; table-layout: auto; }
+}
+
+@media (max-width: 900px) {
+    .reports-page-header {
+        align-items: center !important;
+        flex-direction: row !important;
+    }
+    .reports-header-meta { width: auto !important; }
+    .reports-summary-grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    .reports-tabs { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+    .reports-filter-grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    .reports-filter-actions { grid-column: 1 / -1; }
+}
+
+@media (max-width: 600px) {
+    .reports-page-subtitle,
+    .reports-section-heading p,
+    .reports-workspace-header p,
+    .report-header p,
+    section > .d-flex.justify-content-between.align-items-center.mb-3 small {
+        display: none !important;
+    }
+    .reports-summary-grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    .reports-tabs { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+    .reports-tab-content strong { font-size: 7px !important; }
+    .reports-current-range { display: none !important; }
+}

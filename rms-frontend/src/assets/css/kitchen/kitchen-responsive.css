@@ -1,0 +1,135 @@
+/* =========================================================
+   KITCHEN RESPONSIVE
+========================================================= */
+
+
+/* =========================================================
+   MEDIUM DESKTOP
+========================================================= */
+
+@media (max-width: 1199.98px) {
+  .kitchen-order-items-list {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .kitchen-order-quick-info {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 991.98px) {
+  .kitchen-order-quick-info {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .kitchen-order-context {
+    grid-template-columns: 1fr;
+  }
+
+  .kitchen-order-items-list {
+    grid-template-columns: 1fr;
+  }
+
+  .kitchen-menu-item-content {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+  .kitchen-order-card-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .kitchen-status-badge {
+    align-self: flex-start;
+  }
+
+  .kitchen-order-quick-info {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .kitchen-general-notes {
+    grid-template-columns: 1fr;
+  }
+
+  .kitchen-menu-item-content {
+    grid-template-columns: 1fr;
+  }
+
+  .kitchen-order-timeline {
+    grid-template-columns: 1fr;
+  }
+
+  .kitchen-order-card-footer {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .kitchen-order-actions {
+    width: 100%;
+
+    justify-content: flex-start;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .kitchen-order-quick-info {
+    grid-template-columns: 1fr;
+  }
+
+  .kitchen-order-actions {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .kitchen-action-button,
+  .kitchen-ready-message,
+  .kitchen-no-action-message {
+    width: 100%;
+  }
+
+  .kitchen-menu-item-header {
+    flex-direction: column;
+  }
+
+  .kitchen-menu-item-status {
+    align-self: flex-start;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .kitchen-order-card,
+  .kitchen-menu-item,
+  .kitchen-action-button {
+    transition: none;
+  }
+}

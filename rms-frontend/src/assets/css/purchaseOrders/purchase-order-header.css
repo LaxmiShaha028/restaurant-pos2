@@ -1,0 +1,163 @@
+/* ==========================================================================
+   PURCHASE ORDER HEADER
+   Same size & spacing as Kitchen / Order / Table / Billing / etc.
+   ========================================================================== */
+
+.purchase-order-header-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 7px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.purchase-order-header-content {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.purchase-order-header-left {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+}
+
+.purchase-order-header-icon {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 12px;
+}
+
+.purchase-order-header-text {
+  min-width: 0;
+}
+
+.purchase-order-eyebrow {
+  margin: 0 0 1px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.purchase-order-header-text h1 {
+  margin: 0;
+  color: #172033;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.purchase-order-header-text p {
+  max-width: 580px;
+  margin: 2px 0 0;
+  overflow: hidden;
+  color: #667085;
+  font-size: 12px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.purchase-order-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.purchase-order-header-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.purchase-order-header-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.po-refresh-btn {
+  border-color: #e5e7eb;
+  background: #f8fafc;
+  color: #374151;
+}
+
+.po-refresh-btn:hover:not(:disabled) {
+  background: #f1f5f9;
+}
+
+.po-add-btn {
+  border-color: #2563eb;
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.po-add-btn:hover:not(:disabled) {
+  border-color: #1d4ed8;
+  background: #1d4ed8;
+}
+
+.inventory-refresh-spin {
+  animation: po-header-spin 0.8s linear infinite;
+}
+
+@keyframes po-header-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+  .purchase-order-header-card {
+    align-items: flex-start;
+  }
+
+  .purchase-order-header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .purchase-order-header-actions {
+    width: 100%;
+  }
+
+  .purchase-order-header-actions button {
+    flex: 1;
+  }
+
+  .purchase-order-header-text p {
+    white-space: normal;
+  }
+}

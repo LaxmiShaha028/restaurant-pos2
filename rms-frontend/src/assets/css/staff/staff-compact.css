@@ -1,0 +1,1162 @@
+/* ==========================================================================
+   STAFF MANAGEMENT - FINAL COMPACT OVERRIDE
+   Load this file LAST after all existing staff/employee/attendance/shift CSS.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   PAGE + COMMON HEADER
+   -------------------------------------------------------------------------- */
+
+.staff-management-page {
+    width: 100%;
+    min-width: 0;
+    padding: 6px;
+    overflow-x: hidden;
+}
+
+.staff-header-card {
+    margin-bottom: 8px;
+    padding: 10px 12px;
+    border-radius: 9px;
+}
+
+.staff-header-content {
+    gap: 10px;
+}
+
+.staff-header-text h2 {
+    gap: 7px;
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+.staff-header-text h2 i {
+    font-size: 18px;
+}
+
+.staff-header-text p {
+    margin-top: 3px;
+    font-size: 10px;
+    line-height: 1.3;
+}
+
+.staff-header-actions {
+    gap: 5px;
+}
+
+.staff-header-actions button,
+.staff-refresh-btn {
+    width: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 7px;
+    gap: 0;
+    font-size: 0;
+}
+
+.staff-refresh-btn i {
+    font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   COMMON TABS
+   -------------------------------------------------------------------------- */
+
+.staff-tabs-card {
+    margin-bottom: 8px;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.staff-tabs {
+    gap: 4px;
+}
+
+.staff-tab {
+    min-height: 31px;
+    padding: 0 8px;
+    border-radius: 6px;
+    gap: 5px;
+    font-size: 10px;
+    line-height: 1;
+}
+
+.staff-tab i {
+    font-size: 11px;
+}
+
+.staff-tab.active {
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.16);
+}
+
+/* --------------------------------------------------------------------------
+   SHARED SECTION HEADERS
+   -------------------------------------------------------------------------- */
+
+.employee-section-header,
+.attendance-section-header,
+.shift-section-header {
+    gap: 10px;
+    padding: 9px 11px;
+    margin-bottom: 8px;
+    border-radius: 9px;
+}
+
+.employee-section-header h3,
+.attendance-section-header h3,
+.shift-section-header h3 {
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.employee-section-header p,
+.attendance-section-header p,
+.shift-section-header p {
+    margin-top: 2px;
+    font-size: 12px;
+    line-height: 1.25;
+}
+
+.employee-add-btn,
+.attendance-sync-btn,
+.shift-add-btn {
+    min-height: 30px;
+    padding: 0 9px;
+    border-radius: 7px;
+    gap: 5px;
+    font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   EMPLOYEE NOTICE
+   -------------------------------------------------------------------------- */
+
+.employee-attendance-notice {
+    gap: 7px;
+    padding: 7px 9px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+}
+
+.employee-attendance-notice > i {
+    margin-top: 1px;
+    font-size: 12px;
+}
+
+.employee-attendance-notice strong {
+    margin-bottom: 1px;
+    font-size: 12px;
+}
+
+.employee-attendance-notice p {
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+/* --------------------------------------------------------------------------
+   DATE NAVIGATORS
+   -------------------------------------------------------------------------- */
+
+.attendance-date-navigator,
+.shift-date-navigator {
+    gap: 9px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    border-radius: 9px;
+}
+
+.attendance-date-label,
+.shift-date-navigator-label {
+    gap: 7px;
+}
+
+.attendance-date-icon,
+.shift-date-navigator-label > i {
+    width: 29px;
+    height: 29px;
+    border-radius: 7px;
+    font-size: 12px;
+}
+
+.attendance-date-label span,
+.shift-date-navigator-label span {
+    margin-bottom: 1px;
+    font-size: 12px;
+}
+
+.attendance-date-label strong,
+.shift-date-navigator-label strong {
+    font-size: 12px;
+}
+
+.attendance-date-actions,
+.shift-date-navigation-actions {
+    gap: 4px;
+}
+
+.attendance-date-actions button,
+.attendance-date-actions input,
+.shift-date-navigation-actions button,
+.shift-date-navigation-actions input {
+    min-height: 29px;
+    height: 29px;
+    border-radius: 6px;
+    font-size: 9px;
+}
+
+.attendance-date-actions button,
+.shift-date-navigation-actions button {
+    min-width: 29px;
+    padding: 0 7px;
+}
+
+.attendance-date-actions input,
+.shift-date-navigation-actions input {
+    padding: 0 7px;
+}
+
+/* --------------------------------------------------------------------------
+   SUMMARY CARDS
+   -------------------------------------------------------------------------- */
+
+.employee-summary-grid,
+.attendance-summary-grid,
+.shift-summary-grid {
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.employee-summary-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.attendance-summary-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.shift-summary-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.employee-summary-card,
+.attendance-summary-card,
+.shift-summary-card {
+    min-width: 0;
+    gap: 6px;
+    padding: 7px 10px;
+    border-radius: 8px;
+}
+
+.employee-summary-icon,
+.attendance-summary-icon,
+.shift-summary-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    font-size: 12px;
+}
+
+.employee-summary-card span,
+.attendance-summary-card span,
+.shift-summary-card span {
+    margin-bottom: 1px;
+    font-size: 12px;
+    line-height: 1.15;
+}
+
+.employee-summary-card strong,
+.attendance-summary-card strong,
+.shift-summary-card strong {
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.attendance-summary-card small {
+    margin-top: 1px;
+    font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   FILTERS
+   -------------------------------------------------------------------------- */
+
+.employee-filter-card,
+.attendance-filter-card,
+.shift-filter-card {
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 9px;
+}
+
+.employee-filter-grid,
+.attendance-filter-grid,
+.shift-filter-grid {
+    gap: 6px;
+}
+
+.employee-filter-grid {
+    grid-template-columns:
+        minmax(150px, 1.6fr)
+        minmax(110px, 1fr)
+        minmax(110px, 1fr)
+        auto;
+}
+
+.attendance-filter-grid,
+.shift-filter-grid {
+    grid-template-columns:
+        minmax(150px, 1.35fr)
+        repeat(3, minmax(105px, 1fr))
+        auto;
+}
+
+.employee-filter-group,
+.attendance-filter-group,
+.shift-filter-group {
+    gap: 3px;
+}
+
+.employee-filter-group label,
+.attendance-filter-group label,
+.shift-filter-group label {
+    margin-bottom: 3px;
+    font-size: 9px;
+    line-height: 1.1;
+}
+
+.employee-filter-group input,
+.employee-filter-group select,
+.attendance-filter-group input,
+.attendance-filter-group select,
+.shift-filter-group input,
+.shift-filter-group select {
+    height: 30px;
+    min-height: 30px;
+    padding: 0 8px;
+    border-radius: 6px;
+    font-size: 9.5px;
+}
+
+.employee-filter-actions,
+.attendance-filter-actions,
+.shift-filter-actions {
+    gap: 4px;
+}
+
+.employee-filter-actions button,
+.attendance-filter-btn,
+.attendance-clear-btn,
+.shift-filter-btn,
+.shift-clear-btn {
+    min-height: 30px;
+    height: 30px;
+    padding: 0 8px;
+    border-radius: 6px;
+    gap: 4px;
+    font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   SMALL INFO / MESSAGE ROWS
+   -------------------------------------------------------------------------- */
+
+.attendance-message,
+.shift-message,
+.attendance-auto-refresh-info,
+.attendance-future-notice {
+    padding: 7px 9px;
+    margin-bottom: 7px;
+    border-radius: 7px;
+    gap: 6px;
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   EMPLOYEE TABLE - DESKTOP FIT
+   ========================================================================== */
+
+.employee-table-card {
+    padding: 6px;
+    border-radius: 9px;
+}
+
+.employee-table-responsive {
+    width: 100%;
+    min-width: 0;
+}
+
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.employee-table th,
+.employee-table td {
+    padding: 5px 4px;
+    line-height: 1.15;
+}
+
+.employee-table th {
+    font-size: 8px;
+}
+
+.employee-table td {
+    font-size: 9px;
+}
+
+.employee-name-cell {
+    min-width: 0;
+    gap: 5px;
+}
+
+.employee-avatar,
+.employee-profile-image {
+    width: 27px !important;
+    height: 27px !important;
+    flex: 0 0 27px;
+    font-size: 12px;
+}
+
+.employee-name-cell strong {
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.employee-name-cell small {
+    display: none;
+}
+
+.employee-role-badge {
+    padding: 3px 5px;
+    font-size: 12px;
+}
+
+.employee-email-value {
+    max-width: 100%;
+    font-size: 12px;
+}
+
+.employee-status-control {
+    min-width: 0;
+}
+
+.employee-status-select {
+    width: 50%;
+    min-width: 0;
+    height: 27px;
+    padding: 0 5px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+.staff-alignment{text-align: center;}
+
+.employee-status-note,
+.employee-row-loading-text {
+    display: none;
+}
+
+/* Icon-only Account button */
+.employee-account-btn {
+    width: 45px;
+    min-width: 26px;
+    height: 26px;
+    padding: 0;
+    border-radius: 6px;
+    gap: 0;
+    font-size: 11px;
+}
+
+.employee-actions {
+    justify-content: center;
+    gap: 3px;
+}
+
+.employee-action-btn {
+    width: 25px;
+    height: 25px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.employee-pagination {
+    gap: 7px;
+    margin-top: 7px;
+}
+
+.employee-pagination button {
+    height: 28px;
+    padding: 0 9px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.employee-pagination span {
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   ATTENDANCE TABLE - DESKTOP FIT
+   ========================================================================== */
+
+.attendance-table-card {
+    border-radius: 9px;
+}
+
+.attendance-table-responsive {
+    width: 100%;
+    min-width: 0;
+}
+
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.attendance-table th,
+.attendance-table td {
+    padding: 5px 3px;
+    line-height: 1.12;
+}
+
+.attendance-table th {
+    font-size: 12px;
+}
+
+.attendance-table td {
+    font-size: 12px;
+}
+
+.attendance-employee-cell {
+    gap: 4px;
+}
+
+.attendance-employee-avatar {
+    width: 26px;
+    height: 26px;
+    flex: 0 0 26px;
+    font-size: 12px;
+}
+
+.attendance-employee-cell strong,
+.attendance-shift-cell strong,
+.attendance-duration-cell strong {
+    font-size: 12px;
+}
+
+.attendance-employee-cell small,
+.attendance-shift-cell small,
+.attendance-duration-cell small,
+.attendance-status-detail {
+    display: none;
+}
+
+.attendance-role-badge {
+    padding: 3px 5px;
+    font-size: 12px;
+}
+
+.attendance-time-cell {
+    gap: 3px;
+}
+
+/* Icon-only status */
+.attendance-status-badge {
+    width: 60px;
+    min-width: 24px;
+    height: 24px;
+    min-height: 24px;
+    padding: 0;
+    border-radius: 6px;
+    gap: 0;
+    font-size: 12px;
+}
+
+.attendance-live-dot {
+    width: 7px;
+    height: 7px;
+}
+
+.attendance-metric-badge {
+    gap: 2px;
+    padding: 3px 4px;
+    font-size: 12px;
+}
+
+.attendance-pagination {
+    gap: 7px;
+    padding: 7px 8px;
+}
+
+.attendance-pagination button {
+    min-height: 28px;
+    padding: 0 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.attendance-pagination span {
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   SHIFT TABLE - DESKTOP FIT
+   ========================================================================== */
+
+.shift-table-card {
+    border-radius: 9px;
+}
+
+.shift-table-responsive {
+    width: 100%;
+    min-width: 0;
+}
+
+.shift-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.shift-table th,
+.shift-table td {
+    padding: 5px 3px;
+    line-height: 1.12;
+}
+
+.shift-table th {
+    font-size: 7.5px;
+}
+
+.shift-table td {
+    font-size: 8.5px;
+}
+
+.shift-employee-cell {
+    gap: 4px;
+}
+
+.shift-employee-avatar {
+    width: 26px;
+    height: 26px;
+    flex: 0 0 26px;
+    font-size: 8px;
+}
+
+.shift-employee-cell strong,
+.shift-date-cell strong,
+.shift-rule-cell strong,
+.shift-effective-time strong {
+    font-size: 12px;
+}
+
+.shift-employee-cell small,
+.shift-date-cell small,
+.shift-effective-time small {
+    display: none;
+}
+
+.shift-rule-cell {
+    max-width: none;
+    overflow: hidden;
+}
+
+.shift-rule-cell strong,
+.shift-rule-cell small {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.shift-rule-cell small {
+    margin-top: 1px;
+    font-size: 7px;
+}
+
+.shift-role-badge,
+.shift-grace-badge,
+.shift-type-badge {
+    padding: 3px 5px;
+    font-size: 12px;
+}
+
+/* Icon-only status */
+.shift-status-btn {
+    width: 45px;
+    min-width: 25px;
+    height: 25px;
+    min-height: 25px;
+    padding: 0;
+    border-radius: 6px;
+    gap: 0;
+    font-size: 10px;
+}
+
+.shift-actions {
+    justify-content: center;
+    gap: 3px;
+}
+
+.shift-action-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    font-size: 9px;
+}
+
+.shift-pagination {
+    gap: 7px;
+    padding: 7px 8px;
+}
+
+.shift-pagination button {
+    min-height: 28px;
+    padding: 0 8px;
+    border-radius: 6px;
+    font-size: 8px;
+}
+
+.shift-pagination span {
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   DESKTOP TABLE WIDTH DISTRIBUTION
+   ========================================================================== */
+
+@media (min-width: 1100px) {
+
+    .employee-table,
+    .attendance-table,
+    .shift-table {
+        min-width: 0 !important;
+        table-layout: fixed;
+    }
+
+    .employee-table-responsive,
+    .attendance-table-responsive,
+    .shift-table-responsive {
+        overflow-x: hidden;
+    }
+
+    /* Employee: 10 columns */
+    .employee-table th:nth-child(1),
+    .employee-table td:nth-child(1) { width: 4%; text-align: center; }
+
+    .employee-table th:nth-child(2),
+    .employee-table td:nth-child(2) { width: 15%; text-align: center; }
+
+    .employee-table th:nth-child(3),
+    .employee-table td:nth-child(3) { width: 8%; text-align: center;}
+
+    .employee-table th:nth-child(4),
+    .employee-table td:nth-child(4) { width: 10%; text-align: center; }
+
+    .employee-table th:nth-child(5),
+    .employee-table td:nth-child(5) { width: 16%; text-align: center; }
+
+    .employee-table th:nth-child(6),
+    .employee-table td:nth-child(6) { width: 9%; text-align: center; }
+
+    .employee-table th:nth-child(7),
+    .employee-table td:nth-child(7) { width: 10%; text-align: center; }
+
+    .employee-table th:nth-child(8),
+    .employee-table td:nth-child(8) { width: 14%; text-align: center; }
+
+    .employee-table th:nth-child(9),
+    .employee-table td:nth-child(9) { width: 6%; text-align: center; }
+
+    .employee-table th:nth-child(10),
+    .employee-table td:nth-child(10) { width: 8%; text-align: center; }
+
+    .employee-table td:nth-child(2),
+    .employee-table td:nth-child(3),
+    .employee-table td:nth-child(4),
+    .employee-table td:nth-child(5),
+    .employee-table td:nth-child(6),
+    .employee-table td:nth-child(7) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    /* Attendance: 12 columns */
+    .attendance-table th:nth-child(1),
+    .attendance-table td:nth-child(1) { width: 4%; text-align: center; }
+
+    .attendance-table th:nth-child(2),
+    .attendance-table td:nth-child(2) { width: 12%; text-align: center;}
+
+    .attendance-table th:nth-child(3),
+    .attendance-table td:nth-child(3) { width: 10%; text-align: center;}
+
+    .attendance-table th:nth-child(4),
+    .attendance-table td:nth-child(4) { width: 15%; text-align: center;}
+
+    .attendance-table th:nth-child(5),
+    .attendance-table td:nth-child(5) { width: 10%; text-align: center;}
+
+    .attendance-table th:nth-child(6),
+    .attendance-table td:nth-child(6) { width: 10%; text-align: center;}
+
+    .attendance-table th:nth-child(7),
+    .attendance-table td:nth-child(7) { width: 10%; text-align: center; }
+
+    .attendance-table th:nth-child(8),
+    .attendance-table td:nth-child(8) { width: 10%; text-align: center;}
+
+    .attendance-table th:nth-child(9),
+    .attendance-table td:nth-child(9) { width: 7%; text-align: center;}
+
+    .attendance-table th:nth-child(10),
+    .attendance-table td:nth-child(10) { width: 8%; text-align: center;}
+
+    .attendance-table th:nth-child(11),
+    .attendance-table td:nth-child(11) { width: 9%; text-align: center;}
+
+    .attendance-table th:nth-child(12),
+    .attendance-table td:nth-child(12) { width: 11%; text-align: center;}
+
+    /* Shift: 11 columns */
+    .shift-table th:nth-child(1),
+    .shift-table td:nth-child(1) { width: 4%; text-align: center; }
+
+    .shift-table th:nth-child(2),
+    .shift-table td:nth-child(2) { width: 14%; text-align: center;}
+
+    .shift-table th:nth-child(3),
+    .shift-table td:nth-child(3) { width: 8%; text-align: center;}
+
+    .shift-table th:nth-child(4),
+    .shift-table td:nth-child(4) { width: 9%; text-align: center;}
+
+    .shift-table th:nth-child(5),
+    .shift-table td:nth-child(5) { width: 11%; text-align: center;}
+
+    .shift-table th:nth-child(6),
+    .shift-table td:nth-child(6) { width: 8%; text-align: center;}
+
+    .shift-table th:nth-child(7),
+    .shift-table td:nth-child(7) { width: 7%; text-align: center;}
+
+    .shift-table th:nth-child(8),
+    .shift-table td:nth-child(8) { width: 8%; text-align: center;}
+
+    .shift-table th:nth-child(9),
+    .shift-table td:nth-child(9) { width: 15%; text-align: center;}
+
+    .shift-table th:nth-child(10),
+    .shift-table td:nth-child(10) { width: 6%; text-align: center; }
+
+    .shift-table th:nth-child(11),
+    .shift-table td:nth-child(11) { width: 10%; text-align: center; }
+
+    .shift-table td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* ==========================================================================
+   MODALS - COMPACT
+   ========================================================================== */
+
+.employee-modal-overlay,
+.shift-modal-overlay {
+    padding: 10px;
+}
+
+.employee-modal,
+.shift-modal {
+    max-height: calc(100vh - 20px);
+    border-radius: 11px;
+}
+
+.employee-modal-header,
+.shift-modal-header {
+    gap: 10px;
+    padding: 11px 13px;
+}
+
+.employee-modal-header h3,
+.shift-modal-header h3 {
+    gap: 6px;
+    font-size: 14px;
+}
+
+.employee-modal-header p,
+.shift-modal-header p {
+    margin-top: 2px;
+    font-size: 12px;
+}
+
+.employee-close-btn,
+.shift-modal-close {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.employee-modal-body,
+.shift-modal-body {
+    padding: 12px;
+}
+
+.employee-form-section,
+.shift-form-section {
+    padding: 9px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+}
+
+.employee-form-section-title,
+.shift-form-section-title {
+    gap: 5px;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+
+.employee-form-grid,
+.shift-form-grid {
+    gap: 8px;
+}
+
+.employee-form-group,
+.shift-form-group {
+    margin-bottom: 8px;
+}
+
+.employee-form-group label,
+.shift-form-group label {
+    margin-bottom: 3px;
+    font-size: 12px;
+}
+
+.employee-form-group input,
+.employee-form-group select,
+.employee-form-group textarea,
+.shift-form-group input,
+.shift-form-group select,
+.shift-form-group textarea {
+    min-height: 31px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.employee-field-error,
+.employee-form-help,
+.shift-field-error,
+.shift-form-help {
+    margin-top: 3px;
+    font-size: 12px;
+}
+
+.employee-form-alert,
+.employee-integration-notice,
+.shift-form-alert,
+.shift-range-preview {
+    gap: 6px;
+    padding: 7px 8px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.employee-integration-notice p {
+    margin-top: 2px;
+    font-size: 12px;
+}
+
+.employee-modal-footer,
+.shift-modal-footer {
+    gap: 6px;
+    padding: 9px 12px;
+}
+
+.employee-cancel-btn,
+.employee-save-btn,
+.shift-cancel-btn,
+.shift-save-btn {
+    min-height: 30px;
+    padding: 0 10px;
+    border-radius: 6px;
+    gap: 5px;
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   TABLET / MOBILE
+   Keep scrolling for usability on smaller screens.
+   ========================================================================== */
+
+@media (max-width: 1099px) {
+
+    .staff-management-page {
+        overflow-x: visible;
+    }
+
+    .employee-table-responsive,
+    .attendance-table-responsive,
+    .shift-table-responsive {
+        overflow-x: auto;
+    }
+
+    .employee-table {
+        min-width: 920px !important;
+        table-layout: auto;
+    }
+
+    .attendance-table {
+        min-width: 1050px !important;
+        table-layout: auto;
+    }
+
+    .shift-table {
+        min-width: 1000px !important;
+        table-layout: auto;
+    }
+}
+
+@media (max-width: 850px) {
+
+    .staff-header-content {
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .staff-header-actions {
+        width: auto;
+    }
+
+    .staff-header-actions button {
+        width: 30px;
+    }
+
+    .attendance-summary-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .employee-summary-grid,
+    .shift-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .employee-filter-grid,
+    .attendance-filter-grid,
+    .shift-filter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .employee-filter-actions,
+    .attendance-filter-actions,
+    .shift-filter-actions {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .staff-management-page {
+        padding: 4px;
+    }
+
+    .staff-header-card {
+        padding: 8px;
+    }
+
+    .staff-header-text h2 {
+        font-size: 15px;
+    }
+
+    .staff-header-text p {
+        display: none;
+    }
+
+    .staff-tabs {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .staff-tab {
+        justify-content: center;
+        padding: 0 4px;
+        font-size: 12px;
+    }
+
+    .employee-section-header,
+    .attendance-section-header,
+    .shift-section-header {
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .employee-section-header p,
+    .attendance-section-header p,
+    .shift-section-header p,
+    .employee-attendance-notice p {
+        display: none;
+    }
+
+    .employee-add-btn,
+    .attendance-sync-btn,
+    .shift-add-btn {
+        width: auto;
+    }
+
+    .employee-filter-grid,
+    .attendance-filter-grid,
+    .shift-filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .employee-filter-actions,
+    .attendance-filter-actions,
+    .shift-filter-actions {
+        grid-column: auto;
+    }
+
+    .attendance-summary-grid,
+    .employee-summary-grid,
+    .shift-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 430px) {
+
+    .staff-tab span {
+        display: none;
+    }
+
+    .staff-tab i {
+        font-size: 14px;
+    }
+
+    .employee-add-btn,
+    .attendance-sync-btn,
+    .shift-add-btn {
+        width: 29px;
+        min-width: 29px;
+        padding: 0;
+        font-size: 12px;
+    }
+
+    .employee-add-btn i,
+    .attendance-sync-btn i,
+    .shift-add-btn i {
+        font-size: 12px;
+    }
+
+    .attendance-summary-grid,
+    .employee-summary-grid,
+    .shift-summary-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

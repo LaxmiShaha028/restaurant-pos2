@@ -1,0 +1,333 @@
+/* ==========================================================================
+   PURCHASE ORDER TABLE – Compact POS style
+   ========================================================================== */
+
+.purchase-order-table-card {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.purchase-order-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+  padding: 2px 2px 6px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.purchase-order-table-header h3 {
+  margin: 0;
+  color: #172033;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.purchase-order-table-header p {
+  margin: 2px 0 0;
+  color: #667085;
+  font-size: 7.5px;
+  line-height: 1.3;
+}
+
+/* Table */
+.table-responsive {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.purchase-order-table {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 8px;
+}
+
+.purchase-order-table th {
+  padding: 5px 4px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 7px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.purchase-order-table td {
+  padding: 5px 4px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #374151;
+  font-size: 8px;
+  line-height: 1.25;
+  vertical-align: middle;
+}
+
+.purchase-order-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+/* Column widths */
+.purchase-order-table th:nth-child(1),
+.purchase-order-table td:nth-child(1) {
+  width: 6%;
+  text-align: center;
+}
+
+.purchase-order-table th:nth-child(2),
+.purchase-order-table td:nth-child(2) {
+  width: 18%;
+  text-align: center;
+}
+
+.purchase-order-table th:nth-child(3),
+.purchase-order-table td:nth-child(3) {
+  width: 22%;
+  text-align: center;
+}
+
+.purchase-order-table th:nth-child(4),
+.purchase-order-table td:nth-child(4) {
+  width: 12%;
+  text-align: center;
+}
+
+.purchase-order-table th:nth-child(5),
+.purchase-order-table td:nth-child(5) {
+  width: 16%;
+  text-align: center;
+}
+
+.purchase-order-table th:nth-child(6),
+.purchase-order-table td:nth-child(6) {
+  width: 26%;
+  text-align: center;
+}
+
+/* Text overflow */
+.purchase-order-table td:nth-child(2),
+.purchase-order-table td:nth-child(3) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.item-list span {
+  overflow: hidden;
+  color: #374151;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-list small {
+  color: #667085;
+  font-size: 10px;
+}
+
+/* Status select */
+.po-status-control {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.po-status-select {
+  width: 100%;
+  min-height: 24px;
+  padding: 0 18px 0 5px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  outline: none;
+  cursor: pointer;
+}
+
+.po-status-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.08);
+}
+
+.po-status-select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.po-status-select-ordered {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.po-status-select-partially_received {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.po-status-select-received {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.po-status-select-cancelled {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.po-status-loading {
+  color: #2563eb;
+  font-size: 11px;
+}
+
+/* Action buttons */
+.purchase-order-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.view-btn {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.view-btn:hover:not(:disabled) {
+  background: #bfdbfe;
+}
+
+.edit-btn {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.edit-btn:hover:not(:disabled) {
+  background: #fde68a;
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.delete-btn:hover:not(:disabled) {
+  background: #fecaca;
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Receive action button inside table */
+.purchase-receive-action-button {
+  min-height: 24px;
+  padding: 0 6px;
+  border-radius: 4px;
+  font-size: 7px;
+}
+
+/* Loading / Empty */
+.po-loading,
+.po-empty {
+  padding: 18px 8px !important;
+  color: #667085;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* ==========================================================================
+   PAGINATION
+   ========================================================================== */
+
+.purchase-order-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 5px;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  background: #ffffff;
+}
+
+.purchase-order-pagination button {
+  min-height: 26px;
+  padding: 0 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.purchase-order-pagination button:hover:not(:disabled) {
+  background: #f8fafc;
+}
+
+.purchase-order-pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.purchase-order-pagination span {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 991.98px) {
+  .purchase-order-table {
+    min-width: 780px;
+    table-layout: auto;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .purchase-order-table-card {
+    padding: 5px;
+  }
+
+  .purchase-order-pagination {
+    flex-wrap: wrap;
+  }
+}

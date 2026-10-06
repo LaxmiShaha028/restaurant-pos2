@@ -1,0 +1,561 @@
+/* ==========================================================================
+   BILLING RESPONSIVE
+   Compact Dashboard Integration
+   ========================================================================== */
+
+
+/* ==========================================================================
+   ROOT WIDTH
+   ========================================================================== */
+
+.billing-page {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+
+  margin: 0;
+  padding: 0;
+
+  overflow-x: hidden;
+}
+
+
+/* ==========================================================================
+   DASHBOARD LAYOUT COMPATIBILITY
+   ========================================================================== */
+
+.dashboard-main,
+.dashboard-content,
+.app-main-content,
+.layout-content,
+.main-content {
+  min-width: 0;
+}
+
+.dashboard-main .billing-page,
+.dashboard-content .billing-page,
+.app-main-content .billing-page,
+.layout-content .billing-page,
+.main-content .billing-page {
+  width: 100%;
+  max-width: none;
+
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ==========================================================================
+   FULL WIDTH COMPONENTS
+   ========================================================================== */
+
+.billing-page-header,
+.billing-summary-section,
+.billing-report-card {
+  width: 100%;
+  max-width: none;
+}
+
+
+/* ==========================================================================
+   DESKTOP / LAPTOP
+   ========================================================================== */
+
+@media (min-width: 992px) {
+  .billing-page {
+    padding: 0;
+  }
+
+  .billing-summary-section {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+  }
+
+  .billing-report-card {
+    margin-bottom: 8px;
+  }
+
+  .billing-table-wrapper {
+    overflow-x: hidden;
+  }
+
+  .billing-table,
+  .billing-activity-table {
+    width: 100%;
+    min-width: 0;
+
+    table-layout: fixed;
+  }
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 991.98px) {
+  .billing-page {
+    padding: 0;
+  }
+
+  .billing-summary-section {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .billing-page-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .billing-header-actions {
+    width: 100%;
+  }
+
+  .billing-report-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .billing-report-actions {
+    width: 100%;
+
+    justify-content: flex-start;
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 650px) {
+  .billing-page {
+    padding: 0;
+  }
+
+  .billing-summary-section {
+    grid-template-columns: 1fr;
+  }
+
+  .billing-report-actions {
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto
+      auto;
+
+    gap: 4px;
+  }
+
+  .billing-filter-select {
+    width: 100%;
+  }
+
+  .billing-table-wrapper {
+    max-width: 100%;
+
+    overflow-x: auto;
+  }
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 480px) {
+  .billing-page {
+    padding: 0;
+  }
+
+  .billing-report-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .billing-filter-select,
+  .billing-action-button {
+    width: 100%;
+  }
+}
+
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@media print {
+  body {
+    background: #ffffff;
+  }
+
+  .sidebar,
+  .app-sidebar,
+  .dashboard-sidebar,
+  .top-navbar,
+  .dashboard-header,
+  .billing-header-actions,
+  .billing-report-actions,
+  .billing-pagination {
+    display: none !important;
+  }
+
+  .billing-page {
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: visible;
+
+    background: #ffffff;
+  }
+
+  .billing-page-header {
+    margin-bottom: 8px;
+
+    padding:
+      0
+      0
+      7px;
+
+    border: 0;
+    border-bottom: 1px solid #dddddd;
+    border-radius: 0;
+
+    box-shadow: none;
+  }
+
+  .billing-summary-section {
+    grid-template-columns:
+      repeat(4, 1fr);
+
+    gap: 5px;
+
+    margin-bottom: 8px;
+  }
+
+  .billing-summary-card {
+    border: 1px solid #dddddd;
+
+    box-shadow: none;
+
+    break-inside: avoid;
+  }
+
+  .billing-report-card {
+    border: 1px solid #dddddd;
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+    break-inside: avoid;
+  }
+
+  .billing-table,
+  .billing-activity-table {
+    width: 100%;
+    min-width: 100%;
+
+    table-layout: auto;
+  }
+
+  .billing-table th {
+    background: #f5f5f5 !important;
+
+    color: #000000;
+  }
+
+  .billing-table td {
+    color: #000000;
+  }
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .billing-page *,
+  .billing-page *::before,
+  .billing-page *::after {
+    animation: none !important;
+
+    transition: none !important;
+
+    scroll-behavior: auto !important;
+  }
+}
+/* ==========================================================================
+   BILLING TYPOGRAPHY OVERRIDE
+   Slightly Larger Font - Keep Compact Layout
+   ========================================================================== */
+
+/* Base */
+.billing-page {
+  font-size: 10px;
+}
+
+
+/* ==========================================================================
+   PAGE HEADER
+   ========================================================================== */
+
+.billing-page-eyebrow {
+  font-size: 10px !important;
+}
+
+.billing-page-heading h1 {
+  font-size: 16px !important;
+}
+
+.billing-page-heading > p:last-child {
+  font-size: 12px !important;
+}
+
+
+/* Date Filter */
+
+.billing-range-label {
+  font-size: 12px !important;
+}
+
+.billing-range-label i {
+  font-size: 12px !important;
+}
+
+.billing-range-field input {
+  font-size: 12px !important;
+}
+
+
+/* Refresh Button */
+
+.billing-refresh-button {
+  font-size: 12px !important;
+}
+
+
+/* ==========================================================================
+   SUMMARY CARDS
+   ========================================================================== */
+
+.billing-summary-card-content > span {
+  font-size: 12px !important;
+}
+
+.billing-summary-card-content > strong {
+  font-size: 15px !important;
+}
+
+.billing-summary-card-content > small {
+  font-size: 12px !important;
+}
+
+.billing-summary-icon {
+  font-size: 12px !important;
+}
+
+.billing-coming-soon {
+  font-size: 12px !important;
+}
+
+
+/* ==========================================================================
+   REPORT HEADER
+   ========================================================================== */
+
+.billing-report-heading h2 {
+  font-size: 14px !important;
+}
+
+.billing-report-heading p {
+  font-size: 12px !important;
+}
+
+.billing-report-icon {
+  font-size: 15px !important;
+}
+
+
+/* ==========================================================================
+   REPORT FILTERS / BUTTONS
+   ========================================================================== */
+
+.billing-filter-select {
+  font-size: 12px !important;
+}
+
+.billing-action-button {
+  font-size: 12px !important;
+}
+
+
+/* ==========================================================================
+   BILLING TABLE
+   ========================================================================== */
+
+.billing-table th {
+  font-size: 12px !important;
+}
+
+.billing-table td {
+  font-size: 12px !important;
+}
+
+.billing-table td > strong {
+  font-size: 12px !important;
+}
+
+.billing-table td > small {
+  font-size: 12px !important;
+}
+
+
+/* Order Number */
+
+.billing-order-number {
+  font-size: 12px !important;
+}
+
+
+/* Amount */
+
+.billing-amount-text {
+  font-size: 12px !important;
+}
+
+
+/* Reference */
+
+.billing-reference-text {
+  font-size: 12px !important;
+}
+
+
+/* ==========================================================================
+   STATUS BADGE
+   ========================================================================== */
+
+.billing-status-badge {
+  font-size: 12px !important;
+}
+
+
+/* ==========================================================================
+   PAYMENT METHOD
+   ========================================================================== */
+
+.billing-payment-method {
+  font-size: 12px !important;
+}
+
+.billing-payment-method i {
+  font-size: 12px !important;
+}
+
+
+/* ==========================================================================
+   USER DISPLAY
+   ========================================================================== */
+
+.billing-user-avatar {
+  font-size: 12px !important;
+}
+
+.billing-user-details strong {
+  font-size: 12px !important;
+}
+
+.billing-user-details small {
+  font-size: 12px !important;
+}
+
+
+/* ==========================================================================
+   ALERT
+   ========================================================================== */
+
+.billing-alert-content strong {
+  font-size: 12px !important;
+}
+
+.billing-alert-content p {
+  font-size: 12px !important;
+}
+
+.billing-alert-icon {
+  font-size: 12px !important;
+}
+
+
+/* ==========================================================================
+   LOADING / EMPTY
+   ========================================================================== */
+
+.billing-loading-text,
+.billing-table-loading p {
+  font-size: 12px !important;
+}
+
+.billing-loading-description {
+  font-size: 12px !important;
+}
+
+.billing-empty-state-content strong {
+  font-size: 12px !important;
+}
+
+.billing-empty-state-content p {
+  font-size: 12px !important;
+}
+
+.billing-empty-state-button {
+  font-size: 12px !important;
+}
+
+
+/* ==========================================================================
+   PAGINATION
+   ========================================================================== */
+
+.billing-pagination-info {
+  font-size: 12px !important;
+}
+
+.billing-pagination-button {
+  font-size: 12px !important;
+}
+
+.billing-pagination-ellipsis {
+  font-size: 12px !important;
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 650px) {
+
+  .billing-page-heading h1 {
+    font-size: 15px !important;
+  }
+
+  .billing-summary-card-content > strong {
+    font-size: 15px !important;
+  }
+
+  .billing-table th {
+    font-size: 12px !important;
+  }
+
+  .billing-table td {
+    font-size: 12px !important;
+  }
+}

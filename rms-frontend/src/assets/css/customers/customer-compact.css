@@ -1,0 +1,1677 @@
+/* ==========================================================================
+   CUSTOMER MODULE — FINAL COMPACT OVERRIDE
+   Desktop Sidebar Friendly
+   Readable Fonts
+   ========================================================================== */
+
+
+/* ==========================================================================
+   CUSTOMER MANAGEMENT PAGE
+   ========================================================================== */
+
+.customer-management-page {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  padding: 12px;
+
+  overflow-x: hidden;
+}
+
+
+/* ==========================================================================
+   PAGE HEADER
+   ========================================================================== */
+
+.customer-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  padding: 14px 16px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 5px 16px rgba(15, 23, 42, 0.04);
+}
+
+.customer-page-heading {
+  min-width: 0;
+
+  gap: 3px;
+}
+
+.customer-page-eyebrow {
+  margin: 0;
+
+  color: #2563eb;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+}
+
+.customer-page-heading h1 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 21px;
+  font-weight: 800;
+
+  line-height: 1.2;
+}
+
+.customer-page-heading p {
+  margin: 3px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+
+/* ==========================================================================
+   HEADER BUTTONS
+   ========================================================================== */
+
+.customer-header-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  flex: 0 0 auto;
+}
+
+.customer-header-button {
+  min-width: 0;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  padding: 0 11px;
+
+  border-radius: 7px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.customer-header-button i {
+  font-size: 11px;
+}
+
+
+/* ==========================================================================
+   ALERTS
+   ========================================================================== */
+
+.customer-alert {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 8px;
+
+  padding: 9px 11px;
+
+  border-radius: 8px;
+}
+
+.customer-alert-icon {
+  font-size: 15px;
+}
+
+.customer-alert-content strong {
+  margin-bottom: 2px;
+
+  font-size: 11px;
+}
+
+.customer-alert-content p {
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.customer-alert-close {
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   SUMMARY GRID
+   ========================================================================== */
+
+.customer-summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 9px;
+
+  width: 100%;
+}
+
+
+/* ==========================================================================
+   SUMMARY CARD
+   ========================================================================== */
+
+.customer-summary-card {
+  min-width: 0;
+  min-height: 118px;
+
+  gap: 12px;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 5px 16px rgba(15, 23, 42, 0.04);
+}
+
+.customer-summary-card::before {
+  width: 90px;
+  height: 90px;
+
+  top: -32px;
+  right: -30px;
+}
+
+.customer-summary-icon,
+.customer-summary-loading-icon {
+  width: 34px;
+  height: 34px;
+
+  flex: 0 0 34px;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+}
+
+.customer-summary-badge {
+  min-height: 21px;
+
+  padding: 2px 6px;
+
+  font-size: 8px;
+}
+
+.customer-summary-card-content {
+  gap: 3px;
+}
+
+.customer-summary-label {
+  font-size: 10px;
+}
+
+.customer-summary-value {
+  font-size: 21px;
+  line-height: 1.15;
+}
+
+.customer-summary-description {
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+
+/* ==========================================================================
+   FILTER CARD
+   ========================================================================== */
+
+.customer-filter-card {
+  width: 100%;
+  min-width: 0;
+
+  gap: 9px;
+
+  padding: 11px;
+
+  border-radius: 10px;
+
+  overflow: visible;
+
+  box-shadow:
+    0 5px 16px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ==========================================================================
+   FILTER GRID
+   ========================================================================== */
+
+.customer-filter-fields {
+  display: grid;
+
+  grid-template-columns:
+    minmax(220px, 1.4fr)
+    minmax(120px, 0.55fr)
+    minmax(150px, 0.7fr);
+
+  gap: 8px;
+
+  align-items: end;
+}
+
+
+/* ==========================================================================
+   FILTER LABEL
+   ========================================================================== */
+
+.customer-filter-label {
+  margin-bottom: 4px;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+
+/* ==========================================================================
+   SEARCH INPUT
+   ========================================================================== */
+
+.customer-search-input-wrapper {
+  height: 34px;
+
+  border-radius: 7px;
+}
+
+.customer-search-input-wrapper > i {
+  margin-left: 9px;
+
+  font-size: 11px;
+}
+
+.customer-search-input-wrapper input {
+  padding:
+    0
+    34px
+    0
+    8px;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.customer-search-clear {
+  right: 5px;
+
+  width: 23px;
+  height: 23px;
+
+  border-radius: 5px;
+}
+
+
+/* ==========================================================================
+   SELECT
+   ========================================================================== */
+
+.customer-filter-field select {
+  height: 34px;
+
+  padding:
+    0
+    29px
+    0
+    9px;
+
+  border-radius: 7px;
+
+  font-size: 10px;
+}
+
+
+/* ==========================================================================
+   FILTER ACTION ROW
+   ========================================================================== */
+
+.customer-filter-actions-row {
+  gap: 8px;
+
+  padding-top: 8px;
+}
+
+.customer-filter-active-text {
+  gap: 5px;
+
+  font-size: 9px;
+}
+
+.customer-filter-actions {
+  gap: 6px;
+}
+
+
+/* ==========================================================================
+   FILTER BUTTONS
+   ========================================================================== */
+
+.customer-filter-button {
+  min-width: 100px;
+  height: 33px;
+
+  gap: 5px;
+
+  padding:
+    0
+    10px;
+
+  border-radius: 7px;
+
+  font-size: 9px;
+}
+
+.customer-filter-button i {
+  font-size: 10px;
+}
+
+.customer-apply-button {
+  min-width: 110px;
+}
+
+.customer-clear-button {
+  min-width: 105px;
+}
+
+
+/* ==========================================================================
+   CUSTOMER TABLE CARD
+   ========================================================================== */
+
+.customer-table-card {
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 5px 16px rgba(15, 23, 42, 0.04);
+}
+
+
+/* ==========================================================================
+   TABLE HEADER
+   ========================================================================== */
+
+.customer-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding: 11px 12px;
+}
+
+.customer-table-header h2 {
+  margin: 0;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.customer-table-header p {
+  margin: 2px 0 0;
+
+  font-size: 12px;
+}
+
+.customer-record-count {
+  min-width: auto;
+  height: 27px;
+
+  padding: 0 9px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   TABLE WRAPPER
+   ========================================================================== */
+
+.customer-table-wrapper {
+  width: 100%;
+  min-width: 0;
+
+  overflow-x: hidden;
+}
+
+
+/* ==========================================================================
+   CUSTOMER TABLE
+   Desktop = No Horizontal Scroll
+   ========================================================================== */
+
+.customer-table {
+  width: 100%;
+  min-width: 0 !important;
+
+  table-layout: fixed;
+
+  border-collapse: collapse;
+}
+
+
+/* ==========================================================================
+   COLUMN WIDTHS
+   ========================================================================== */
+
+.customer-table th:nth-child(1),
+.customer-table td:nth-child(1) {
+  width: 4%;
+  text-align: center;
+}
+
+.customer-table th:nth-child(2),
+.customer-table td:nth-child(2) {
+  width: 14%;
+  text-align: center;
+}
+
+.customer-table th:nth-child(3),
+.customer-table td:nth-child(3) {
+  width: 13%;
+  text-align: center;
+}
+
+.customer-table th:nth-child(4),
+.customer-table td:nth-child(4) {
+  width: 18%;
+  text-align: center;
+}
+
+.customer-table th:nth-child(5),
+.customer-table td:nth-child(5) {
+  width: 8%;
+  text-align: center;
+}
+
+.customer-table th:nth-child(6),
+.customer-table td:nth-child(6) {
+  width: 12%;
+  text-align: center;
+}
+
+.customer-table th:nth-child(7),
+.customer-table td:nth-child(7) {
+  width: 11%;
+  text-align: center;
+}
+
+.customer-table th:nth-child(8),
+.customer-table td:nth-child(8) {
+  width: 9%;
+  text-align: center;
+}
+
+.customer-table th:nth-child(9),
+.customer-table td:nth-child(9) {
+  width: 11%;
+  text-align: center;
+}
+
+
+/* ==========================================================================
+   TABLE HEAD
+   ========================================================================== */
+
+.customer-table th {
+  padding:
+    8px
+    7px;
+
+  overflow: hidden;
+
+  color: #64748b;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.025em;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   TABLE BODY
+   ========================================================================== */
+
+.customer-table td {
+  min-width: 0;
+
+  padding:
+    8px
+    7px;
+
+  overflow: hidden;
+
+  color: #334155;
+
+  font-size: 10px;
+
+  text-overflow: ellipsis;
+
+  vertical-align: middle;
+}
+
+
+/* ==========================================================================
+   SERIAL
+   ========================================================================== */
+
+.customer-serial-column {
+  width: auto;
+
+  font-size: 9px;
+}
+
+
+/* ==========================================================================
+   PROFILE
+   ========================================================================== */
+
+.customer-profile-cell {
+  min-width: 0;
+
+  gap: 7px;
+}
+
+.customer-profile-details {
+  min-width: 0;
+
+  gap: 1px;
+}
+
+.customer-profile-details strong {
+  display: block;
+
+  overflow: hidden;
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.customer-profile-details small {
+  display: block;
+
+  overflow: hidden;
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   CONTACT
+   ========================================================================== */
+
+.customer-contact-link {
+  display: inline-flex;
+
+  max-width: 100%;
+
+  gap: 4px;
+
+  overflow: hidden;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.customer-contact-link span {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.customer-contact-link i {
+  flex: 0 0 auto;
+}
+
+.customer-muted-text {
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   VISITS
+   ========================================================================== */
+
+.customer-visit-badge {
+  min-width: 34px;
+  height: 25px;
+
+  padding: 0 7px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   SPEND
+   ========================================================================== */
+
+.customer-spend-amount {
+  display: block;
+
+  overflow: hidden;
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   LAST VISIT
+   ========================================================================== */
+
+.customer-last-visit {
+  display: block;
+
+  overflow: hidden;
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   STATUS
+   ========================================================================== */
+
+.customer-status-button {
+  min-width: 64px;
+  height: 26px;
+
+  padding: 0 7px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   ACTION BUTTONS
+   ========================================================================== */
+
+.customer-action-group {
+  gap: 4px;
+}
+
+.customer-action-button {
+  width: 27px;
+  height: 27px;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   LOADING
+   ========================================================================== */
+
+.customer-table-loading {
+  min-height: 160px;
+
+  gap: 7px;
+
+  padding: 20px;
+}
+
+.customer-table-loading .spinner-border {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.customer-table-loading p {
+  font-size: 10px;
+}
+
+
+/* ==========================================================================
+   EMPTY / ERROR
+   ========================================================================== */
+
+.customer-table-empty {
+  min-height: 170px;
+
+  gap: 8px;
+
+  padding: 22px;
+}
+
+.customer-table-empty-icon {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 9px;
+
+  font-size: 16px;
+}
+
+.customer-table-empty strong {
+  margin-bottom: 2px;
+
+  font-size: 11px;
+}
+
+.customer-table-empty p {
+  font-size: 9px;
+}
+
+.customer-empty-action {
+  height: 30px;
+
+  padding:
+    0
+    10px;
+
+  border-radius: 6px;
+
+  font-size: 9px;
+}
+
+
+/* ==========================================================================
+   PAGINATION
+   ========================================================================== */
+
+.customer-pagination {
+  gap: 8px;
+
+  padding:
+    8px
+    10px;
+}
+
+.customer-pagination-info {
+  font-size: 9px;
+}
+
+.customer-pagination-actions {
+  gap: 4px;
+}
+
+.customer-pagination-button {
+  min-width: 27px;
+  height: 27px;
+
+  padding:
+    0
+    6px;
+
+  border-radius: 5px;
+
+  font-size: 9px;
+}
+
+
+/* ==========================================================================
+   CUSTOMER DETAILS PAGE
+   ========================================================================== */
+
+.customer-details-page {
+  display: flex;
+  flex-direction: column;
+
+  gap: 11px;
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  padding: 12px;
+
+  overflow-x: hidden;
+}
+
+
+/* ==========================================================================
+   DETAILS HEADER
+   ========================================================================== */
+
+.customer-details-header {
+  gap: 12px;
+
+  padding:
+    13px
+    15px;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 5px 16px rgba(15, 23, 42, 0.04);
+}
+
+.customer-details-heading {
+  min-width: 0;
+
+  gap: 9px;
+}
+
+.customer-details-back-button {
+  width: 34px;
+  height: 34px;
+
+  flex: 0 0 34px;
+
+  border-radius: 7px;
+
+  font-size: 11px;
+}
+
+.customer-details-eyebrow {
+  margin-bottom: 2px;
+
+  font-size: 9px;
+
+  letter-spacing: 0.06em;
+}
+
+.customer-details-heading h1 {
+  font-size: 20px;
+}
+
+.customer-details-heading p:last-child {
+  margin-top: 2px;
+
+  font-size: 10px;
+}
+
+.customer-details-edit-button {
+  height: 34px;
+
+  padding:
+    0
+    11px;
+
+  gap: 5px;
+
+  border-radius: 7px;
+
+  font-size: 9px;
+}
+
+
+/* ==========================================================================
+   DETAILS ALERT
+   ========================================================================== */
+
+.customer-details-alert {
+  gap: 7px;
+
+  padding:
+    8px
+    10px;
+
+  border-radius: 7px;
+
+  font-size: 10px;
+}
+
+
+/* ==========================================================================
+   CUSTOMER PROFILE CARD
+   ========================================================================== */
+
+.customer-profile-card {
+  gap: 12px;
+
+  padding: 13px;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 5px 16px rgba(15, 23, 42, 0.04);
+}
+
+.customer-profile-main {
+  min-width: 0;
+
+  gap: 10px;
+}
+
+.customer-avatar {
+  width: 46px;
+  height: 46px;
+
+  flex: 0 0 46px;
+
+  font-size: 19px;
+}
+
+.customer-profile-main h2 {
+  margin-bottom: 4px;
+
+  font-size: 15px;
+}
+
+.customer-profile-main p {
+  margin: 2px 0;
+
+  font-size: 9px;
+}
+
+.customer-status-badge {
+  padding:
+    4px
+    8px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   DETAILS SUMMARY
+   ========================================================================== */
+
+.customer-details-summary {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 8px;
+}
+
+.customer-details-summary-card {
+  padding: 11px;
+
+  border-radius: 8px;
+}
+
+.customer-details-summary-card span {
+  margin-bottom: 4px;
+
+  font-size: 12px;
+}
+
+.customer-details-summary-card strong {
+  font-size: 17px;
+}
+
+
+/* ==========================================================================
+   HISTORY CARD
+   ========================================================================== */
+
+.customer-history-card {
+  min-width: 0;
+
+  border-radius: 10px;
+}
+
+.customer-history-header {
+  gap: 10px;
+
+  padding:
+    10px
+    12px;
+}
+
+.customer-history-header h2 {
+  font-size: 14px;
+}
+
+.customer-history-header p {
+  margin-top: 2px;
+
+  font-size: 12px;
+}
+
+.customer-history-count {
+  padding:
+    4px
+    8px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   HISTORY TABLE
+   ========================================================================== */
+
+.customer-history-table-wrapper {
+  width: 100%;
+  min-width: 0;
+
+  overflow-x: hidden;
+}
+
+.customer-history-table {
+  width: 100%;
+  min-width: 0;
+
+  table-layout: fixed;
+
+  border-collapse: collapse;
+}
+
+.customer-history-table th {
+  padding:
+    7px
+    7px;
+
+  font-size: 12px;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.customer-history-table td {
+  padding:
+    8px
+    7px;
+
+  font-size: 12px;
+}
+
+
+/* History column width */
+
+.customer-history-table th:nth-child(1),
+.customer-history-table td:nth-child(1) {
+  width: 5%;
+}
+
+.customer-history-table th:nth-child(2),
+.customer-history-table td:nth-child(2) {
+  width: 12%;
+}
+
+.customer-history-table th:nth-child(3),
+.customer-history-table td:nth-child(3) {
+  width: 14%;
+}
+
+.customer-history-table th:nth-child(4),
+.customer-history-table td:nth-child(4) {
+  width: 33%;
+}
+
+.customer-history-table th:nth-child(5),
+.customer-history-table td:nth-child(5),
+.customer-history-table th:nth-child(6),
+.customer-history-table td:nth-child(6),
+.customer-history-table th:nth-child(7),
+.customer-history-table td:nth-child(7) {
+  width: 12%;
+}
+
+
+/* ==========================================================================
+   HISTORY ITEMS
+   ========================================================================== */
+
+.customer-order-items {
+  min-width: 0;
+
+  gap: 4px;
+}
+
+.customer-order-item {
+  min-width: 0;
+
+  gap: 6px;
+
+  font-size: 12px;
+}
+
+.customer-order-item > div {
+  min-width: 0;
+}
+
+.customer-order-item strong {
+  font-size: 12px;
+}
+
+.customer-order-item small {
+  display: block;
+
+  margin-top: 1px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   HISTORY PAGINATION
+   ========================================================================== */
+
+.customer-history-pagination {
+  gap: 8px;
+
+  padding: 9px;
+
+  font-size: 12px;
+}
+
+.customer-history-pagination button {
+  height: 29px;
+
+  padding:
+    0
+    9px;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   CUSTOMER EDIT PAGE
+   ========================================================================== */
+
+.customer-edit-page {
+  display: flex;
+  flex-direction: column;
+
+  gap: 11px;
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  padding: 12px;
+}
+
+
+/* ==========================================================================
+   EDIT HEADER
+   ========================================================================== */
+
+.customer-edit-header {
+  gap: 12px;
+
+  padding:
+    13px
+    15px;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 5px 16px rgba(15, 23, 42, 0.04);
+}
+
+.customer-edit-heading {
+  gap: 9px;
+}
+
+.customer-edit-back-button {
+  width: 34px;
+  height: 34px;
+
+  border-radius: 7px;
+}
+
+.customer-edit-eyebrow {
+  margin-bottom: 2px;
+
+  font-size: 12px;
+}
+
+.customer-edit-heading h1 {
+  font-size: 20px;
+}
+
+.customer-edit-heading p:last-child {
+  margin-top: 2px;
+
+  font-size: 12px;
+}
+
+.customer-edit-code {
+  min-height: 27px;
+
+  padding:
+    0
+    9px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   EDIT FORM
+   ========================================================================== */
+
+.customer-edit-form-card {
+  border-radius: 10px;
+
+  box-shadow:
+    0 5px 16px rgba(15, 23, 42, 0.04);
+}
+
+.customer-edit-form-header {
+  gap: 10px;
+
+  padding:
+    11px
+    13px;
+}
+
+.customer-edit-form-header h2 {
+  font-size: 14px;
+}
+
+.customer-edit-form-header p {
+  margin-top: 2px;
+
+  font-size: 9px;
+}
+
+.customer-edit-status-preview {
+  min-width: 65px;
+  min-height: 27px;
+
+  padding:
+    0
+    8px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   EDIT GRID
+   ========================================================================== */
+
+.customer-edit-form-grid {
+  gap: 10px;
+
+  padding: 13px;
+}
+
+
+/* ==========================================================================
+   EDIT LABEL
+   ========================================================================== */
+
+.customer-edit-label {
+  gap: 4px;
+
+  margin-bottom: 4px;
+
+  font-size: 12px;
+}
+
+.customer-edit-label small {
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   EDIT INPUT
+   ========================================================================== */
+
+.customer-edit-input-wrapper {
+  height: 35px;
+
+  border-radius: 7px;
+}
+
+.customer-edit-input-wrapper > i {
+  margin-left: 9px;
+
+  font-size: 12px;
+}
+
+.customer-edit-input-wrapper input {
+  padding:
+    0
+    9px
+    0
+    7px;
+
+  font-size: 12px;
+}
+
+.customer-edit-field-error {
+  margin-top: 3px;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   EDIT STATUS ROW
+   ========================================================================== */
+
+.customer-edit-switch-row {
+  min-height: 52px;
+
+  gap: 10px;
+
+  padding:
+    8px
+    10px;
+
+  border-radius: 7px;
+}
+
+.customer-edit-switch-row strong {
+  margin-bottom: 2px;
+
+  font-size: 10px;
+}
+
+.customer-edit-switch-row small {
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   EDIT SWITCH
+   ========================================================================== */
+
+.customer-edit-switch-input {
+  width: 38px;
+  height: 22px;
+}
+
+.customer-edit-switch-input::before {
+  top: 3px;
+  left: 3px;
+
+  width: 14px;
+  height: 14px;
+}
+
+.customer-edit-switch-input:checked::before {
+  transform: translateX(16px);
+}
+
+
+/* ==========================================================================
+   EDIT ACTIONS
+   ========================================================================== */
+
+.customer-edit-form-actions {
+  gap: 6px;
+
+  padding:
+    9px
+    13px;
+}
+
+.customer-edit-button {
+  min-width: 95px;
+  height: 33px;
+
+  gap: 5px;
+
+  padding:
+    0
+    10px;
+
+  border-radius: 7px;
+
+  font-size: 12px;
+}
+
+.customer-edit-submit-button {
+  min-width: 115px;
+}
+
+
+/* ==========================================================================
+   DESKTOP / SMALL LAPTOP
+   ========================================================================== */
+
+@media (max-width: 1100px) {
+
+  .customer-table th {
+    padding:
+      7px
+      4px;
+
+    font-size: 12px;
+  }
+
+  .customer-table td {
+    padding:
+      7px
+      4px;
+
+    font-size: 12px;
+  }
+
+  .customer-action-button {
+    width: 25px;
+    height: 25px;
+  }
+
+  .customer-status-button {
+    min-width: 58px;
+
+    padding:
+      0
+      5px;
+  }
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+  .customer-management-page,
+  .customer-details-page,
+  .customer-edit-page {
+    padding: 10px;
+  }
+
+  .customer-page-header,
+  .customer-details-header,
+  .customer-edit-header {
+    align-items: stretch;
+
+    flex-direction: column;
+  }
+
+  .customer-header-actions {
+    width: 100%;
+  }
+
+  .customer-header-button {
+    flex: 1;
+  }
+
+  .customer-summary-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .customer-filter-fields {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .customer-search-field {
+    grid-column: 1 / -1;
+  }
+
+  /*
+   * Tablet থেকে horizontal scrolling acceptable,
+   * কারণ column hide না করে data readable রাখা ভালো।
+   */
+
+  .customer-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .customer-table {
+    min-width: 820px !important;
+
+    table-layout: auto;
+  }
+
+  .customer-history-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .customer-history-table {
+    min-width: 750px;
+
+    table-layout: auto;
+  }
+
+  .customer-details-summary {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 600px) {
+
+  .customer-management-page,
+  .customer-details-page,
+  .customer-edit-page {
+    padding: 8px;
+  }
+
+  .customer-page-heading h1,
+  .customer-details-heading h1,
+  .customer-edit-heading h1 {
+    font-size: 18px;
+  }
+
+  .customer-header-actions {
+    flex-direction: column;
+  }
+
+  .customer-header-button {
+    width: 100%;
+  }
+
+  .customer-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .customer-filter-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .customer-search-field {
+    grid-column: auto;
+  }
+
+  .customer-filter-actions-row {
+    align-items: stretch;
+
+    flex-direction: column;
+  }
+
+  .customer-filter-actions {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    width: 100%;
+  }
+
+  .customer-filter-button {
+    width: 100%;
+  }
+
+  .customer-profile-card {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .customer-details-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .customer-history-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .customer-edit-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .customer-edit-field-full {
+    grid-column: auto;
+  }
+
+  .customer-edit-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .customer-edit-button {
+    width: 100%;
+  }
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 420px) {
+
+  .customer-filter-actions {
+    grid-template-columns: 1fr;
+  }
+}

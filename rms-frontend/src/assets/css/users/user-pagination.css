@@ -1,0 +1,231 @@
+.user-pagination {
+
+
+    margin-top:20px;
+
+
+    background:white;
+
+
+    padding:18px;
+
+
+    border-radius:16px;
+
+
+    display:flex;
+
+
+    justify-content:space-between;
+
+
+    align-items:center;
+
+
+    gap:20px;
+
+
+}
+
+
+
+
+
+.pagination-info {
+
+
+    color:#64748b;
+
+
+    font-size:14px;
+
+
+}
+
+
+
+
+
+.pagination-buttons {
+
+
+    display:flex;
+
+
+    gap:6px;
+
+
+    align-items:center;
+
+
+}
+
+
+
+
+.page-btn,
+.page-number {
+
+
+    height:36px;
+
+
+    min-width:36px;
+
+
+    border:none;
+
+
+    border-radius:8px;
+
+
+    cursor:pointer;
+
+
+    background:#f1f5f9;
+
+
+    color:#334155;
+
+
+    font-weight:600;
+
+
+}
+
+
+
+
+
+.page-number.active {
+
+
+    background:#2563eb;
+
+
+    color:white;
+
+
+}
+
+
+
+
+
+.page-btn:disabled {
+
+
+    opacity:.5;
+
+
+    cursor:not-allowed;
+
+
+}
+
+
+
+
+
+
+
+.user-loading-overlay {
+
+
+    position:absolute;
+
+
+    inset:0;
+
+
+    background:
+
+        rgba(
+            255,
+            255,
+            255,
+            .75
+        );
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    align-items:center;
+
+
+    gap:10px;
+
+
+    z-index:10;
+
+
+}
+
+
+
+
+
+.user-loader {
+
+
+    width:22px;
+
+
+    height:22px;
+
+
+    border:
+
+        3px solid #dbeafe;
+
+
+    border-top-color:#2563eb;
+
+
+    border-radius:50%;
+
+
+    animation:
+
+        spin .7s linear infinite;
+
+
+}
+
+
+
+
+@keyframes spin {
+
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+
+
+
+
+
+@media(max-width:700px){
+
+
+.user-pagination{
+
+
+    flex-direction:column;
+
+
+}
+
+
+}

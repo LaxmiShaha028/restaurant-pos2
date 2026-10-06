@@ -1,0 +1,142 @@
+/* ==========================================================================
+   EXPENSE PAGE HEADER
+   Same size & spacing as Kitchen / Order / Table / Billing / etc.
+   ========================================================================== */
+
+.expense-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 7px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.expense-header-content {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.expense-header-left {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+}
+
+.expense-header-icon {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 11px;
+}
+
+.expense-page-eyebrow {
+  margin: 0 0 1px;
+  color: #2563eb;
+  font-size: 7px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.expense-title {
+  margin: 0;
+  color: #172033;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.expense-description {
+  max-width: 580px;
+  margin: 2px 0 0;
+  overflow: hidden;
+  color: #667085;
+  font-size: 8px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.expense-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.expense-header-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 0 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #f8fafc;
+  color: #374151;
+  font-size: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.expense-header-btn:hover {
+  background: #f1f5f9;
+}
+
+.expense-add-btn {
+  border-color: #2563eb;
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.expense-add-btn:hover {
+  border-color: #1d4ed8;
+  background: #1d4ed8;
+  color: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+  .expense-page-header {
+    align-items: flex-start;
+  }
+
+  .expense-header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .expense-header-actions {
+    width: 100%;
+  }
+
+  .expense-header-btn {
+    flex: 1;
+  }
+
+  .expense-description {
+    white-space: normal;
+  }
+}
