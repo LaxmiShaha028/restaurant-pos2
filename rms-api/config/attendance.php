@@ -1,0 +1,1 @@
+<?php return [ 'prevent_future_sync' => true, 'early_check_in_minutes' => 120, 'auto_checkout_after_minutes' => 360, 'auto_checkout_time' => '22:00', ];

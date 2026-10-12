@@ -1,0 +1,454 @@
+/* ==========================================================================
+   BILLING SUMMARY
+   Compact POS / Admin UI
+   ========================================================================== */
+
+.billing-summary-section {
+  display: grid;
+
+  width: 100%;
+  min-width: 0;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 6px;
+
+  margin-bottom: 8px;
+}
+
+
+/* ==========================================================================
+   SUMMARY CARD
+   ========================================================================== */
+
+.billing-summary-card {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+
+  min-width: 0;
+  min-height: 74px;
+
+  flex-direction: column;
+
+  overflow: hidden;
+
+  padding: 7px;
+
+  border: 1px solid var(--billing-border);
+  border-radius: 5px;
+
+  background: var(--billing-card);
+
+  box-shadow: none;
+
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.billing-summary-card::before {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+  left: 0;
+
+  height: 2px;
+
+  background:
+    var(
+      --card-accent,
+      var(--billing-primary)
+    );
+
+  content: "";
+}
+
+/* Remove decorative glow */
+.billing-summary-card::after {
+  display: none;
+}
+
+.billing-summary-card:hover {
+  transform: none;
+
+  border-color:
+    var(
+      --card-border,
+      #bfdbfe
+    );
+
+  box-shadow: none;
+}
+
+
+/* ==========================================================================
+   CARD HEADER
+   ========================================================================== */
+
+.billing-summary-card-header {
+  position: relative;
+
+  z-index: 1;
+
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 4px;
+}
+
+
+/* ==========================================================================
+   ICON
+   ========================================================================== */
+
+.billing-summary-icon {
+  display: inline-flex;
+
+  width: 25px;
+  height: 25px;
+
+  flex: 0 0 25px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 4px;
+
+  background:
+    var(
+      --card-icon-background,
+      var(--billing-primary-soft)
+    );
+
+  color:
+    var(
+      --card-accent,
+      var(--billing-primary)
+    );
+
+  font-size: 12px;
+
+  box-shadow: none;
+}
+
+.billing-summary-icon i {
+  line-height: 1;
+}
+
+
+/* ==========================================================================
+   COMING SOON
+   ========================================================================== */
+
+.billing-coming-soon {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 16px;
+
+  padding:
+    1px
+    4px;
+
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+
+  background: #fffbeb;
+
+  color: #92400e;
+
+  font-size: 5px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   CARD CONTENT
+   ========================================================================== */
+
+.billing-summary-card-content {
+  position: relative;
+
+  z-index: 1;
+
+  min-width: 0;
+
+  margin-top: 6px;
+  text-align: center;
+}
+
+.billing-summary-card-content > span {
+  display: block;
+
+  margin-bottom: 2px;
+
+  overflow: hidden;
+
+  color: var(--billing-muted);
+
+  font-size: 12px;
+  font-weight: 650;
+
+  line-height: 1.1;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.billing-summary-card-content > strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: var(--billing-text);
+
+  font-size: 12px;
+  font-weight: 750;
+
+  line-height: 1.15;
+
+  letter-spacing: 0;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.billing-summary-card-content > small {
+  display: block;
+
+  margin-top: 2px;
+
+  overflow: hidden;
+
+  color: var(--billing-muted);
+
+  font-size: 5.5px;
+
+  line-height: 1.2;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   COLOURS
+   ========================================================================== */
+
+.sales-card {
+  --card-accent: #2563eb;
+  --card-border: #bfdbfe;
+  --card-icon-background: #eff6ff;
+}
+
+.collected-card {
+  --card-accent: #16a34a;
+  --card-border: #bbf7d0;
+  --card-icon-background: #f0fdf4;
+}
+
+.tax-card {
+  --card-accent: #7c3aed;
+  --card-border: #ddd6fe;
+  --card-icon-background: #f5f3ff;
+}
+
+.service-card {
+  --card-accent: #0891b2;
+  --card-border: #a5f3fc;
+  --card-icon-background: #ecfeff;
+}
+
+.expense-card {
+  --card-accent: #d97706;
+  --card-border: #fde68a;
+  --card-icon-background: #fffbeb;
+}
+
+.cash-card {
+  --card-accent: #059669;
+  --card-border: #a7f3d0;
+  --card-icon-background: #ecfdf5;
+}
+
+.due-card {
+  --card-accent: #dc2626;
+  --card-border: #fecaca;
+  --card-icon-background: #fef2f2;
+}
+
+.orders-card {
+  --card-accent: #ea580c;
+  --card-border: #fed7aa;
+  --card-icon-background: #fff7ed;
+}
+
+
+/* ==========================================================================
+   LOADING
+   ========================================================================== */
+
+.billing-summary-loading-card {
+  pointer-events: none;
+}
+
+.billing-summary-loading-card::before {
+  background: #dbe2ea;
+}
+
+.billing-summary-loading-icon,
+.billing-summary-loading-label,
+.billing-summary-loading-value,
+.billing-summary-loading-description {
+  position: relative;
+
+  display: block;
+
+  overflow: hidden;
+
+  border-radius: 3px;
+
+  background: #e9eef5;
+}
+
+.billing-summary-loading-icon {
+  width: 25px;
+  height: 25px;
+}
+
+.billing-summary-loading-label {
+  width: 42%;
+  height: 5px;
+
+  margin-bottom: 4px;
+}
+
+.billing-summary-loading-value {
+  width: 70%;
+  height: 12px;
+}
+
+.billing-summary-loading-description {
+  width: 82%;
+  height: 5px;
+
+  margin-top: 4px;
+}
+
+.billing-summary-loading-icon::after,
+.billing-summary-loading-label::after,
+.billing-summary-loading-value::after,
+.billing-summary-loading-description::after {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.7),
+      transparent
+    );
+
+  content: "";
+
+  transform: translateX(-100%);
+
+  animation:
+    billing-summary-shimmer
+    1.35s infinite;
+}
+
+@keyframes billing-summary-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 850px) {
+  .billing-summary-section {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 480px) {
+  .billing-summary-section {
+    grid-template-columns: 1fr;
+  }
+
+  .billing-summary-card {
+    min-height: 68px;
+  }
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .billing-summary-card,
+  .billing-summary-loading-icon::after,
+  .billing-summary-loading-label::after,
+  .billing-summary-loading-value::after,
+  .billing-summary-loading-description::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@media print {
+  .billing-summary-section {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+
+    gap: 5px;
+
+    margin-bottom: 8px;
+  }
+
+  .billing-summary-card {
+    min-height: auto;
+
+    padding: 6px;
+
+    break-inside: avoid;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 0;
+  }
+
+  .billing-summary-card-content > small,
+  .billing-coming-soon {
+    display: none;
+  }
+}

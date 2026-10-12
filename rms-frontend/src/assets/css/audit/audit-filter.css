@@ -1,0 +1,35 @@
+.audit-filter{
+
+display:flex;
+
+gap:12px;
+
+margin-bottom:20px;
+
+}
+
+
+
+.audit-filter input,
+.audit-filter select{
+
+
+padding:10px 14px;
+
+border:1px solid #e2e8f0;
+
+border-radius:10px;
+
+font-size:14px;
+
+outline:none;
+
+
+}
+
+
+.audit-filter input{
+
+flex:1;
+
+}

@@ -1,0 +1,64 @@
+.audit-page{
+
+    padding:24px;
+
+}
+
+
+.audit-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:20px;
+
+}
+
+
+.audit-header h2{
+
+    margin:0;
+
+    font-size:24px;
+
+    color:#0f172a;
+
+}
+
+
+.audit-header p{
+
+    margin-top:6px;
+
+    color:#64748b;
+
+}
+
+
+
+
+
+.audit-card{
+
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:20px;
+
+    box-shadow:
+
+    0 10px 30px rgba(0,0,0,.05);
+
+
+}
+
+
+
+.card-body{
+
+    width:100%;
+
+}

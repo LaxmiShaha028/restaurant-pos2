@@ -1,0 +1,807 @@
+
+/* ==========================================================================
+   USERS MANAGEMENT - FINAL COMPACT GLOBAL OVERRIDE
+   Load this file LAST, after all existing user CSS files.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   PAGE
+   -------------------------------------------------------------------------- */
+
+.users-page {
+    width: 100%;
+    min-width: 0;
+    padding: 8px;
+    background: #f8fafc;
+}
+
+/* --------------------------------------------------------------------------
+   HEADER
+   -------------------------------------------------------------------------- */
+
+.users-header {
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.header-left {
+    gap: 8px;
+}
+
+.header-icon {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 8px;
+    font-size: 15px;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, .10);
+}
+
+.header-left h2 {
+    font-size: 17px;
+    line-height: 1.2;
+}
+
+.header-left p {
+    margin-top: 2px;
+    font-size: 10px;
+    line-height: 1.25;
+}
+
+/* Existing page uses add-user-btn */
+.add-user-btn,
+.refresh-btn {
+    min-height: 30px;
+    height: 30px;
+    padding: 0 9px;
+    border: 0;
+    border-radius: 6px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.add-user-btn:hover,
+.refresh-btn:hover {
+    background: #1d4ed8;
+}
+
+/* --------------------------------------------------------------------------
+   ERROR
+   -------------------------------------------------------------------------- */
+
+.error-box {
+    gap: 2px;
+    padding: 7px 9px;
+    margin-bottom: 7px;
+    border-radius: 7px;
+    font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   MAIN CARD
+   -------------------------------------------------------------------------- */
+
+.users-card {
+    border-radius: 9px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .04);
+}
+
+.card-header {
+    padding: 8px 10px;
+}
+
+.card-header h3 {
+    font-size: 12px;
+}
+
+.card-header p {
+    margin-top: 1px;
+    font-size: 12px;
+}
+
+.count-badge {
+    padding: 3px 6px;
+    font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   FILTERS
+   -------------------------------------------------------------------------- */
+
+.user-filters,
+.filter-card {
+    gap: 6px;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+}
+
+.filter-search {
+    min-width: 150px;
+}
+
+.filter-search i {
+    left: 8px;
+    font-size: 12px;
+}
+
+.filter-search input,
+.filter-card input {
+    height: 29px;
+    min-height: 29px;
+    padding: 0 7px 0 24px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.filter-select,
+.filter-card select {
+    min-width: 105px;
+    height: 29px;
+    min-height: 29px;
+    padding: 0 7px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.reset-filter-btn {
+    width: 29px;
+    min-width: 29px;
+    height: 29px;
+    padding: 0;
+    border-radius: 6px;
+    font-size: 0;
+}
+
+.reset-filter-btn::before {
+    content: "↺";
+    font-size: 12px;
+    line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   TABLE
+   -------------------------------------------------------------------------- */
+
+.table-container {
+    min-width: 0;
+}
+
+.user-table-wrapper {
+    width: 100%;
+    min-width: 0;
+    padding: 6px;
+    overflow-x: hidden;
+}
+
+.user-table {
+    width: 100%;
+    min-width: 0 !important;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.user-table th {
+    padding: 6px 4px;
+    font-size: 12px;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.user-table td {
+    padding: 6px 4px;
+    font-size: 12px;
+    line-height: 1.15;
+}
+
+.user-avatar,
+.user-avatar-placeholder {
+    width: 27px;
+    height: 27px;
+    min-width: 27px;
+    border-width: 1px;
+    font-size: 12px;
+}
+
+.user-name {
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-email {
+    display: none;
+}
+
+.username {
+    overflow: hidden;
+    display: block;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.role-badge {
+    max-width: 100%;
+    padding: 3px 5px;
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Active / Blocked = icon only */
+.status-active,
+.status-blocked {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    padding: 0;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+}
+
+.status-active::before {
+    content: "✓";
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.status-blocked::before {
+    content: "×";
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.date-text {
+    font-size: 12px;
+}
+
+/* Actions */
+.user-actions {
+    justify-content: center;
+    gap: 3px;
+}
+
+.user-actions button {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    padding: 0;
+    border-radius: 5px;
+    font-size: 0;
+}
+
+/* If buttons already contain Bootstrap icons, keep only icons visible */
+.user-actions button i {
+    font-size: 12px;
+}
+
+/* Fallback icons if action buttons contain text only */
+.user-actions .view-btn:empty::before,
+.user-actions .view-btn:not(:has(i))::before {
+    content: "◉";
+    font-size: 10px;
+}
+
+.user-actions .edit-btn:empty::before,
+.user-actions .edit-btn:not(:has(i))::before {
+    content: "✎";
+    font-size: 11px;
+}
+
+.user-actions .status-btn:empty::before,
+.user-actions .status-btn:not(:has(i))::before {
+    content: "↔";
+    font-size: 11px;
+}
+
+.user-actions .delete-btn:empty::before,
+.user-actions .delete-btn:not(:has(i))::before {
+    content: "×";
+    font-size: 13px;
+}
+
+/* Desktop column widths.
+   These selectors are harmless if the actual table has fewer/more columns. */
+@media (min-width: 1100px) {
+    .user-table th:nth-child(1),
+    .user-table td:nth-child(1) {
+        width: 5%;
+    }
+
+    .user-table th:nth-child(2),
+    .user-table td:nth-child(2) {
+        width: 19%;
+        text-align: center;
+    }
+
+    .user-table th:nth-child(3),
+    .user-table td:nth-child(3) {
+        width: 13%;
+        text-align: center;
+    }
+
+    .user-table th:nth-child(4),
+    .user-table td:nth-child(4) {
+        width: 12%;
+        text-align: center;
+    }
+
+    .user-table th:nth-child(5),
+    .user-table td:nth-child(5) {
+        width: 10%;
+        text-align: center;
+    }
+
+    .user-table th:nth-child(6),
+    .user-table td:nth-child(6) {
+        width: 15%;
+        text-align: center;
+    }
+
+    .user-table th:nth-child(7),
+    .user-table td:nth-child(7) {
+        width: 11%;
+        text-align: center;
+    }
+
+    .user-table th:nth-child(8),
+    .user-table td:nth-child(8) {
+        width: 15%;
+        text-align: center;
+    }
+
+    .user-table td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   TABLE STATES
+   -------------------------------------------------------------------------- */
+
+.table-state {
+    padding: 20px 8px;
+    font-size: 12px;
+}
+
+.loader {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 5px;
+    border-width: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   PAGINATION — supports both class variants in the pasted CSS
+   -------------------------------------------------------------------------- */
+
+.pagination,
+.user-pagination {
+    gap: 8px;
+    margin-top: 7px;
+    padding: 7px 8px;
+    border-radius: 7px;
+}
+
+.pagination {
+    justify-content: space-between;
+}
+
+.pagination-info {
+    font-size: 12px;
+}
+
+.pagination-actions,
+.pagination-buttons {
+    gap: 4px;
+}
+
+.pagination button,
+.page-btn,
+.page-number {
+    min-width: 27px;
+    height: 27px;
+    padding: 0 7px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.pagination-actions span {
+    font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   VIEW MODAL
+   -------------------------------------------------------------------------- */
+
+.user-modal-overlay {
+    padding: 10px;
+}
+
+.user-view-modal {
+    max-width: 560px;
+    max-height: calc(100vh - 20px);
+    border-radius: 11px;
+}
+
+.user-modal-header {
+    padding: 10px 12px;
+}
+
+.user-modal-header h3 {
+    font-size: 13px;
+}
+
+.close-btn {
+    width: 27px;
+    height: 27px;
+    font-size: 15px;
+}
+
+.user-modal-body {
+    padding: 12px;
+}
+
+.profile-section {
+    padding-bottom: 9px;
+}
+
+.large-profile-image,
+.large-avatar {
+    width: 52px;
+    height: 52px;
+}
+
+.large-avatar {
+    font-size: 17px;
+}
+
+.profile-section h2 {
+    margin: 7px 0 2px;
+    font-size: 13px;
+}
+
+.profile-section p {
+    margin-bottom: 2px;
+    font-size: 12px;
+}
+
+.profile-section span {
+    font-size: 12px;
+}
+
+.info-card {
+    margin-top: 8px;
+    padding: 8px;
+    border-radius: 7px;
+}
+
+.info-card h4 {
+    margin-bottom: 7px;
+    font-size: 12px;
+}
+
+.info-grid {
+    gap: 7px;
+}
+
+.info-grid div {
+    gap: 2px;
+}
+
+.info-grid label {
+    font-size: 12px;
+}
+
+.info-grid strong {
+    font-size: 12px;
+}
+
+.permission-list {
+    gap: 3px;
+}
+
+.permission-list span {
+    padding: 3px 5px;
+    font-size: 12px;
+}
+
+.user-modal-footer {
+    padding: 8px 10px;
+}
+
+.close-footer-btn {
+    min-height: 29px;
+    padding: 0 10px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   EDIT MODAL
+   -------------------------------------------------------------------------- */
+
+.user-edit-overlay,
+.user-create-overlay {
+    padding: 10px;
+}
+
+.user-edit-modal,
+.user-create-modal {
+    max-width: 620px;
+    max-height: calc(100vh - 20px);
+    border-radius: 11px;
+}
+
+.user-edit-header,
+.user-create-header {
+    padding: 10px 12px;
+}
+
+.user-edit-header h3,
+.user-create-header h3 {
+    font-size: 13px;
+}
+
+.user-edit-header p,
+.user-create-header p {
+    margin-top: 2px;
+    font-size: 12px;
+}
+
+.edit-close-btn,
+.create-close-btn {
+    width: 27px;
+    height: 27px;
+    font-size: 15px;
+}
+
+.user-edit-body,
+.user-create-body {
+    padding: 11px;
+}
+
+.edit-error,
+.create-error {
+    padding: 7px 8px;
+    margin-bottom: 7px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.edit-section,
+.create-section {
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 7px;
+}
+
+.edit-section h4,
+.create-section h4 {
+    margin-bottom: 7px;
+    font-size: 12px;
+}
+
+.edit-grid,
+.create-grid {
+    gap: 7px;
+}
+
+.edit-field,
+.create-field {
+    gap: 3px;
+}
+
+.edit-field label,
+.create-field label {
+    font-size: 12px;
+}
+
+.edit-field input,
+.edit-field select,
+.create-field input,
+.create-field select {
+    height: 30px;
+    min-height: 30px;
+    padding: 0 7px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.switch-row {
+    gap: 6px;
+    font-size:12px;
+}
+
+.switch-row input {
+    width: 14px;
+    height: 14px;
+}
+
+.image-preview {
+    margin-top: 5px;
+}
+
+.image-preview img {
+    width: 52px;
+    height: 52px;
+    border-width: 2px;
+}
+
+.user-edit-footer,
+.user-create-footer {
+    gap: 5px;
+    padding: 8px 10px;
+}
+
+.cancel-edit-btn,
+.save-edit-btn,
+.cancel-create-btn,
+.save-create-btn {
+    min-height: 29px;
+    padding: 0 10px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   LOADING OVERLAY
+   -------------------------------------------------------------------------- */
+
+.user-loading-overlay {
+    gap: 5px;
+    font-size: 12px;
+}
+
+.user-loader {
+    width: 17px;
+    height: 17px;
+    border-width: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   TABLET / MOBILE
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1099px) {
+    .user-table-wrapper {
+        overflow-x: auto;
+    }
+
+    .user-table {
+        min-width: 780px !important;
+        table-layout: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .users-page {
+        padding: 6px;
+    }
+
+    .users-header {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .header-left p {
+        display: none;
+    }
+
+    .add-user-btn,
+    .refresh-btn {
+        width: 30px;
+        min-width: 30px;
+        padding: 0;
+        font-size: 0;
+    }
+
+    .add-user-btn::before {
+        content: "+";
+        font-size: 16px;
+        line-height: 1;
+    }
+
+    .user-filters,
+    .filter-card {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .filter-search {
+        min-width: 0;
+        flex: 1 1 180px;
+    }
+
+    .filter-select {
+        width: auto;
+        min-width: 90px;
+    }
+
+    .pagination,
+    .user-pagination {
+        flex-direction: row;
+    }
+
+    .info-grid,
+    .edit-grid,
+    .create-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .header-left h2 {
+        font-size: 14px;
+    }
+
+    .header-icon {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        font-size: 13px;
+    }
+
+    .user-filters,
+    .filter-card {
+        flex-wrap: wrap;
+    }
+
+    .filter-search {
+        flex-basis: 100%;
+    }
+
+    .info-grid,
+    .edit-grid,
+    .create-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pagination-info {
+        display: none;
+    }
+
+    .pagination,
+    .user-pagination {
+        justify-content: center;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   DARK MODE FRIENDLY
+   -------------------------------------------------------------------------- */
+
+.dark .users-page {
+    background: #0f172a;
+}
+
+.dark .users-card,
+.dark .user-filters,
+.dark .filter-card,
+.dark .user-pagination {
+    background: #111827;
+    border-color: #374151;
+}
+
+.dark .user-table th {
+    background: #1f2937;
+    color: #d1d5db;
+}
+
+.dark .user-table td {
+    border-color: #374151;
+}
+
+.dark .user-name,
+.dark .username {
+    color: #f9fafb;
+}

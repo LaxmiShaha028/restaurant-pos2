@@ -1,0 +1,681 @@
+.audit-modal-overlay {
+
+
+position:fixed;
+
+
+inset:0;
+
+
+background:
+
+rgba(
+
+15,
+
+23,
+
+42,
+
+.65
+
+);
+
+
+
+display:flex;
+
+
+justify-content:center;
+
+
+align-items:center;
+
+
+padding:20px;
+
+
+z-index:9999;
+
+
+}
+
+
+
+
+
+.audit-modal {
+
+
+width:100%;
+
+
+max-width:750px;
+
+
+max-height:90vh;
+
+
+background:white;
+
+
+border-radius:18px;
+
+
+overflow:hidden;
+
+
+display:flex;
+
+
+flex-direction:column;
+
+
+box-shadow:
+
+0 25px 60px rgba(0,0,0,.25);
+
+
+}
+
+
+
+
+
+.audit-modal-header {
+
+
+padding:20px 25px;
+
+
+background:#2563eb;
+
+
+color:white;
+
+
+display:flex;
+
+
+justify-content:space-between;
+
+
+align-items:center;
+
+
+}
+
+
+
+
+
+.audit-modal-header h3 {
+
+
+margin:0;
+
+
+font-size:20px;
+
+
+}
+
+
+
+
+.audit-modal-header p {
+
+
+margin:5px 0 0;
+
+
+font-size:13px;
+
+
+opacity:.85;
+
+
+}
+
+
+
+
+
+.audit-close-btn {
+
+
+width:36px;
+
+
+height:36px;
+
+
+border:none;
+
+
+border-radius:50%;
+
+
+background:
+
+rgba(255,255,255,.15);
+
+
+color:white;
+
+
+font-size:24px;
+
+
+cursor:pointer;
+
+
+}
+
+
+
+
+
+.audit-modal-body {
+
+
+padding:25px;
+
+
+overflow-y:auto;
+
+
+}
+
+
+
+
+
+.audit-section {
+
+
+border:
+
+1px solid #e2e8f0;
+
+
+border-radius:14px;
+
+
+padding:18px;
+
+
+margin-bottom:18px;
+
+
+}
+
+
+
+
+.audit-section h4 {
+
+
+margin:0 0 15px;
+
+
+font-size:15px;
+
+
+color:#0f172a;
+
+
+}
+
+
+
+
+
+.user-card {
+
+
+display:flex;
+
+
+align-items:center;
+
+
+gap:12px;
+
+
+}
+
+
+
+
+
+.user-avatar {
+
+
+width:45px;
+
+
+height:45px;
+
+
+border-radius:50%;
+
+
+background:#2563eb;
+
+
+color:white;
+
+
+display:flex;
+
+
+justify-content:center;
+
+
+align-items:center;
+
+
+font-weight:700;
+
+
+}
+
+
+
+
+
+.user-card span {
+
+
+display:block;
+
+
+font-size:13px;
+
+
+color:#64748b;
+
+
+}
+
+
+
+
+
+
+
+
+.activity-grid {
+
+
+display:grid;
+
+
+grid-template-columns:repeat(2,1fr);
+
+
+gap:15px;
+
+
+}
+
+
+
+
+
+.activity-grid label {
+
+
+display:block;
+
+
+font-size:12px;
+
+
+color:#64748b;
+
+
+margin-bottom:5px;
+
+
+}
+
+
+
+
+
+
+
+
+.module-badge {
+
+
+background:#eff6ff;
+
+
+color:#2563eb;
+
+
+padding:5px 12px;
+
+
+border-radius:20px;
+
+
+font-size:12px;
+
+
+font-weight:700;
+
+
+}
+
+
+
+
+
+.action-badge {
+
+
+background:#dcfce7;
+
+
+color:#15803d;
+
+
+padding:5px 12px;
+
+
+border-radius:20px;
+
+
+font-size:12px;
+
+
+font-weight:700;
+
+
+}
+
+
+
+
+
+.description {
+
+
+color:#475569;
+
+
+line-height:1.6;
+
+
+}
+
+
+
+
+
+
+
+
+.changes-grid {
+
+
+display:grid;
+
+
+grid-template-columns:1fr 1fr;
+
+
+gap:15px;
+
+
+}
+
+
+
+
+
+.change-box {
+
+
+border-radius:12px;
+
+
+padding:15px;
+
+
+}
+
+
+
+
+
+.change-box h5 {
+
+
+margin:0 0 10px;
+
+
+}
+
+
+
+
+
+.change-box pre {
+
+
+font-size:12px;
+
+
+white-space:pre-wrap;
+
+
+overflow:auto;
+
+
+}
+
+
+
+
+.change-box.old {
+
+
+background:#fef2f2;
+
+
+border:1px solid #fecaca;
+
+
+}
+
+
+
+
+.change-box.new {
+
+
+background:#f0fdf4;
+
+
+border:1px solid #bbf7d0;
+
+
+}
+
+
+
+
+
+
+
+
+.audit-modal-footer {
+
+
+padding:15px 25px;
+
+
+background:#f8fafc;
+
+
+border-top:1px solid #e2e8f0;
+
+
+display:flex;
+
+
+justify-content:flex-end;
+
+
+}
+
+
+
+
+
+.close-footer-btn {
+
+
+padding:10px 25px;
+
+
+border:none;
+
+
+border-radius:8px;
+
+
+background:#2563eb;
+
+
+color:white;
+
+
+font-weight:600;
+
+
+cursor:pointer;
+
+
+}
+
+
+
+
+
+
+
+
+@media(max-width:650px){
+
+
+.activity-grid,
+
+.changes-grid{
+
+
+grid-template-columns:1fr;
+
+
+}
+
+
+}
+
+/* Human-readable audit field comparison */
+.change-table {
+  display: grid;
+  gap: 7px;
+}
+
+.change-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.9fr) repeat(2, minmax(0, 1.3fr));
+  align-items: stretch;
+  gap: 8px;
+}
+
+.change-row > * {
+  min-width: 0;
+  padding: 9px 10px;
+  overflow-wrap: anywhere;
+}
+
+.change-row-heading {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.change-field {
+  align-self: center;
+  color: #334155;
+  font-size: 13px;
+}
+
+.change-value {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 7px;
+  font-size: 13px;
+}
+
+.change-value small {
+  display: none;
+  margin-bottom: 3px;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.change-before {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.change-after {
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.change-empty {
+  margin: 0;
+  color: #64748b;
+}
+
+@media (max-width: 650px) {
+  .change-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .change-row-heading {
+    display: none;
+  }
+
+  .change-field {
+    grid-column: 1 / -1;
+    padding-bottom: 0;
+  }
+
+  .change-value small {
+    display: block;
+  }
+}
+
+/* Readable browser, operating system, and device summary */
+.device-info-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.device-info-item { display:flex; min-width:0; flex-direction:column; gap:5px; padding:11px 12px; border:1px solid #e2e8f0; border-radius:9px; background:#f8fafc; }
+.device-info-item label { color:#64748b; font-size:12px; }
+.device-info-item strong { color:#1e293b; font-size:13px; overflow-wrap:anywhere; }
+.device-unavailable { margin:0; color:#64748b; }
+.device-technical-details { margin-top:10px; color:#64748b; font-size:12px; }
+.device-technical-details summary { width:fit-content; cursor:pointer; }
+.device-technical-details code { display:block; margin-top:7px; padding:9px; border-radius:7px; background:#f1f5f9; color:#475569; white-space:normal; overflow-wrap:anywhere; }
+@media (max-width:650px) { .device-info-grid { grid-template-columns:1fr; } }

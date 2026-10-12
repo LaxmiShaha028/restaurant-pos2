@@ -1,0 +1,1108 @@
+/* =========================================================
+   TABLE MANAGEMENT
+   Compact POS / Admin Layout
+
+   Sidebar Expanded  : 150px
+   Sidebar Collapsed : 48px
+   Parent Layout Gap : 8px
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.table-management-page {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  min-height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  overflow-x: hidden;
+
+  background: transparent;
+
+  color: #374151;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.table-management-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  margin-bottom: 8px;
+
+  padding: 0;
+}
+
+.table-management-header__content {
+  min-width: 0;
+
+  flex: 1;
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.table-management-eyebrow {
+  margin:
+    0
+    0
+    1px !important;
+
+  color:
+    #4f46e5 !important;
+
+  font-size:
+    10px !important;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  letter-spacing: 0.04em;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.table-management-header h1 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.table-management-header__content > p:last-child {
+  max-width: 650px;
+
+  margin: 2px 0 0;
+
+  overflow: hidden;
+
+  color: #6b7280;
+
+  font-size: 12px;
+
+  line-height: 1.3;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   ADD TABLE BUTTON
+========================================================= */
+
+.table-management-add {
+  display: inline-flex;
+
+  width: auto;
+  min-width: 0;
+  min-height: 28px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  padding:
+    0
+    8px;
+
+  border-radius: 4px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+.table-management-add i {
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   ALERTS
+========================================================= */
+
+.table-management-alert {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  margin-bottom: 7px;
+
+  padding:
+    5px
+    27px
+    5px
+    7px;
+
+  border-radius: 4px;
+
+  font-size: 12px;
+
+  line-height: 1.3;
+}
+
+.table-management-alert > i {
+  flex-shrink: 0;
+
+  font-size: 12px;
+}
+
+.table-management-alert > span {
+  min-width: 0;
+
+  flex: 1;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   ALERT CLOSE
+========================================================= */
+
+.table-management-alert .btn-close {
+  position: absolute;
+
+  top: 50%;
+  right: 6px;
+
+  width: 7px;
+  height: 7px;
+
+  padding: 4px;
+
+  transform: translateY(-50%);
+}
+
+
+/* =========================================================
+   MAIN CONTENT CARD
+========================================================= */
+
+.table-management-card {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+
+  margin: 0;
+
+  padding: 6px;
+
+  overflow: hidden;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   TABLE LIST ROOT NORMALIZATION
+========================================================= */
+
+.table-management-card > * {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+
+/* =========================================================
+   COMMON CHILD TABLE RESET
+========================================================= */
+
+.table-management-card .table-responsive {
+  width: 100%;
+  max-width: 100%;
+
+  margin: 0;
+
+  overflow-x: auto;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-management-card .table {
+  width: 100%;
+
+  margin: 0;
+
+  font-size: 12px;
+
+  vertical-align: middle;
+}
+
+.table-management-card .table > :not(caption) > * > * {
+  padding:
+    4px
+    5px;
+
+  vertical-align: middle;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.table-management-card .table thead th {
+  background: #f8fafc;
+
+  color: #475569;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  line-height: 1.15;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.table-management-card .table tbody td {
+  color: #374151;
+
+  font-size: 12px;
+
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   TABLE BUTTONS
+========================================================= */
+
+.table-management-card .table .btn {
+  min-height: 24px;
+
+  padding:
+    2px
+    5px;
+
+  border-radius: 3px;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.table-management-card .badge {
+  padding:
+    2px
+    4px;
+
+  border-radius: 3px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   FORM ELEMENTS INSIDE TABLE LIST
+========================================================= */
+
+.table-management-card .form-control,
+.table-management-card .form-select {
+  min-height: 27px;
+
+  padding:
+    3px
+    6px;
+
+  border-radius: 4px;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   TOOLBAR / FILTER GENERIC SUPPORT
+========================================================= */
+
+.table-management-card .toolbar,
+.table-management-card .table-toolbar,
+.table-management-card .filter-bar,
+.table-management-card .table-filter-bar {
+  margin-bottom: 6px;
+
+  padding: 6px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+
+  background: #fafbfc;
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.table-management-card .pagination {
+  margin:
+    6px
+    0
+    0;
+}
+
+.table-management-card .page-link {
+  min-width: 25px;
+
+  padding:
+    3px
+    6px;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 992px) {
+  .table-management-page {
+    padding: 0;
+  }
+
+  .table-management-card {
+    padding: 6px;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 991.98px) {
+  .table-management-header {
+    margin-bottom: 7px;
+  }
+
+  .table-management-header h1 {
+    font-size: 14px;
+  }
+
+  .table-management-card {
+    padding: 5px;
+  }
+
+  .table-management-header__content > p:last-child {
+    white-space: normal;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767.98px) {
+  .table-management-header {
+    align-items: stretch;
+
+    flex-direction: column;
+
+    gap: 6px;
+  }
+
+  .table-management-add {
+    width: 100%;
+
+    min-height: 29px;
+  }
+
+  .table-management-card {
+    padding: 4px;
+
+    border-radius: 4px;
+  }
+
+  .table-management-card .table-responsive {
+    overflow-x: auto;
+  }
+}
+
+/* Dashboard / order page palette. */
+.table-management-page {
+  --restaurant-accent: #f97316;
+  --restaurant-accent-dark: #c2410c;
+  --restaurant-border: #eee3da;
+  padding: 18px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
+    #f4f1ed;
+  color: #111827;
+}
+
+.table-management-header,
+.table-management-card {
+  border: 1px solid #eee3da !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
+}
+
+.table-management-header {
+  min-height: 100px;
+  margin-bottom: 12px;
+  padding: 18px 20px;
+}
+
+.table-management-header-icon {
+  width: 40px;
+  height: 40px;
+  flex-basis: 40px;
+  border-radius: 12px;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.table-management-eyebrow,
+.table-management-title,
+.table-management-description {
+  color: #111827 !important;
+}
+
+.table-management-add,
+.table-management-add:hover {
+  border: 1px solid #292929 !important;
+  border-radius: 10px !important;
+  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+}
+
+.table-management-card {
+  padding: 12px;
+}
+
+@media (max-width: 767.98px) {
+  .table-management-page {
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .table-management-header {
+    padding: 14px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 479.98px) {
+  .table-management-header h1 {
+    font-size: 13px;
+  }
+
+  .table-management-header__content > p:last-child {
+    font-size: 12px;
+  }
+
+  .table-management-alert {
+    align-items: flex-start;
+
+    font-size: 12px;
+  }
+
+  .table-management-card {
+    padding: 3px;
+  }
+}
+/* =========================================================
+   HEADER  (same size & spacing as Kitchen / Order header)
+========================================================= */
+
+.table-management-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 7px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.table-management-header-left {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+}
+
+.table-management-header-icon {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: #eff6ff;          /* soft blue */
+  color: #2563eb;               /* blue accent */
+  font-size: 11px;
+}
+
+.table-management-header-left > div:last-child {
+  min-width: 0;
+}
+
+.table-management-eyebrow {
+  margin: 0 0 1px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.table-management-title {
+  margin: 0;
+  color: #172033;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.table-management-description {
+  max-width: 650px;
+  margin: 2px 0 0;
+  overflow: hidden;
+  color: #667085;
+  font-size: 12px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Add Table button – same height as other pages */
+.table-management-add {
+  display: inline-flex;
+  min-height: 28px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.table-management-add i {
+  font-size: 12px;
+}
+/* ==========================================================================
+   TABLE MANAGEMENT — PERFECT RESPONSIVE OVERRIDE
+   ========================================================================== */
+
+
+/* ==========================================================================
+   PAGE SAFETY
+   ========================================================================== */
+
+.table-management-page {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.table-management-page *,
+.table-management-page *::before,
+.table-management-page *::after {
+  box-sizing: border-box;
+}
+
+
+/* ==========================================================================
+   HEADER — DESKTOP
+   ========================================================================== */
+
+.table-management-header {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  margin: 0 0 8px;
+  padding: 7px 8px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  overflow: hidden;
+}
+
+.table-management-header-left {
+  min-width: 0;
+  max-width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  flex: 1 1 auto;
+}
+
+.table-management-header-left > div:last-child {
+  min-width: 0;
+  max-width: 100%;
+
+  flex: 1 1 auto;
+}
+
+.table-management-header-icon {
+  width: 28px;
+  height: 28px;
+
+  flex: 0 0 28px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 4px;
+
+  background: #eff6ff;
+  color: #2563eb;
+
+  font-size: 11px;
+}
+
+.table-management-eyebrow {
+  max-width: 100%;
+
+  margin: 0 0 1px;
+
+  overflow: hidden;
+
+  color: #2563eb;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table-management-title {
+  max-width: 100%;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  color: #172033;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table-management-description {
+  width: 100%;
+  max-width: 650px;
+
+  margin: 2px 0 0;
+
+  overflow: hidden;
+
+  color: #667085;
+
+  font-size: 10px;
+
+  line-height: 1.25;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   ADD BUTTON
+   ========================================================================== */
+
+.table-management-add {
+  flex: 0 0 auto;
+
+  width: auto;
+  max-width: 100%;
+
+  min-height: 28px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  padding: 0 8px;
+
+  border-radius: 4px;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+.table-management-add i {
+  flex-shrink: 0;
+
+  font-size: 10px;
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 767.98px) {
+
+  .table-management-header {
+    width: 100%;
+    max-width: 100%;
+
+    flex-direction: column;
+
+    align-items: stretch;
+    justify-content: flex-start;
+
+    gap: 8px;
+
+    padding: 8px;
+  }
+
+  .table-management-header-left {
+    width: 100%;
+    max-width: 100%;
+
+    flex: none;
+
+    align-items: flex-start;
+  }
+
+  .table-management-header-left > div:last-child {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .table-management-header-icon {
+    width: 28px;
+    height: 28px;
+
+    flex: 0 0 28px;
+  }
+
+  .table-management-eyebrow {
+    font-size: 9px;
+
+    white-space: nowrap;
+  }
+
+  .table-management-title {
+    font-size: 14px;
+
+    white-space: nowrap;
+  }
+
+  .table-management-description {
+    max-width: 100%;
+
+    font-size: 10px;
+
+    line-height: 1.3;
+
+    white-space: normal;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .table-management-add {
+    width: 100%;
+    max-width: 100%;
+
+    min-height: 30px;
+
+    flex: none;
+
+    font-size: 10px;
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 576px) {
+
+  .table-management-page {
+    width: 100%;
+    max-width: 100%;
+
+    padding: 0;
+  }
+
+  .table-management-header {
+    width: 100%;
+    max-width: 100%;
+
+    margin-bottom: 7px;
+    padding: 7px;
+
+    gap: 7px;
+
+    border-radius: 5px;
+  }
+
+  .table-management-header-left {
+    width: 100%;
+    max-width: 100%;
+
+    gap: 6px;
+  }
+
+  .table-management-header-icon {
+    width: 26px;
+    height: 26px;
+
+    flex: 0 0 26px;
+
+    font-size: 10px;
+  }
+
+  .table-management-eyebrow {
+    margin-bottom: 1px;
+
+    font-size: 8px;
+
+    letter-spacing: 0.025em;
+  }
+
+  .table-management-title {
+    font-size: 13px;
+  }
+
+  .table-management-description {
+    margin-top: 2px;
+
+    font-size: 9px;
+
+    line-height: 1.3;
+  }
+
+  .table-management-add {
+    width: 100%;
+
+    min-height: 29px;
+
+    padding: 0 8px;
+
+    font-size: 10px;
+  }
+
+  .table-management-add i {
+    font-size: 10px;
+  }
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 400px) {
+
+  .table-management-header {
+    padding: 6px;
+  }
+
+  .table-management-header-left {
+    gap: 5px;
+  }
+
+  .table-management-header-icon {
+    width: 24px;
+    height: 24px;
+
+    flex: 0 0 24px;
+
+    font-size: 9px;
+  }
+
+  .table-management-eyebrow {
+    font-size: 7px;
+  }
+
+  .table-management-title {
+    font-size: 12px;
+  }
+
+  .table-management-description {
+    font-size: 8px;
+  }
+
+  .table-management-add {
+    min-height: 28px;
+
+    font-size: 9px;
+  }
+
+  .table-management-add i {
+    font-size: 9px;
+  }
+}
+
+
+/* ==========================================================================
+   EXTRA SAFETY AGAINST HORIZONTAL OVERFLOW
+   ========================================================================== */
+
+@media (max-width: 767.98px) {
+
+  .table-management-page,
+  .table-management-header,
+  .table-management-header-left,
+  .table-management-header-left > div:last-child,
+  .table-management-card {
+    overflow-x: hidden;
+  }
+
+  .table-management-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+/* Keep the warm order-page shell after responsive layout rules. */
+.table-management-page {
+  background:
+    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
+    #f4f1ed;
+  color: #111827;
+}
+
+.table-management-header,
+.table-management-card {
+  border-color: #eee3da !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
+}
+
+.table-management-header-icon {
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.table-management-eyebrow,
+.table-management-title,
+.table-management-description {
+  color: #111827 !important;
+}
+
+.table-management-add,
+.table-management-add:hover {
+  border-color: #292929 !important;
+  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+}
+
+.table-management-page .table-management-add span,
+.table-management-page .table-management-add i {
+  color: #f97316 !important;
+}

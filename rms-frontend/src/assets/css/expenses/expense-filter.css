@@ -1,0 +1,715 @@
+/*
+|--------------------------------------------------------------------------
+| Expense Filter Card
+|--------------------------------------------------------------------------
+*/
+
+
+.expense-filter-card {
+
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 5px;
+
+    padding: 2px;
+
+    margin-bottom: 20px;
+
+
+    box-shadow:
+
+        0 2px 8px rgba(0,0,0,0.04);
+
+
+}
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Filter Grid
+|--------------------------------------------------------------------------
+*/
+
+
+.expense-filter-grid {
+
+
+    display: grid;
+
+
+    grid-template-columns:
+
+        repeat(4, 1fr);
+
+
+    gap: 18px;
+
+
+}
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Labels
+|--------------------------------------------------------------------------
+*/
+
+
+.expense-filter-grid label {
+
+
+    display: block;
+
+
+    margin-bottom: 7px;
+
+
+    font-size: 13px;
+
+
+    font-weight: 600;
+
+
+    color: #374151;
+
+
+}
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Inputs & Select
+|--------------------------------------------------------------------------
+*/
+
+
+.expense-filter-grid input,
+
+.expense-filter-grid select {
+
+
+    width: 100%;
+
+
+    height: 42px;
+
+
+    padding:
+
+        0 12px;
+
+
+    border-radius: 10px;
+
+
+    border: 1px solid #d1d5db;
+
+
+    background: #ffffff;
+
+
+    color: #374151;
+
+
+    font-size: 14px;
+
+
+    outline: none;
+
+
+    transition: .2s ease;
+
+
+}
+
+
+
+
+.expense-filter-grid input:focus,
+
+.expense-filter-grid select:focus {
+
+
+    border-color: #2563eb;
+
+
+    box-shadow:
+
+        0 0 0 3px rgba(37,99,235,.12);
+
+
+}
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Actions
+|--------------------------------------------------------------------------
+*/
+
+
+.expense-filter-actions {
+
+
+    display: flex;
+
+
+    justify-content: flex-end;
+
+
+    align-items: center;
+
+
+    gap: 12px;
+
+
+    margin-top: 20px;
+
+
+}
+
+
+
+
+
+.expense-filter-actions button {
+
+
+    height: 42px;
+
+
+    padding:
+
+        0 18px;
+
+
+    display: flex;
+
+
+    align-items: center;
+
+
+    justify-content: center;
+
+
+    gap: 8px;
+
+
+    border-radius: 10px;
+
+
+    font-size: 14px;
+
+
+    font-weight: 600;
+
+
+    cursor: pointer;
+
+
+    transition: .2s ease;
+
+
+}
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Apply Button
+|--------------------------------------------------------------------------
+*/
+
+
+.btn-primary {
+
+
+    background: #2563eb;
+
+
+    color: #ffffff;
+
+
+    border: 1px solid #2563eb;
+
+
+}
+
+
+
+
+.btn-primary:hover {
+
+
+    background:#1d4ed8;
+
+
+}
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Secondary Buttons
+|--------------------------------------------------------------------------
+*/
+
+
+.btn-secondary {
+
+
+    background:#ffffff;
+
+
+    color:#374151;
+
+
+    border:1px solid #d1d5db;
+
+
+}
+
+
+
+.btn-secondary:hover {
+
+
+    background:#f9fafb;
+
+
+}
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Responsive
+|--------------------------------------------------------------------------
+*/
+
+
+@media(max-width:992px){
+
+
+    .expense-filter-grid {
+
+
+        grid-template-columns:
+
+        repeat(2,1fr);
+
+
+    }
+
+
+}
+
+
+
+
+@media(max-width:576px){
+
+
+    .expense-filter-grid {
+
+
+        grid-template-columns:
+
+        1fr;
+
+
+    }
+
+
+
+    .expense-filter-actions {
+
+
+        flex-direction:column;
+
+
+        align-items:stretch;
+
+
+    }
+
+
+
+    .expense-filter-actions button {
+
+
+        width:100%;
+
+
+    }
+
+
+}
+/*
+|--------------------------------------------------------------------------
+| Expense Filter Card — Compact
+|--------------------------------------------------------------------------
+*/
+
+.expense-filter-card {
+    width: 100%;
+    min-width: 0;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(130px, 1fr)
+        minmax(130px, 1fr)
+        minmax(150px, 1.1fr)
+        minmax(150px, 1.1fr)
+        auto;
+
+    align-items: end;
+
+    column-gap: 8px;
+
+    padding: 12px;
+
+    margin-bottom: 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.035);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Filter Grid
+|--------------------------------------------------------------------------
+| Makes the 4 filters direct grid items of the card.
+|--------------------------------------------------------------------------
+*/
+
+.expense-filter-grid {
+    display: contents;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Filter Fields
+|--------------------------------------------------------------------------
+*/
+
+.expense-filter-grid > div {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Labels
+|--------------------------------------------------------------------------
+*/
+
+.expense-filter-grid label {
+    display: block;
+
+    margin: 0;
+
+    color: #374151;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 1.2;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Inputs / Selects
+|--------------------------------------------------------------------------
+*/
+
+.expense-filter-grid input,
+.expense-filter-grid select {
+    width: 100%;
+    min-width: 0;
+
+    height: 31px;
+
+    padding:
+        0
+        8px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #374151;
+
+    font-size: 10px;
+    font-weight: 500;
+
+    line-height: 1;
+
+    outline: none;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease;
+}
+
+.expense-filter-grid input:focus,
+.expense-filter-grid select:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(37, 99, 235, 0.10);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Actions
+|--------------------------------------------------------------------------
+*/
+
+.expense-filter-actions {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    gap: 5px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+
+    white-space: nowrap;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Action Buttons
+|--------------------------------------------------------------------------
+*/
+
+.expense-filter-actions button {
+    height: 31px;
+    min-height: 31px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    padding:
+        0
+        9px;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Apply
+|--------------------------------------------------------------------------
+*/
+
+.expense-filter-actions .btn-primary {
+    min-width: 58px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    border: 1px solid #2563eb;
+}
+
+.expense-filter-actions .btn-primary:hover {
+    background: #1d4ed8;
+
+    border-color: #1d4ed8;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Secondary Buttons
+|--------------------------------------------------------------------------
+*/
+
+.expense-filter-actions .btn-secondary {
+    min-width: 58px;
+
+    background: #ffffff;
+
+    color: #374151;
+
+    border: 1px solid #d1d5db;
+}
+
+.expense-filter-actions .btn-secondary:hover {
+    background: #f9fafb;
+
+    border-color: #cbd5e1;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Icons
+|--------------------------------------------------------------------------
+*/
+
+.expense-filter-actions i {
+    font-size: 10px;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Medium Desktop
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 1100px) {
+
+    .expense-filter-card {
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+    }
+
+    .expense-filter-actions {
+        grid-column: 1 / -1;
+
+        justify-content: flex-end;
+
+        padding-top: 7px;
+
+        border-top:
+            1px solid #edf0f4;
+    }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Tablet
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 800px) {
+
+    .expense-filter-card {
+        display: block;
+
+        padding: 12px;
+    }
+
+    .expense-filter-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 9px;
+    }
+
+    .expense-filter-actions {
+        margin-top: 8px;
+
+        padding-top: 7px;
+
+        border-top:
+            1px solid #edf0f4;
+    }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Mobile
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 576px) {
+
+    .expense-filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .expense-filter-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .expense-filter-actions button {
+        flex: 0 0 38px;
+        width: 38px;
+        min-width: 38px;
+        padding: 0;
+    }
+
+    .expense-filter-actions .expense-filter-action-label {
+        display: none;
+    }
+
+    .expense-filter-actions i {
+        font-size: 12px;
+    }
+}

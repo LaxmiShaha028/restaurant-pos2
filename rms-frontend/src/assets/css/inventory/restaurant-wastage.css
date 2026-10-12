@@ -1,0 +1,820 @@
+/* ==========================================================================
+   Restaurant Damage / Wastage
+   ========================================================================== */
+
+.restaurant-wastage-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  min-height: 34px;
+  padding: 0.45rem 0.72rem;
+  border: 1px solid rgba(220, 53, 69, 0.24);
+  border-radius: 9px;
+  background: rgba(220, 53, 69, 0.06);
+  color: #b4232f;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1;
+  transition: 160ms ease;
+}
+
+.restaurant-wastage-action-btn:hover:not(:disabled) {
+  border-color: rgba(220, 53, 69, 0.42);
+  background: rgba(220, 53, 69, 0.11);
+  transform: translateY(-1px);
+}
+
+.restaurant-wastage-action-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.restaurant-stock-table th:last-child,
+.restaurant-stock-table td:last-child {
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   Modal
+   ========================================================================== */
+
+.restaurant-wastage-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1095;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(15, 23, 42, 0.58);
+  backdrop-filter: blur(3px);
+}
+
+.restaurant-wastage-modal {
+  width: min(760px, 100%);
+  max-height: calc(100vh - 2.5rem);
+  overflow: auto;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.24);
+}
+
+.restaurant-wastage-modal-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.35rem 1.45rem;
+  border-bottom: 1px solid #e8edf3;
+  background: rgba(255, 255, 255, 0.97);
+}
+
+.restaurant-wastage-modal-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+}
+
+.restaurant-wastage-modal-icon {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(220, 53, 69, 0.1);
+  color: #b4232f;
+  font-size: 1.05rem;
+}
+
+.restaurant-wastage-eyebrow {
+  display: block;
+  margin-bottom: 0.18rem;
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.restaurant-wastage-modal-heading h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.restaurant-wastage-modal-heading p {
+  margin: 0.35rem 0 0;
+  color: #64748b;
+  font-size: 0.88rem;
+}
+
+.restaurant-wastage-modal-close {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 9px;
+  background: #f3f4f6;
+  color: #475569;
+}
+
+.restaurant-wastage-modal-close:hover:not(:disabled) {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.restaurant-wastage-modal-error,
+.restaurant-wastage-history-error,
+.restaurant-wastage-history-validation {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 1rem 1.45rem 0;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid rgba(220, 53, 69, 0.22);
+  border-radius: 10px;
+  background: rgba(220, 53, 69, 0.06);
+  color: #a61e2b;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.restaurant-wastage-history-error,
+.restaurant-wastage-history-validation {
+  margin-inline: 0;
+}
+
+.restaurant-wastage-history-error button {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+.restaurant-wastage-material-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.25rem 1.45rem 0;
+  padding: 1rem;
+  border: 1px solid #e6ebf1;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.restaurant-wastage-material-card > div {
+  min-width: 0;
+}
+
+.restaurant-wastage-material-card span,
+.restaurant-wastage-preview article span,
+.restaurant-wastage-history-summary article span,
+.restaurant-wastage-history-metrics span {
+  display: block;
+  margin-bottom: 0.22rem;
+  color: #64748b;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.restaurant-wastage-material-card strong {
+  display: block;
+  color: #111827;
+  font-size: 0.94rem;
+  word-break: break-word;
+}
+
+.restaurant-wastage-material-card small {
+  color: #64748b;
+  font-size: 0.76rem;
+}
+
+.restaurant-wastage-form {
+  padding: 1.25rem 1.45rem 1.45rem;
+}
+
+.restaurant-wastage-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.restaurant-wastage-form-group {
+  min-width: 0;
+}
+
+.restaurant-wastage-form-group-wide {
+  grid-column: 1 / -1;
+}
+
+.restaurant-wastage-form-group label {
+  display: block;
+  margin-bottom: 0.42rem;
+  color: #334155;
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.restaurant-wastage-form-group label span {
+  color: #dc3545;
+}
+
+.restaurant-wastage-form-group input,
+.restaurant-wastage-form-group select,
+.restaurant-wastage-form-group textarea {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #d7dee7;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #1f2937;
+  font-size: 0.88rem;
+  outline: none;
+  padding: 0.65rem 0.75rem;
+  transition: 150ms ease;
+}
+
+.restaurant-wastage-form-group textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+
+.restaurant-wastage-form-group input:focus,
+.restaurant-wastage-form-group select:focus,
+.restaurant-wastage-form-group textarea:focus {
+  border-color: #94a3b8;
+  box-shadow: 0 0 0 3px rgba(100, 116, 139, 0.1);
+}
+
+.restaurant-wastage-input-unit {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.restaurant-wastage-input-unit input {
+  border-radius: 9px 0 0 9px;
+}
+
+.restaurant-wastage-input-unit > span {
+  display: inline-flex;
+  min-width: 58px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d7dee7;
+  border-left: 0;
+  border-radius: 0 9px 9px 0;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.restaurant-wastage-field-error {
+  display: block;
+  margin-top: 0.35rem;
+  color: #b4232f;
+  font-size: 0.76rem;
+  font-weight: 650;
+}
+
+.restaurant-wastage-field-help,
+.restaurant-wastage-notes-meta {
+  display: block;
+  margin-top: 0.35rem;
+  color: #64748b;
+  font-size: 0.72rem;
+}
+
+.restaurant-wastage-notes-meta {
+  display: flex;
+  justify-content: space-between;
+}
+
+.restaurant-wastage-preview {
+  margin-top: 1.15rem;
+  padding: 1rem;
+  border: 1px solid #e6ebf1;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fbfcfe 0%, #f8fafc 100%);
+}
+
+.restaurant-wastage-preview-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.restaurant-wastage-preview-heading span {
+  display: block;
+  color: #64748b;
+  font-size: 0.73rem;
+  font-weight: 700;
+}
+
+.restaurant-wastage-preview-heading strong {
+  color: #111827;
+  font-size: 0.9rem;
+}
+
+.restaurant-wastage-accounting-badge {
+  padding: 0.38rem 0.62rem;
+  border-radius: 999px;
+  background: rgba(220, 53, 69, 0.08);
+  color: #b4232f !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+}
+
+.restaurant-wastage-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.restaurant-wastage-preview article {
+  padding: 0.75rem;
+  border: 1px solid #e7ebf0;
+  border-radius: 9px;
+  background: #ffffff;
+}
+
+.restaurant-wastage-preview article strong {
+  color: #1f2937;
+  font-size: 0.9rem;
+}
+
+.restaurant-wastage-preview .restaurant-wastage-loss-card {
+  border-color: rgba(220, 53, 69, 0.22);
+  background: rgba(220, 53, 69, 0.045);
+}
+
+.restaurant-wastage-preview .restaurant-wastage-loss-card strong,
+.restaurant-wastage-negative {
+  color: #b4232f !important;
+}
+
+.restaurant-wastage-preview > p {
+  margin: 0.8rem 0 0;
+  color: #64748b;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.restaurant-wastage-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #edf0f4;
+}
+
+.restaurant-wastage-cancel,
+.restaurant-wastage-submit {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border-radius: 9px;
+  padding: 0.62rem 0.95rem;
+  font-size: 0.84rem;
+  font-weight: 750;
+}
+
+.restaurant-wastage-cancel {
+  border: 1px solid #d7dee7;
+  background: #ffffff;
+  color: #475569;
+}
+
+.restaurant-wastage-submit {
+  border: 1px solid #b4232f;
+  background: #b4232f;
+  color: #ffffff;
+}
+
+.restaurant-wastage-submit:hover:not(:disabled) {
+  background: #991f29;
+}
+
+.restaurant-wastage-cancel:disabled,
+.restaurant-wastage-submit:disabled,
+.restaurant-wastage-modal-close:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+
+/* ==========================================================================
+   History
+   ========================================================================== */
+
+.restaurant-wastage-history {
+  min-width: 0;
+}
+
+.restaurant-wastage-history-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.restaurant-wastage-history-header h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.restaurant-wastage-history-header p {
+  margin: 0.28rem 0 0;
+  color: #64748b;
+  font-size: 0.83rem;
+}
+
+.restaurant-wastage-history-refresh,
+.restaurant-wastage-history-clear,
+.restaurant-wastage-history-apply {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  border-radius: 9px;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.restaurant-wastage-history-refresh,
+.restaurant-wastage-history-clear {
+  border: 1px solid #d8dee7;
+  background: #ffffff;
+  color: #475569;
+}
+
+.restaurant-wastage-history-apply {
+  border: 1px solid #334155;
+  background: #334155;
+  color: #ffffff;
+}
+
+.restaurant-wastage-history-filters {
+  padding: 1rem;
+  border: 1px solid #e6ebf1;
+  border-radius: 12px;
+  background: #fbfcfe;
+}
+
+.restaurant-wastage-history-filter-grid {
+  display: grid;
+  grid-template-columns: minmax(170px, 1.4fr) repeat(4, minmax(135px, 1fr));
+  gap: 0.75rem;
+}
+
+.restaurant-wastage-history-filter-group label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #475569;
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+.restaurant-wastage-history-filter-group input,
+.restaurant-wastage-history-filter-group select {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid #d8dee7;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 0.8rem;
+  padding: 0.52rem 0.65rem;
+}
+
+.restaurant-wastage-history-filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  margin-top: 0.8rem;
+}
+
+.restaurant-wastage-history-validation {
+  margin-top: 0.75rem;
+}
+
+.restaurant-wastage-history-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 0.9rem 0;
+}
+
+.restaurant-wastage-history-summary article {
+  padding: 0.8rem 0.9rem;
+  border: 1px solid #e6ebf1;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.restaurant-wastage-history-summary article strong {
+  color: #111827;
+  font-size: 1rem;
+}
+
+.restaurant-wastage-history-summary .restaurant-wastage-history-loss-summary {
+  border-color: rgba(220, 53, 69, 0.2);
+  background: rgba(220, 53, 69, 0.04);
+}
+
+.restaurant-wastage-history-summary .restaurant-wastage-history-loss-summary strong {
+  color: #b4232f;
+}
+
+.restaurant-wastage-history-state {
+  display: flex;
+  min-height: 180px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 1.25rem;
+  color: #64748b;
+  text-align: center;
+}
+
+.restaurant-wastage-history-state > i {
+  font-size: 1.55rem;
+}
+
+.restaurant-wastage-history-state strong {
+  color: #334155;
+}
+
+.restaurant-wastage-history-state p {
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.restaurant-wastage-history-list {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.restaurant-wastage-history-card {
+  overflow: hidden;
+  border: 1px solid #e6ebf1;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.restaurant-wastage-history-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #edf0f4;
+  background: #fafbfc;
+}
+
+.restaurant-wastage-history-card-header > div:first-child span {
+  display: block;
+  color: #64748b;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.restaurant-wastage-history-card-header > div:first-child strong {
+  color: #111827;
+  font-size: 0.9rem;
+}
+
+.restaurant-wastage-history-card-date {
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
+.restaurant-wastage-history-card-body {
+  padding: 0.95rem 1rem;
+}
+
+.restaurant-wastage-history-metrics {
+  display: grid;
+  grid-template-columns: 1.3fr repeat(4, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.restaurant-wastage-history-metrics > div {
+  min-width: 0;
+}
+
+.restaurant-wastage-history-metrics strong {
+  display: block;
+  color: #334155;
+  font-size: 0.84rem;
+  overflow-wrap: anywhere;
+}
+
+.restaurant-wastage-history-loss strong {
+  color: #b4232f;
+}
+
+.restaurant-wastage-history-notes {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
+.restaurant-wastage-history-details-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #475569;
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.restaurant-wastage-history-details {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid #edf0f4;
+}
+
+.restaurant-wastage-history-details-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.restaurant-wastage-history-details-heading h4 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.restaurant-wastage-history-details-heading p {
+  margin: 0.2rem 0 0;
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+.restaurant-wastage-history-immutable {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.restaurant-wastage-history-table-scroll {
+  overflow-x: auto;
+}
+
+.restaurant-wastage-history-table {
+  width: 100%;
+  min-width: 860px;
+  border-collapse: collapse;
+}
+
+.restaurant-wastage-history-table th,
+.restaurant-wastage-history-table td {
+  padding: 0.65rem 0.7rem;
+  border-bottom: 1px solid #edf0f4;
+  color: #475569;
+  font-size: 0.77rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.restaurant-wastage-history-table th {
+  background: #f8fafc;
+  color: #334155;
+  font-size: 0.72rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.restaurant-wastage-history-accounting-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-top: 0.8rem;
+  padding: 0.75rem;
+  border: 1px solid rgba(14, 116, 144, 0.18);
+  border-radius: 9px;
+  background: rgba(14, 116, 144, 0.04);
+  color: #0f6477;
+}
+
+.restaurant-wastage-history-accounting-note strong,
+.restaurant-wastage-history-accounting-note span {
+  display: block;
+}
+
+.restaurant-wastage-history-accounting-note strong {
+  font-size: 0.78rem;
+}
+
+.restaurant-wastage-history-accounting-note span {
+  margin-top: 0.15rem;
+  font-size: 0.74rem;
+}
+
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 1080px) {
+  .restaurant-wastage-history-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .restaurant-wastage-history-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .restaurant-wastage-modal-backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .restaurant-wastage-modal {
+    width: 100%;
+    max-height: 94vh;
+    border-radius: 18px 18px 0 0;
+  }
+
+  .restaurant-wastage-material-card,
+  .restaurant-wastage-form-grid,
+  .restaurant-wastage-preview-grid,
+  .restaurant-wastage-history-summary,
+  .restaurant-wastage-history-filter-grid,
+  .restaurant-wastage-history-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-wastage-form-group-wide {
+    grid-column: auto;
+  }
+
+  .restaurant-wastage-history-header,
+  .restaurant-wastage-history-card-header,
+  .restaurant-wastage-history-details-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .restaurant-wastage-history-refresh {
+    align-self: flex-start;
+  }
+
+  .restaurant-wastage-modal-footer {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-wastage-cancel,
+  .restaurant-wastage-submit {
+    width: 100%;
+  }
+}

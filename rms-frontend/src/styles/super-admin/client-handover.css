@@ -1,0 +1,245 @@
+.client-handover-card .content-card-body {
+  padding-top: 20px;
+}
+
+.handover-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.handover-status-badge.is-ready {
+  background: #eaf7ef;
+  color: #198754;
+}
+
+.handover-status-badge.is-pending {
+  background: #fff7df;
+  color: #9a6700;
+}
+
+.handover-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 12px;
+}
+
+.handover-detail-card {
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #e6ebf1;
+  border-radius: 14px;
+  background: #fbfcfe;
+}
+
+.handover-detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.handover-detail-head strong {
+  display: block;
+  margin-top: 4px;
+  color: #344054;
+  font-size: 11px;
+}
+
+.handover-detail-icon {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border-radius: 9px;
+  background: #eef4ff;
+  color: #0d6efd;
+  font-size: 14px;
+}
+
+.handover-value-row {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.handover-value {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  color: #27364a;
+  font-size: 11px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.handover-copy-icon {
+  width: 31px;
+  height: 31px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border: 1px solid #dce3eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #667085;
+  font-size: 10px;
+}
+
+.handover-copy-icon:hover {
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.handover-missing-value {
+  margin-top: 13px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  background: #f3f5f7;
+  color: #8a94a6;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.handover-security-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin-top: 14px;
+  padding: 13px 14px;
+  border: 1px solid #dce6f4;
+  border-radius: 12px;
+  background: #f7faff;
+}
+
+.handover-security-icon {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border-radius: 9px;
+  background: #e9f1ff;
+  color: #0d6efd;
+  font-size: 14px;
+}
+
+.handover-security-note strong {
+  display: block;
+  color: #344054;
+  font-size: 11px;
+}
+
+.handover-security-note p {
+  margin: 4px 0 0;
+  color: #748094;
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.handover-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.handover-actions .btn {
+  min-height: 39px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.handover-preview {
+  margin-top: 14px;
+  overflow: hidden;
+  border: 1px solid #e4eaf0;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.handover-preview-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #edf0f3;
+  background: #fafbfd;
+}
+
+.handover-preview-head span:last-child {
+  color: #98a2b3;
+  font-size: 9px;
+}
+
+.handover-preview pre {
+  margin: 0;
+  padding: 14px;
+  overflow-x: auto;
+  background: #ffffff;
+  color: #344054;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  font-size: 10px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@media (max-width: 1050px) {
+  .handover-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .handover-detail-card:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 650px) {
+  .handover-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .handover-detail-card:first-child {
+    grid-column: auto;
+  }
+
+  .handover-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .handover-actions .btn {
+    width: 100%;
+  }
+
+  .handover-preview-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

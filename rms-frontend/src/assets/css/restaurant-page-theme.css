@@ -1,0 +1,828 @@
+/* Shared restaurant page theme, aligned with Order Management. */
+.pos-page,
+.pos-workspace-page,
+.kitchen-page,
+.table-management-page,
+.billing-page {
+  --restaurant-accent: #f97316;
+  --restaurant-accent-dark: #c2410c;
+  --restaurant-accent-soft: #fff1e6;
+  --restaurant-border: #eee3da;
+  --restaurant-ink: #111827;
+  --pos-ink: #111827;
+  --pos-muted: #6b7280;
+  --pos-line: #eee3da;
+  --pos-soft: #fffaf5;
+  --pos-blue: #f97316;
+  --pos-blue-soft: #fff1e6;
+  --kitchen-primary: #f97316;
+  --kitchen-primary-dark: #c2410c;
+  --kitchen-primary-soft: #fff1e6;
+  --kitchen-border: #eee3da;
+  --kitchen-border-soft: #f4ece5;
+  --billing-primary: #f97316;
+  --billing-primary-dark: #c2410c;
+  --billing-primary-deep: #9a3412;
+  --billing-primary-soft: #fff1e6;
+  --billing-border: #eee3da;
+  color: var(--restaurant-ink);
+  padding: 18px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
+    #f4f1ed;
+}
+
+.pos-page-header,
+.pos-workspace-header,
+.kitchen-header,
+.table-management-header,
+.billing-page-header {
+  min-height: 100px;
+  margin-bottom: 12px;
+  padding: 18px 20px;
+  border: 1px solid var(--restaurant-border);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+}
+
+.pos-page-header-icon,
+.pos-workspace-header .pos-page-header-icon,
+.kitchen-header-icon,
+.table-management-header-icon,
+.billing-page-header-icon {
+  width: 40px;
+  height: 40px;
+  flex-basis: 40px;
+  border-radius: 12px;
+  background: #fff1e6;
+  color: #f97316;
+}
+
+.pos-table-selection-page .pos-page-header-icon,
+.pos-table-selection-page .pos-page-header-icon i {
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.pos-eyebrow,
+.kitchen-page-tag,
+.table-management-eyebrow,
+.billing-page-eyebrow {
+  color: #111827 !important;
+}
+
+.pos-page-header h1,
+.pos-workspace-header h1,
+.kitchen-header h1,
+.table-management-title,
+.billing-page-heading h1,
+.pos-page-subtitle,
+.pos-workspace-header .pos-page-subtitle,
+.kitchen-page-description,
+.table-management-description,
+.billing-page-heading > p:last-child {
+  color: #111827;
+}
+
+.pos-table-card,
+.pos-menu-card,
+.pos-table-selection-footer,
+.pos-menu-workspace,
+.pos-category-rail,
+.kitchen-summary-grid .summary-card,
+.kitchen-compact-card,
+.kitchen-order-card,
+.table-management-card,
+.billing-report-card,
+.billing-page .billing-summary-card {
+  border-color: var(--restaurant-border);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+}
+
+.pos-page :where(h1, h2, h3, p, span, strong, label, th, td, button, a),
+.pos-workspace-page :where(h1, h2, h3, p, span, strong, label, th, td, button, a),
+.kitchen-page :where(h1, h2, h3, p, span, strong, label, th, td, button, a),
+.table-management-page :where(h1, h2, h3, p, span, strong, label, th, td, button, a),
+.billing-page :where(h1, h2, h3, p, span, strong, label, th, td, button, a) {
+  color: #111827;
+}
+
+.pos-page .pos-primary-button,
+.pos-workspace-page .pos-primary-button,
+.kitchen-header-right .btn-primary,
+.table-management-add,
+.billing-refresh-button {
+  border: 1px solid #292929;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%);
+  color: #f97316 !important;
+}
+
+.pos-page .pos-primary-button:hover,
+.pos-workspace-page .pos-primary-button:hover,
+.kitchen-header-right .btn-primary:hover,
+.table-management-add:hover,
+.billing-refresh-button:hover:not(:disabled) {
+  border-color: #3b3b3b;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%);
+  color: #fb923c !important;
+}
+
+.pos-table-card:hover,
+.pos-menu-card:hover:not(:disabled) {
+  border-color: #fdba74;
+  box-shadow: 0 10px 26px rgba(124, 45, 18, .1);
+}
+
+.pos-table-card.selected,
+.pos-category-rail button.active,
+.table-management-page .page-item.active .page-link {
+  border-color: #fb923c;
+  background: #fff8f1;
+  color: #c2410c;
+}
+
+.pos-table-card.selected .pos-table-card-check {
+  background: #f97316;
+}
+
+.pos-table-card-icon,
+.pos-empty-state > span,
+.pos-workspace-waiter > span,
+.pos-menu-counter strong,
+.pos-category-rail button.active,
+.kitchen-header-icon,
+.table-management-header-icon,
+.billing-page-header-icon {
+  color: #f97316;
+}
+
+.kitchen-page .btn-outline-primary,
+.billing-page .btn-outline-primary {
+  border-color: #f97316;
+  color: #c2410c;
+}
+
+.kitchen-header-right .btn-outline-primary {
+  border-color: #292929;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%);
+  color: #ffffff !important;
+}
+
+.kitchen-header-right .btn-outline-primary i {
+  color: #f97316;
+}
+
+.pos-table-selection-page .pos-selection-count strong {
+  color: #f97316 !important;
+}
+
+.pos-table-selection-page .pos-table-card-icon {
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.kitchen-page .accepted-card .summary-card-icon {
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.kitchen-page .kitchen-summary-grid .summary-card-icon,
+.kitchen-page .kitchen-summary-grid .pending-card .summary-card-icon,
+.kitchen-page .kitchen-summary-grid .preparing-card .summary-card-icon,
+.kitchen-page .kitchen-summary-grid .ready-card .summary-card-icon {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.kitchen-page .kitchen-header-right button.btn-outline-primary {
+  border-color: #292929 !important;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+  width: fit-content !important;
+  min-width: 0 !important;
+  padding-inline: 12px !important;
+}
+
+.kitchen-page .kitchen-header-right button.btn-outline-primary span,
+.kitchen-page .kitchen-filter-bar .refresh-button,
+.kitchen-page .kitchen-empty-refresh-button,
+.kitchen-page .kitchen-empty-refresh-button span {
+  color: #f97316 !important;
+}
+
+.kitchen-page .kitchen-header-right button.btn-outline-primary i {
+  color: #f97316 !important;
+}
+
+.kitchen-page .kitchen-filter-bar .search-button,
+.kitchen-page .kitchen-filter-bar .refresh-button,
+.kitchen-page .kitchen-empty-refresh-button {
+  border-color: #292929 !important;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+  width: fit-content !important;
+  min-width: 0 !important;
+}
+
+.kitchen-page .kitchen-filter-bar .search-button,
+.kitchen-page .kitchen-filter-bar .search-button i {
+  border-color: #c2410c !important;
+  background: linear-gradient(135deg, #c2410c, #f97316) !important;
+  color: #111827 !important;
+}
+
+.kitchen-page .kitchen-filter-bar .clear-button {
+  border-color: #eee3da !important;
+  background: #fff !important;
+  color: #111827 !important;
+}
+
+.kitchen-page .kitchen-filter-button i,
+.kitchen-page .kitchen-empty-refresh-button i {
+  color: #f97316 !important;
+}
+
+.kitchen-page .kitchen-filter-bar .clear-button i {
+  color: #f97316 !important;
+}
+
+.pos-search-control:focus-within,
+.billing-range-field input:focus,
+.table-management-page .form-control:focus,
+.table-management-page .form-select:focus {
+  border-color: #fb923c;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14);
+}
+
+/* POS accents were still using the old blue / violet palette. */
+.pos-workspace-page .pos-menu-card-footer strong,
+.pos-workspace-page .pos-menu-counter strong,
+.pos-workspace-page .pos-workspace-table-strip button,
+.pos-workspace-page .pos-order-tabs button span,
+.pos-workspace-page .pos-bill-total > strong {
+  color: #c2410c !important;
+}
+
+.pos-workspace-page .pos-menu-card-footer > span,
+.pos-workspace-page .pos-order-tabs button span {
+  background: #fff1e6 !important;
+}
+
+.pos-workspace-page .pos-menu-card-footer > span {
+  color: #c2410c !important;
+}
+
+.pos-workspace-page .pos-menu-card-category {
+  border-color: #fed7aa;
+  background: #fff1e6;
+  color: #9a3412;
+}
+
+.pos-workspace-page .pos-pay-button,
+.pos-workspace-page .pos-pay-button:hover:not(:disabled) {
+  border-color: #c2410c !important;
+  background: linear-gradient(135deg, #c2410c, #f97316) !important;
+  color: #fff !important;
+}
+
+.pos-table-selection-page .pos-table-card.selected {
+  border-color: #f97316 !important;
+  outline: 2px solid rgba(249, 115, 22, .18) !important;
+  background: #fff8f1 !important;
+  box-shadow: 0 10px 26px rgba(124, 45, 18, .1) !important;
+}
+
+@media (max-width: 767.98px) {
+  .pos-page,
+  .pos-workspace-page,
+  .kitchen-page,
+  .table-management-page,
+  .billing-page {
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .pos-page-header,
+  .pos-workspace-header,
+  .kitchen-header,
+  .table-management-header,
+  .billing-page-header {
+    padding: 14px;
+  }
+}
+
+/* Customer Details page theme aligned with Order Management. */
+.customer-details-page {
+  gap: 12px !important;
+  padding: 18px !important;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
+    #f4f1ed !important;
+  color: #111827;
+}
+
+.customer-details-page .customer-details-header,
+.customer-details-page .customer-profile-card,
+.customer-details-page .customer-details-summary-card,
+.customer-details-page .customer-history-card {
+  border: 1px solid #eee3da !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
+}
+
+.customer-details-page .customer-details-header {
+  min-height: 100px;
+  padding: 18px 20px !important;
+}
+
+.customer-details-page .customer-details-eyebrow {
+  color: #f97316 !important;
+}
+
+.customer-details-page .customer-details-heading h1,
+.customer-details-page .customer-details-heading p:last-child,
+.customer-details-page .customer-profile-main h2,
+.customer-details-page .customer-profile-main p,
+.customer-details-page .customer-details-summary-card span,
+.customer-details-page .customer-details-summary-card strong,
+.customer-details-page .customer-history-header h2,
+.customer-details-page .customer-history-header p,
+.customer-details-page .customer-history-table th,
+.customer-details-page .customer-history-table td,
+.customer-details-page .customer-order-item strong {
+  color: #111827 !important;
+}
+
+.customer-details-page .customer-details-back-button {
+  border-color: #eee3da !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.customer-details-page .customer-avatar {
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.customer-details-page .customer-profile-main p i,
+.customer-details-page .customer-history-empty i {
+  color: #f97316 !important;
+}
+
+.customer-details-page .customer-details-edit-button {
+  border: 1px solid #292929 !important;
+  border-radius: 10px !important;
+  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+}
+
+.customer-details-page .customer-details-edit-button i {
+  color: #f97316 !important;
+}
+
+.customer-details-page .customer-details-summary-card {
+  padding: 18px !important;
+}
+
+.customer-details-page .customer-history-header {
+  border-color: #eee3da !important;
+  background: #fff8f1;
+}
+
+.customer-details-page .customer-history-count {
+  border: 1px solid #fed7aa;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+.customer-details-page .customer-history-table th {
+  background: #f8f1e9 !important;
+}
+
+.customer-details-page .customer-history-table tbody tr:hover {
+  background: #fffaf5 !important;
+}
+
+@media (max-width: 767.98px) {
+  .customer-details-page {
+    padding: 10px !important;
+    border-radius: 18px;
+  }
+
+  .customer-details-page .customer-details-header {
+    padding: 14px !important;
+  }
+}
+
+/* Customer Management page theme aligned with Order Management. */
+.customer-management-page {
+  --customer-accent: #f97316;
+  --customer-border: #eee3da;
+  gap: 12px !important;
+  padding: 18px !important;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
+    #f4f1ed !important;
+  color: #111827;
+}
+
+.customer-management-page .customer-page-header,
+.customer-management-page .customer-summary-card,
+.customer-management-page .customer-filter-card,
+.customer-management-page .customer-table-card {
+  border: 1px solid #eee3da !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
+}
+
+.customer-management-page .customer-page-header {
+  min-height: 100px;
+  padding: 18px 20px !important;
+}
+
+.customer-management-page .customer-page-header-icon,
+.customer-management-page .customer-summary-icon {
+  border-radius: 10px !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.customer-management-page .customer-page-eyebrow,
+.customer-management-page .customer-page-heading h1,
+.customer-management-page .customer-page-heading p,
+.customer-management-page .customer-summary-label,
+.customer-management-page .customer-summary-value,
+.customer-management-page .customer-summary-description,
+.customer-management-page .customer-filter-label,
+.customer-management-page .customer-table-header h2,
+.customer-management-page .customer-table-header p,
+.customer-management-page .customer-table th,
+.customer-management-page .customer-table td,
+.customer-management-page .customer-name,
+.customer-management-page .customer-code,
+.customer-management-page .customer-record-count {
+  color: #111827 !important;
+}
+
+.customer-management-page .customer-page-eyebrow,
+.customer-management-page .customer-page-header-icon i,
+.customer-management-page .customer-summary-icon i {
+  color: #f97316 !important;
+}
+
+.customer-management-page .customer-summary-card::before {
+  display: none !important;
+}
+
+.customer-management-page .customer-refresh-button {
+  border: 1px solid #292929 !important;
+  border-radius: 10px !important;
+  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+}
+
+.customer-management-page .customer-refresh-button span,
+.customer-management-page .customer-refresh-button i {
+  color: #f97316 !important;
+}
+
+.customer-management-page .customer-apply-button {
+  border-color: #c2410c !important;
+  background: linear-gradient(135deg, #c2410c, #f97316) !important;
+  color: #111827 !important;
+}
+
+.customer-management-page .customer-apply-button i {
+  color: #111827 !important;
+}
+
+.customer-management-page .customer-filter-card .form-control:focus,
+.customer-management-page .customer-filter-card .form-select:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
+}
+
+.customer-management-page .customer-table-header {
+  border-color: #eee3da !important;
+  background: #fff8f1 !important;
+}
+
+.customer-management-page .customer-table th {
+  border-color: #eee3da !important;
+  background: #f8f1e9 !important;
+}
+
+.customer-management-page .customer-action-button {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.customer-management-page .customer-action-button i {
+  color: #f97316 !important;
+}
+
+.customer-management-page .customer-record-count,
+.customer-management-page .customer-visit-count {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+.customer-management-page .customer-visit-badge {
+  color: #111827 !important;
+}
+
+@media (max-width: 767.98px) {
+  .customer-management-page {
+    padding: 10px !important;
+    border-radius: 18px;
+  }
+
+  .customer-management-page .customer-page-header {
+    padding: 14px !important;
+  }
+}
+
+/* Billing page theme aligned with Order Management. */
+.billing-page {
+  --billing-primary: #f97316;
+  --billing-primary-dark: #c2410c;
+  --billing-primary-deep: #9a3412;
+  --billing-primary-soft: #fff1e6;
+  --billing-border: #eee3da;
+  --billing-card: #fff;
+  --billing-text: #111827;
+  --billing-muted: #111827;
+  padding: 18px !important;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
+    #f4f1ed !important;
+  color: #111827;
+}
+
+.billing-page-header,
+.billing-report-card,
+.billing-summary-card {
+  border: 1px solid #eee3da !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
+}
+
+.billing-page-header {
+  min-height: 100px;
+  margin-bottom: 12px !important;
+  padding: 18px 20px !important;
+}
+
+.billing-page-header-icon,
+.billing-report-icon,
+.billing-summary-icon {
+  border-radius: 10px !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.billing-page-eyebrow,
+.billing-page-heading h1,
+.billing-page-heading > p:last-child,
+.billing-report-heading h2,
+.billing-report-heading p,
+.billing-summary-card-content > span,
+.billing-summary-card-content > strong,
+.billing-summary-card-content > small {
+  color: #111827 !important;
+}
+
+.billing-page-eyebrow,
+.billing-range-label,
+.billing-range-label i {
+  color: #f97316 !important;
+}
+
+.billing-summary-card::before {
+  background: #f97316 !important;
+}
+
+.billing-page .sales-card,
+.billing-page .collected-card,
+.billing-page .tax-card,
+.billing-page .service-card,
+.billing-page .expense-card,
+.billing-page .cash-card,
+.billing-page .due-card,
+.billing-page .orders-card {
+  --card-accent: #f97316;
+  --card-border: #eee3da;
+  --card-icon-background: #fff1e6;
+}
+
+.billing-range-field input:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
+}
+
+.billing-refresh-button,
+.billing-refresh-button:hover:not(:disabled),
+.billing-action-button.extract-button {
+  border: 1px solid #292929 !important;
+  border-radius: 10px !important;
+  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+}
+
+.billing-refresh-button i,
+.billing-action-button.extract-button i {
+  color: #f97316 !important;
+}
+
+.billing-page .billing-refresh-button,
+.billing-page .billing-refresh-button span,
+.billing-page .billing-refresh-button i {
+  color: #f97316 !important;
+}
+
+.billing-page .billing-action-button.extract-button,
+.billing-page .billing-action-button.extract-button span,
+.billing-page .billing-action-button.extract-button i {
+  color: #f97316 !important;
+}
+
+.billing-page .billing-order-number,
+.billing-page .billing-order-number::before {
+  color: #111827 !important;
+}
+
+.billing-report-header {
+  border-color: #eee3da !important;
+  background: #fff8f1 !important;
+}
+
+.billing-action-button.print-button,
+.billing-action-button {
+  border-color: #eee3da !important;
+  background: #fff !important;
+  color: #111827 !important;
+}
+
+.billing-action-button.print-button i {
+  color: #f97316 !important;
+}
+
+@media (max-width: 767.98px) {
+  .billing-page {
+    padding: 10px !important;
+    border-radius: 18px;
+  }
+
+  .billing-page-header {
+    padding: 14px !important;
+  }
+}
+
+/* Customer edit page theme aligned with Order Management. */
+.customer-edit-page {
+  --customer-edit-accent: #f97316;
+  gap: 12px !important;
+  padding: 18px !important;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
+    #f4f1ed !important;
+  color: #111827 !important;
+}
+
+.customer-edit-page .customer-edit-header,
+.customer-edit-page .customer-edit-form-card,
+.customer-edit-page .customer-edit-loading {
+  border: 1px solid #eee3da !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
+}
+
+.customer-edit-page .customer-edit-header {
+  min-height: 100px;
+  padding: 18px 20px !important;
+}
+
+.customer-edit-page .customer-edit-eyebrow,
+.customer-edit-page .customer-edit-heading h1,
+.customer-edit-page .customer-edit-heading p:last-child,
+.customer-edit-page .customer-edit-form-header h2,
+.customer-edit-page .customer-edit-form-header p,
+.customer-edit-page .customer-edit-label,
+.customer-edit-page .customer-edit-switch-row strong {
+  color: #111827 !important;
+}
+
+.customer-edit-page .customer-edit-eyebrow {
+  color: #f97316 !important;
+}
+
+.customer-edit-page .customer-edit-back-button {
+  width: 40px;
+  height: 40px;
+  border-color: #eee3da !important;
+  border-radius: 10px !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.customer-edit-page .customer-edit-back-button:hover {
+  border-color: #fdba74 !important;
+  background: #fff8f1 !important;
+  color: #c2410c !important;
+}
+
+.customer-edit-page .customer-edit-code {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+.customer-edit-page .customer-edit-form-header,
+.customer-edit-page .customer-edit-form-actions {
+  border-color: #eee3da !important;
+}
+
+.customer-edit-page .customer-edit-form-actions {
+  background: #fff8f1 !important;
+}
+
+.customer-edit-page .customer-edit-input-wrapper,
+.customer-edit-page .customer-edit-switch-row {
+  border-color: #eee3da !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+}
+
+.customer-edit-page .customer-edit-input-wrapper > i {
+  color: #f97316 !important;
+}
+
+.customer-edit-page .customer-edit-input-wrapper input {
+  color: #111827 !important;
+}
+
+.customer-edit-page .customer-edit-input-wrapper:focus-within {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
+}
+
+.customer-edit-page .customer-edit-switch-row small {
+  color: #667085 !important;
+}
+
+.customer-edit-page .customer-edit-submit-button,
+.customer-edit-page .customer-edit-submit-button:hover:not(:disabled) {
+  border-color: #292929 !important;
+  border-radius: 10px !important;
+  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+}
+
+.customer-edit-page .customer-edit-submit-button i,
+.customer-edit-page .customer-edit-submit-button .spinner-border {
+  color: #f97316 !important;
+}
+
+.customer-edit-page .customer-edit-cancel-button {
+  border-color: #eee3da !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  color: #111827 !important;
+}
+
+.customer-edit-page .customer-edit-cancel-button i {
+  color: #f97316 !important;
+}
+
+@media (max-width: 767.98px) {
+  .customer-edit-page {
+    padding: 10px !important;
+    border-radius: 18px;
+  }
+
+  .customer-edit-page .customer-edit-header {
+    padding: 14px !important;
+  }
+}

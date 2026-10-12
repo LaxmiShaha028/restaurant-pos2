@@ -1,0 +1,1413 @@
+/* =========================================================
+   KITCHEN ORDER CARD
+   Compact Detailed Version
+========================================================= */
+
+
+/* =========================================================
+   ORDER CARD
+========================================================= */
+
+.kitchen-order-card {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+
+  border: 1px solid var(--kitchen-border);
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  box-shadow: none;
+}
+
+.kitchen-order-card::before {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+  left: 0;
+
+  height: 2px;
+
+  background: var(--kitchen-border);
+
+  content: "";
+}
+
+.kitchen-order-pending::before {
+  background: #f59e0b;
+}
+
+.kitchen-order-preparing::before {
+  background: #ea580c;
+}
+
+.kitchen-order-ready::before {
+  background: #16a34a;
+}
+
+.kitchen-order-assigned {
+  border-color: #dbeafe;
+}
+
+.kitchen-order-unassigned {
+  border-color: #fde68a;
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.kitchen-order-card-header {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 7px;
+
+  padding: 8px;
+
+  border-bottom: 1px solid var(--kitchen-border-soft);
+
+  background: #fafbfc;
+}
+
+.kitchen-order-heading {
+  display: flex;
+
+  min-width: 0;
+
+  align-items: flex-start;
+
+  gap: 6px;
+}
+
+.kitchen-order-status-icon {
+  display: inline-flex;
+
+  width: 29px;
+  height: 29px;
+
+  flex: 0 0 29px;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--kitchen-border);
+  border-radius: 4px;
+
+  background: #ffffff;
+
+  color: var(--kitchen-muted);
+
+  font-size: 15px;
+}
+
+.kitchen-order-title {
+  min-width: 0;
+}
+
+.kitchen-order-label {
+  display: block;
+
+  margin-bottom: 1px;
+
+  color: var(--kitchen-muted);
+
+  font-size: 10px;
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  text-transform: uppercase;
+}
+
+.kitchen-order-title h2 {
+  margin: 0;
+
+  color: var(--kitchen-text);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   HEADER META
+========================================================= */
+
+.kitchen-order-header-meta {
+  display: flex;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 3px 7px;
+
+  margin-top: 3px;
+}
+
+.kitchen-order-header-meta span {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 2px;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+
+  line-height: 1.2;
+}
+
+.kitchen-order-header-meta i {
+  color: var(--kitchen-muted-light);
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.kitchen-status-badge {
+  display: inline-flex;
+
+  min-height: 20px;
+
+  flex: 0 0 auto;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 2px;
+
+  padding: 2px 5px;
+
+  border: 1px solid transparent;
+  border-radius: 10px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.kitchen-status-pending {
+  border-color: #fde68a !important;
+
+  background: var(--kitchen-warning-soft) !important;
+
+  color: var(--kitchen-warning) !important;
+}
+
+.kitchen-status-accepted {
+  border-color: #bfdbfe !important;
+
+  background: var(--kitchen-blue-soft) !important;
+
+  color: var(--kitchen-blue) !important;
+}
+
+.kitchen-status-preparing {
+  border-color: #fed7aa !important;
+
+  background: var(--kitchen-primary-soft) !important;
+
+  color: var(--kitchen-primary) !important;
+}
+
+.kitchen-status-ready {
+  border-color: #bbf7d0 !important;
+
+  background: var(--kitchen-success-soft) !important;
+
+  color: var(--kitchen-success) !important;
+}
+
+.kitchen-status-default {
+  border-color: var(--kitchen-border) !important;
+
+  background: #f8fafc !important;
+
+  color: var(--kitchen-muted) !important;
+}
+
+
+/* =========================================================
+   QUICK INFO
+========================================================= */
+
+.kitchen-order-quick-info {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 5px;
+
+  padding: 7px 8px;
+
+  border-bottom: 1px solid var(--kitchen-border-soft);
+
+  background: #ffffff;
+}
+
+.kitchen-quick-info-item {
+  display: flex;
+
+  min-width: 0;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 5px;
+
+  border: 1px solid var(--kitchen-border-soft);
+  border-radius: 4px;
+
+  background: #fafbfc;
+}
+
+.kitchen-quick-info-icon {
+  display: inline-flex;
+
+  width: 23px;
+  height: 23px;
+
+  flex: 0 0 23px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 4px;
+
+  background: var(--kitchen-primary-soft);
+
+  color: var(--kitchen-primary);
+
+  font-size: 12px;
+}
+
+.kitchen-quick-info-item > div {
+  min-width: 0;
+}
+
+.kitchen-quick-info-item small {
+  display: block;
+
+  margin-bottom: 1px;
+
+  overflow: hidden;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kitchen-quick-info-item strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: var(--kitchen-text);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kitchen-quick-info-item > div > span {
+  display: block;
+
+  margin-top: 1px;
+
+  overflow: hidden;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   CONTEXT
+========================================================= */
+
+.kitchen-order-context {
+  display: grid;
+
+  grid-template-columns:
+    minmax(170px, 0.6fr)
+    minmax(0, 1.4fr);
+
+  gap: 5px;
+
+  padding: 7px 8px;
+
+  border-bottom: 1px solid var(--kitchen-border-soft);
+
+  background: #ffffff;
+}
+
+
+/* =========================================================
+   CUSTOMER
+========================================================= */
+
+.kitchen-customer-summary {
+  display: flex;
+
+  min-width: 0;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 5px;
+
+  border: 1px solid var(--kitchen-border);
+  border-radius: 4px;
+
+  background: #fafbfc;
+}
+
+.kitchen-customer-summary > span {
+  display: inline-flex;
+
+  width: 23px;
+  height: 23px;
+
+  flex: 0 0 23px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 4px;
+
+  background: #ffffff;
+
+  color: var(--kitchen-blue);
+
+  font-size: 12px;
+}
+
+.kitchen-customer-summary > div {
+  min-width: 0;
+}
+
+.kitchen-customer-summary small {
+  display: block;
+
+  margin-bottom: 1px;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.kitchen-customer-summary strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: var(--kitchen-text);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kitchen-customer-summary p {
+  margin: 1px 0 0;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+.kitchen-general-notes {
+  display: grid;
+
+  min-width: 0;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 5px;
+}
+
+.kitchen-note-box {
+  display: flex;
+
+  min-width: 0;
+
+  align-items: flex-start;
+
+  gap: 4px;
+
+  padding: 5px;
+
+  border: 1px solid var(--kitchen-border);
+  border-radius: 4px;
+
+  background: #fafbfc;
+}
+
+.kitchen-note-box > span {
+  display: inline-flex;
+
+  width: 21px;
+  height: 21px;
+
+  flex: 0 0 21px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 3px;
+
+  background: #ffffff;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+}
+
+.kitchen-note-box small {
+  display: block;
+
+  margin-bottom: 1px;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.kitchen-note-box p {
+  margin: 0;
+
+  color: var(--kitchen-text-secondary);
+
+  font-size: 12px;
+
+  line-height: 1.3;
+
+  white-space: pre-wrap;
+
+  overflow-wrap: anywhere;
+}
+
+.kitchen-priority-note {
+  border-color: #fed7aa;
+
+  background: var(--kitchen-primary-soft);
+}
+
+
+/* =========================================================
+   ORDER ITEM SECTION
+========================================================= */
+
+.kitchen-order-items-section {
+  min-width: 0;
+
+  border-bottom: 1px solid var(--kitchen-border-soft);
+}
+
+.kitchen-order-section-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 6px;
+
+  padding: 6px 8px;
+
+  border-bottom: 1px solid var(--kitchen-border-soft);
+
+  background: #fafbfc;
+}
+
+.kitchen-order-section-header > div {
+  display: flex;
+
+  min-width: 0;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+.kitchen-section-icon {
+  display: inline-flex;
+
+  width: 24px;
+  height: 24px;
+
+  flex: 0 0 24px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 4px;
+
+  background: var(--kitchen-primary-soft);
+
+  color: var(--kitchen-primary);
+
+  font-size: 12px;
+}
+
+.kitchen-order-section-header h3 {
+  margin: 0;
+
+  color: var(--kitchen-text);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.kitchen-order-section-header p {
+  margin: 1px 0 0;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+}
+
+.kitchen-item-count {
+  display: inline-flex;
+
+  min-height: 19px;
+
+  flex: 0 0 auto;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 2px 5px;
+
+  border: 1px solid #fed7aa;
+  border-radius: 9px;
+
+  background: var(--kitchen-primary-soft);
+
+  color: var(--kitchen-primary-dark);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   ITEM GRID
+========================================================= */
+
+.kitchen-order-items-list {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 6px;
+
+  padding: 7px 8px;
+}
+
+
+/* =========================================================
+   ITEM CARD
+========================================================= */
+
+.kitchen-menu-item {
+  min-width: 0;
+
+  overflow: hidden;
+
+  border: 1px solid var(--kitchen-border);
+  border-radius: 4px;
+
+  background: #ffffff;
+
+  box-shadow: none;
+}
+
+.kitchen-menu-item-header {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 5px;
+
+  padding: 6px;
+
+  border-bottom: 1px solid var(--kitchen-border-soft);
+
+  background: #fafbfc;
+}
+
+.kitchen-menu-item-heading {
+  display: flex;
+
+  min-width: 0;
+
+  align-items: flex-start;
+
+  gap: 4px;
+}
+
+.kitchen-menu-item-icon {
+  display: inline-flex;
+
+  width: 23px;
+  height: 23px;
+
+  flex: 0 0 23px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 4px;
+
+  background: var(--kitchen-primary-soft);
+
+  color: var(--kitchen-primary);
+
+  font-size: 12px;
+}
+
+.kitchen-menu-item-heading > div {
+  min-width: 0;
+}
+
+.kitchen-menu-item-heading h4 {
+  margin: 0;
+
+  overflow: hidden;
+
+  color: var(--kitchen-text);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kitchen-menu-item-meta {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 2px 5px;
+
+  margin-top: 2px;
+}
+
+.kitchen-menu-item-meta span {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 2px;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+}
+
+.kitchen-menu-item-meta strong {
+  color: var(--kitchen-text-secondary);
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   ITEM STATUS
+========================================================= */
+
+.kitchen-menu-item-status {
+  display: inline-flex;
+
+  min-height: 18px;
+
+  flex: 0 0 auto;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 2px;
+
+  padding: 2px 4px;
+
+  border: 1px solid transparent;
+  border-radius: 9px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.kitchen-item-status-pending {
+  border-color: #fde68a;
+
+  background: var(--kitchen-warning-soft);
+
+  color: var(--kitchen-warning);
+}
+
+.kitchen-item-status-preparing {
+  border-color: #fed7aa;
+
+  background: var(--kitchen-primary-soft);
+
+  color: var(--kitchen-primary);
+}
+
+.kitchen-item-status-ready {
+  border-color: #bbf7d0;
+
+  background: var(--kitchen-success-soft);
+
+  color: var(--kitchen-success);
+}
+
+
+/* =========================================================
+   ITEM CONTENT
+========================================================= */
+
+.kitchen-menu-item-content {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 4px;
+
+  padding: 5px;
+}
+
+.kitchen-item-section {
+  min-width: 0;
+
+  padding: 5px;
+
+  border: 1px solid var(--kitchen-border-soft);
+  border-radius: 4px;
+
+  background: #fafbfc;
+}
+
+.kitchen-item-section-title {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 4px;
+
+  margin-bottom: 4px;
+}
+
+.kitchen-item-section-title > span {
+  display: inline-flex;
+
+  width: 20px;
+  height: 20px;
+
+  flex: 0 0 20px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 3px;
+
+  background: #ffffff;
+
+  color: var(--kitchen-primary);
+
+  font-size: 12px;
+}
+
+.kitchen-item-section-title h5 {
+  margin: 0;
+
+  color: var(--kitchen-text);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.kitchen-item-section-title p {
+  margin: 1px 0 0;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   INGREDIENTS / ADDONS
+========================================================= */
+
+.kitchen-ingredient-list,
+.kitchen-addon-list {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 3px;
+}
+
+.kitchen-ingredient-chip,
+.kitchen-addon-chip {
+  display: inline-flex;
+
+  max-width: 100%;
+
+  align-items: center;
+
+  gap: 2px;
+
+  padding: 2px 4px;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  overflow-wrap: anywhere;
+}
+
+.kitchen-ingredient-chip {
+  border: 1px solid #bbf7d0;
+
+  background: var(--kitchen-success-soft);
+
+  color: var(--kitchen-success);
+}
+
+.kitchen-addon-chip {
+  border: 1px solid #bfdbfe;
+
+  background: var(--kitchen-blue-soft);
+
+  color: var(--kitchen-blue);
+}
+
+.kitchen-addon-chip small {
+  font-size: 12px;
+}
+
+.kitchen-item-empty {
+  display: flex;
+
+  align-items: center;
+
+  gap: 3px;
+
+  color: var(--kitchen-muted-light);
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   ITEM NOTE
+========================================================= */
+
+.kitchen-item-note {
+  display: flex;
+
+  min-width: 0;
+
+  align-items: flex-start;
+
+  gap: 4px;
+
+  margin:
+    0
+    5px
+    5px;
+
+  padding: 4px;
+
+  border: 1px solid #fde68a;
+  border-radius: 4px;
+
+  background: var(--kitchen-warning-soft);
+}
+
+.kitchen-item-note > span {
+  display: inline-flex;
+
+  width: 20px;
+  height: 20px;
+
+  flex: 0 0 20px;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 3px;
+
+  background: #ffffff;
+
+  color: var(--kitchen-warning);
+
+  font-size: 12px;
+}
+
+.kitchen-item-note small {
+  display: block;
+
+  margin-bottom: 1px;
+
+  color: #92400e;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.kitchen-item-note p {
+  margin: 0;
+
+  color: #92400e;
+
+  font-size: 12px;
+
+  line-height: 1.25;
+
+  white-space: pre-wrap;
+}
+
+
+/* =========================================================
+   EMPTY ITEMS
+========================================================= */
+
+.kitchen-order-items-empty {
+  display: flex;
+
+  min-height: 100px;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 15px;
+
+  text-align: center;
+}
+
+.kitchen-order-items-empty > i {
+  margin-bottom: 3px;
+
+  color: var(--kitchen-muted-light);
+
+  font-size: 14px;
+}
+
+.kitchen-order-items-empty strong {
+  color: var(--kitchen-text);
+
+  font-size: 12px;
+}
+
+.kitchen-order-items-empty span {
+  margin-top: 2px;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.kitchen-order-timeline {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 5px;
+
+  padding: 7px 8px;
+
+  border-bottom: 1px solid var(--kitchen-border-soft);
+
+  background: #fafbfc;
+}
+
+.kitchen-timeline-step {
+  display: flex;
+
+  min-width: 0;
+
+  align-items: center;
+
+  gap: 4px;
+
+  padding: 5px;
+
+  border: 1px solid var(--kitchen-border);
+  border-radius: 4px;
+
+  background: #ffffff;
+}
+
+.kitchen-timeline-marker {
+  display: inline-flex;
+
+  width: 22px;
+  height: 22px;
+
+  flex: 0 0 22px;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--kitchen-border);
+  border-radius: 50%;
+
+  background: #f8fafc;
+
+  color: var(--kitchen-muted-light);
+
+  font-size: 12px;
+}
+
+.kitchen-timeline-step.completed {
+  border-color: #bbf7d0;
+
+  background: var(--kitchen-success-soft);
+}
+
+.kitchen-timeline-step.completed
+.kitchen-timeline-marker {
+  border-color: #86efac;
+
+  background: #ffffff;
+
+  color: var(--kitchen-success);
+}
+
+.kitchen-timeline-step strong {
+  display: block;
+
+  color: var(--kitchen-text);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.kitchen-timeline-step small {
+  display: block;
+
+  margin-top: 1px;
+
+  overflow: hidden;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+
+  line-height: 1.2;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTION ERROR
+========================================================= */
+
+.kitchen-action-error {
+  display: flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  margin:
+    5px
+    8px
+    0;
+
+  padding: 5px;
+
+  border: 1px solid #fecaca;
+  border-radius: 4px;
+
+  background: var(--kitchen-danger-soft);
+
+  color: var(--kitchen-danger);
+
+  font-size: 12px;
+}
+
+.kitchen-action-error > span {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.kitchen-action-error > button {
+  display: inline-flex;
+
+  width: 20px;
+  height: 20px;
+
+  flex: 0 0 20px;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 3px;
+
+  background: transparent;
+
+  color: var(--kitchen-danger);
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.kitchen-order-card-footer {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 7px;
+
+  padding: 7px 8px;
+
+  background: #ffffff;
+}
+
+.kitchen-assignment-info {
+  display: flex;
+
+  min-width: 0;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+.kitchen-assignment-avatar {
+  display: inline-flex;
+
+  width: 25px;
+  height: 25px;
+
+  flex: 0 0 25px;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--kitchen-border);
+  border-radius: 4px;
+
+  background: #f8fafc;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.kitchen-assignment-avatar.assigned {
+  border-color: #bfdbfe;
+
+  background: var(--kitchen-blue-soft);
+
+  color: var(--kitchen-blue);
+}
+
+.kitchen-assignment-info small {
+  display: block;
+
+  margin-bottom: 1px;
+
+  color: var(--kitchen-muted);
+
+  font-size: 12px;
+}
+
+.kitchen-assignment-info strong {
+  display: block;
+
+  color: var(--kitchen-text);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.kitchen-order-actions {
+  display: flex;
+
+  min-width: 0;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 4px;
+}
+
+.kitchen-action-button {
+  display: inline-flex;
+
+  min-height: 27px;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  padding: 0 7px;
+
+  border: 1px solid transparent;
+  border-radius: 4px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.kitchen-action-button:hover:not(:disabled) {
+  transform: none;
+}
+
+.accept-button {
+  border-color: var(--kitchen-blue);
+
+  background: var(--kitchen-blue);
+
+  color: #ffffff;
+
+  box-shadow: none;
+}
+
+.preparing-button {
+  border-color: var(--kitchen-primary);
+
+  background: var(--kitchen-primary);
+
+  color: #ffffff;
+
+  box-shadow: none;
+}
+
+.ready-button {
+  border-color: var(--kitchen-success);
+
+  background: var(--kitchen-success);
+
+  color: #ffffff;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   READY / NO ACTION MESSAGE
+========================================================= */
+
+.kitchen-ready-message,
+.kitchen-no-action-message {
+  display: inline-flex;
+
+  min-height: 26px;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  padding: 0 6px;
+
+  border-radius: 4px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.kitchen-ready-message {
+  border: 1px solid #bbf7d0;
+
+  background: var(--kitchen-success-soft);
+
+  color: var(--kitchen-success);
+}
+
+.kitchen-no-action-message {
+  border: 1px solid var(--kitchen-border);
+
+  background: #f8fafc;
+
+  color: var(--kitchen-muted);
+}

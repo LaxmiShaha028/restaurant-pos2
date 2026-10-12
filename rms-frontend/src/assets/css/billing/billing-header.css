@@ -1,0 +1,194 @@
+/* ==========================================================================
+   BILLING PAGE HEADER
+   Same size & spacing as Kitchen / Order / Table headers
+   ========================================================================== */
+
+.billing-page-header {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 7px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+/* Left side with icon */
+.billing-page-header-left {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+}
+
+.billing-page-header-icon {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 15px;
+}
+
+/* Heading text */
+.billing-page-heading {
+  min-width: 0;
+}
+
+.billing-page-eyebrow {
+  display: block;
+  margin: 0 0 1px;
+  color: #2563eb;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.billing-page-heading h1 {
+  margin: 0;
+  color: #172033;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.billing-page-heading > p:last-child {
+  max-width: 550px;
+  margin: 2px 0 0;
+  overflow: hidden;
+  color: #667085;
+  font-size: 8px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Right side actions */
+.billing-header-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+/* Date fields */
+.billing-range-field {
+  display: flex;
+  min-width: 112px;
+  flex-direction: column;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.billing-range-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: #667085;
+  font-size: 7px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.billing-range-label i {
+  color: #2563eb;
+  font-size: 7px;
+}
+
+.billing-range-field input {
+  width: 100%;
+  min-height: 28px;
+  padding: 0 5px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  outline: none;
+  background: #ffffff;
+  color: #172033;
+  font-size: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.billing-range-field input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.08);
+}
+
+/* Refresh button */
+.billing-refresh-button {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 0 8px;
+  border: 1px solid #16a34a;
+  border-radius: 4px;
+  background: #16a34a;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.billing-refresh-button:hover:not(:disabled) {
+  border-color: #15803d;
+  background: #15803d;
+}
+
+.billing-refresh-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.billing-refresh-button .spinner-border {
+  width: 10px;
+  height: 10px;
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+  .billing-page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .billing-header-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
+  }
+
+  .billing-range-field {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .billing-header-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .billing-refresh-button {
+    width: 100%;
+  }
+
+  .billing-page-heading > p:last-child {
+    white-space: normal;
+  }
+}

@@ -1,0 +1,1518 @@
+/* =========================================================
+   TABLE LIST
+   Compact POS / Admin Layout
+
+   IMPORTANT:
+   Template has exactly 6 columns:
+   1. Table
+   2. Capacity
+   3. Section
+   4. Status
+   5. Merge Information
+   6. Actions
+========================================================= */
+
+.table-list {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+
+  margin: 0;
+  padding: 0;
+
+  color: #374151;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.table-list__header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  margin-bottom: 7px;
+}
+
+.table-list__header > div {
+  min-width: 0;
+
+  flex: 1;
+}
+
+
+/* =========================================================
+   HEADER EYEBROW
+========================================================= */
+
+.table-list__eyebrow {
+  margin:
+    0
+    0
+    1px;
+
+  color: #6366f1;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  letter-spacing: 0.04em;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   HEADER TITLE
+========================================================= */
+
+.table-list__title {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   HEADER DESCRIPTION
+========================================================= */
+
+.table-list__description {
+  max-width: 600px;
+
+  margin: 2px 0 0;
+
+  overflow: hidden;
+
+  color: #6b7280;
+
+  font-size: 12px;
+
+  line-height: 1.25;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   REFRESH BUTTON
+========================================================= */
+
+.table-list__refresh {
+  display: inline-flex;
+
+  min-height: 27px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  padding:
+    0
+    7px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+
+  background: #ffffff;
+
+  color: #475569;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.table-list__refresh:hover:not(:disabled) {
+  border-color: #a5b4fc;
+
+  background: #eef2ff;
+
+  color: #4338ca;
+}
+
+.table-list__refresh:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.55;
+}
+
+.table-list__spin {
+  animation:
+    table-list-spin 0.8s linear infinite;
+}
+
+@keyframes table-list-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   STATUS TABS
+========================================================= */
+
+.status-tabs {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  gap: 5px;
+
+  margin-bottom: 7px;
+}
+
+
+/* =========================================================
+   STATUS TAB
+========================================================= */
+
+.status-tab {
+  display: flex;
+
+  min-width: 0;
+  min-height: 34px;
+
+  align-items: center;
+
+  gap: 4px;
+
+  padding: 4px 5px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+
+  background: #ffffff;
+
+  color: #64748b;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.status-tab:hover {
+  border-color: #c7d2fe;
+
+  background: #fafbff;
+}
+
+.status-tab--active {
+  border-color: #818cf8;
+
+  background: #eef2ff;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   STATUS ICON
+========================================================= */
+
+.status-tab__icon {
+  display: grid;
+
+  width: 22px;
+  height: 22px;
+
+  flex: 0 0 22px;
+
+  place-items: center;
+
+  border-radius: 3px;
+
+  background: #f1f5f9;
+
+  color: #475569;
+
+  font-size: 12px;
+}
+
+.status-tab--available
+.status-tab__icon {
+  background: #dcfce7;
+
+  color: #15803d;
+}
+
+.status-tab--occupied
+.status-tab__icon {
+  background: #fee2e2;
+
+  color: #dc2626;
+}
+
+.status-tab--reserved
+.status-tab__icon {
+  background: #ede9fe;
+
+  color: #7c3aed;
+}
+
+.status-tab--cleaning
+.status-tab__icon {
+  background: #dbeafe;
+
+  color: #2563eb;
+}
+
+
+/* =========================================================
+   STATUS LABEL
+========================================================= */
+
+.status-tab__label {
+  min-width: 0;
+
+  flex: 1;
+
+  overflow: hidden;
+
+  color: #374151;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   STATUS COUNT
+========================================================= */
+
+.status-tab__count {
+  display: grid;
+
+  min-width: 18px;
+  height: 18px;
+
+  flex: 0 0 auto;
+
+  place-items: center;
+
+  padding: 0 3px;
+
+  border-radius: 9px;
+
+  background: #f1f5f9;
+
+  color: #475569;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   FILTER BAR
+========================================================= */
+
+.table-filters {
+  display: grid;
+
+  grid-template-columns:
+    minmax(180px, 1fr)
+    115px
+    auto
+    auto;
+
+  align-items: center;
+
+  gap: 5px;
+
+  margin-bottom: 7px;
+
+  padding: 5px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+
+  background: #ffffff;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.table-filters__search {
+  display: flex;
+
+  min-width: 0;
+  min-height: 27px;
+
+  align-items: center;
+
+  gap: 4px;
+
+  padding:
+    0
+    6px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+
+  background: #f9fafb;
+
+  color: #9ca3af;
+}
+
+.table-filters__search > i {
+  flex-shrink: 0;
+
+  font-size: 12px;
+}
+
+.table-filters__search:focus-within {
+  border-color: #818cf8;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 2px rgba(99, 102, 241, 0.08);
+}
+
+.table-filters__search input {
+  width: 100%;
+  min-width: 0;
+
+  padding: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #111827;
+
+  font-size: 12px;
+}
+
+.table-filters__search input::placeholder {
+  color: #9ca3af;
+}
+
+
+/* =========================================================
+   SECTION SELECT
+========================================================= */
+
+.table-filters__select {
+  width: 100%;
+  min-height: 27px;
+
+  padding:
+    0
+    22px
+    0
+    6px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+
+  background-color: #ffffff;
+
+  color: #374151;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  outline: none;
+}
+
+
+/* =========================================================
+   CLEAR BUTTON
+========================================================= */
+
+.table-filters__clear {
+  display: inline-flex;
+
+  min-height: 27px;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  padding:
+    0
+    6px;
+
+  border: 1px solid #fecaca;
+  border-radius: 4px;
+
+  background: #fff1f2;
+
+  color: #dc2626;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   RESULT COUNT
+========================================================= */
+
+.table-filters__result {
+  color: #6b7280;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   DESKTOP LIST WRAPPER
+========================================================= */
+
+.table-list-view {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+
+  background: #ffffff;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   IMPORTANT
+   EXACTLY SIX COLUMNS
+========================================================= */
+
+.table-list-view__head,
+.table-list-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(125px, 1.35fr)
+    minmax(55px, 0.5fr)
+    minmax(65px, 0.6fr)
+    minmax(80px, 0.72fr)
+    minmax(120px, 1.15fr)
+    minmax(160px, 1.35fr);
+
+  gap: 5px;
+}
+
+
+/* =========================================================
+   TABLE HEAD
+========================================================= */
+
+.table-list-view__head {
+  align-items: center;
+
+  min-height: 27px;
+
+  padding:
+    4px
+    7px;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  background: #f8fafc;
+
+  color: #64748b;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  text-transform: uppercase;
+}
+
+.table-list-view__head span {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+
+/* =========================================================
+   TABLE ROW
+========================================================= */
+
+.table-list-row {
+  position: relative;
+
+  align-items: center;
+
+  min-height: 48px;
+
+  padding:
+    5px
+    7px;
+
+  border-bottom: 1px solid #f0f2f5;
+
+  background: #ffffff;
+
+  transition:
+    background 0.12s ease;
+}
+
+.table-list-row:last-child {
+  border-bottom: 0;
+}
+
+.table-list-row:hover {
+  background: #fafbfc;
+}
+
+
+/* =========================================================
+   STATUS LEFT BORDER
+========================================================= */
+
+.table-list-row::before {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  width: 2px;
+
+  background: #94a3b8;
+
+  content: "";
+}
+
+.table-list-row--available::before {
+  background: #22c55e;
+}
+
+.table-list-row--occupied::before {
+  background: #ef4444;
+}
+
+.table-list-row--reserved::before {
+  background: #8b5cf6;
+}
+
+.table-list-row--cleaning::before {
+  background: #3b82f6;
+}
+
+
+/* =========================================================
+   TABLE IDENTITY
+========================================================= */
+
+.table-list-row__table {
+  min-width: 0;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+
+/* =========================================================
+   TABLE ICON
+========================================================= */
+
+.table-list-row__icon {
+  display: grid;
+
+  width: 24px;
+  height: 24px;
+
+  flex: 0 0 24px;
+
+  place-items: center;
+
+  border-radius: 4px;
+
+  background: #eef2ff;
+
+  color: #4f46e5;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   TABLE IDENTITY TEXT
+========================================================= */
+
+.table-list-row__identity {
+  min-width: 0;
+}
+
+.table-list-row__identity strong,
+.table-list-row__identity span,
+.table-list-row__identity small {
+  display: block;
+}
+
+.table-list-row__identity strong {
+  overflow: hidden;
+
+  color: #111827;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1.15;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.table-list-row__identity span {
+  margin-top: 1px;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+  text-align: center;
+}
+
+.table-list-row__identity small {
+  max-width: 100%;
+
+  margin-top: 1px;
+
+  overflow: hidden;
+
+  color: #6b7280;
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   NORMAL CELLS
+========================================================= */
+
+.table-list-row__cell {
+  min-width: 0;
+  text-align: center;
+}
+
+.table-list-row__cell strong,
+.table-list-row__cell span {
+  display: block;
+  text-align: center;
+}
+
+.table-list-row__cell strong {
+  color: #1f2937;
+
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.table-list-row__cell
+> span:not(.table-list-row__status)
+:not(.table-list-row__section) {
+  margin-top: 1px;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   SECTION BADGE
+========================================================= */
+
+.table-list-row__section {
+  display: inline-flex !important;
+
+  width: fit-content;
+  max-width: 100%;
+
+  align-items: center;
+
+  padding:
+    2px
+    4px;
+
+  border-radius: 3px;
+
+  background: #eff6ff;
+
+  color: #1d4ed8;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+.table-list-row__status {
+  display: inline-flex !important;
+
+  width: fit-content;
+  max-width: 100%;
+
+  align-items: center;
+
+  gap: 2px;
+
+  padding:
+    2px
+    4px;
+
+  border-radius: 3px;
+
+  font-size: 12px;
+  font-weight: 650;
+
+  white-space: nowrap;
+}
+
+.table-list-row__status i {
+  font-size: 12px;
+}
+
+.table-list-row__status--available {
+  background: #dcfce7;
+
+  color: #15803d;
+}
+
+.table-list-row__status--occupied {
+  background: #fee2e2;
+
+  color: #dc2626;
+}
+
+.table-list-row__status--reserved {
+  background: #ede9fe;
+
+  color: #7c3aed;
+}
+
+.table-list-row__status--cleaning {
+  background: #dbeafe;
+
+  color: #2563eb;
+}
+
+
+/* =========================================================
+   MERGE INFORMATION
+========================================================= */
+
+.table-list-row__merge {
+  min-width: 0;
+  text-align: center;
+}
+
+.table-list-row__merge strong,
+.table-list-row__merge small {
+  display: block;
+}
+
+.table-list-row__merge strong {
+  max-width: 100%;
+
+  margin-top: 2px;
+
+  overflow: hidden;
+
+  color: #475569;
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table-list-row__merge small {
+  margin-top: 1px;
+
+  overflow: hidden;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table-list-row__merge-badge {
+  display: inline-flex;
+
+  max-width: 100%;
+
+  align-items: center;
+
+  gap: 2px;
+
+  padding:
+    2px
+    4px;
+
+  border-radius: 3px;
+
+  background: #dbeafe;
+
+  color: #1d4ed8;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.table-list-row__empty {
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.table-list-row__actions {
+  display: grid;
+
+  min-width: 0;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 3px;
+}
+
+
+/* =========================================================
+   ACTION BUTTON
+========================================================= */
+
+.table-list-row__button {
+  display: inline-flex;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 22px;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 2px;
+
+  padding:
+    2px
+    4px;
+
+  border: 1px solid;
+  border-radius: 3px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  line-height: 1;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.12s ease,
+    background 0.12s ease;
+}
+
+.table-list-row__button i {
+  font-size: 12px;
+}
+
+.table-list-row__button:hover {
+  transform: none;
+}
+
+
+/* =========================================================
+   EDIT
+========================================================= */
+
+.table-list-row__button--edit {
+  border-color: #c7d2fe;
+
+  background: #eef2ff;
+
+  color: #4338ca;
+}
+
+.table-list-row__button--edit:hover {
+  border-color: #818cf8;
+
+  background: #e0e7ff;
+}
+
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+.table-list-row__button--delete {
+  border-color: #fecaca;
+
+  background: #fff1f2;
+
+  color: #dc2626;
+}
+
+.table-list-row__button--delete:hover {
+  border-color: #f87171;
+
+  background: #ffe4e6;
+}
+
+
+/* =========================================================
+   MERGE
+========================================================= */
+
+.table-list-row__button--merge {
+  border-color: #fde68a;
+
+  background: #fffbeb;
+
+  color: #b45309;
+}
+
+.table-list-row__button--merge:hover {
+  border-color: #fbbf24;
+
+  background: #fef3c7;
+}
+
+
+/* =========================================================
+   SPLIT
+========================================================= */
+
+.table-list-row__button--split {
+  border-color: #cbd5e1;
+
+  background: #f8fafc;
+
+  color: #475569;
+}
+
+.table-list-row__button--split:hover {
+  border-color: #94a3b8;
+
+  background: #f1f5f9;
+}
+
+
+/* =========================================================
+   LOADING / EMPTY STATE
+========================================================= */
+
+.table-list__state {
+  display: flex;
+
+  min-height: 150px;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  padding: 15px;
+
+  border: 1px dashed #cbd5e1;
+  border-radius: 4px;
+
+  background: #ffffff;
+
+  text-align: center;
+}
+
+.table-list__state strong {
+  color: #334155;
+
+  font-size: 12px;
+}
+
+.table-list__state span {
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+.table-list__loader {
+  width: 24px;
+  height: 24px;
+
+  margin-bottom: 3px;
+
+  border: 2px solid #e2e8f0;
+  border-top-color: #6366f1;
+  border-radius: 50%;
+
+  animation:
+    table-list-spin 0.8s linear infinite;
+}
+
+
+/* =========================================================
+   EMPTY ICON
+========================================================= */
+
+.table-list__empty-icon {
+  display: grid;
+
+  width: 32px;
+  height: 32px;
+
+  margin-bottom: 3px;
+
+  place-items: center;
+
+  border-radius: 5px;
+
+  background: #eef2ff;
+
+  color: #6366f1;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   EMPTY BUTTON
+========================================================= */
+
+.table-list__empty-button {
+  min-height: 25px;
+
+  margin-top: 4px;
+
+  padding:
+    0
+    7px;
+
+  border: 0;
+  border-radius: 4px;
+
+  background: #4f46e5;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   SMALL DESKTOP
+   Keep desktop table - NO horizontal scroll
+========================================================= */
+
+@media (max-width: 1199.98px) {
+  .table-list-view {
+    overflow-x: hidden;
+  }
+
+  .table-list-view__head,
+  .table-list-row {
+    min-width: 0;
+
+    grid-template-columns:
+      minmax(115px, 1.25fr)
+      minmax(48px, 0.45fr)
+      minmax(58px, 0.55fr)
+      minmax(72px, 0.68fr)
+      minmax(100px, 1fr)
+      minmax(125px, 1.2fr);
+
+    gap: 4px;
+  }
+
+  .table-list-row {
+    padding:
+      5px
+      6px;
+  }
+
+  .table-list-view__head {
+    padding:
+      4px
+      6px;
+  }
+
+  .table-list-row__button span {
+    display: none;
+  }
+
+  .table-list-row__button {
+    min-height: 22px;
+
+    padding: 0;
+  }
+
+  .table-list-row__button i {
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .table-list__header {
+    align-items: stretch;
+
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+  .table-list__refresh {
+    width: 100%;
+  }
+
+  .table-list__description {
+    white-space: normal;
+  }
+
+  .status-tabs {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+  .table-filters {
+    grid-template-columns:
+      minmax(0, 1fr)
+      100px
+      auto;
+  }
+
+  .table-filters__result {
+    grid-column: 1 / -1;
+
+    text-align: right;
+  }
+}
+
+
+/* =========================================================
+   MOBILE CARD MODE
+========================================================= */
+
+@media (max-width: 720px) {
+  .status-tabs {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .table-filters {
+    display: flex;
+
+    align-items: stretch;
+
+    flex-direction: column;
+  }
+
+  .table-filters__select,
+  .table-filters__clear {
+    width: 100%;
+  }
+
+  .table-filters__result {
+    text-align: right;
+  }
+
+
+  /* -----------------------------------------
+     Disable desktop list shell
+  ----------------------------------------- */
+
+  .table-list-view {
+    overflow: visible;
+
+    border: 0;
+    border-radius: 0;
+
+    background: transparent;
+  }
+
+  .table-list-view__head {
+    display: none;
+  }
+
+
+  /* -----------------------------------------
+     Mobile card row
+  ----------------------------------------- */
+
+  .table-list-row {
+    display: flex;
+
+    min-width: 0;
+    min-height: 0;
+
+    align-items: stretch;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    margin-bottom: 6px;
+
+    padding: 7px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+
+    background: #ffffff;
+  }
+
+  .table-list-row:last-child {
+    border-bottom:
+      1px solid #e5e7eb;
+  }
+
+  .table-list-row::before {
+    width: 2px;
+  }
+
+
+  /* -----------------------------------------
+     Mobile cells
+  ----------------------------------------- */
+
+  .table-list-row
+  > div:not(.table-list-row__table) {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 7px;
+
+    padding-top: 4px;
+
+    border-top: 1px solid #f0f2f5;
+  }
+
+  .table-list-row
+  > div::before {
+    flex-shrink: 0;
+
+    color: #9ca3af;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    content: attr(data-label);
+  }
+
+  .table-list-row__table::before {
+    display: none;
+  }
+
+  .table-list-row__merge {
+    text-align: right;
+  }
+
+
+  /* -----------------------------------------
+     Mobile actions
+  ----------------------------------------- */
+
+  .table-list-row__actions {
+    display: grid !important;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    width: 100%;
+  }
+
+  .table-list-row__button {
+    width: 100%;
+
+    min-height: 26px;
+
+    font-size: 12px;
+  }
+
+  .table-list-row__button span {
+    display: inline;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+  .status-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .table-list-row__actions {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .table-list__spin {
+    animation: none;
+  }
+
+  .status-tab,
+  .table-list-row,
+  .table-list-row__button,
+  .table-list__refresh {
+    transition: none;
+  }
+}
+
+/* Warm orange accents matching the shared restaurant theme. */
+.table-management-page .status-tab--active {
+  border-color: #fb923c !important;
+  background: #fff8f1 !important;
+  color: #c2410c !important;
+}
+
+.table-management-page .status-tab:hover {
+  border-color: #fdba74 !important;
+  background: #fffaf5 !important;
+}
+
+.table-management-page .status-tab--active .status-tab__icon,
+.table-management-page .table-list-row__icon {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.table-management-page .table-filters__search:focus-within,
+.table-management-page .table-filters__select:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
+}
+
+.table-management-page .table-list-view__head {
+  border-color: #eee3da !important;
+  background: #f8f1e9 !important;
+}
+
+.table-management-page .table-list-row__button--edit,
+.table-management-page .table-list-row__button--merge,
+.table-management-page .table-list__empty-button {
+  border-color: #c2410c !important;
+  background: linear-gradient(135deg, #c2410c, #f97316) !important;
+  color: #fff !important;
+}
+
+.table-management-page .table-list__empty-icon {
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.table-management-page .table-list-row--reserved::before,
+.table-management-page .table-list-row--cleaning::before {
+  background: #f97316 !important;
+}
+
+.table-management-page .table-list-row__status--reserved,
+.table-management-page .table-list-row__status--cleaning {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+.table-management-page .status-tabs > .status-tab:nth-child(4) .status-tab__icon,
+.table-management-page .status-tabs > .status-tab:nth-child(5) .status-tab__icon {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.table-management-page .table-list-row__section {
+  color: #111827 !important;
+}

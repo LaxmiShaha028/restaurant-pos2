@@ -1,0 +1,924 @@
+/* =========================================================
+   ROOT SIDEBAR
+========================================================= */
+
+.app-sidebar {
+  position: fixed;
+  z-index: 1050;
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  width: 170px;
+  flex-direction: column;
+
+  overflow: visible;
+
+  background: linear-gradient(180deg, #191919 0%, #111111 54%, #090909 100%);
+  color: #ffffff;
+
+  box-shadow: 2px 0 8px rgba(15, 23, 42, 0.08);
+
+  transition:
+    width 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* =========================================================
+   COLLAPSED SIDEBAR
+========================================================= */
+
+.app-sidebar.sidebar-collapsed {
+  width: 48px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.sidebar-header {
+  position: relative;
+
+  display: flex;
+  min-height: 46px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+
+  padding: 0 7px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.07);
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.sidebar-brand {
+  display: flex;
+
+  min-width: 0;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color: #ffffff;
+
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   BRAND LOGO
+========================================================= */
+
+.brand-logo {
+  display: flex;
+
+  width: 27px;
+  height: 27px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 5px;
+
+  background: linear-gradient(135deg, #ff922b, #f97316);
+
+  color: #ffffff;
+
+  font-size: 15px;
+}
+
+.brand-logo-image {
+  overflow: hidden;
+}
+
+.brand-logo-image-element {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+/* =========================================================
+   BRAND DETAILS
+========================================================= */
+
+.brand-details {
+  min-width: 0;
+
+  overflow: hidden;
+}
+
+.brand-title {
+  max-width: 100px;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brand-subtitle {
+  display: block;
+
+  max-width: 100px;
+
+  margin-top: 1px;
+
+  overflow: hidden;
+
+  color: rgba(255, 255, 255, 0.46);
+
+  font-size: 12px;
+
+  line-height: 1.1;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   COLLAPSED HEADER
+========================================================= */
+
+.sidebar-collapsed .sidebar-header {
+  justify-content: center;
+
+  padding: 0 4px;
+}
+
+
+/* =========================================================
+   COLLAPSE BUTTON
+========================================================= */
+
+.desktop-collapse-button {
+  position: absolute;
+
+  z-index: 20;
+
+  top: 50%;
+  right: -9px;
+
+  display: flex;
+
+  width: 19px;
+  height: 19px;
+
+  align-items: center;
+  justify-content: center;
+
+  transform: translateY(-50%);
+
+  border: 2px solid #171717;
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #ff922b, #f97316);
+
+  color: #ffffff;
+
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.16);
+
+  font-size: 10px;
+
+  cursor: pointer;
+}
+
+.desktop-collapse-button:hover {
+  background: #ea580c;
+}
+
+
+/* =========================================================
+   MOBILE CLOSE
+========================================================= */
+
+.mobile-close-button {
+  display: flex;
+
+  width: 25px;
+  height: 25px;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-left: auto;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 4px;
+
+  background: rgba(255, 255, 255, 0.07);
+
+  color: #ffffff;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+.sidebar-scroll {
+  flex: 1;
+
+  overflow-x: visible;
+  overflow-y: auto;
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgba(255, 255, 255, 0.15)
+    transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+  width: 3px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+
+  background:
+    rgba(255, 255, 255, 0.15);
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.sidebar-navigation {
+  padding: 6px 5px;
+}
+
+.sidebar-collapsed .sidebar-navigation {
+  padding: 6px 3px;
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.sidebar-section {
+  margin-bottom: 3px;
+}
+
+
+/* =========================================================
+   SECTION HEADING
+========================================================= */
+
+.section-heading {
+  display: flex;
+
+  width: 100%;
+  min-height: 23px;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 3px 5px;
+
+  border: 0;
+
+  background: transparent;
+
+  color:
+    rgba(255, 255, 255, 0.4);
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 0.02rem;
+
+  text-align: left;
+  text-transform: uppercase;
+
+  cursor: pointer;
+}
+
+.section-heading:hover {
+  color:
+    rgba(255, 255, 255, 0.75);
+}
+
+.section-chevron {
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   COMPACT SEPARATOR
+========================================================= */
+
+.compact-section-separator {
+  width: 19px;
+  height: 1px;
+
+  margin: 5px auto;
+
+  background:
+    rgba(255, 255, 255, 0.12);
+}
+
+
+/* =========================================================
+   SECTION MENU
+========================================================= */
+
+.section-menu {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 1px;
+}
+
+
+/* =========================================================
+   MENU LINK
+========================================================= */
+
+.sidebar-menu-link {
+  position: relative;
+
+  display: flex;
+
+  width: 100%;
+  min-height: 29px;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 4px 5px;
+
+  border: 1px solid transparent;
+  border-radius: 4px;
+
+  color:
+    rgba(255, 255, 255, 0.7);
+
+  text-decoration: none;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.sidebar-menu-link:hover {
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   MENU ICON
+========================================================= */
+
+.menu-icon {
+  display: flex;
+
+  width: 15px;
+  height: 15px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   MENU LABEL
+========================================================= */
+
+.menu-label {
+  min-width: 0;
+
+  flex: 1;
+
+  overflow: hidden;
+
+  color: inherit;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  line-height: 1.2;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+.menu-badge {
+  flex-shrink: 0;
+
+  min-width: 14px;
+
+  padding: 1px 3px;
+
+  border-radius: 8px;
+
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  color: #ffffff;
+
+  font-size: 11px;
+
+  line-height: 1.1;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   ACTIVE LINK
+========================================================= */
+
+.sidebar-menu-link.router-link-active,
+.sidebar-menu-link.router-link-exact-active {
+  border-color:
+    rgba(249, 115, 22, 0.2);
+
+  background:
+    linear-gradient(100deg, rgba(249, 115, 22, .32), rgba(194, 65, 12, .2));
+
+  color: #ffffff;
+
+  box-shadow:
+    inset 2px 0 0 #fdba74;
+}
+
+.sidebar-menu-link.router-link-active .menu-icon,
+.sidebar-menu-link.router-link-exact-active .menu-icon {
+  color: #fed7aa;
+}
+
+.sidebar-menu-link.router-link-active .menu-label,
+.sidebar-menu-link.router-link-exact-active .menu-label {
+  color: #ffffff;
+
+  font-weight: 600;
+}
+
+.sidebar-menu-link.router-link-active:hover,
+.sidebar-menu-link.router-link-exact-active:hover {
+  background:
+    rgba(249, 115, 22, 0.38);
+}
+
+
+/* =========================================================
+   COLLAPSED LINK
+========================================================= */
+
+.sidebar-collapsed .sidebar-menu-link {
+  width: 34px;
+  height: 30px;
+  min-height: 30px;
+
+  justify-content: center;
+
+  margin: 0 auto;
+
+  padding: 0;
+
+  border-radius: 4px;
+}
+
+.sidebar-collapsed .menu-icon {
+  width: auto;
+  height: auto;
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   TOOLTIP
+========================================================= */
+
+.compact-tooltip {
+  position: absolute;
+
+  z-index: 5000;
+
+  top: 50%;
+  left: calc(100% + 7px);
+
+  visibility: hidden;
+
+  transform:
+    translateY(-50%)
+    translateX(-3px);
+
+  padding: 4px 6px;
+
+  border-radius: 4px;
+
+  background: #171717;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 4px 10px rgba(15, 23, 42, 0.2);
+
+  opacity: 0;
+
+  font-size: 9px;
+  font-weight: 500;
+
+  white-space: nowrap;
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease,
+    visibility 0.12s ease;
+}
+
+.compact-tooltip::before {
+  position: absolute;
+
+  top: 50%;
+  left: -3px;
+
+  width: 6px;
+  height: 6px;
+
+  transform:
+    translateY(-50%)
+    rotate(45deg);
+
+  background: #171717;
+
+  content: "";
+}
+
+.sidebar-menu-link:hover .compact-tooltip {
+  visibility: visible;
+
+  transform:
+    translateY(-50%)
+    translateX(0);
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   COLLAPSED ACTIVE
+========================================================= */
+
+.app-sidebar.sidebar-collapsed
+.sidebar-menu-link.router-link-active,
+.app-sidebar.sidebar-collapsed
+.sidebar-menu-link.router-link-exact-active {
+  background:
+    rgba(249, 115, 22, 0.38);
+
+  box-shadow:
+    inset 2px 0 0 #fdba74;
+}
+
+
+/* =========================================================
+   USER SECTION
+========================================================= */
+
+.sidebar-user {
+  display: flex;
+
+  cursor: pointer;
+
+  min-height: 48px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 5px 6px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.07);
+
+  background:
+    rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   USER AVATAR
+========================================================= */
+
+.user-avatar {
+  display: flex;
+
+  width: 27px;
+  height: 27px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #ff922b, #f97316);
+
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   USER DETAILS
+========================================================= */
+
+.user-details {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.user-name {
+  overflow: hidden;
+
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-role {
+  margin-top: 1px;
+
+  overflow: hidden;
+
+  color:
+    rgba(255, 255, 255, 0.45);
+
+  font-size: 9px;
+
+  line-height: 1.1;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   USER OPTIONS
+========================================================= */
+
+.user-options-button {
+  display: flex;
+
+  width: 20px;
+  height: 20px;
+
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 3px;
+
+  background: transparent;
+
+  color:
+    rgba(255, 255, 255, 0.5);
+
+  font-size: 11px;
+}
+
+.user-options-button:hover {
+  background:
+    rgba(255, 255, 255, 0.07);
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   COLLAPSED USER
+========================================================= */
+
+.sidebar-user-compact {
+  justify-content: center;
+
+  padding: 5px 3px;
+}
+
+.sidebar-user-compact .user-avatar {
+  width: 27px;
+  height: 27px;
+}
+
+
+/* =========================================================
+   BACKDROP
+========================================================= */
+
+.sidebar-backdrop {
+  position: fixed;
+
+  z-index: 1040;
+
+  inset: 0;
+
+  background:
+    rgba(15, 23, 42, 0.55);
+
+  backdrop-filter: blur(1px);
+}
+
+
+/* =========================================================
+   TRANSITIONS
+========================================================= */
+
+.sidebar-text-enter-active,
+.sidebar-text-leave-active {
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease;
+}
+
+.sidebar-text-enter-from,
+.sidebar-text-leave-to {
+  transform: translateX(-3px);
+
+  opacity: 0;
+}
+
+.section-collapse-enter-active,
+.section-collapse-leave-active {
+  overflow: hidden;
+
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease;
+}
+
+.section-collapse-enter-from,
+.section-collapse-leave-to {
+  transform: translateY(-2px);
+
+  opacity: 0;
+}
+
+.backdrop-enter-active,
+.backdrop-leave-active {
+  transition:
+    opacity 0.15s ease;
+}
+
+.backdrop-enter-from,
+.backdrop-leave-to {
+  opacity: 0;
+}
+
+
+/* =========================================================
+   TABLET / MOBILE
+========================================================= */
+
+@media (max-width: 991.98px) {
+  .app-sidebar,
+  .app-sidebar.sidebar-collapsed {
+    width: 210px;
+
+    transform: translateX(-100%);
+  }
+
+  .app-sidebar.sidebar-mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-header,
+  .sidebar-collapsed .sidebar-header {
+    justify-content: flex-start;
+
+    min-height: 50px;
+
+    padding: 0 8px;
+  }
+
+  .sidebar-navigation,
+  .sidebar-collapsed .sidebar-navigation {
+    padding: 7px 6px;
+  }
+
+  .sidebar-collapsed .sidebar-menu-link {
+    width: 100%;
+    height: auto;
+    min-height: 31px;
+
+    justify-content: flex-start;
+
+    margin: 0;
+
+    padding: 4px 6px;
+  }
+
+  .sidebar-collapsed .menu-icon {
+    width: 15px;
+    height: 15px;
+
+    font-size: 11px;
+  }
+
+  .compact-tooltip {
+    display: none;
+  }
+
+  .sidebar-user-compact {
+    justify-content: flex-start;
+
+    padding: 5px 6px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 575.98px) {
+  .app-sidebar,
+  .app-sidebar.sidebar-collapsed {
+    width: 200px;
+  }
+
+  .brand-title,
+  .brand-subtitle,
+  .menu-label,
+  .user-name,
+  .user-role {
+    font-size: 11px;
+  }
+}
