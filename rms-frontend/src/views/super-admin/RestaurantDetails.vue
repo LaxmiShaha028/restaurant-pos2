@@ -1352,7 +1352,7 @@
               </thead>
               <tbody>
                 <tr
-                  v-for="payment in paginatedPayments"
+                  v-for="payment in payments"
                   :key="payment.id"
                 >
                   <td>
@@ -1404,13 +1404,6 @@
               </tbody>
             </table>
           </div>
-
-          <PaginationControls
-            v-if="payments.length"
-            v-model:page="paymentsPage"
-            :total="payments.length"
-            :per-page="paymentPageSize"
-          />
 
           <div v-else class="empty-state table-empty-state">
             <div class="empty-state-icon">
@@ -2250,7 +2243,6 @@ import {
   onMounted,
   ref,
 } from 'vue'
-import PaginationControls from '@/components/shared/PaginationControls.vue'
 
 import {
   useRoute,
@@ -2295,14 +2287,6 @@ const restaurant = ref(null)
 const subscription = ref(null)
 
 const payments = ref([])
-const paymentsPage = ref(1)
-const paymentPageSize = 10
-const paginatedPayments = computed(() =>
-  payments.value.slice(
-    (paymentsPage.value - 1) * paymentPageSize,
-    paymentsPage.value * paymentPageSize,
-  ),
-)
 
 /*
 |--------------------------------------------------------------------------
@@ -2836,18 +2820,15 @@ async function loadPayments() {
 
   if (Array.isArray(data)) {
     payments.value = data
-    paymentsPage.value = 1
     return
   }
 
   if (Array.isArray(data?.payments)) {
     payments.value = data.payments
-    paymentsPage.value = 1
     return
   }
 
   payments.value = []
-  paymentsPage.value = 1
 }
 
 

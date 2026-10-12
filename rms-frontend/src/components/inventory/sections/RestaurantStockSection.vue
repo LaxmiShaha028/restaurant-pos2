@@ -222,7 +222,7 @@
         "
       >
         <i
-          class="bi bi-trash"
+          class="bi bi-trash3"
           aria-hidden="true"
         ></i>
 
@@ -684,7 +684,7 @@
                     "
                   >
                     <i
-                      class="bi bi-trash"
+                      class="bi bi-trash3"
                       aria-hidden="true"
                     ></i>
 

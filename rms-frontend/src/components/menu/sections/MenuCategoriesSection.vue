@@ -589,7 +589,7 @@ onMounted(() => {
                     "
                   >
                     <i
-                      class="bi bi-pencil"
+                      class="bi bi-pencil-square"
                     ></i>
                   </button>
 
@@ -607,7 +607,7 @@ onMounted(() => {
                     "
                   >
                     <i
-                      class="bi bi-trash"
+                      class="bi bi-trash3"
                     ></i>
                   </button>
                 </div>

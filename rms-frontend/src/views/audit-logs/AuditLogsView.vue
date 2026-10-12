@@ -128,7 +128,7 @@ const filters = reactive({
 
     action:'',
 
-    per_page: 10
+    per_page:20
 
 })
 

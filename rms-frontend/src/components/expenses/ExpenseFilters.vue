@@ -130,7 +130,7 @@ class="btn-primary"
 
 <i class="bi bi-funnel"></i>
 
-Apply
+<span class="expense-filter-action-label">Apply</span>
 
 </button>
 
@@ -144,7 +144,7 @@ class="btn-secondary"
 
 <i class="bi bi-x-circle"></i>
 
-Clear
+<span class="expense-filter-action-label">Clear</span>
 
 </button>
 
@@ -158,7 +158,7 @@ class="btn-secondary"
 
 <i class="bi bi-printer"></i>
 
-Print
+<span class="expense-filter-action-label">Print</span>
 
 </button>
 

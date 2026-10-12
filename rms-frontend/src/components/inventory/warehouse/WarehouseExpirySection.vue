@@ -74,7 +74,7 @@
           :disabled="loading"
           @click="applySearch"
         >
-          Search
+          Apply
         </button>
 
         <button
@@ -221,7 +221,7 @@
               class="warehouse-lot-edit-button"
               @click="openMetadataEdit(lot)"
             >
-              <i class="bi bi-pencil"></i>
+              <i class="bi bi-pencil-square"></i>
               Edit Expiry
             </button>
 

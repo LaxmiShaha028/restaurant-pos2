@@ -230,3 +230,110 @@ padding:50px;
 text-align:center;
 
 }
+/* Print only the expense report table, not the application page. */
+@media print {
+  @page {
+    margin: 12mm;
+  }
+
+  html,
+  body {
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  .expense-management-page {
+    position: static !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+  }
+
+  .expense-management-page > :not(.expense-table-card) {
+    display: none !important;
+  }
+
+  .expense-table-card,
+  .expense-table-card * {
+    visibility: visible !important;
+  }
+
+  .expense-table-card {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+  }
+
+  .expense-table-card > :not(.table-responsive) {
+    display: none !important;
+  }
+
+  .expense-table-card .table-responsive {
+    width: 100% !important;
+    overflow: visible !important;
+  }
+
+  .expense-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    table-layout: auto !important;
+  }
+
+  .expense-table th,
+  .expense-table td {
+    padding: 5px 6px !important;
+    color: #111827 !important;
+    font-size: 10pt !important;
+    background: #ffffff !important;
+    border-bottom: 1px solid #d1d5db !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+  }
+
+  .expense-table thead th {
+    font-weight: 700 !important;
+    border-bottom: 1px solid #6b7280 !important;
+  }
+
+  .expense-table th:last-child,
+  .expense-table tbody td:last-child {
+    display: none !important;
+  }
+
+  .expense-table tfoot .total-label {
+    text-align: right !important;
+    font-weight: 700 !important;
+  }
+
+  .expense-table tfoot .total-amount {
+    font-weight: 700 !important;
+  }
+
+  .expense-pagination,
+  .expense-actions {
+    display: none !important;
+  }
+
+  .expense-table tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+

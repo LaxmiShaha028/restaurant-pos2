@@ -1834,9 +1834,9 @@ const statusDonutStyle = computed(() => {
 
     '#409ae9',
 
-    '#35b987',
+    '#f97316',
 
-    '#765de6',
+    '#9a3412',
 
   ]
 
@@ -2318,8 +2318,6 @@ function goToMenu() {
 
 }
 
-
-
 /* =========================================================
 
    LOAD
@@ -2464,11 +2462,11 @@ onMounted(loadDashboard)
   border: 1px solid rgba(255, 255, 255, .4);
   border-radius: 18px;
   background:
-    radial-gradient(ellipse at 34% 10%, rgba(151, 87, 2, 0.78), transparent 36%),
-    radial-gradient(ellipse at 90% 8%, rgba(249, 115, 22, .72), transparent 34%),
-    radial-gradient(ellipse at 4% 92%, rgba(111, 38, 9, 0.9), transparent 42%),
-    linear-gradient(112deg, #8d2e08 0%, #c75809 38%, #fb923c 62%, #ea580c 100%);
-  box-shadow: 0 12px 30px rgba(194, 65, 12, .24);
+    radial-gradient(ellipse at 34% 10%, rgba(180, 83, 9, .42), transparent 36%),
+    radial-gradient(ellipse at 90% 8%, rgba(124, 45, 4, .58), transparent 34%),
+    radial-gradient(ellipse at 4% 92%, rgba(69, 21, 2, .82), transparent 42%),
+    linear-gradient(112deg, #321407 0%, #542006 38%, #e45a0a 62%, #3b1605 100%);
+  box-shadow: 0 12px 30px rgba(40, 17, 4, .32);
 }
 
 .dashboard-header::before {
@@ -2478,7 +2476,7 @@ onMounted(loadDashboard)
   width: 170px;
   height: 170px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(249, 115, 22, .1), transparent 68%);
+  background: radial-gradient(circle, rgba(124, 45, 4, .2), transparent 68%);
   content: "";
   pointer-events: none;
 }
@@ -2490,7 +2488,7 @@ onMounted(loadDashboard)
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(251, 146, 60, .08), transparent 70%);
+  background: radial-gradient(circle, rgba(69, 21, 2, .2), transparent 70%);
   content: "";
   pointer-events: none;
 }
@@ -2550,10 +2548,10 @@ onMounted(loadDashboard)
   gap: 10px;
   min-width: 185px;
   padding: 9px 12px;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, .12);
   border-radius: 13px;
-  background: rgba(255, 255, 255, .88);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .22);
 }
 
 .dashboard-date > i {
@@ -2563,8 +2561,8 @@ onMounted(loadDashboard)
   flex: 0 0 37px;
   place-items: center;
   border-radius: 11px;
-  background: var(--primary-soft);
-  color: var(--primary);
+  background: rgba(255, 255, 255, .08);
+  color: #fb923c;
   font-size: 15px;
 }
 
@@ -2577,7 +2575,7 @@ onMounted(loadDashboard)
 
 .dashboard-date strong {
   overflow: hidden;
-  color: #334155;
+  color: #f8f1e8;
   font-size: 11px;
   font-weight: 750;
   text-overflow: ellipsis;
@@ -2585,7 +2583,7 @@ onMounted(loadDashboard)
 }
 
 .dashboard-date span {
-  color: #94a3b8;
+  color: #b7a99c;
   font-size: 9px;
 }
 
@@ -2596,11 +2594,11 @@ onMounted(loadDashboard)
   justify-content: center;
   gap: 7px;
   padding: 0 15px;
-  border: 1px solid rgba(255, 255, 255, .72);
+  border: 1px solid rgba(255, 255, 255, .12);
   border-radius: 12px;
-  background: rgba(255, 255, 255, .96);
-  box-shadow: 0 8px 18px rgba(124, 45, 18, .2);
-  color: #c2410c;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .22);
+  color: #fb923c;
   font-size: 11px;
   font-weight: 750;
   cursor: pointer;
@@ -2612,7 +2610,8 @@ onMounted(loadDashboard)
 
 .dashboard-refresh-button:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 11px 24px rgba(124, 45, 18, .26);
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%);
+  box-shadow: 0 11px 24px rgba(0, 0, 0, .3);
 }
 
 .dashboard-refresh-button:active:not(:disabled) {
@@ -3281,13 +3280,13 @@ onMounted(loadDashboard)
 }
 
 .status-dot.completed {
-  background: #35b987;
-  box-shadow: 0 0 0 3px rgba(53, 185, 135, .12);
+  background: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, .14);
 }
 
 .status-dot.canceled {
-  background: #765de6;
-  box-shadow: 0 0 0 3px rgba(118, 93, 230, .12);
+  background: #9a3412;
+  box-shadow: 0 0 0 3px rgba(154, 52, 18, .12);
 }
 
 .status-chart-tooltip {
@@ -3406,7 +3405,7 @@ onMounted(loadDashboard)
 
 .payment-icon.cash,
 .payment-progress .cash {
-  background-color: #10b981;
+  background-color: #f97316;
 }
 
 .payment-icon.card,

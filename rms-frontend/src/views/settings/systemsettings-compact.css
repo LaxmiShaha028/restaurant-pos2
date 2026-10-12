@@ -1,6 +1,4 @@
 
-
-
 /* ==========================================================================
    SYSTEM SETTINGS VIEW - COMPACT OVERRIDE
    Add AFTER SystemSettingsView.css
@@ -108,8 +106,6 @@
         justify-content: flex-end;
     }
 }
-
-
 /* ==========================================================================
    SYSTEM SETTINGS – Compact POS / Admin UI
    Matches Kitchen / Order / Expense / Reports headers
@@ -132,7 +128,7 @@
 .system-settings-header {
   margin-bottom: 8px;
   padding: 7px 8px;
-  border: 1px solid #eee3da;
+  border: 1px solid #e5e7eb;
   border-radius: 5px;
   background: #ffffff;
   box-shadow: none;
@@ -152,14 +148,14 @@
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  background: #fff1e6;
-  color: #f97316;
+  background: #eff6ff;
+  color: #2563eb;
   font-size: 11px;
 }
 
 .system-settings-eyebrow {
   margin: 0 0 1px;
-  color: #f97316;
+  color: #2563eb;
   font-size: 10px;
   font-weight: 700;
   line-height: 1.1;
@@ -195,7 +191,7 @@
   gap: 2px;
   margin-bottom: 8px;
   padding: 4px;
-  border: 1px solid #eee3da;
+  border: 1px solid #e5e7eb;
   border-radius: 5px;
   background: #ffffff;
 }
@@ -218,12 +214,12 @@
 }
 
 .settings-tab-button:hover {
-  color: #f97316;
-  background: #f8f1e9;
+  color: #2563eb;
+  background: #f8fafc;
 }
 
 .settings-tab-button.active {
-  background: #f97316;
+  background: #2563eb;
   color: #ffffff;
 }
 
@@ -260,7 +256,7 @@
   min-height: 120px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #eee3da;
+  border: 1px solid #e5e7eb;
   border-radius: 5px;
   background: #ffffff;
   color: #667085;
@@ -288,9 +284,9 @@
   min-width: 140px;
   min-height: 28px;
   padding: 0 12px;
-  border: 1px solid #f97316;
+  border: 1px solid #2563eb;
   border-radius: 4px;
-  background: #f97316;
+  background: #2563eb;
   color: #ffffff;
   font-size: 12px;
   font-weight: 600;
@@ -299,8 +295,8 @@
 }
 
 .settings-save-button:hover:not(:disabled) {
-  border-color: #c2410c;
-  background: #c2410c;
+  border-color: #1d4ed8;
+  background: #1d4ed8;
 }
 
 .settings-save-button:disabled {
@@ -328,21 +324,4 @@
   .settings-save-button {
     width: 100%;
   }
-}
-
-/* Reference theme: warm canvas, white surfaces, orange primary actions */
-.system-settings-page {
-  background: #f4f1ed;
-}
-
-.settings-save-button {
-  border: 1px solid #e7d8cb;
-  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%);
-  color: #f97316;
-}
-
-.settings-save-button:hover:not(:disabled) {
-  border-color: #3b3b3b;
-  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%);
-  color: #fb923c;
 }

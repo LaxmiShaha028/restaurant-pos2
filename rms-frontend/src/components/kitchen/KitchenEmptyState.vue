@@ -31,7 +31,7 @@
     >
       <i class="bi bi-arrow-clockwise"></i>
 
-      <span>Refresh Orders</span>
+      <span>Refresh</span>
     </button>
   </section>
 </template>

@@ -37,7 +37,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  background: #172033;
+  background: #f97316;
   color: #ffffff;
   font-size: 19px;
 }
@@ -96,8 +96,8 @@
 .super-admin-nav-link:hover,
 .super-admin-nav-link.active,
 .super-admin-nav-group.active > .super-admin-nav-link {
-  background: #eef4ff;
-  color: #0d6efd;
+  background: #fff1e6;
+  color: #c2410c;
 }
 
 .super-admin-dropdown-toggle {
@@ -148,8 +148,8 @@
 
 .super-admin-dropdown-link:hover,
 .super-admin-dropdown-link.router-link-active {
-  background: #f2f6ff;
-  color: #0d6efd;
+  background: #fff8f1;
+  color: #c2410c;
 }
 
 .super-admin-account {
@@ -378,13 +378,13 @@
 .super-admin-dropdown-link:focus-visible,
 .super-admin-mobile-toggle:focus-visible,
 .super-admin-logout-button:focus-visible {
-  outline: 3px solid rgba(13, 110, 253, 0.18);
+  outline: 3px solid rgba(249, 115, 22, 0.2);
   outline-offset: 2px;
 }
 
 .super-admin-dropdown-link.router-link-exact-active {
-  background: #f2f6ff;
-  color: #0d6efd;
+  background: #fff1e6;
+  color: #c2410c;
 }
 
 .super-admin-user-avatar {

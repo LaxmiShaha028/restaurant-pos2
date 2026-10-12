@@ -100,8 +100,8 @@
       @refresh="refreshOrders"
       @clear="clearFilters"
       @print="printOrders"
-      @export-excel="showExportNotice('Excel')"
-      @export-pdf="showExportNotice('PDF')"
+      @export-excel="exportOrdersCsv"
+      @export-pdf="exportOrdersPdf"
     />
 
     <!-- Order List -->
@@ -195,6 +195,8 @@ import CompleteOrderModal from "@/components/orders/CompleteOrderModal.vue";
 */
 
 import orderService from "@/services/orderService";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 
 /*
 |--------------------------------------------------------------------------
@@ -1349,20 +1351,62 @@ const printOrders = () => {
   window.print();
 };
 
-/*
-|--------------------------------------------------------------------------
-| Show Pending Export Notice
-|--------------------------------------------------------------------------
-|
-| Excel এবং PDF export module connect হওয়ার আগ পর্যন্ত notice দেখায়।
-|
-*/
+const exportOrdersCsv = () => {
+  const columns = ['SL', 'Order ID', 'Time', 'Customer', 'Date', 'Table', 'Merged With', 'Status', 'Total', 'Due', 'Payment Status', 'Payment Method'];
+  const escapeCsvValue = (value) => {
+    const text = String(value ?? '');
+    const safeText = /^[=+@\-]/.test(text) ? String.fromCharCode(39) + text : text;
+    return String.fromCharCode(34) + safeText.replace(/"/g, String.fromCharCode(34, 34)) + String.fromCharCode(34);
+  };
+  const rows = orders.value.map((order, index) => {
+    const statusLabel = filterOptions.statuses.find((option) => option.value === order.status)?.label || order.status || '';
+    return [Number(meta.from || 1) + index, order.order_number, order.time, order.customer?.name, order.date, order.primary_table?.table_name || 'No Table', (order.merged_tables || []).map((table) => table.table_name).join(', '), statusLabel, order.total_amount_formatted || order.total_amount, Number(order.due_amount) > 0 ? (order.due_amount_formatted || order.due_amount) : '0.00', order.payment_status_label || order.payment_status, order.payment_method_label || order.payment_method];
+  });
+  const csv = [columns, ...rows].map((row) => row.map(escapeCsvValue).join(',')).join(String.fromCharCode(13, 10));
+  const blob = new Blob([String.fromCharCode(0xFEFF), csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'orders-page-' + (meta.current_page || 1) + '.csv';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 0);
+  showSuccess('Order list CSV downloaded. It can be opened in Excel.');
+};
 
-// const showExportNotice = (type) => {
-//   showSuccess(
-//     `${type} export will be connected in the next export module.`
-//   );
-// };
+const exportOrdersPdf = () => {
+  try {
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'a4' });
+    const reportRows = orders.value.map((order, index) => {
+      const statusLabel = filterOptions.statuses.find((option) => option.value === order.status)?.label || order.status || '';
+      const amount = (value) => 'BDT ' + Number(value || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return [Number(meta.from || 1) + index, order.order_number || '', order.time || '', order.customer?.name || '', order.date || '', order.primary_table?.table_name || 'No Table', (order.merged_tables || []).map((table) => table.table_name).join(', ') || '—', statusLabel, amount(order.total_amount), order.payment_status_label || order.payment_status || '—', order.payment_method_label || order.payment_method || '—'];
+    });
+    doc.setFontSize(16);
+    doc.text('Order Report', 40, 36);
+    doc.setFontSize(9);
+    doc.text('Showing ' + (meta.from || 0) + ' to ' + (meta.to || 0) + ' of ' + (meta.total || 0) + ' orders', 40, 52);
+    autoTable(doc, {
+      startY: 66,
+      head: [['SL', 'Order ID', 'Time', 'Customer', 'Date', 'Table', 'Merged With', 'Status', 'Total', 'Payment Status', 'Payment Method']],
+      body: reportRows,
+      theme: 'grid',
+      styles: { font: 'helvetica', fontSize: 8, cellPadding: 5, overflow: 'linebreak' },
+      headStyles: { fillColor: [76, 45, 160], textColor: 255, fontStyle: 'bold' },
+      didDrawPage: () => {
+        const pageCount = doc.internal.getNumberOfPages();
+        doc.setFontSize(8);
+        doc.text('Page ' + doc.internal.getCurrentPageInfo().pageNumber + ' of ' + pageCount, doc.internal.pageSize.getWidth() - 70, doc.internal.pageSize.getHeight() - 18);
+      },
+    });
+    doc.save('orders-page-' + (meta.current_page || 1) + '.pdf');
+    showSuccess('Order list PDF downloaded.');
+  } catch (error) {
+    console.error('Order PDF export failed:', error);
+    errorMessage.value = 'Unable to create the order PDF.';
+  }
+};
 
 /*
 |--------------------------------------------------------------------------

@@ -95,7 +95,7 @@
 }
 
 .audit-table th {
-    background: #f8f1e9;
+    background: #f8fafc;
     color: #475569;
     font-size: 12px;
     white-space: nowrap;
@@ -106,7 +106,7 @@
 }
 
 .audit-table tbody tr:hover {
-    background: #f8f1e9;
+    background: #f8fafc;
 }
 
 /* User */
@@ -412,8 +412,8 @@
 }
 
 .action-badge.unblocked {
-    background: #fff1e6;
-    color: #c2410c;
+    background: #dbeafe;
+    color: #1d4ed8;
 }
 
 /* ==========================================================================
@@ -483,7 +483,7 @@
   gap: 8px;
   margin-bottom: 8px;
   padding: 7px 8px;
-  border: 1px solid #eee3da;
+  border: 1px solid #e5e7eb;
   border-radius: 5px;
   background: #ffffff;
   box-shadow: none;
@@ -505,14 +505,14 @@
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  background: #fff1e6;
-  color: #f97316;
+  background: #eff6ff;
+  color: #2563eb;
   font-size: 12px;
 }
 
 .audit-page-eyebrow {
   margin: 0 0 1px;
-  color: #f97316;
+  color: #2563eb;
   font-size: 10px;
   font-weight: 700;
   line-height: 1.1;
@@ -545,7 +545,7 @@
 
 .audit-card {
   padding: 6px;
-  border: 1px solid #eee3da;
+  border: 1px solid #e5e7eb;
   border-radius: 5px;
   background: #ffffff;
   box-shadow: none;
@@ -570,7 +570,7 @@
   gap: 6px;
   margin-bottom: 8px;
   padding: 6px;
-  border: 1px solid #eee3da;
+  border: 1px solid #e5e7eb;
   border-radius: 5px;
   background: #ffffff;
 }
@@ -582,7 +582,7 @@
   min-height: 28px;
   height: 28px;
   padding: 0 6px;
-  border: 1px solid #eee3da;
+  border: 1px solid #e5e7eb;
   border-radius: 4px;
   background: #ffffff;
   color: #172033;
@@ -593,8 +593,8 @@
 
 .audit-filter input:focus,
 .audit-filter select:focus {
-  border-color: #f97316;
-  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.08);
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.08);
 }
 
 /* --------------------------------------------------------------------------
@@ -622,8 +622,8 @@
 }
 
 .audit-table th {
-  background: #f8f1e9;
-  border-bottom: 1px solid #eee3da;
+  background: #f8fafc;
+  border-bottom: 1px solid #e5e7eb;
   color: #475569;
   font-size: 12px;
   font-weight: 700;
@@ -639,7 +639,7 @@
 }
 
 .audit-table tbody tr:hover {
-  background: #fff8f1;
+  background: #fafbfc;
 }
 
 /* First column breathing room */
@@ -679,8 +679,8 @@
   max-width: 100%;
   padding: 2px 6px;
   border-radius: 10px;
-  background: #fff1e6;
-  color: #f97316;
+  background: #eff6ff;
+  color: #2563eb;
   font-size: 12px;
   font-weight: 600;
   overflow: hidden;
@@ -722,8 +722,8 @@
 }
 
 .action-badge.unblocked {
-  background: #fff1e6;
-  color: #c2410c;
+  background: #dbeafe;
+  color: #1d4ed8;
 }
 
 /* View button */
@@ -733,9 +733,9 @@
   justify-content: center;
   min-height: 24px;
   padding: 0 8px;
-  border: 1px solid #f97316;
+  border: 1px solid #2563eb;
   border-radius: 4px;
-  background: #f97316;
+  background: #2563eb;
   color: #ffffff;
   font-size: 12px;
   font-weight: 600;
@@ -743,8 +743,8 @@
 }
 
 .view-btn:hover {
-  background: #c2410c;
-  border-color: #c2410c;
+  background: #1d4ed8;
+  border-color: #1d4ed8;
 }
 
 /* States */
@@ -813,7 +813,4 @@
   .audit-filter {
     grid-template-columns: 1fr;
   }
-}
-.audit-page {
-  background: #f4f1ed;
 }

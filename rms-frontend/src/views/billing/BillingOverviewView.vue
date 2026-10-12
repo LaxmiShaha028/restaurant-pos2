@@ -184,6 +184,7 @@ import '@/assets/css/billing/billing-header.css'
 import '@/assets/css/billing/billing-summary.css'
 import '@/assets/css/billing/billing-table.css'
 import '@/assets/css/billing/billing-responsive.css'
+import '@/assets/css/restaurant-page-theme.css'
 
 /*
 |--------------------------------------------------------------------------

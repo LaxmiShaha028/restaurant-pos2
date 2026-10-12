@@ -4,10 +4,7 @@ import {
   computed,
   onMounted,
   ref,
-  watch,
 } from 'vue'
-
-import PaginationControls from '@/components/shared/PaginationControls.vue'
 
 import {
   createManagedPaymentMethod,
@@ -19,9 +16,6 @@ import {
 
 const methods =
   ref([])
-
-const currentPage = ref(1)
-const pageSize = 10
 
 const loading =
   ref(false)
@@ -93,15 +87,6 @@ const filteredMethods =
     )
 
   })
-
-const paginatedMethods = computed(() => {
-  const start = (currentPage.value - 1) * pageSize
-  return filteredMethods.value.slice(start, start + pageSize)
-})
-
-watch(search, () => {
-  currentPage.value = 1
-})
 
 
 const totalMethods =
@@ -497,7 +482,7 @@ onMounted(
 
 <template>
 
-  <section class="management-page payment-methods-page">
+  <section class="management-page">
 
 
     <header class="management-page-header">
@@ -812,7 +797,7 @@ onMounted(
           <tbody>
 
             <tr
-              v-for="method in paginatedMethods"
+              v-for="method in filteredMethods"
               :key="method.id"
             >
 
@@ -926,12 +911,6 @@ onMounted(
 
       </div>
 
-      <PaginationControls
-        v-model:page="currentPage"
-        :total="filteredMethods.length"
-        :per-page="pageSize"
-      />
-
     </section>
 
 
@@ -957,4 +936,3 @@ onMounted(
 <style
   src="@/styles/super-admin/management.css"
 ></style>
-

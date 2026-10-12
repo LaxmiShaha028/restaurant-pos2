@@ -311,6 +311,7 @@
 </template>
 
 <script setup>
+import "@/assets/css/restaurant-page-theme.css";
 import {
   computed,
   onBeforeUnmount,
@@ -406,7 +407,7 @@ const isChef =
 const meta = reactive({
   current_page: 1,
   last_page: 1,
-  per_page: 10,
+  per_page: 20,
   total: 0,
   from: null,
   to: null,
@@ -420,7 +421,7 @@ const meta = reactive({
 
 const filters = reactive({
   page: 1,
-  per_page: 10,
+  per_page: 20,
   search: '',
   status: '',
   assignment: '',
@@ -1314,3 +1315,4 @@ onBeforeUnmount(() => {
   }
 }
 </style>
+

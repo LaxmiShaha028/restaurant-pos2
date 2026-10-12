@@ -12,9 +12,9 @@
 
     border: 1px solid #e5e7eb;
 
-    border-radius: 16px;
+    border-radius: 5px;
 
-    padding: 22px;
+    padding: 2px;
 
     margin-bottom: 20px;
 
@@ -693,30 +693,23 @@
     }
 
     .expense-filter-actions {
-        display: grid;
-
-        grid-template-columns:
-            repeat(3, minmax(0, 1fr));
-
-        gap: 6px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
     }
 
     .expense-filter-actions button {
-        width: 100%;
-        min-width: 0;
+        flex: 0 0 38px;
+        width: 38px;
+        min-width: 38px;
+        padding: 0;
     }
-}
 
+    .expense-filter-actions .expense-filter-action-label {
+        display: none;
+    }
 
-/*
-|--------------------------------------------------------------------------
-| Very Small Mobile
-|--------------------------------------------------------------------------
-*/
-
-@media (max-width: 420px) {
-
-    .expense-filter-actions {
-        grid-template-columns: 1fr;
+    .expense-filter-actions i {
+        font-size: 12px;
     }
 }

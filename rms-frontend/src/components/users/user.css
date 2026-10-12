@@ -9,7 +9,7 @@
 
     min-height:100%;
 
-    background:#f8f1e9;
+    background:#f8fafc;
 
 }
 
@@ -73,13 +73,18 @@
 
         linear-gradient(
             135deg,
-            #fff1e6,
-            #fff1e6
+            #dbeafe,
+            #eff6ff
         );
 
     box-shadow:
 
-        0 8px 20px rgba(249, 115, 22, .12);
+        0 8px 20px rgba(
+            37,
+            99,
+            235,
+            .12
+        );
 
 }
 
@@ -146,7 +151,7 @@
 
     border-radius:10px;
 
-    background:#f97316;
+    background:#2563eb;
 
     color:white;
 
@@ -165,7 +170,7 @@
 .refresh-btn:hover {
 
 
-    background:#c2410c;
+    background:#1d4ed8;
 
     transform:translateY(-1px);
 
@@ -280,7 +285,7 @@
 
     border-radius:16px;
 
-    border:1px solid #eee3da;
+    border:1px solid #e2e8f0;
 
 
 }
@@ -297,7 +302,7 @@
 
     border-radius:10px;
 
-    border:1px solid #e7d8cb;
+    border:1px solid #cbd5e1;
 
     outline:none;
 
@@ -327,11 +332,16 @@
 .filter-card select:focus {
 
 
-    border-color:#f97316;
+    border-color:#2563eb;
 
     box-shadow:
 
-        0 0 0 3px rgba(249, 115, 22, .12);
+        0 0 0 3px rgba(
+            37,
+            99,
+            235,
+            .12
+        );
 
 
 }
@@ -357,7 +367,7 @@
 
     overflow:hidden;
 
-    border:1px solid #eee3da;
+    border:1px solid #e2e8f0;
 
     box-shadow:
 
@@ -386,7 +396,7 @@
 
     padding:20px 24px;
 
-    border-bottom:1px solid #eee3da;
+    border-bottom:1px solid #e2e8f0;
 
 
 }
@@ -432,9 +442,9 @@
 
     border-radius:999px;
 
-    background:#fff1e6;
+    background:#eff6ff;
 
-    color:#f97316;
+    color:#2563eb;
 
     font-size:13px;
 
@@ -492,7 +502,7 @@
 
     text-align:left;
 
-    background:#f8f1e9;
+    background:#f8fafc;
 
     color:#475569;
 
@@ -512,7 +522,7 @@
 
     padding:16px 15px;
 
-    border-bottom:1px solid #eee3da;
+    border-bottom:1px solid #e2e8f0;
 
     vertical-align:middle;
 
@@ -537,7 +547,7 @@
 .user-table tbody tr:hover {
 
 
-    background:#f8f1e9;
+    background:#f8fafc;
 
 
 }
@@ -605,8 +615,8 @@
 
         linear-gradient(
             135deg,
-            #f97316,
-            #fb923c
+            #2563eb,
+            #60a5fa
         );
 
 
@@ -696,9 +706,9 @@
 
     border-radius:999px;
 
-    background:#fff1e6;
+    background:#eff6ff;
 
-    color:#f97316;
+    color:#2563eb;
 
     font-size:12px;
 
@@ -838,9 +848,9 @@
 .view-btn {
 
 
-    background:#fff1e6;
+    background:#e0f2fe;
 
-    color:#c2410c;
+    color:#0369a1;
 
 
 }
@@ -922,9 +932,9 @@
 
     margin:0 auto 12px;
 
-    border:3px solid #fff1e6;
+    border:3px solid #dbeafe;
 
-    border-top-color:#f97316;
+    border-top-color:#2563eb;
 
     border-radius:50%;
 
@@ -975,7 +985,7 @@
 
     border-radius:8px;
 
-    background:#f97316;
+    background:#2563eb;
 
     color:white;
 

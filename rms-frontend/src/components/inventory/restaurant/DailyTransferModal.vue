@@ -280,7 +280,7 @@
                           title="Remove from today's transfer only"
                           @click="removeItem(index)"
                         >
-                          <i class="bi bi-trash"></i>
+                          <i class="bi bi-trash3"></i>
                         </button>
                       </div>
                     </article>

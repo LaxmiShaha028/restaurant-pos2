@@ -209,30 +209,12 @@ class ResolveTenant
         |--------------------------------------------------------------------------
         | Restaurant Status
         |--------------------------------------------------------------------------
+        |
+        | validateRestaurantSubscription() already refreshes and verifies
+        | the restaurant status before allowing the request to continue.
+        | Reusing that verified model avoids a duplicate central DB read.
+        |
         */
-
-        /*
-         * Re-read the restaurant status after subscription validation.
-         * This is important because validateRestaurantSubscription()
-         * may have changed the restaurant to inactive.
-         */
-        $restaurant->refresh();
-
-        if ($restaurant->status !== 'active') {
-            return response()->json([
-                'success' => false,
-
-                'message' =>
-                    'This restaurant account is not active.',
-
-                'data' => [
-                    'restaurant_status' =>
-                        $restaurant->status,
-                ],
-
-                'errors' => null,
-            ], 403);
-        }
 
 
         /*
@@ -287,27 +269,6 @@ class ResolveTenant
             $this->connectionManager->connect(
                 $restaurant
             );
-
-            /*
-            |--------------------------------------------------------------------------
-            | Make Tenant Connection Default
-            |--------------------------------------------------------------------------
-            */
-
-            DB::purge('tenant');
-
-            DB::reconnect('tenant');
-
-            DB::setDefaultConnection('tenant');
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | Tenant Connection Safety Check
-            |--------------------------------------------------------------------------
-            */
-
-            DB::connection('tenant')->getPdo();
 
         } catch (Throwable $exception) {
             report($exception);
@@ -620,7 +581,6 @@ class ResolveTenant
                 'errors' => null,
             ], 403);
         }
-
 
         /*
         |--------------------------------------------------------------------------

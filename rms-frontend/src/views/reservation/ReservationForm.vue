@@ -7,6 +7,10 @@
 
     <div class="reservation-page-header">
 
+      <span class="reservation-form-header-icon">
+        <i class="bi bi-calendar-plus"></i>
+      </span>
+
       <div>
 
         <h1 class="reservation-page-title">
@@ -2492,6 +2496,123 @@ onBeforeUnmount(
   flex: 0 0 auto;
 }
 
+/* Order Management theme: warm canvas, black text and orange accents. */
+.reservation-form-page {
+  padding: 18px !important;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
+    #f4f1ed !important;
+  color: #111827 !important;
+}
+
+.reservation-page-header,
+.reservation-form-card {
+  border: 1px solid #eee3da !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
+}
+
+.reservation-page-header {
+  min-height: 100px;
+  margin-bottom: 12px !important;
+  padding: 18px 20px !important;
+}
+
+.reservation-form-header-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  place-items: center;
+  border-radius: 12px;
+  background: #fff1e6;
+  color: #f97316;
+  font-size: 17px;
+}
+
+.reservation-page-title,
+.reservation-page-subtitle,
+.reservation-section-header h2,
+.reservation-section-header p,
+.reservation-label,
+.reservation-customer-mode button,
+.reservation-form-page .form-control,
+.reservation-form-page .form-select,
+.reservation-table-card,
+.reservation-selected-table-item strong {
+  color: #111827 !important;
+}
+
+.reservation-section-icon,
+.reservation-selected-customer-avatar,
+.reservation-table-icon {
+  border-radius: 10px !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.reservation-form-page .form-control:focus,
+.reservation-form-page .form-select:focus,
+.reservation-form-page textarea:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
+}
+
+.reservation-customer-mode {
+  border-color: #eee3da !important;
+  background: #f8f1e9 !important;
+}
+
+.reservation-customer-mode button.active {
+  border-color: #fed7aa !important;
+  background: #fff !important;
+  color: #c2410c !important;
+}
+
+.reservation-customer-mode button.active i {
+  color: #f97316 !important;
+}
+
+.reservation-check-button,
+.reservation-primary-button,
+.reservation-check-button:hover:not(:disabled),
+.reservation-primary-button:hover:not(:disabled) {
+  border: 1px solid #292929 !important;
+  border-radius: 10px !important;
+  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+}
+
+.reservation-check-button i,
+.reservation-primary-button i {
+  color: #f97316 !important;
+}
+
+.reservation-back-button {
+  border-color: #eee3da !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  color: #111827 !important;
+}
+
+.reservation-back-button i {
+  color: #f97316 !important;
+}
+
+.reservation-table-card.selected {
+  border-color: #f97316 !important;
+  background: #fff8f1 !important;
+  box-shadow: 0 0 0 1px rgba(249, 115, 22, .16) !important;
+}
+
+.reservation-form-footer {
+  border-color: #eee3da !important;
+  background: #fff8f1 !important;
+}
+
 @media (max-width: 560px) {
   .reservation-customer-mode {
     width: 100%;
@@ -2499,6 +2620,15 @@ onBeforeUnmount(
 
   .reservation-customer-mode button {
     flex: 1;
+  }
+
+  .reservation-form-page {
+    padding: 10px !important;
+    border-radius: 18px;
+  }
+
+  .reservation-page-header {
+    padding: 14px !important;
   }
 }
 </style>

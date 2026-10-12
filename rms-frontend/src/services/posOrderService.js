@@ -72,33 +72,6 @@ function normalizeBootstrap(response) {
   }
 }
 
-function addSeatedReservationTables(tables, response) {
-  const data = unwrap(response)
-  const reservations = asArray(data?.data ?? data)
-    .filter((reservation) =>
-      String(reservation?.status || '').toLowerCase() === 'seated',
-    )
-  const tableMap = new Map(
-    tables.map((table) => [Number(table.id), { ...table }]),
-  )
-
-  reservations.forEach((reservation) => {
-    asArray(reservation?.tables).forEach((table) => {
-      const id = positiveId(table?.id)
-      if (!id) return
-
-      const existing = tableMap.get(id)
-      tableMap.set(id, {
-        ...(existing || table),
-        has_seated_reservation: true,
-        reservation_no: reservation.reservation_no || '',
-      })
-    })
-  })
-
-  return [...tableMap.values()]
-}
-
 function normalizeSettings(response) {
   const data = unwrap(response)
 
@@ -140,16 +113,8 @@ function normalizeCustomerSearch(response) {
 
 const posOrderService = {
   async loadBootstrap() {
-    const [optionsResponse, reservationsResponse] = await Promise.all([
-      orderService.getCreateOptions(),
-      orderService.getSeatedReservations({ per_page: 100 }),
-    ])
-    const data = normalizeBootstrap(optionsResponse)
-
-    return {
-      ...data,
-      tables: addSeatedReservationTables(data.tables, reservationsResponse),
-    }
+    const response = await orderService.getCreateOptions()
+    return normalizeBootstrap(response)
   },
 
   async loadOperationalSettings() {

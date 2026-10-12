@@ -185,7 +185,7 @@
 
                         <i
                           v-else
-                          class="bi bi-trash"
+                          class="bi bi-trash3"
                         ></i>
                       </button>
                     </div>
@@ -386,7 +386,7 @@
                         :disabled="saving || form.items.length <= 1"
                         @click="removeItem(index)"
                       >
-                        <i class="bi bi-trash"></i>
+                        <i class="bi bi-trash3"></i>
                       </button>
                     </div>
 

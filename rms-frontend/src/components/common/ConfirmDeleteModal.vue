@@ -77,7 +77,7 @@ const confirmDelete = () => {
         <div class="delete-content">
           <div class="delete-icon">
             <i
-              class="bi bi-trash"
+              class="bi bi-trash3"
             ></i>
           </div>
 
@@ -119,7 +119,7 @@ const confirmDelete = () => {
 
               <i
                 v-else
-                class="bi bi-trash me-2"
+                class="bi bi-trash3 me-2"
               ></i>
 
               {{

@@ -290,7 +290,7 @@
                     class="warehouse-lot-edit-button"
                     @click="openMetadataEdit(lot)"
                   >
-                    <i class="bi bi-pencil"></i>
+                    <i class="bi bi-pencil-square"></i>
                     Edit
                   </button>
 
@@ -439,7 +439,7 @@ const filters =
     source_type: '',
     has_stock: '1',
     page: 1,
-    per_page: 10,
+    per_page: 20,
   })
 
 const showDetails =

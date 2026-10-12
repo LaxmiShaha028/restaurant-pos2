@@ -4,8 +4,8 @@
   --pos-muted: #64748b;
   --pos-line: #e2e8f0;
   --pos-soft: #f8fafc;
-  --pos-blue: #2563eb;
-  --pos-blue-soft: #eff6ff;
+  --pos-blue: #f97316;
+  --pos-blue-soft: #fff1e6;
   --pos-green: #059669;
   --pos-red: #dc2626;
   color: var(--pos-ink);
@@ -102,7 +102,6 @@
 .pos-primary-badge { padding: 3px 7px; border-radius: 999px; color: #1d4ed8; background: #dbeafe; font-size: 10px; font-weight: 800; }
 .pos-table-card-meta { display: flex; justify-content: space-between; gap: 8px; color: var(--pos-muted); font-size: 11px; font-weight: 700; }
 .pos-table-card-meta .available { color: var(--pos-green); }
-.pos-table-card-meta .seated { color: #b45309; }
 
 .pos-table-selection-footer { position: sticky; bottom: 16px; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 14px 16px; border: 1px solid rgba(226,232,240,.9); border-radius: 18px; background: rgba(255,255,255,.93); box-shadow: 0 18px 50px rgba(15,23,42,.12); backdrop-filter: blur(12px); }
 .pos-selected-summary { display: flex; gap: 30px; }
@@ -377,8 +376,8 @@
   --pos-muted: #667085;
   --pos-line: #e5e7eb;
   --pos-soft: #fafbfc;
-  --pos-blue: #2563eb;
-  --pos-blue-soft: #eff6ff;
+  --pos-blue: #f97316;
+  --pos-blue-soft: #fff1e6;
   --pos-green: #027a48;
   --pos-red: #b42318;
   width: 100%;
@@ -1814,4 +1813,98 @@
   .pos-menu-grid {
     grid-template-columns: repeat(2,minmax(0,1fr));
   }
+}
+
+/* POS modal theme: white surfaces, black text and restaurant orange accents. */
+.pos-modal-backdrop {
+  background: rgba(35, 20, 10, .58);
+}
+
+.pos-modal {
+  border: 1px solid #eee3da;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(55, 29, 10, .24);
+}
+
+.pos-modal-header,
+.pos-food-modal-footer,
+.pos-modal-footer {
+  border-color: #eee3da;
+  background: #fff;
+}
+
+.pos-modal-title > span,
+.pos-food-modal-image,
+.pos-payment-method .icon {
+  border-color: #f3dfcf;
+  background: #fff1e6;
+  color: #f97316 !important;
+}
+
+.pos-modal-title p,
+.pos-modal-title h2,
+.pos-food-modal-product h3,
+.pos-option-heading h3,
+.pos-option-pill span,
+.pos-payment-method > span:not(.icon) {
+  color: #111827;
+}
+
+.pos-food-modal-product p,
+.pos-option-pill strong,
+.pos-payment-method .check {
+  color: #c2410c !important;
+}
+
+.pos-option-pill.selected,
+.pos-payment-method.selected {
+  border-color: #f97316 !important;
+  background: #fff8f1 !important;
+}
+
+.pos-option-pill input,
+.pos-payment-method input {
+  accent-color: #f97316;
+}
+
+.pos-modal :is(input, textarea, select):focus {
+  border-color: #fb923c;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14);
+}
+
+.pos-modal .pos-primary-button,
+.pos-modal .pos-primary-button:hover:not(:disabled) {
+  border: 1px solid #292929 !important;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+}
+
+.pos-modal .pos-primary-button:hover:not(:disabled) {
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+  color: #fb923c !important;
+}
+
+.pos-modal .pos-secondary-button,
+.pos-modal .pos-modal-close {
+  border-color: #eee3da;
+  background: #fff;
+  color: #111827;
+}
+
+.pos-modal .pos-payment-total {
+  border-radius: 12px;
+  background: linear-gradient(145deg, #321407, #542006 60%, #3b1605);
+  color: #fffaf5;
+}
+
+.pos-modal .pos-payment-total strong {
+  color: #fb923c;
+}
+
+.pos-modal .pos-payment-breakdown > div,
+.pos-modal .pos-modal-note {
+  border-color: #eee3da;
+  background: #fff8f1;
 }

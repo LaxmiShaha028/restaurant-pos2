@@ -16,7 +16,6 @@
     <div class="pos-table-card-copy">
       <div class="pos-table-card-title-row">
         <h3>{{ table.table_name || `Table ${table.id}` }}</h3>
-        <span v-if="primary" class="pos-primary-badge">Primary</span>
       </div>
 
       <p>{{ table.section || 'Restaurant Floor' }}</p>
@@ -27,9 +26,9 @@
           {{ table.capacity || 0 }} seats
         </span>
 
-        <span :class="table.has_seated_reservation ? 'seated' : 'available'">
-          <i :class="table.has_seated_reservation ? 'bi bi-person-check-fill' : 'bi bi-check-circle-fill'"></i>
-          {{ table.has_seated_reservation ? 'Seated reservation' : 'Available' }}
+        <span class="available">
+          <i class="bi bi-check-circle-fill"></i>
+          Available
         </span>
       </div>
     </div>

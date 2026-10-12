@@ -17,6 +17,10 @@
 
     <div class="reservation-header">
 
+        <div class="reservation-page-header-icon">
+            <i class="bi bi-calendar-check"></i>
+        </div>
+
         <div class="reservation-header-content">
 
             <h1 class="page-title">
@@ -330,7 +334,7 @@
                         class="bi bi-search"
                     ></i>
 
-                    Search
+                    Apply
 
                 </button>
 

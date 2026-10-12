@@ -168,7 +168,7 @@ class RecipeMappingService
                 'menuItem',
                 'variant',
                 'addOn',
-                'rawMaterial',
+                'rawMaterial.restaurantStock',
                 'creator',
                 'updater',
             ])

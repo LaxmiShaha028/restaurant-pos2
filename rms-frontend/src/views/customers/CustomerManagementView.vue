@@ -201,6 +201,7 @@ import '@/assets/css/customers/customer-filter.css'
 import '@/assets/css/customers/customer-table.css'
 import '@/assets/css/customers/customer-responsive.css'
 import '@/assets/css/customers/customer-compact.css'
+import '@/assets/css/restaurant-page-theme.css'
 
 /*
 |--------------------------------------------------------------------------

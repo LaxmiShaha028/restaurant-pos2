@@ -1149,7 +1149,7 @@ table{
 thead th{
 
 
-    background:#f8f1e9!important;
+    background:#f8f9fa!important;
 
     color:#495057;
 
@@ -1161,7 +1161,7 @@ thead th{
 
     letter-spacing:.3px;
 
-    border-bottom:1px solid #eee3da;
+    border-bottom:1px solid #dee2e6;
 
 
 }
@@ -1183,7 +1183,7 @@ tbody tr{
 tbody tr:hover{
 
 
-    background:#fff8f1;
+    background:#fafafa;
 
 }
 
@@ -1226,7 +1226,7 @@ td:nth-child(4) div{
 
     border-radius:.6rem;
 
-    background:#f8f1e9;
+    background:#f8f9fa;
 
     margin-bottom:5px;
 
@@ -1309,7 +1309,7 @@ td:nth-child(8){
 .bg-light{
 
 
-    background:#f8f1e9!important;
+    background:#f1f3f5!important;
 
     color:#495057!important;
 
@@ -1459,9 +1459,9 @@ margin-bottom:12px;
 
 .purchase-card .summary-icon{
 
-background:#fff1e6;
+background:#e7f1ff;
 
-color:#f97316;
+color:#0d6efd;
 
 }
 
@@ -1495,9 +1495,9 @@ display:inline-block;
 
 padding:6px 12px;
 
-background:#fff1e6;
+background:#eef7ff;
 
-color:#f97316;
+color:#0d6efd;
 
 border-radius:30px;
 
@@ -1524,7 +1524,7 @@ font-size:.75rem;
 
 font-weight:700;
 
-background:#f8f1e9;
+background:#f1f3f5;
 
 }
 

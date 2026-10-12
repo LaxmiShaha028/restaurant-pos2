@@ -109,7 +109,7 @@
       >
         <i class="bi bi-search"></i>
 
-        Search
+        Apply
       </button>
 
       <button

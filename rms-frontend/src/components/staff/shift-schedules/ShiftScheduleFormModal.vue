@@ -20,7 +20,7 @@
                         class="bi"
                         :class="
                             isEditing
-                                ? 'bi-pencil'
+                                ? 'bi-pencil-square'
                                 : 'bi-calendar-range'
                         "
                     ></i>

@@ -10,7 +10,7 @@
           <p class="pos-eyebrow">Operations</p>
           <h1>POS Order</h1>
           <p class="pos-page-subtitle">
-            Select available tables or tables with seated reservations. The first selected table becomes the primary table.
+            Select one or more available tables. The first selected table becomes the primary table.
           </p>
         </div>
       </div>
@@ -47,29 +47,20 @@
         </div>
       </div>
 
-      <template v-if="filteredTables.length">
-        <div class="pos-table-grid">
-          <PosTableCard
-            v-for="table in paginatedTables"
-            :key="table.id"
-            :table="table"
-            :selected="isSelected(table.id)"
-            :primary="isPrimary(table.id)"
-            @toggle="toggleTable"
-          />
-        </div>
-
-        <PaginationControls
-          v-if="filteredTables.length > pageSize"
-          v-model:page="currentPage"
-          :total="filteredTables.length"
-          :per-page="pageSize"
+      <div v-if="filteredTables.length" class="pos-table-grid">
+        <PosTableCard
+          v-for="table in filteredTables"
+          :key="table.id"
+          :table="table"
+          :selected="isSelected(table.id)"
+          :primary="isPrimary(table.id)"
+          @toggle="toggleTable"
         />
-      </template>
+      </div>
 
       <div v-else class="pos-empty-state">
         <span><i class="bi bi-grid-3x3-gap"></i></span>
-        <h2>No POS tables found</h2>
+        <h2>No available tables found</h2>
         <p>Refresh the floor or clear the search filter.</p>
       </div>
     </template>
@@ -102,12 +93,12 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import PosTableCard from '@/components/pos/PosTableCard.vue'
-import PaginationControls from '@/components/shared/PaginationControls.vue'
 import posOrderService from '@/services/posOrderService'
 import '@/assets/css/pos/pos-order.css'
+import '@/assets/css/restaurant-page-theme.css'
 
 const router = useRouter()
 const loading = ref(true)
@@ -115,8 +106,6 @@ const errorMessage = ref('')
 const tables = ref([])
 const selectedIds = ref([])
 const search = ref('')
-const currentPage = ref(1)
-const pageSize = 12
 
 const filteredTables = computed(() => {
   const term = search.value.trim().toLowerCase()
@@ -129,15 +118,6 @@ const filteredTables = computed(() => {
       .toLowerCase()
       .includes(term),
   )
-})
-
-const paginatedTables = computed(() => {
-  const start = (currentPage.value - 1) * pageSize
-  return filteredTables.value.slice(start, start + pageSize)
-})
-
-watch(search, () => {
-  currentPage.value = 1
 })
 
 const selectedTables = computed(() =>

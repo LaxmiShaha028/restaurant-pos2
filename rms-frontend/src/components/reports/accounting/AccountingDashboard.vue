@@ -1006,7 +1006,12 @@ function money(
 
 .bg-primary-subtle {
   background-color:
-    rgba(249, 115, 22, 0.12);
+    rgba(
+      13,
+      110,
+      253,
+      0.12
+    );
 }
 
 

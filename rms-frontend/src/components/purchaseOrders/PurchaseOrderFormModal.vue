@@ -30,7 +30,7 @@
                                     class="bi"
                                     :class="
                                         isEditMode
-                                            ? 'bi-pencil'
+                                            ? 'bi-pencil-square'
                                             : 'bi-cart-plus'
                                     "
                                     aria-hidden="true"
@@ -440,7 +440,7 @@
                                                 @click="removeItem(index)"
                                             >
 
-                                                <i class="bi bi-trash" aria-hidden="true"></i>
+                                                <i class="bi bi-trash3" aria-hidden="true"></i>
 
                                             </button>
 

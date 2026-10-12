@@ -15,8 +15,6 @@ import {
   getCentralSubscriptions,
 } from '@/services/superAdminApi'
 
-import PaginationControls from '@/components/shared/PaginationControls.vue'
-
 
 /*
 |--------------------------------------------------------------------------
@@ -79,9 +77,6 @@ const router =
 
 const subscriptions =
   ref([])
-
-const currentPage = ref(1)
-const pageSize = 10
 
 const loading =
   ref(false)
@@ -153,15 +148,6 @@ const filteredSubscriptions =
     )
 
   })
-
-const paginatedSubscriptions = computed(() => {
-  const start = (currentPage.value - 1) * pageSize
-  return filteredSubscriptions.value.slice(start, start + pageSize)
-})
-
-watch(search, () => {
-  currentPage.value = 1
-})
 
 
 /*
@@ -830,7 +816,7 @@ watch(
           <tbody>
 
             <tr
-              v-for="subscription in paginatedSubscriptions"
+              v-for="subscription in filteredSubscriptions"
               :key="subscription.id"
             >
 
@@ -1042,12 +1028,6 @@ watch(
         </table>
 
       </div>
-
-      <PaginationControls
-        v-model:page="currentPage"
-        :total="filteredSubscriptions.length"
-        :per-page="pageSize"
-      />
 
     </section>
 

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Order;
 use App\Models\OrderPayment;
+use App\Models\Expense;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -168,7 +169,15 @@ class BillingService
         |
         */
 
-        $expenses = 0.0;
+        $expenses = (float) Expense::query()
+            ->whereBetween(
+                'expense_date',
+                [
+                    $startDate,
+                    $endDate,
+                ]
+            )
+            ->sum('amount');
 
         return [
             /*

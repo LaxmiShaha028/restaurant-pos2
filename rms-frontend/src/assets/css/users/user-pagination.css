@@ -100,7 +100,7 @@
 .page-number.active {
 
 
-    background:#f97316;
+    background:#2563eb;
 
 
     color:white;
@@ -180,10 +180,10 @@
 
     border:
 
-        3px solid #fff1e6;
+        3px solid #dbeafe;
 
 
-    border-top-color:#f97316;
+    border-top-color:#2563eb;
 
 
     border-radius:50%;

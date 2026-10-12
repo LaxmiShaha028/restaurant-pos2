@@ -515,7 +515,7 @@
 }
 
 .status-active {
-  background: linear-gradient(90deg, #4ade80 0%, #16a34a 100%);
+  background: linear-gradient(90deg, #fb923c 0%, #ea580c 100%);
 }
 
 .status-pending {
@@ -527,7 +527,7 @@
 }
 
 .status-inactive {
-  background: linear-gradient(90deg, #cbd5e1 0%, #64748b 100%);
+  background: linear-gradient(90deg, #fed7aa 0%, #f97316 100%);
 }
 
 .dashboard-snapshot-grid {
@@ -564,6 +564,147 @@
   padding: 30px 20px;
   color: #94a3b8;
   font-size: 12px;
+}
+
+/* Super-admin dashboard palette matched to the restaurant dashboard. */
+.super-admin-dashboard-page {
+  --admin-accent: #f97316;
+  --admin-accent-dark: #c2410c;
+  padding: 18px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
+    #f4f1ed;
+  color: #111827;
+}
+
+.super-admin-dashboard-page .dashboard-kicker,
+.super-admin-dashboard-page .dashboard-mini-kicker,
+.super-admin-dashboard-page .dashboard-hero-copy h1,
+.super-admin-dashboard-page .dashboard-hero-copy p,
+.super-admin-dashboard-page .dashboard-last-updated strong,
+.super-admin-dashboard-page .dashboard-highlight-list li strong,
+.super-admin-dashboard-page .dashboard-stat-copy span,
+.super-admin-dashboard-page .dashboard-stat-copy strong,
+.super-admin-dashboard-page .dashboard-stat-copy small,
+.super-admin-dashboard-page .dashboard-panel-head h2,
+.super-admin-dashboard-page .dashboard-status-title,
+.super-admin-dashboard-page .dashboard-status-value,
+.super-admin-dashboard-page .dashboard-snapshot-item span,
+.super-admin-dashboard-page .dashboard-snapshot-item strong {
+  color: #111827;
+}
+
+.super-admin-dashboard-page .dashboard-kicker,
+.super-admin-dashboard-page .dashboard-mini-kicker {
+  color: #c2410c;
+}
+
+.super-admin-dashboard-page .dashboard-spotlight-card,
+.super-admin-dashboard-page .dashboard-stat-card,
+.super-admin-dashboard-page .dashboard-panel-card,
+.super-admin-dashboard-page .dashboard-loading-card {
+  border-color: #eee3da;
+  border-radius: 14px;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+}
+
+.super-admin-dashboard-page .dashboard-spotlight-main {
+  border-color: #572000;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 70% 50%, rgba(249, 115, 22, .98), transparent 48%),
+    linear-gradient(110deg, #311100 0%, #5a2100 55%, #301000 100%);
+  color: #fff;
+}
+
+.super-admin-dashboard-page .dashboard-spotlight-main .dashboard-mini-kicker,
+.super-admin-dashboard-page .dashboard-spotlight-main .dashboard-spotlight-head strong,
+.super-admin-dashboard-page .dashboard-spotlight-main .dashboard-spotlight-footer,
+.super-admin-dashboard-page .dashboard-spotlight-main .dashboard-spotlight-metrics span,
+.super-admin-dashboard-page .dashboard-spotlight-main .dashboard-spotlight-metrics strong {
+  color: #fff;
+}
+
+.super-admin-dashboard-page .dashboard-spotlight-metrics div {
+  border-color: rgba(255, 255, 255, .18);
+  background: rgba(25, 12, 4, .28);
+}
+
+.super-admin-dashboard-page .dashboard-highlight-list li {
+  border-bottom-color: #eee3da;
+}
+
+.super-admin-dashboard-page .dashboard-spotlight-side,
+.super-admin-dashboard-page .dashboard-panel-head {
+  background: #fff8f1;
+}
+
+.super-admin-dashboard-page .dashboard-stat-icon,
+.super-admin-dashboard-page .tone-primary .dashboard-stat-icon,
+.super-admin-dashboard-page .tone-success .dashboard-stat-icon,
+.super-admin-dashboard-page .tone-violet .dashboard-stat-icon,
+.super-admin-dashboard-page .tone-slate .dashboard-stat-icon,
+.super-admin-dashboard-page .tone-emerald .dashboard-stat-icon,
+.super-admin-dashboard-page .tone-amber .dashboard-stat-icon {
+  background: #fff1e6;
+  color: #f97316;
+}
+
+.super-admin-dashboard-page .dashboard-refresh-button,
+.super-admin-dashboard-page .dashboard-refresh-button:hover:not(:disabled) {
+  border: 1px solid #292929;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909);
+  color: #f97316;
+}
+
+.super-admin-dashboard-page .dashboard-refresh-button i,
+.super-admin-dashboard-page .dashboard-refresh-button .spinner-border {
+  color: #f97316;
+}
+
+.super-admin-dashboard-page .dashboard-panel-card {
+  overflow: hidden;
+}
+
+.super-admin-dashboard-page .dashboard-panel-head {
+  border-bottom-color: #eee3da;
+}
+
+.super-admin-dashboard-page .dashboard-panel-tag,
+.super-admin-dashboard-page .dashboard-snapshot-item {
+  border-color: #eee3da;
+  background: #fff8f1;
+}
+
+.super-admin-dashboard-page .bar-restaurants,
+.super-admin-dashboard-page .bar-revenue {
+  background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
+}
+
+.super-admin-dashboard-page .dashboard-chart-track {
+  background:
+    repeating-linear-gradient(
+      to top,
+      #f4eee8,
+      #f4eee8 1px,
+      transparent 1px,
+      transparent 25%
+    );
+}
+
+.super-admin-dashboard-page .dashboard-status-progress {
+  background: #f4eee8;
+}
+
+@media (max-width: 767.98px) {
+  .super-admin-dashboard-page {
+    padding: 10px;
+    border-radius: 18px;
+  }
 }
 
 @media (max-width: 1480px) {

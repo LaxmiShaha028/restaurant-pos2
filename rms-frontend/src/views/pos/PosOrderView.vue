@@ -169,6 +169,7 @@ import PosPaymentModal from '@/components/pos/PosPaymentModal.vue'
 import PosOrderSuccessModal from '@/components/pos/PosOrderSuccessModal.vue'
 import posOrderService from '@/services/posOrderService'
 import '@/assets/css/pos/pos-order.css'
+import '@/assets/css/restaurant-page-theme.css'
 
 const route = useRoute()
 const router = useRouter()

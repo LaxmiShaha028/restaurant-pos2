@@ -24,7 +24,7 @@ border-collapse:collapse;
 
 padding:14px;
 
-background:#f8f1e9;
+background:#f8fafc;
 
 text-align:left;
 
@@ -41,7 +41,7 @@ color:#475569;
 
 padding:14px;
 
-border-bottom:1px solid #eee3da;
+border-bottom:1px solid #e2e8f0;
 
 font-size:14px;
 
@@ -80,9 +80,9 @@ padding:5px 12px;
 
 border-radius:20px;
 
-background:#fff1e6;
+background:#eff6ff;
 
-color:#f97316;
+color:#2563eb;
 
 font-size:12px;
 
@@ -153,9 +153,9 @@ color:#991b1b;
 
 .action-badge.unblocked{
 
-background:#fff1e6;
+background:#dbeafe;
 
-color:#c2410c;
+color:#1d4ed8;
 
 }
 
@@ -172,7 +172,7 @@ padding:7px 14px;
 
 border-radius:8px;
 
-background:#f97316;
+background:#2563eb;
 
 color:white;
 

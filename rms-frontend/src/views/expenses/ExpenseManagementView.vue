@@ -156,17 +156,11 @@ const filters =
 
 
 async function loadAllData(){
-
   await Promise.all([
-
     loadOptions(),
-
     loadExpenses(),
-
     loadSummary(),
-
   ])
-
 }
 
 
@@ -297,11 +291,8 @@ async function applyFilters(){
     1
 
   await Promise.all([
-
     loadExpenses(),
-
     loadSummary(),
-
   ])
 
 }

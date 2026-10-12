@@ -283,15 +283,13 @@ const cards = computed(() => {
         }),
 
       description:
-        "Expense module not connected yet",
+        "Recorded expenses in the selected date range",
 
       icon:
         "bi bi-box-arrow-up-right",
 
       className:
         "expense-card",
-
-      comingSoon: true,
     },
 
     /*

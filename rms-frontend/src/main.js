@@ -6,7 +6,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 import './assets/main.css'
-import './assets/css/reference-business-theme.css'
 
 import App from './App.vue'
 import router from './router'
@@ -18,4 +17,3 @@ app.use(pinia)
 app.use(router)
 
 app.mount('#app')
-

@@ -157,7 +157,7 @@
         <div class="shift-summary-card">
 
             <div class="shift-summary-icon">
-                <i class="bi bi-pencil"></i>
+                <i class="bi bi-pencil-square"></i>
             </div>
 
             <div>

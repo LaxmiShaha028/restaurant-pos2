@@ -324,7 +324,6 @@ const notificationError = ref('')
 const notificationSummary = ref({})
 const notificationSubscription = ref(null)
 const notificationUpdatedAt = ref(null)
-const seenNotificationKeys = ref(new Set())
 
 let notificationPollTimer = null
 
@@ -538,12 +537,7 @@ const notifications = computed(() => {
 })
 
 const notificationCount = computed(() => {
-  return notifications.value.filter(
-    (notification) =>
-      !seenNotificationKeys.value.has(
-        notificationReadKey(notification),
-      ),
-  ).length
+  return notifications.value.length
 })
 
 const notificationBadge = computed(() => {
@@ -573,25 +567,6 @@ function money(value) {
       maximumFractionDigits: 2,
     },
   )}`
-}
-
-function notificationReadKey(notification) {
-  const identity =
-    notification.key === 'subscription'
-      ? notificationSubscription.value?.id ||
-        notificationSubscription.value?.end_at
-      : notification.value
-
-  return `${notification.key}:${identity ?? ''}`
-}
-
-function markNotificationsRead() {
-  seenNotificationKeys.value = new Set([
-    ...seenNotificationKeys.value,
-    ...notifications.value.map(
-      notificationReadKey,
-    ),
-  ])
 }
 
 async function loadNotifications(silent = false) {
@@ -693,10 +668,6 @@ async function loadNotifications(silent = false) {
       Date.now()
 
     notificationError.value = ''
-
-    if (notificationOpen.value) {
-      markNotificationsRead()
-    }
   } catch (error) {
     if (
       !silent ||
@@ -719,7 +690,6 @@ function toggleNotifications() {
   closeUserDropdown()
 
   if (notificationOpen.value) {
-    markNotificationsRead()
     loadNotifications(true)
   }
 }
@@ -1360,8 +1330,8 @@ onBeforeUnmount(() => {
   background:
     linear-gradient(
       135deg,
-      #2563eb,
-      #4f46e5
+      #f97316,
+      #c2410c
     );
   color: #fff;
   font-weight: 700;

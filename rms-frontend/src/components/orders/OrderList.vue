@@ -316,7 +316,7 @@
                       :disabled="isUpdating(order)"
                       @click="goToEdit(order)"
                     >
-                      <i class="bi bi-pencil"></i>
+                      <i class="bi bi-pencil-square"></i>
                     </button>
 
                     <button

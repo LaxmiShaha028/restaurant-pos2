@@ -54,9 +54,9 @@
 
     border-radius: 12px;
 
-    background: rgba(249, 115, 22, .12);
+    background: rgba(13,110,253,.12);
 
-    color: #f97316;
+    color: #0d6efd;
 
     font-size: 22px;
 
@@ -161,7 +161,7 @@
 .settings-tab-button.active {
 
 
-    background: #f97316;
+    background: #0d6efd;
 
 
     color: white;
@@ -327,7 +327,7 @@
     border-radius: 10px;
 
 
-    background: #f97316;
+    background: #0d6efd;
 
 
     color: white;
@@ -353,7 +353,7 @@
 .settings-save-button:hover {
 
 
-    background: #c2410c;
+    background: #0b5ed7;
 
 
 }

@@ -686,7 +686,7 @@ th {
 
 
 tfoot td {
-  background-color: #f8f1e9;
+  background-color: #f8f9fa;
 }
 
 

@@ -60,7 +60,7 @@
                   class="bi bi-file-earmark-excel"
                 ></i>
 
-                Export Excel
+                Export Excel-compatible CSV
               </button>
             </li>
 

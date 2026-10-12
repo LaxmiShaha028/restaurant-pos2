@@ -1,6 +1,5 @@
 import orderService from "@/services/orderService";
 import systemSettingService from "@/services/systemSettingService";
-import PaginationControls from "@/components/shared/PaginationControls.vue";
 const BACKEND_URL = (
   import.meta.env.VITE_BACKEND_URL ||
   "http://127.0.0.1:8000"
@@ -8,10 +7,6 @@ const BACKEND_URL = (
 
 export default {
   name: "CreateOrderView",
-
-  components: {
-    PaginationControls,
-  },
 
   /*
   |--------------------------------------------------------------------------
@@ -44,8 +39,6 @@ export default {
       originalOrder: null,
 
       selectedMenuCategory: "all",
-      menuPage: 1,
-      menuPageSize: 10,
       categories: [],
 
       /*
@@ -248,30 +241,6 @@ export default {
   */
 
   computed: {
-    reservationsForCurrentTable() {
-      if (this.$route.name !== "pos-order-create") {
-        return this.reservations;
-      }
-
-      const selectedTableIds = [
-        this.form.restaurant_table_id,
-        ...(this.form.merged_table_ids || []),
-      ]
-        .filter(Boolean)
-        .map(String);
-
-      if (!selectedTableIds.length) {
-        return [];
-      }
-
-      return this.reservations.filter((reservation) =>
-        Array.isArray(reservation?.tables) &&
-        reservation.tables.some((table) =>
-          selectedTableIds.includes(String(table?.id)),
-        ),
-      );
-    },
-
     /*
     |--------------------------------------------------------------------------
     | Basic page mode
@@ -564,11 +533,6 @@ selectedReservationTables() {
             String(this.selectedMenuCategory)
         );
       });
-    },
-
-    paginatedMenuItems() {
-      const start = (this.menuPage - 1) * this.menuPageSize;
-      return this.filteredMenuItems.slice(start, start + this.menuPageSize);
     },
 
     /*
@@ -953,56 +917,6 @@ grandTotal() {
         requestNotAlreadyCommitted
       );
     },
-
-    submitBlockedReason() {
-      if (this.isSubmitting || this.canSubmit) {
-        return "";
-      }
-
-      if (!this.form.restaurant_table_id) {
-        return "Select an available table above to create this order.";
-      }
-
-      if (
-        !this.form.items.some(
-          (item) =>
-            Boolean(item.menu_item_id) &&
-            Number(item.quantity) >= 1
-        )
-      ) {
-        return "Add at least one menu item to create this order.";
-      }
-
-      if (
-        !this.form.items.every(
-          (item) =>
-            Boolean(item.menu_item_id) &&
-            Number(item.quantity) >= 1
-        )
-      ) {
-        return "Complete or remove the empty menu item row.";
-      }
-
-      if (this.normalizedPaidAmount > this.grandTotal) {
-        return "Paid amount cannot be greater than the order total.";
-      }
-
-      if (
-        this.isEditMode &&
-        this.normalizedPaidAmount < this.recordedPaidAmount
-      ) {
-        return "Paid amount cannot be lower than the amount already recorded.";
-      }
-
-      if (
-        this.requiresNewPaymentMethod &&
-        !this.form.payment_method
-      ) {
-        return "Select a payment method for the amount received.";
-      }
-
-      return "Check the order fields above before submitting.";
-    },
   },
   /*
 |--------------------------------------------------------------------------
@@ -1013,17 +927,6 @@ grandTotal() {
 watch: {
   "form.discount_amount"() {
     this.syncCalculatedCharges();
-  },
-
-  "form.restaurant_table_id"() {
-    this.clearPosReservationIfTableChanged();
-  },
-
-  "form.merged_table_ids": {
-    deep: true,
-    handler() {
-      this.clearPosReservationIfTableChanged();
-    },
   },
 
   "form.items": {
@@ -1079,7 +982,6 @@ watch: {
 
     await this.loadCreateOptions();
 
-
     await this.loadSystemSettings();
 
     this.syncCalculatedCharges();
@@ -1100,37 +1002,7 @@ watch: {
 
         await this.loadReservations();
 
-        if (this.$route.name === "pos-order-create") {
-          const requestedTableIds = String(this.$route.query?.tables ?? "")
-            .split(",")
-            .map((id) => id.trim())
-            .filter(Boolean);
-          const reservationTables = this.reservations.flatMap((reservation) =>
-            Array.isArray(reservation?.tables) ? reservation.tables : [],
-          );
-          const tableOptions = new Map(
-            [...this.tables, ...reservationTables].map((table) => [
-              String(table?.id),
-              table,
-            ]),
-          );
-          const selectedTableIds = requestedTableIds.filter((id) =>
-            tableOptions.has(id),
-          );
 
-          selectedTableIds.forEach((id) => {
-            const table = tableOptions.get(id);
-            if (!this.tables.some((item) => String(item.id) === id)) {
-              this.tables.push(table);
-            }
-            if (!this.mergeTables.some((item) => String(item.id) === id)) {
-              this.mergeTables.push(table);
-            }
-          });
-
-          this.form.restaurant_table_id = selectedTableIds[0] ?? "";
-          this.form.merged_table_ids = selectedTableIds.slice(1);
-        }
 
         /*
         |--------------------------------------------------------------------------
@@ -1173,13 +1045,6 @@ watch: {
 
             }
 
-        } else if (this.$route.name === "pos-order-create") {
-          const matchingReservation = this.reservationsForCurrentTable[0];
-
-          if (matchingReservation) {
-            this.selectedReservationId = String(matchingReservation.id);
-            await this.handleReservationChange();
-          }
         }
 
     }
@@ -1405,7 +1270,7 @@ async loadReservations() {
 
     try {
         const response =
-            await orderService.getSeatedReservations({ per_page: 100 });
+            await orderService.getReservationsForOrder();
 
         const responseData =
           response?.data?.data ??
@@ -1622,7 +1487,6 @@ async loadReservations() {
         */
 
         this.selectedMenuCategory = "all";
-        this.menuPage = 1;
       } catch (error) {
         console.error(
           "Create order options loading failed:",
@@ -1900,7 +1764,6 @@ async loadReservations() {
         */
 
         this.selectedMenuCategory = "all";
-        this.menuPage = 1;
 
         /*
         |--------------------------------------------------------------------------
@@ -2261,8 +2124,8 @@ this.selectedReservationId =
     */
 
     selectMenuCategory(categoryId) {
-  this.selectedMenuCategory = String(categoryId);
-  this.menuPage = 1;
+  this.selectedMenuCategory =
+    String(categoryId);
 },
 
 /*
@@ -3297,39 +3160,6 @@ getTableDisplayName(table) {
 | Reservation selection
 |--------------------------------------------------------------------------
 */
-
-clearPosReservationIfTableChanged() {
-    if (
-      this.$route.name !== "pos-order-create" ||
-      !this.selectedReservation
-    ) {
-      return;
-    }
-
-    const stillMatchesSelectedTable =
-      this.reservationsForCurrentTable.some(
-        (reservation) =>
-          Number(reservation?.id) ===
-          Number(this.selectedReservation.id),
-      );
-
-    if (stillMatchesSelectedTable) {
-      return;
-    }
-
-    const reservationCustomerId =
-      this.selectedReservation.customer_id ??
-      this.selectedReservation.customer?.id;
-
-    this.clearReservationSelection();
-
-    if (
-      reservationCustomerId &&
-      Number(this.selectedCustomer?.id) === Number(reservationCustomerId)
-    ) {
-      this.clearSelectedCustomer();
-    }
-},
 
 handleReservationChange() {
     const reservationId =

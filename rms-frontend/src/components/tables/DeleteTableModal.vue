@@ -300,7 +300,7 @@ const confirmDelete = async () => {
               :class="
                 cannotDelete
                   ? 'bi bi-exclamation-triangle'
-                  : 'bi bi-trash'
+                  : 'bi bi-trash3'
               "
             ></i>
           </div>
@@ -494,7 +494,7 @@ const confirmDelete = async () => {
 
               <i
                 v-else
-                class="bi bi-trash me-1"
+                class="bi bi-trash3 me-1"
               ></i>
 
               {{

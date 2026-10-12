@@ -934,11 +934,14 @@
 ========================================================= */
 
 .table-list-row__actions {
-  display: flex;
+  display: grid;
+
   min-width: 0;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 3px;
 }
 
 
@@ -947,18 +950,27 @@
 ========================================================= */
 
 .table-list-row__button {
-  display: inline-grid;
-  width: 28px;
-  min-width: 28px;
-  height: 28px;
-  min-height: 28px;
+  display: inline-flex;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 22px;
 
   align-items: center;
   justify-content: center;
-  padding: 0;
+
+  gap: 2px;
+
+  padding:
+    2px
+    4px;
 
   border: 1px solid;
-  border-radius: 6px;
+  border-radius: 3px;
+
+  font-size: 12px;
+  font-weight: 600;
+
   line-height: 1;
 
   white-space: nowrap;
@@ -966,29 +978,16 @@
   cursor: pointer;
 
   transition:
-    border-color 0.16s ease,
-    background 0.16s ease,
-    box-shadow 0.16s ease,
-    transform 0.16s ease;
+    border-color 0.12s ease,
+    background 0.12s ease;
 }
 
 .table-list-row__button i {
-  font-size: 13px;
+  font-size: 12px;
 }
 
-.table-list-row__button:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 8px rgb(15 23 42 / 10%);
-}
-
-.table-list-row__button:focus-visible {
-  outline: 3px solid rgb(59 130 246 / 24%);
-  outline-offset: 2px;
-}
-
-.table-list-row__button:disabled {
-  cursor: not-allowed;
-  opacity: 0.55;
+.table-list-row__button:hover {
+  transform: none;
 }
 
 
@@ -997,16 +996,17 @@
 ========================================================= */
 
 .table-list-row__button--edit {
-  border-color: #f6dfa0;
-  border-radius: 8px;
-  background: #fff2c7;
-  color: #d97706;
+  border-color: #c7d2fe;
+
+  background: #eef2ff;
+
+  color: #4338ca;
 }
 
 .table-list-row__button--edit:hover {
-  border-color: #f2cf6f;
-  background: #ffe8a3;
-  color: #b45309;
+  border-color: #818cf8;
+
+  background: #e0e7ff;
 }
 
 
@@ -1015,17 +1015,17 @@
 ========================================================= */
 
 .table-list-row__button--delete {
-  border-color: #ffb7bf;
+  border-color: #fecaca;
 
-  background: #fff;
+  background: #fff1f2;
 
-  color: #f06470;
+  color: #dc2626;
 }
 
 .table-list-row__button--delete:hover {
-  border-color: #f47b87;
+  border-color: #f87171;
 
-  background: #fff3f4;
+  background: #ffe4e6;
 }
 
 
@@ -1034,17 +1034,17 @@
 ========================================================= */
 
 .table-list-row__button--merge {
-  border-color: #9bd9b0;
+  border-color: #fde68a;
 
-  background: #fff;
+  background: #fffbeb;
 
-  color: #279653;
+  color: #b45309;
 }
 
 .table-list-row__button--merge:hover {
-  border-color: #62bd82;
+  border-color: #fbbf24;
 
-  background: #f0fff5;
+  background: #fef3c7;
 }
 
 
@@ -1053,9 +1053,9 @@
 ========================================================= */
 
 .table-list-row__button--split {
-  border-color: #b8c7d8;
+  border-color: #cbd5e1;
 
-  background: #fff;
+  background: #f8fafc;
 
   color: #475569;
 }
@@ -1396,16 +1396,24 @@
   ----------------------------------------- */
 
   .table-list-row__actions {
-    display: flex !important;
+    display: grid !important;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
     width: 100%;
-    justify-content: center;
   }
 
   .table-list-row__button {
-    width: 28px;
-    min-width: 28px;
-    height: 28px;
-    min-height: 28px;
+    width: 100%;
+
+    min-height: 26px;
+
+    font-size: 12px;
+  }
+
+  .table-list-row__button span {
+    display: inline;
   }
 }
 
@@ -1420,7 +1428,8 @@
   }
 
   .table-list-row__actions {
-    justify-content: center;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -1442,212 +1451,68 @@
   }
 }
 
-/* TABLE MANAGEMENT PAGE LAYOUT REFINEMENTS */
-.table-list__header {
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
+/* Warm orange accents matching the shared restaurant theme. */
+.table-management-page .status-tab--active {
+  border-color: #fb923c !important;
+  background: #fff8f1 !important;
+  color: #c2410c !important;
 }
 
-.status-tabs {
-  gap: 8px;
-  margin-bottom: 12px;
+.table-management-page .status-tab:hover {
+  border-color: #fdba74 !important;
+  background: #fffaf5 !important;
 }
 
-.status-tab {
-  min-height: 42px;
-  gap: 8px;
-  padding: 7px 10px;
-  border-radius: 8px;
+.table-management-page .status-tab--active .status-tab__icon,
+.table-management-page .table-list-row__icon {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
 }
 
-.status-tab__icon {
-  width: 26px;
-  height: 26px;
-  flex-basis: 26px;
-  border-radius: 7px;
+.table-management-page .table-filters__search:focus-within,
+.table-management-page .table-filters__select:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
 }
 
-.status-tab__label,
-.status-tab__count,
-.table-filters__search input,
-.table-filters__select,
-.table-filters__clear,
-.table-filters__result {
-  font-size: 13px;
+.table-management-page .table-list-view__head {
+  border-color: #eee3da !important;
+  background: #f8f1e9 !important;
 }
 
-.table-filters {
-  grid-template-columns: minmax(220px, 1fr) 150px auto auto;
-  gap: 8px;
-  margin-bottom: 12px;
-  padding: 8px;
-  border-radius: 9px;
+.table-management-page .table-list-row__button--edit,
+.table-management-page .table-list-row__button--merge,
+.table-management-page .table-list__empty-button {
+  border-color: #c2410c !important;
+  background: linear-gradient(135deg, #c2410c, #f97316) !important;
+  color: #fff !important;
 }
 
-.table-filters__search,
-.table-filters__select,
-.table-filters__clear {
-  min-height: 36px;
-  border-radius: 7px;
+.table-management-page .table-list__empty-icon {
+  background: #fff1e6 !important;
+  color: #f97316 !important;
 }
 
-.table-list-view {
-  border-radius: 10px;
+.table-management-page .table-list-row--reserved::before,
+.table-management-page .table-list-row--cleaning::before {
+  background: #f97316 !important;
 }
 
-.table-list-view__head,
-.table-list-row {
-  gap: 10px;
-  grid-template-columns:
-    minmax(150px, 1.35fr)
-    minmax(70px, 0.55fr)
-    minmax(90px, 0.7fr)
-    minmax(100px, 0.85fr)
-    minmax(150px, 1.2fr)
-    minmax(120px, 0.9fr);
+.table-management-page .table-list-row__status--reserved,
+.table-management-page .table-list-row__status--cleaning {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
 }
 
-.table-list-view__head {
-  min-height: 40px;
-  padding: 8px 14px;
-  font-size: 11px;
+.table-management-page .status-tabs > .status-tab:nth-child(4) .status-tab__icon,
+.table-management-page .status-tabs > .status-tab:nth-child(5) .status-tab__icon {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
 }
 
-.table-list-row {
-  min-height: 62px;
-  padding: 10px 14px;
-}
-
-.table-list-row__identity strong,
-.table-list-row__cell strong,
-.table-list-row__section,
-.table-list-row__status,
-.table-list-row__merge strong,
-.table-list-row__merge small {
-  font-size: 13px;
-}
-
-.table-list-row__actions {
-  display: grid !important;
-  width: 100%;
-  grid-template-columns: repeat(4, 28px);
-  align-items: center;
-  justify-self: center;
-  justify-content: center;
-  justify-items: center;
-  gap: 6px;
-}
-
-.table-list-row__button {
-  flex: none;
-}
-
-.table-list-row__button--edit {
-  grid-column: 1;
-}
-
-.table-list-row__button--delete {
-  grid-column: 2;
-}
-
-.table-list-row__button--merge {
-  grid-column: 3;
-}
-
-.table-list-row__button--split {
-  grid-column: 4;
-}
-
-.table-list-view__head > span:last-child {
-  text-align: center;
-}
-
-.table-list__state {
-  min-height: 220px;
-  justify-content: center;
-  gap: 10px;
-  padding: 32px 20px;
-  border: 1px dashed #d7deea;
-  border-radius: 10px;
-  background: #f9fbff;
-  text-align: center;
-}
-
-@media (max-width: 1199.98px) {
-  .table-list-view__head,
-  .table-list-row {
-    gap: 6px;
-    grid-template-columns:
-      minmax(120px, 1.2fr)
-      minmax(55px, 0.5fr)
-      minmax(70px, 0.65fr)
-      minmax(80px, 0.75fr)
-      minmax(110px, 1fr)
-      minmax(110px, 1fr);
-  }
-}
-
-@media (max-width: 900px) {
-  .table-filters {
-    grid-template-columns: minmax(0, 1fr) 145px auto;
-  }
-}
-
-@media (max-width: 720px) {
-  .table-list__header {
-    align-items: stretch;
-  }
-
-  .status-tabs {
-    gap: 7px;
-  }
-
-  .table-filters {
-    gap: 8px;
-    padding: 10px;
-  }
-
-  .table-list-row {
-    gap: 8px;
-    margin-bottom: 10px;
-    padding: 12px;
-    border-radius: 10px;
-  }
-
-  .table-list-row > div:not(.table-list-row__table) {
-    min-height: 34px;
-    padding-top: 7px;
-  }
-
-  .table-list-row__actions {
-    display: grid !important;
-    width: 100%;
-    grid-template-columns: repeat(4, 28px);
-    align-items: center;
-    justify-self: center;
-    justify-content: center;
-    justify-items: center;
-    gap: 6px;
-  }
-
-  .table-list-row__button {
-    flex: none;
-  }
-}
-
-@media (max-width: 420px) {
-  .status-tabs {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .status-tab {
-    min-height: 40px;
-    gap: 6px;
-    padding: 6px 8px;
-  }
-
-  .table-filters {
-    padding: 8px;
-  }
+.table-management-page .table-list-row__section {
+  color: #111827 !important;
 }

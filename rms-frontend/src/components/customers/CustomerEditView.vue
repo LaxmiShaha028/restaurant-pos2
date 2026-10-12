@@ -416,6 +416,7 @@ import '@/assets/css/customers/customer-overview.css'
 import '@/assets/css/customers/customer-edit.css'
 import '@/assets/css/customers/customer-responsive.css'
 import '@/assets/css/customers/customer-compact.css'
+import '@/assets/css/restaurant-page-theme.css'
 
 /*
 |--------------------------------------------------------------------------

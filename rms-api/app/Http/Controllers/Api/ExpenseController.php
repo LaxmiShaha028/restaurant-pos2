@@ -85,7 +85,6 @@ class ExpenseController extends Controller
     }
 
 
-
     /*
     |--------------------------------------------------------------------------
     | Expense Summary
@@ -144,33 +143,21 @@ class ExpenseController extends Controller
 
 
             'data' => [
-
-                'categories' =>
-                    ExpenseCategory::query()
-
-                        ->active()
-
-                        ->select([
-                            'id',
-                            'name',
-                        ])
-
-                        ->orderBy(
-                            'name'
-                        )
-
-                        ->get(),
-
-
+                'categories' => ExpenseCategory::query()
+                    ->active()
+                    ->select([
+                        'id',
+                        'name',
+                    ])
+                    ->orderBy('name')
+                    ->get(),
                 'payment_methods' =>
                     Expense::paymentMethodOptions(),
-
             ],
 
         ]);
 
     }
-
 
 
     /*

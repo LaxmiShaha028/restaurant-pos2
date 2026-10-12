@@ -65,14 +65,15 @@
     <!-- Recipe Mapping -->
 
     <RecipeMappingSection
-      v-if="activeTab === 'recipe-mapping'"
+      v-if="recipeMounted"
+      v-show="activeTab === 'recipe-mapping'"
       :key="`recipe-mapping-${recipeRefreshKey}`"
     />
 
     <!-- Warehouse -->
 
     <WarehouseStockSection
-      v-else-if="activeTab === 'warehouse-stock'"
+      v-if="activeTab === 'warehouse-stock'"
       :options="options"
       :refresh-key="warehouseRefreshKey"
       :can-manage="canManageInventory"
@@ -82,7 +83,7 @@
     <!-- Restaurant -->
 
     <RestaurantStockSection
-      v-else-if="activeTab === 'restaurant-stock'"
+      v-if="activeTab === 'restaurant-stock'"
       :key="`restaurant-stock-${restaurantRefreshKey}`"
       @inventory-changed="handleInventoryChanged"
     />
@@ -95,6 +96,7 @@ import {
   onMounted,
   reactive,
   ref,
+  watch,
 } from 'vue'
 
 import {
@@ -167,6 +169,15 @@ const canManageInventory = computed(() => {
 
 const activeTab =
   ref('warehouse-stock')
+
+const recipeMounted =
+  ref(false)
+
+watch(activeTab, (tab) => {
+  if (tab === 'recipe-mapping') {
+    recipeMounted.value = true
+  }
+})
 
 const initialLoading =
   ref(false)

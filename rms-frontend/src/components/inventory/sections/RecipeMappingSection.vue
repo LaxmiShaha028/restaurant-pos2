@@ -1947,7 +1947,7 @@
                   >
 
                     <i
-                      class="bi bi-pencil"
+                      class="bi bi-pencil-square"
                       aria-hidden="true"
                     ></i>
 
@@ -2094,6 +2094,9 @@ const canManageInventory =
 
 const foundationLoading =
   ref(false)
+
+let foundationLoadPromise =
+  null
 
 const recipeLoading =
   ref(false)
@@ -5751,146 +5754,6 @@ async function loadAllAddOns() {
 
 /*
 |--------------------------------------------------------------------------
-| Load Menu Item Variants
-|--------------------------------------------------------------------------
-*/
-
-async function loadAllMenuVariants() {
-  /*
-  |--------------------------------------------------------------------------
-  | Prefer variants already included in menu-item payloads.
-  |--------------------------------------------------------------------------
-  */
-
-  rebuildVariantsCollection()
-
-
-  /*
-  |--------------------------------------------------------------------------
-  | Optional fallback endpoint.
-  |--------------------------------------------------------------------------
-  | If the project exposes a dedicated endpoint, merge its data. If it does
-  | not, keep the variants already loaded from menu items.
-  |--------------------------------------------------------------------------
-  */
-
-  try {
-    const collected = []
-
-    let page = 1
-
-    let lastPage = 1
-
-
-    do {
-      const response =
-        await api.get(
-          '/menu-management/menu-variants',
-          {
-            params: {
-              page,
-              per_page: 100,
-            },
-          },
-        )
-
-
-      const normalized =
-        normalizeCollectionResponse(
-          response,
-        )
-
-
-      collected.push(
-        ...normalized.data,
-      )
-
-
-      lastPage =
-        resolveLastPage(
-          normalized.meta,
-        )
-
-
-      page += 1
-
-    } while (
-      page <= lastPage
-      &&
-      page <= 100
-    )
-
-
-    const unique =
-      new Map()
-
-
-    for (
-      const variant
-      of collected
-    ) {
-      const id =
-        Number(
-          variant?.id,
-        )
-
-      const menuItemId =
-        Number(
-          variant?.menu_item_id
-          ??
-          variant?.menuItem?.id
-          ??
-          0,
-        )
-
-      if (
-        Number.isInteger(id)
-        &&
-        id > 0
-        &&
-        Number.isInteger(menuItemId)
-        &&
-        menuItemId > 0
-      ) {
-        unique.set(
-          id,
-          {
-            ...variant,
-            id,
-            menu_item_id: menuItemId,
-          },
-        )
-      }
-    }
-
-
-    if (unique.size > 0) {
-      variants.value = [
-        ...new Map(
-          [
-            ...variants.value,
-            ...unique.values(),
-          ].map((variant) => [
-            Number(variant.id),
-            variant,
-          ]),
-        ).values(),
-      ]
-    }
-
-  } catch (error) {
-    /*
-    |--------------------------------------------------------------------------
-    | Dedicated endpoint is optional.
-    |--------------------------------------------------------------------------
-    */
-
-    rebuildVariantsCollection()
-  }
-}
-
-/*
-|--------------------------------------------------------------------------
 | Load Raw Materials
 |--------------------------------------------------------------------------
 */
@@ -6168,80 +6031,43 @@ async function loadFoundation() {
   if (
     !canViewInventory.value
   ) {
-
     return
   }
 
-
-  foundationLoading.value =
-    true
-
-
-  errorMessage.value =
-    ''
-
-
-  try {
-
-    const results =
-  await Promise.allSettled([
-    loadAllMenuItems(),
-
-    loadAllMenuVariants(),
-
-    loadAllAddOns(),
-
-    loadAllRawMaterials(),
-
-    loadAllRestaurantStocks(),
-
-    loadRecipeMappings(),
-  ])
-
-
-    const rejected =
-      results.find(
-        (
-          result,
-        ) => {
-
-          return (
-            result.status ===
-            'rejected'
-          )
-        },
-      )
-
-
-    if (
-      rejected
-    ) {
-
-      throw rejected.reason
-    }
-
-
-  } catch (
-    error
-  ) {
-
-    errorMessage.value =
-      inventoryService
-        .getInventoryErrorMessage(
-
-          error,
-
-          'Unable to load recipe mapping information.',
-
-        )
-  } finally {
-
-    foundationLoading.value =
-      false
+  if (foundationLoadPromise) {
+    return foundationLoadPromise
   }
+
+  foundationLoading.value = true
+  errorMessage.value = ''
+
+  foundationLoadPromise = (async () => {
+    try {
+      const results = await Promise.allSettled([
+        loadAllMenuItems(),
+        loadAllAddOns(),
+        loadAllRawMaterials(),
+        loadAllRestaurantStocks(),
+        loadRecipeMappings(),
+      ])
+
+      const rejected = results.find((result) => result.status === 'rejected')
+      if (rejected) {
+        throw rejected.reason
+      }
+    } catch (error) {
+      errorMessage.value = inventoryService.getInventoryErrorMessage(
+        error,
+        'Unable to load recipe mapping information.',
+      )
+    } finally {
+      foundationLoading.value = false
+      foundationLoadPromise = null
+    }
+  })()
+
+  return foundationLoadPromise
 }
-
-
 /*
 |--------------------------------------------------------------------------
 | Form State

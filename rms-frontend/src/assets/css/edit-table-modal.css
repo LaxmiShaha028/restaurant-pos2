@@ -708,3 +708,79 @@
     width: 100%;
   }
 }
+
+/* Order page theme: warm surfaces, orange accents, dark primary action. */
+.table-modal-header,
+.table-modal-footer {
+  border-color: #eee3da;
+  background: linear-gradient(135deg, #fff8f1, #fff 70%);
+}
+
+.table-modal-header h2,
+.table-modal-body .form-label,
+.reservation-heading strong,
+.edit-merge-heading h3,
+.edit-table-list-main strong {
+  color: #111827;
+}
+
+.table-modal-eyebrow {
+  color: #f97316 !important;
+}
+
+.table-modal-close:hover {
+  background: #fff1e6;
+  color: #c2410c;
+}
+
+.table-modal-body .form-control:focus,
+.table-modal-body .form-select:focus {
+  border-color: #fb923c;
+  box-shadow: 0 0 0 .2rem rgb(249 115 22 / 14%);
+}
+
+.reservation-fields {
+  border-color: #fed7aa;
+  background: #fff8f1;
+}
+
+.reservation-heading-icon {
+  background: #fff1e6;
+  color: #f97316;
+}
+
+.reservation-heading strong,
+.reservation-heading span {
+  color: #111827;
+}
+
+.edit-table-list-item--selectable:hover,
+.edit-table-list-item--selected {
+  background: #fff8f1;
+}
+
+.edit-table-list-icon {
+  background: #fff1e6;
+  color: #f97316;
+}
+
+.edit-table-list-item--selected .edit-table-list-check {
+  background: #f97316;
+  color: #fff;
+}
+
+.edit-table-list-badge {
+  background: #fff1e6;
+  color: #c2410c;
+}
+
+.table-modal-footer .btn-primary,
+.table-modal-footer .btn-primary:hover:not(:disabled) {
+  border-color: #292929;
+  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%);
+  color: #f97316;
+}
+
+.table-modal-footer .btn-primary i {
+  color: #f97316;
+}

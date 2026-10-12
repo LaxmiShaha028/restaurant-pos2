@@ -24,8 +24,9 @@ class ExpenseService
         $query =
             Expense::query()
                 ->with([
-                    'category',
-                    'creator',
+                    'category:id,name',
+                    'creator:id,name,email',
+                    'updater:id,name',
                 ]);
 
 
@@ -138,14 +139,18 @@ class ExpenseService
 
 
 
-        $totalAmount =
-            $query->sum(
-                'amount'
-            );
+        $totals =
+            $query
+                ->selectRaw(
+                    'COUNT(*) as total_records, COALESCE(SUM(amount), 0) as total_amount'
+                )
+                ->first();
 
+        $totalAmount =
+            (float) ($totals->total_amount ?? 0);
 
         $totalRecords =
-            $query->count();
+            (int) ($totals->total_records ?? 0);
 
 
 

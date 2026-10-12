@@ -73,9 +73,6 @@ const notificationError =
 const expiryNotifications =
   ref([])
 
-const seenExpiryNotificationIds =
-  ref(new Set())
-
 const notificationNow =
   ref(Date.now())
 
@@ -153,12 +150,7 @@ const superAdminInitials =
 const expiryNotificationCount =
   computed(() => {
 
-    return expiryNotifications.value.filter(
-      (notification) =>
-        !seenExpiryNotificationIds.value.has(
-          `${notification.id}:${notification.end_at}`
-        )
-    ).length
+    return expiryNotifications.value.length
 
   })
 
@@ -388,10 +380,6 @@ async function loadExpiryNotifications(
     notificationNow.value =
       Date.now()
 
-    if (notificationOpen.value) {
-      markExpiryNotificationsRead()
-    }
-
     notificationError.value =
       ''
 
@@ -431,26 +419,11 @@ function toggleNotifications() {
     notificationOpen.value
   ) {
 
-    markExpiryNotificationsRead()
-
     loadExpiryNotifications(
       true
     )
 
   }
-}
-
-
-function markExpiryNotificationsRead() {
-
-  seenExpiryNotificationIds.value = new Set([
-    ...seenExpiryNotificationIds.value,
-    ...expiryNotifications.value.map(
-      (notification) =>
-        `${notification.id}:${notification.end_at}`
-    ),
-  ])
-
 }
 
 

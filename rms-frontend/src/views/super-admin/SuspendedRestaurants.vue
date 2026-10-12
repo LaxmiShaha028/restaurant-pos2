@@ -14,8 +14,6 @@ import {
   getRestaurants,
 } from '@/services/superAdminApi'
 
-import PaginationControls from '@/components/shared/PaginationControls.vue'
-
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +33,6 @@ const router =
 
 const restaurants =
   ref([])
-
-const currentPage = ref(1)
-const pageSize = 10
 
 const loading =
   ref(false)
@@ -64,11 +59,6 @@ const suspendedRestaurants =
     )
 
   })
-
-const paginatedRestaurants = computed(() => {
-  const start = (currentPage.value - 1) * pageSize
-  return suspendedRestaurants.value.slice(start, start + pageSize)
-})
 
 
 /*
@@ -502,7 +492,7 @@ onMounted(
           <tbody>
 
             <tr
-              v-for="restaurant in paginatedRestaurants"
+              v-for="restaurant in suspendedRestaurants"
               :key="restaurant.id"
             >
 
@@ -716,12 +706,6 @@ onMounted(
         </table>
 
       </div>
-
-      <PaginationControls
-        v-model:page="currentPage"
-        :total="suspendedRestaurants.length"
-        :per-page="pageSize"
-      />
 
     </section>
 

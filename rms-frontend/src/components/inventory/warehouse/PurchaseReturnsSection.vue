@@ -44,7 +44,7 @@
           :disabled="loading"
           @click="applySearch"
         >
-          Search
+          Apply
         </button>
 
         <button
@@ -335,7 +335,7 @@ const meta =
   reactive({
     current_page: 1,
     last_page: 1,
-    per_page: 10,
+    per_page: 20,
     total: 0,
     from: null,
     to: null,

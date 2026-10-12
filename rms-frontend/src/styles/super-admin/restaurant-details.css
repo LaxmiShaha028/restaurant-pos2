@@ -966,3 +966,109 @@
     border-radius: 14px;
   }
 }
+
+/* Restaurant details page theme aligned with Order Management. */
+.super-admin-restaurant-details.page-shell {
+  padding: 18px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
+    #f4f1ed;
+  color: #111827;
+}
+
+.super-admin-restaurant-details .title-icon,
+.super-admin-restaurant-details .section-icon,
+.super-admin-restaurant-details .security-note-icon,
+.super-admin-restaurant-details .empty-state-icon,
+.super-admin-restaurant-details .domain-icon,
+.super-admin-restaurant-details .payment-icon,
+.super-admin-restaurant-details .plan-update-icon {
+  border-radius: 10px;
+  background: #fff1e6;
+  color: #f97316;
+  box-shadow: none;
+}
+
+.super-admin-restaurant-details .upgrade-icon {
+  background: #fff1e6;
+  color: #f97316;
+}
+
+.super-admin-restaurant-details .back-link:hover {
+  color: #c2410c;
+}
+
+.super-admin-restaurant-details .page-title-row h1,
+.super-admin-restaurant-details .section-heading h2,
+.super-admin-restaurant-details .info-value,
+.super-admin-restaurant-details .info-value.strong,
+.super-admin-restaurant-details .state-card strong,
+.super-admin-restaurant-details .method-info-row strong {
+  color: #111827;
+}
+
+.super-admin-restaurant-details .page-subtitle,
+.super-admin-restaurant-details .section-heading p {
+  color: #667085;
+}
+
+.super-admin-restaurant-details .content-card,
+.super-admin-restaurant-details .state-card {
+  border-color: #eee3da;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+}
+
+.super-admin-restaurant-details .content-card-header {
+  border-bottom-color: #eee3da;
+  background: #fff8f1;
+}
+
+.super-admin-restaurant-details .btn-primary,
+.super-admin-restaurant-details .btn-primary:hover:not(:disabled) {
+  border: 1px solid #292929;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909);
+  color: #f97316;
+  box-shadow: none;
+}
+
+.super-admin-restaurant-details .btn-primary i,
+.super-admin-restaurant-details .btn-primary .spinner-border {
+  color: #f97316;
+}
+
+.super-admin-restaurant-details .btn-outline-primary,
+.super-admin-restaurant-details .btn-outline-success {
+  border-color: #fed7aa;
+  border-radius: 10px;
+  background: #fff1e6;
+  color: #c2410c;
+}
+
+.super-admin-restaurant-details .btn-outline-primary:hover:not(:disabled),
+.super-admin-restaurant-details .btn-outline-success:hover:not(:disabled) {
+  border-color: #fdba74;
+  background: #fff8f1;
+  color: #9a3412;
+}
+
+.super-admin-restaurant-details .btn-outline-primary i,
+.super-admin-restaurant-details .btn-outline-success i {
+  color: #f97316;
+}
+
+.super-admin-restaurant-details .content-card :is(input, select, textarea):focus {
+  border-color: #fb923c;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14);
+}
+
+@media (max-width: 767.98px) {
+  .super-admin-restaurant-details.page-shell {
+    padding: 10px;
+    border-radius: 18px;
+  }
+}

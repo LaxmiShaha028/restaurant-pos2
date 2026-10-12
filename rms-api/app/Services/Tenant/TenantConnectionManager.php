@@ -257,10 +257,6 @@ class TenantConnectionManager
         |--------------------------------------------------------------------------
         */
 
-        DB::disconnect(
-            self::CONNECTION
-        );
-
         DB::purge(
             self::CONNECTION
         );

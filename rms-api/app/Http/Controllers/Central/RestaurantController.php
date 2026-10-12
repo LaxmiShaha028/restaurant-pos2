@@ -524,6 +524,7 @@ if (
                 'restaurants.country',
                 'restaurants.status',
                 'restaurants.tenant_key',
+                'restaurants.created_at',
 
                 'current_plan.id as plan_id',
                 'current_plan.name as plan_name',
