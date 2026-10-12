@@ -241,7 +241,7 @@
                 class="raw-material-action-notice raw-material-action-notice-danger"
               >
                 <i
-                  class="bi bi-trash3-fill"
+                  class="bi bi-trash"
                   aria-hidden="true"
                 ></i>
 
@@ -787,7 +787,7 @@ const actionDescription = computed(() => {
 
 const actionIcon = computed(() => {
   if (isDelete.value) {
-    return 'bi-trash3'
+    return 'bi-trash'
   }
 
 

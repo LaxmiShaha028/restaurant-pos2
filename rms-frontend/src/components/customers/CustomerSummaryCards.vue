@@ -425,6 +425,9 @@ function formatInteger(
     value,
   ).toLocaleString(
     'en-GB',
+    {
+      minimumIntegerDigits: 2,
+    },
   )
 }
 

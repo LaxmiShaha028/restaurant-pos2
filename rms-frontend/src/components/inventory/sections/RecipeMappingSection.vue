@@ -1947,7 +1947,7 @@
                   >
 
                     <i
-                      class="bi bi-pencil-square"
+                      class="bi bi-pencil"
                       aria-hidden="true"
                     ></i>
 

@@ -27,9 +27,9 @@
           {{ table.capacity || 0 }} seats
         </span>
 
-        <span class="available">
-          <i class="bi bi-check-circle-fill"></i>
-          Available
+        <span :class="table.has_seated_reservation ? 'seated' : 'available'">
+          <i :class="table.has_seated_reservation ? 'bi bi-person-check-fill' : 'bi bi-check-circle-fill'"></i>
+          {{ table.has_seated_reservation ? 'Seated reservation' : 'Available' }}
         </span>
       </div>
     </div>

@@ -157,9 +157,7 @@
 
               <td class="customer-serial-column">
                 {{
-                  calculateSerial(
-                    index
-                  )
+                  String(calculateSerial(index)).padStart(2, '0')
                 }}
               </td>
 
@@ -354,7 +352,7 @@
                       )
                     "
                   >
-                    <i class="bi bi-pencil-square"></i>
+                    <i class="bi bi-pencil"></i>
                   </button>
 
                   <button

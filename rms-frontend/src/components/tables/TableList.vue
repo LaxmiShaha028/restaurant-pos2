@@ -2,7 +2,10 @@
 import {
   computed,
   ref,
+  watch,
 } from "vue";
+
+import PaginationControls from "@/components/shared/PaginationControls.vue";
 
 const props = defineProps({
   tables: {
@@ -27,6 +30,8 @@ const emit = defineEmits([
 const selectedStatus = ref("all");
 const selectedSection = ref("all");
 const searchQuery = ref("");
+const currentPage = ref(1);
+const pageSize = 10;
 
 const statusTabs = [
   {
@@ -308,6 +313,18 @@ const filteredTables = computed(
       }
     );
   }
+);
+
+const paginatedTables = computed(() => {
+  const start = (currentPage.value - 1) * pageSize;
+  return filteredTables.value.slice(start, start + pageSize);
+});
+
+watch(
+  [selectedStatus, selectedSection, searchQuery],
+  () => {
+    currentPage.value = 1;
+  },
 );
 
 const getStatusCount = (
@@ -703,7 +720,7 @@ const handleSplit = (
       </div>
 
       <article
-        v-for="table in filteredTables"
+        v-for="table in paginatedTables"
         :key="table.id"
         class="table-list-row"
         :class="
@@ -863,28 +880,22 @@ const handleSplit = (
             type="button"
             class="table-list-row__button table-list-row__button--edit"
             title="Edit table"
+            aria-label="Edit table"
             @click="handleEdit(table)"
           >
-            <i
-              class="bi bi-pencil-square"
-            ></i>
-
-            <span>Edit</span>
+            <i class="bi bi-pencil" aria-hidden="true"></i>
           </button>
 
           <button
             type="button"
             class="table-list-row__button table-list-row__button--delete"
             title="Delete table"
+            aria-label="Delete table"
             @click="
               handleDelete(table)
             "
           >
-            <i
-              class="bi bi-trash3"
-            ></i>
-
-            <span>Delete</span>
+            <i class="bi bi-x-circle" aria-hidden="true"></i>
           </button>
 
           <button
@@ -894,15 +905,12 @@ const handleSplit = (
             type="button"
             class="table-list-row__button table-list-row__button--merge"
             title="Merge table"
+            aria-label="Merge table"
             @click="
               handleMerge(table)
             "
           >
-            <i
-              class="bi bi-intersect"
-            ></i>
-
-            <span>Merge</span>
+            <i class="bi bi-arrow-left-right" aria-hidden="true"></i>
           </button>
 
           <button
@@ -912,19 +920,22 @@ const handleSplit = (
             type="button"
             class="table-list-row__button table-list-row__button--split"
             title="Split merged group"
+            aria-label="Split merged group"
             @click="
               handleSplit(table)
             "
           >
-            <i
-              class="bi bi-distribute-horizontal"
-            ></i>
-
-            <span>Split</span>
+            <i class="bi bi-distribute-horizontal" aria-hidden="true"></i>
           </button>
         </div>
       </article>
     </div>
+
+    <PaginationControls
+      v-model:page="currentPage"
+      :total="filteredTables.length"
+      :per-page="pageSize"
+    />
   </section>
 </template>
 

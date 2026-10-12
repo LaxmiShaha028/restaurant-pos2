@@ -211,7 +211,7 @@
           <tbody>
 
             <tr
-              v-for="restaurant in restaurants"
+              v-for="restaurant in paginatedRestaurants"
               :key="restaurant.id"
             >
 
@@ -414,6 +414,12 @@
 
       </div>
 
+      <PaginationControls
+        v-model:page="currentPage"
+        :total="restaurants.length"
+        :per-page="pageSize"
+      />
+
     </section>
 
 
@@ -464,6 +470,8 @@ import {
   updateRestaurantStatus,
 } from '@/services/superAdminApi'
 
+import PaginationControls from '@/components/shared/PaginationControls.vue'
+
 
 /*
 |--------------------------------------------------------------------------
@@ -483,6 +491,14 @@ const router =
 
 const restaurants =
   ref([])
+
+const currentPage = ref(1)
+const pageSize = 10
+
+const paginatedRestaurants = computed(() => {
+  const start = (currentPage.value - 1) * pageSize
+  return restaurants.value.slice(start, start + pageSize)
+})
 
 const loading =
   ref(false)
@@ -1074,3 +1090,4 @@ onMounted(
   opacity: 0.55;
 }
 </style>
+

@@ -470,7 +470,7 @@
 
                     <i
                       v-else
-                      class="bi bi-pencil-square"
+                      class="bi bi-pencil"
                       aria-hidden="true"
                     ></i>
                   </button>
@@ -593,7 +593,7 @@
 
                     <i
                       v-else
-                      class="bi bi-trash3"
+                      class="bi bi-trash"
                       aria-hidden="true"
                     ></i>
                   </button>

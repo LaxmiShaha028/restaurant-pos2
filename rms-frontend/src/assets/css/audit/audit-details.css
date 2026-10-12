@@ -88,7 +88,7 @@ box-shadow:
 padding:20px 25px;
 
 
-background:#2563eb;
+background:#f97316;
 
 
 color:white;
@@ -196,7 +196,7 @@ overflow-y:auto;
 
 border:
 
-1px solid #e2e8f0;
+1px solid #eee3da;
 
 
 border-radius:14px;
@@ -261,7 +261,7 @@ height:45px;
 border-radius:50%;
 
 
-background:#2563eb;
+background:#f97316;
 
 
 color:white;
@@ -351,10 +351,10 @@ margin-bottom:5px;
 .module-badge {
 
 
-background:#eff6ff;
+background:#fff1e6;
 
 
-color:#2563eb;
+color:#f97316;
 
 
 padding:5px 12px;
@@ -520,10 +520,10 @@ border:1px solid #bbf7d0;
 padding:15px 25px;
 
 
-background:#f8fafc;
+background:#f8f1e9;
 
 
-border-top:1px solid #e2e8f0;
+border-top:1px solid #eee3da;
 
 
 display:flex;
@@ -550,7 +550,7 @@ border:none;
 border-radius:8px;
 
 
-background:#2563eb;
+background:#f97316;
 
 
 color:white;

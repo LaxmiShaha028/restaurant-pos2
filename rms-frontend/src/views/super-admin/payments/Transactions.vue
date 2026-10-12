@@ -4,7 +4,10 @@ import {
   computed,
   onMounted,
   ref,
+  watch,
 } from 'vue'
+
+import PaginationControls from '@/components/shared/PaginationControls.vue'
 
 import {
   useRouter,
@@ -33,6 +36,9 @@ const router =
 
 const transactions =
   ref([])
+
+const currentPage = ref(1)
+const pageSize = 10
 
 const loading =
   ref(false)
@@ -186,6 +192,18 @@ const filteredTransactions =
     )
 
   })
+
+const paginatedTransactions = computed(() => {
+  const start = (currentPage.value - 1) * pageSize
+  return filteredTransactions.value.slice(start, start + pageSize)
+})
+
+watch(
+  [search, statusFilter, typeFilter, methodFilter],
+  () => {
+    currentPage.value = 1
+  },
+)
 
 
 /*
@@ -886,7 +904,7 @@ onMounted(
           <tbody>
 
             <tr
-              v-for="transaction in filteredTransactions"
+              v-for="transaction in paginatedTransactions"
               :key="transaction.id"
             >
 
@@ -1098,6 +1116,12 @@ onMounted(
         </table>
 
       </div>
+
+      <PaginationControls
+        v-model:page="currentPage"
+        :total="filteredTransactions.length"
+        :per-page="pageSize"
+      />
 
     </section>
 

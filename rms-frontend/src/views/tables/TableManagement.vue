@@ -10,7 +10,6 @@ import DeleteTableModal from "@/components/tables/DeleteTableModal.vue";
 import MergeTableModal from "@/components/tables/MergeTableModal.vue";
 import SplitTableModal from "@/components/tables/SplitTableModal.vue";
 import AddTableModal from "@/components/tables/AddTableModal.vue";
-
 import {
   restaurantTableService,
 } from "@/services/restaurantTableService";
@@ -113,18 +112,30 @@ const loadTables = async () => {
   errorMessage.value = "";
 
   try {
-    const response =
-      await restaurantTableService
-        .getTables({
-          page: 1,
-          per_page: 100,
-        });
+    const allTables = [];
+    let requestedPage = 1;
+    let lastPage = 1;
 
-    tables.value = Array.isArray(
-      response?.data
-    )
-      ? response.data
-      : [];
+    do {
+      const response =
+        await restaurantTableService
+          .getTables({
+            page: requestedPage,
+            per_page: 100,
+          });
+
+      if (Array.isArray(response?.data)) {
+        allTables.push(...response.data);
+      }
+
+      lastPage = Math.max(
+        1,
+        Number(response?.meta?.last_page) || 1,
+      );
+      requestedPage += 1;
+    } while (requestedPage <= lastPage);
+
+    tables.value = allTables;
   } catch (error) {
     console.error(
       "Restaurant table loading failed:",

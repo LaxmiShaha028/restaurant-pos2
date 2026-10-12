@@ -236,7 +236,7 @@
 
                     <td>
 
-                        {{ index + 1 }}
+                        {{ (currentPage - 1) * pageSize + index + 1 }}
 
                     </td>
 
@@ -393,6 +393,12 @@
 
     </div>
 
+    <PaginationControls
+        v-model:page="currentPage"
+        :total="supplierMeta.total"
+        :per-page="pageSize"
+    />
+
 
 
 
@@ -413,8 +419,7 @@
 
 
 import {
-
-
+    watch,
     onMounted,
 
 
@@ -433,6 +438,8 @@ import {
 import supplierService
 
 from '@/services/supplierService'
+
+import PaginationControls from '@/components/shared/PaginationControls.vue'
 
 
 
@@ -495,6 +502,12 @@ const errorMessage =
 
     ref('')
 
+const currentPage = ref(1)
+const pageSize = 10
+const supplierMeta = ref({ total: 0, last_page: 1 })
+
+watch(currentPage, () => loadSuppliers())
+
 
 
 
@@ -530,15 +543,30 @@ async function loadSuppliers(){
         const response =
 
             await supplierService
-                .getSuppliers()
+                .getSuppliers({
+                    page: currentPage.value,
+                    per_page: pageSize,
+                })
 
 
 
 
 
-        suppliers.value =
+        const lastPage = Math.max(
+            1,
+            Number(response?.meta?.last_page) || 1,
+        )
 
-            response.data ?? []
+        if (currentPage.value > lastPage) {
+            currentPage.value = lastPage
+            return
+        }
+
+        suppliers.value = response.data ?? []
+        supplierMeta.value = {
+            total: Number(response?.meta?.total) || 0,
+            last_page: lastPage,
+        }
 
 
 

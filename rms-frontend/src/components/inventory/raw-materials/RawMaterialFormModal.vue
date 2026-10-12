@@ -26,7 +26,7 @@
                   class="bi"
                   :class="
                     isEditMode
-                      ? 'bi-pencil-square'
+                      ? 'bi-pencil'
                       : 'bi-plus-circle'
                   "
                   aria-hidden="true"

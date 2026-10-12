@@ -223,80 +223,86 @@ class DashboardController extends Controller
         |--------------------------------------------------------------------------
         | Sales Chart
         |--------------------------------------------------------------------------
-        |
-        | Daily sales for current month.
-        |
         */
 
-        $salesChartRows =
-            Order::query()
-                ->selectRaw(
-                    'DATE(created_at) as sale_date'
-                )
-                ->selectRaw(
-                    'SUM(total_amount) as total_sales'
-                )
-                ->whereBetween(
-                    'created_at',
-                    [
-                        $currentMonthStart,
-                        $currentMonthEnd,
-                    ]
-                )
-                ->where(
-                    'status',
-                    '!=',
-                    Order::STATUS_CANCELED
-                )
-                ->groupBy(
-                    DB::raw('DATE(created_at)')
-                )
-                ->orderBy(
-                    'sale_date'
-                )
-                ->get();
+        $salesPeriod = $request->query('sales_period', 'month');
 
-        $salesChartLookup =
-            $salesChartRows
-                ->mapWithKeys(
-                    function ($row): array {
-                        return [
-                            Carbon::parse(
-                                $row->sale_date
-                            )->format('Y-m-d')
-                                =>
-                            round(
-                                (float) $row->total_sales,
-                                2
-                            ),
-                        ];
-                    }
-                );
+        if (! in_array($salesPeriod, ['day', 'month', 'year', 'last_year'], true)) {
+            $salesPeriod = 'month';
+        }
+
+        if ($salesPeriod === 'day') {
+            $chartStart = $now->copy()->startOfDay();
+            $chartEnd = $now->copy()->endOfDay();
+            $chartSelect = 'HOUR(created_at) as period_key';
+            $chartGroup = 'HOUR(created_at)';
+        } elseif ($salesPeriod === 'year') {
+            $chartStart = $now->copy()->startOfYear();
+            $chartEnd = $now->copy()->endOfYear();
+            $chartSelect = 'MONTH(created_at) as period_key';
+            $chartGroup = 'MONTH(created_at)';
+        } elseif ($salesPeriod === 'last_year') {
+            $chartStart = $now->copy()->subYearNoOverflow()->startOfYear();
+            $chartEnd = $now->copy()->subYearNoOverflow()->endOfYear();
+            $chartSelect = 'MONTH(created_at) as period_key';
+            $chartGroup = 'MONTH(created_at)';
+        } else {
+            $chartStart = $currentMonthStart;
+            $chartEnd = $currentMonthEnd;
+            $chartSelect = 'DATE(created_at) as period_key';
+            $chartGroup = 'DATE(created_at)';
+        }
+
+        $salesChartRows = Order::query()
+            ->selectRaw($chartSelect)
+            ->selectRaw('SUM(total_amount) as total_sales')
+            ->whereBetween('created_at', [$chartStart, $chartEnd])
+            ->where('status', '!=', Order::STATUS_CANCELED)
+            ->groupBy(DB::raw($chartGroup))
+            ->orderBy('period_key')
+            ->get();
+
+        $salesChartLookup = $salesChartRows->mapWithKeys(function ($row) use ($salesPeriod): array {
+            $key = $salesPeriod === 'day'
+                ? (int) $row->period_key
+                : ($salesPeriod === 'month'
+                    ? Carbon::parse($row->period_key)->format('Y-m-d')
+                    : (int) $row->period_key);
+
+            return [$key => round((float) $row->total_sales, 2)];
+        });
 
         $salesChart = [];
 
-        $chartDate =
-            $currentMonthStart->copy();
+        if ($salesPeriod === 'day') {
+            for ($hour = 0; $hour < 24; $hour++) {
+                $salesChart[] = [
+                    'date' => sprintf('%02d:00', $hour),
+                    'label' => Carbon::createFromTime($hour)->format('g A'),
+                    'sales' => (float) ($salesChartLookup[$hour] ?? 0),
+                ];
+            }
+        } elseif ($salesPeriod === 'month') {
+            $chartDate = $chartStart->copy();
 
-        while (
-            $chartDate->lessThanOrEqualTo(
-                $currentMonthEnd
-            )
-        ) {
-            $dateKey =
-                $chartDate->format('Y-m-d');
-
-            $salesChart[] = [
-                'date' => $dateKey,
-                'label' => $chartDate->format('d M'),
-                'sales' =>
-                    (float) (
-                        $salesChartLookup[$dateKey]
-                        ?? 0
-                    ),
-            ];
-
-            $chartDate->addDay();
+            while ($chartDate->lessThanOrEqualTo($chartEnd)) {
+                $dateKey = $chartDate->format('Y-m-d');
+                $salesChart[] = [
+                    'date' => $dateKey,
+                    'label' => $chartDate->format('d M'),
+                    'sales' => (float) ($salesChartLookup[$dateKey] ?? 0),
+                ];
+                $chartDate->addDay();
+            }
+        } else {
+            for ($month = 1; $month <= 12; $month++) {
+                $chartDate = $chartStart->copy()->month($month)->startOfMonth();
+                $salesChart[] = [
+                    'date' => $chartDate->format('Y-m'),
+                    'label' => $chartDate->format('M'),
+                    'sales' => (float) ($salesChartLookup[$month] ?? 0),
+                ];
+            }
         }
 
         /*

@@ -659,3 +659,77 @@ a {
     --bs-gutter-y: 10px;
   }
 }
+/* Consistent edit and delete row actions */
+td button:has(i.bi-pencil),
+td a:has(i.bi-pencil),
+[class*="row-action"] button:has(i.bi-pencil),
+[class*="row-action"] a:has(i.bi-pencil),
+[class*="action-buttons"] button:has(i.bi-pencil),
+[class*="action-buttons"] a:has(i.bi-pencil) {
+  display: inline-flex !important;
+  width: 28px !important;
+  min-width: 28px !important;
+  height: 28px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  border: 1px solid #f6dfa0 !important;
+  border-radius: 8px !important;
+  background: #fff2c7 !important;
+  color: #d97706 !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+}
+
+td button:has(i.bi-trash),
+td a:has(i.bi-trash),
+[class*="row-action"] button:has(i.bi-trash),
+[class*="row-action"] a:has(i.bi-trash),
+[class*="action-buttons"] button:has(i.bi-trash),
+[class*="action-buttons"] a:has(i.bi-trash) {
+  display: inline-flex !important;
+  width: 28px !important;
+  min-width: 28px !important;
+  height: 28px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  border: 1px solid #fecdd3 !important;
+  border-radius: 8px !important;
+  background: #ffe7e9 !important;
+  color: #e11d48 !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+}
+
+td button:has(i.bi-pencil) i,
+td a:has(i.bi-pencil) i,
+td button:has(i.bi-trash) i,
+td a:has(i.bi-trash) i,
+[class*="row-action"] button i,
+[class*="row-action"] a i,
+[class*="action-buttons"] button i,
+[class*="action-buttons"] a i {
+  margin: 0 !important;
+  font-size: 13px !important;
+}
+
+td button:has(i.bi-pencil):hover:not(:disabled),
+td a:has(i.bi-pencil):hover,
+[class*="row-action"] button:has(i.bi-pencil):hover:not(:disabled),
+[class*="row-action"] a:has(i.bi-pencil):hover,
+[class*="action-buttons"] button:has(i.bi-pencil):hover:not(:disabled),
+[class*="action-buttons"] a:has(i.bi-pencil):hover {
+  background: #ffe8a3 !important;
+  color: #b45309 !important;
+}
+
+td button:has(i.bi-trash):hover:not(:disabled),
+td a:has(i.bi-trash):hover,
+[class*="row-action"] button:has(i.bi-trash):hover:not(:disabled),
+[class*="row-action"] a:has(i.bi-trash):hover,
+[class*="action-buttons"] button:has(i.bi-trash):hover:not(:disabled),
+[class*="action-buttons"] a:has(i.bi-trash):hover {
+  background: #ffd5da !important;
+  color: #be123c !important;
+}

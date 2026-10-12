@@ -45,7 +45,7 @@
         class="customer-details-edit-button"
         @click="goEdit"
       >
-        <i class="bi bi-pencil-square"></i>
+        <i class="bi bi-pencil"></i>
 
         Edit Customer
       </button>

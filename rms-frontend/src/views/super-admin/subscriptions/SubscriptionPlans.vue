@@ -4,7 +4,10 @@ import {
   computed,
   onMounted,
   ref,
+  watch,
 } from 'vue'
+
+import PaginationControls from '@/components/shared/PaginationControls.vue'
 
 import {
   createManagedSubscriptionPlan,
@@ -22,6 +25,9 @@ import {
 
 const plans =
   ref([])
+
+const currentPage = ref(1)
+const pageSize = 10
 
 const loading =
   ref(false)
@@ -118,6 +124,15 @@ const filteredPlans =
     )
 
   })
+
+const paginatedPlans = computed(() => {
+  const start = (currentPage.value - 1) * pageSize
+  return filteredPlans.value.slice(start, start + pageSize)
+})
+
+watch(search, () => {
+  currentPage.value = 1
+})
 
 
 const totalPlans =
@@ -684,7 +699,7 @@ onMounted(
 
 <template>
 
-  <section class="management-page">
+  <section class="management-page subscription-plans-page">
 
 
     <!-- Header -->
@@ -1208,7 +1223,7 @@ onMounted(
     >
 
       <article
-        v-for="plan in filteredPlans"
+        v-for="plan in paginatedPlans"
         :key="plan.id"
         class="managed-plan-card"
         :class="{
@@ -1385,6 +1400,12 @@ onMounted(
       </article>
 
     </section>
+
+    <PaginationControls
+      v-model:page="currentPage"
+      :total="filteredPlans.length"
+      :per-page="pageSize"
+    />
 
 
     <!-- Empty -->

@@ -51,9 +51,9 @@
 
     border-radius: 10px;
 
-    background: rgba(13, 110, 253, 0.12);
+    background: rgba(249, 115, 22, 0.12);
 
-    color: #0d6efd;
+    color: #f97316;
 
     font-size: 20px;
 
@@ -158,7 +158,7 @@
 
     outline: none;
 
-    border-color: #0d6efd;
+    border-color: #f97316;
 
 }
 
@@ -346,9 +346,9 @@
 
     border-radius: 50%;
 
-    background: rgba(13,110,253,.1);
+    background: rgba(249, 115, 22, .1);
 
-    color:#0d6efd;
+    color:#f97316;
 
 }
 
@@ -455,7 +455,7 @@
 
     border:none;
 
-    background:#0d6efd;
+    background:#f97316;
 
     color:white;
 

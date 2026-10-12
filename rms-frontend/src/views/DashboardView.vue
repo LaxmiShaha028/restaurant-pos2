@@ -354,7 +354,7 @@
 
             <span class="kpi-mini-badge">
 
-              Floor
+              Current
 
             </span>
 
@@ -418,7 +418,7 @@
 
                 <p>
 
-                  Daily sales for this month
+                  {{ salesPeriodDescription }}
 
                 </p>
 
@@ -426,16 +426,29 @@
 
             </div>
 
-            <div class="chart-total">
+            <div class="sales-chart-controls">
+              <select
+                v-model="salesPeriod"
+                class="sales-period-select"
+                aria-label="Sales chart period"
+                @change="loadSalesChart"
+              >
+                <option value="day">Day</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+                <option value="last_year">Last Year</option>
+              </select>
 
-              <span>This Month</span>
+              <div class="chart-total">
+                <span>{{ salesPeriodLabel }}</span>
 
-              <strong>
+                <strong>
 
-                {{ money(summary.total_sales) }}
+                  {{ money(salesChartTotal) }}
 
-              </strong>
+                </strong>
 
+              </div>
             </div>
 
           </div>
@@ -443,187 +456,14 @@
 
 
           <div class="chart-wrapper">
-
-            <div class="chart-y-axis">
-
-              <span>{{ moneyCompact(chartMax) }}</span>
-
-              <span>{{ moneyCompact(chartMax * .75) }}</span>
-
-              <span>{{ moneyCompact(chartMax * .5) }}</span>
-
-              <span>{{ moneyCompact(chartMax * .25) }}</span>
-
-              <span>৳ 0</span>
-
-            </div>
-
             <div class="chart-body">
-
-              <div class="chart-grid">
-
-                <span></span>
-
-                <span></span>
-
-                <span></span>
-
-                <span></span>
-
-                <span></span>
-
-              </div>
-
-              <svg
-
-                class="sales-chart-svg"
-
-                viewBox="0 0 1000 300"
-
-                preserveAspectRatio="none"
-
-              >
-
-                <defs>
-
-                  <linearGradient
-
-                    id="salesAreaGradient"
-
-                    x1="0"
-
-                    y1="0"
-
-                    x2="0"
-
-                    y2="1"
-
-                  >
-
-                    <stop
-
-                      offset="0%"
-
-                      stop-color="rgba(37, 99, 235, .18)"
-
-                    />
-
-                    <stop
-
-                      offset="100%"
-
-                      stop-color="rgba(37, 99, 235, 0)"
-
-                    />
-
-                  </linearGradient>
-
-                </defs>
-
-                <path
-
-                  v-if="chartAreaPath"
-
-                  :d="chartAreaPath"
-
-                  fill="url(#salesAreaGradient)"
-
-                />
-
-                <polyline
-
-                  v-if="chartLinePath"
-
-                  :points="chartLinePath"
-
-                  fill="none"
-
-                  stroke="#2583eb"
-
-                  stroke-width="3.5"
-
-                  stroke-linecap="round"
-
-                  stroke-linejoin="round"
-
-                />
-
-                <circle
-
-                  v-for="point in chartPoints"
-
-                  :key="point.date"
-
-                  :cx="point.x"
-
-                  :cy="point.y"
-
-                  r="5"
-
-                  fill="#ffffff"
-
-                  stroke="#2583eb"
-
-                  stroke-width="2.5"
-
-                  class="sales-chart-point"
-
-                  @mouseenter="hoveredSalesPoint = point"
-
-                  @mouseleave="hoveredSalesPoint = null"
-
-                />
-
-              </svg>
-
-              <div
-
-  v-if="hoveredSalesPoint"
-
-  class="sales-chart-tooltip"
-
-  :style="{
-
-    left: `${hoveredSalesPoint.x / 10}%`,
-
-    top: `${(hoveredSalesPoint.y / 3) - 18}%`
-
-  }"
-
->
-
-  <strong>{{ hoveredSalesPoint.label }}</strong>
-
-  <span>
-
-    Sales:
-
-    <b>{{ money(hoveredSalesPoint.sales) }}</b>
-
-  </span>
-
-</div>
-
-              <div class="chart-x-axis">
-
-                <span
-
-                  v-for="point in chartLabels"
-
-                  :key="point.date"
-
-                >
-
-                  {{ point.label }}
-
-                </span>
-
-              </div>
-
+              <Bar
+                :data="salesChartData"
+                :options="salesChartOptions"
+                class="sales-bar-chart"
+              />
             </div>
-
           </div>
-
         </section>
 
 
@@ -1516,6 +1356,9 @@ import {
 
 } from 'vue'
 
+import { Bar } from 'vue-chartjs'
+import 'chart.js/auto'
+
 import {
 
   useRouter,
@@ -1534,7 +1377,9 @@ const errorMessage = ref('')
 
 const dashboard = ref({})
 
-const hoveredSalesPoint = ref(null)
+const salesPeriod = ref('month')
+const salesChartRequestId = ref(0)
+
 
 const hoveredStatus = ref(null)
 
@@ -1574,6 +1419,24 @@ const salesChart = computed(
 
       : []
 
+)
+
+const salesPeriodLabel = computed(() => ({
+  day: 'Today',
+  month: 'This Month',
+  year: 'This Year',
+  last_year: 'Last Year',
+}[salesPeriod.value] ?? 'This Month'))
+
+const salesPeriodDescription = computed(() => ({
+  day: 'Hourly sales for today',
+  month: 'Daily sales for this month',
+  year: 'Monthly sales for this year',
+  last_year: 'Monthly sales for last year',
+}[salesPeriod.value] ?? 'Daily sales for this month'))
+
+const salesChartTotal = computed(() =>
+  salesChart.value.reduce((total, item) => total + Number(item.sales ?? 0), 0)
 )
 
 const topItems = computed(
@@ -1741,213 +1604,64 @@ const completionRate = computed(() => {
 ========================================================= */
 
 const chartMax = computed(() => {
-
-  const values =
-
-    salesChart.value.map(
-
-      item => Number(item.sales ?? 0)
-
-    )
-
-  const max =
-
-    Math.max(...values, 0)
-
+  const values = salesChart.value.map(item => Number(item.sales ?? 0))
+  const max = Math.max(...values, 0)
   if (max <= 0) return 100
-
   return Math.ceil(max / 1000) * 1000
-
 })
 
-
-
-const chartPoints = computed(() => {
-
-  if (!salesChart.value.length) {
-
-    return []
-
-  }
-
-  const width = 1000
-
-  const height = 300
-
-  const padding = 12
-
-  const usableWidth =
-
-    width - padding * 2
-
-  const usableHeight =
-
-    height - 20
-
-  const max =
-
-    chartMax.value || 1
-
-  const lastIndex =
-
-    Math.max(
-
-      salesChart.value.length - 1,
-
-      1
-
-    )
-
-  return salesChart.value.map(
-
-    (item, index) => {
-
-      const sales =
-
-        Number(item.sales ?? 0)
-
-      const x =
-
-        padding +
-
-        (index / lastIndex) *
-
-        usableWidth
-
-      const y =
-
-        height -
-
-        (sales / max) *
-
-        usableHeight
-
-      return {
-
-        date: item.date,
-
-        label: item.label,
-
-        sales,
-
-        x,
-
-        y,
-
-      }
-
-    }
-
-  )
-
-})
-
-
-
-const chartLinePath = computed(
-
-  () =>
-
-    chartPoints.value
-
-      .map(
-
-        point =>
-
-          `${point.x},${point.y}`
-
-      )
-
-      .join(' ')
-
-)
-
-
-
-const chartAreaPath = computed(() => {
-
-  const points = chartPoints.value
-
-  if (!points.length) {
-
-    return ''
-
-  }
-
-  const baseline = 300
-
-  const first = points[0]
-
-  const last = points[points.length - 1]
-
-  const line =
-
-    points
-
-      .map(
-
-        point =>
-
-          `${point.x},${point.y}`
-
-      )
-
-      .join(' L ')
-
-  return `
-
-    M ${first.x},${baseline}
-
-    L ${line}
-
-    L ${last.x},${baseline}
-
-    Z
-
-  `
-
-})
-
-
-
-const chartLabels = computed(() => {
-
-  if (!salesChart.value.length) {
-
-    return []
-
-  }
-
-  const maxLabels = 7
-
-  const step =
-
-    Math.max(
-
-      1,
-
-      Math.ceil(
-
-        salesChart.value.length /
-
-        maxLabels
-
-      )
-
-    )
-
-  return salesChart.value.filter(
-
-    (_, index) =>
-
-      index % step === 0
-
-  )
-
-})
-
-
-
+const salesChartData = computed(() => ({
+  labels: salesChart.value.map(item => item.label || item.date),
+  datasets: [{
+    label: 'Sales',
+    data: salesChart.value.map(item => Number(item.sales ?? 0)),
+    borderColor: '#f97316',
+    backgroundColor: '#f97316',
+    borderWidth: 0,
+    borderRadius: 5,
+    maxBarThickness: 28,
+    pointRadius: 3.5,
+    pointHoverRadius: 6,
+    pointBackgroundColor: '#ffffff',
+    pointBorderColor: '#f97316',
+    pointBorderWidth: 2,
+    tension: 0,
+    fill: false,
+  }],
+}))
+
+const salesChartOptions = computed(() => ({
+  responsive: true,
+  maintainAspectRatio: false,
+  animation: false,
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      callbacks: {
+        label: context => `Sales: ${money(context.parsed.y)}`,
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: { display: false },
+      border: { display: false },
+      ticks: { color: '#94a3b8', maxTicksLimit: 7, font: { size: 9 } },
+    },
+    y: {
+      beginAtZero: true,
+      max: chartMax.value,
+      grid: { color: '#eef1f5' },
+      border: { display: false },
+      ticks: {
+        count: 5,
+        color: '#94a3b8',
+        font: { size: 9 },
+        callback: value => moneyCompact(value),
+      },
+    },
+  },
+}))
 /* =========================================================
 
    ORDER STATUS
@@ -2386,11 +2100,13 @@ function moneyCompact(value) {
 
 function number(value) {
 
-  return Number(
+  const count = Number(value || 0)
 
-    value || 0
+  return count < 10
 
-  ).toLocaleString('en-BD')
+    ? String(count).padStart(2, '0')
+
+    : count.toLocaleString('en-BD')
 
 }
 
@@ -2620,7 +2336,9 @@ async function loadDashboard() {
 
     const response =
 
-      await api.get('/dashboard')
+      await api.get('/dashboard', {
+        params: { sales_period: salesPeriod.value },
+      })
 
     dashboard.value =
 
@@ -2644,6 +2362,33 @@ async function loadDashboard() {
 
 }
 
+async function loadSalesChart() {
+  const requestId = ++salesChartRequestId.value
+
+  try {
+    const response = await api.get('/dashboard', {
+      params: { sales_period: salesPeriod.value },
+    })
+
+    if (requestId !== salesChartRequestId.value) return
+
+    const nextSalesChart = response?.data?.data?.sales_chart
+    if (Array.isArray(nextSalesChart)) {
+      dashboard.value = {
+        ...dashboard.value,
+        sales_chart: nextSalesChart,
+      }
+    }
+  } catch (error) {
+    if (requestId === salesChartRequestId.value) {
+      errorMessage.value =
+        error?.response?.data?.message ||
+        error?.message ||
+        'Could not load sales chart.'
+    }
+  }
+}
+
 
 
 onMounted(loadDashboard)
@@ -2657,28 +2402,28 @@ onMounted(loadDashboard)
 ========================================================= */
 
 .restaurant-dashboard {
-  --dash-bg: #f6f8fc;
+  --dash-bg: #f4f1ed;
   --surface: #ffffff;
-  --surface-soft: #f8fafc;
-  --surface-muted: #f1f5f9;
-  --border: #e6eaf0;
-  --border-strong: #dbe2ea;
+  --surface-soft: #fffaf5;
+  --surface-muted: #f3ebe2;
+  --border: #eee3da;
+  --border-strong: #e3d4c7;
   --text: #172033;
   --text-2: #475569;
   --text-3: #7c8a9d;
-  --primary: #2563eb;
-  --primary-2: #3b82f6;
-  --primary-soft: #eff6ff;
-  --success: #10b981;
-  --success-soft: #ecfdf5;
+  --primary: #f97316;
+  --primary-2: #fb923c;
+  --primary-soft: #fff1e6;
+  --success: #ea8a36;
+  --success-soft: #fff3e8;
   --warning: #f59e0b;
   --warning-soft: #fffbeb;
   --danger: #ef4444;
   --danger-soft: #fef2f2;
-  --purple: #7c3aed;
-  --purple-soft: #f5f3ff;
-  --cyan: #0891b2;
-  --cyan-soft: #ecfeff;
+  --purple: #d97706;
+  --purple-soft: #fff5eb;
+  --cyan: #ea580c;
+  --cyan-soft: #fff1e6;
   --shadow-sm: 0 1px 2px rgba(15, 23, 42, .04);
   --shadow-md: 0 8px 24px rgba(15, 23, 42, .06);
   --shadow-lg: 0 18px 45px rgba(15, 23, 42, .09);
@@ -2689,8 +2434,8 @@ onMounted(loadDashboard)
   padding: 18px;
   border-radius: 24px;
   background:
-    radial-gradient(circle at 0 0, rgba(37, 99, 235, .07), transparent 28%),
-    radial-gradient(circle at 100% 8%, rgba(124, 58, 237, .05), transparent 25%),
+    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
     var(--dash-bg);
   color: var(--text);
   font-family:
@@ -2716,11 +2461,14 @@ onMounted(loadDashboard)
   margin-bottom: 18px;
   padding: 20px 22px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, .8);
+  border: 1px solid rgba(255, 255, 255, .4);
   border-radius: 18px;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, .98), rgba(249, 251, 255, .96));
-  box-shadow: var(--shadow-md);
+    radial-gradient(ellipse at 34% 10%, rgba(151, 87, 2, 0.78), transparent 36%),
+    radial-gradient(ellipse at 90% 8%, rgba(249, 115, 22, .72), transparent 34%),
+    radial-gradient(ellipse at 4% 92%, rgba(111, 38, 9, 0.9), transparent 42%),
+    linear-gradient(112deg, #8d2e08 0%, #c75809 38%, #fb923c 62%, #ea580c 100%);
+  box-shadow: 0 12px 30px rgba(194, 65, 12, .24);
 }
 
 .dashboard-header::before {
@@ -2730,7 +2478,7 @@ onMounted(loadDashboard)
   width: 170px;
   height: 170px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(37, 99, 235, .12), transparent 68%);
+  background: radial-gradient(circle, rgba(249, 115, 22, .1), transparent 68%);
   content: "";
   pointer-events: none;
 }
@@ -2742,7 +2490,7 @@ onMounted(loadDashboard)
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(124, 58, 237, .1), transparent 70%);
+  background: radial-gradient(circle, rgba(251, 146, 60, .08), transparent 70%);
   content: "";
   pointer-events: none;
 }
@@ -2758,7 +2506,7 @@ onMounted(loadDashboard)
   align-items: center;
   gap: 7px;
   margin: 0 0 7px;
-  color: var(--primary);
+  color: #effff5;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1.35px;
@@ -2768,14 +2516,15 @@ onMounted(loadDashboard)
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--primary);
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, .1);
+  background: #ffedd5;
+  box-shadow: 0 0 0 4px rgba(255, 237, 213, .24);
   content: "";
 }
 
 .dashboard-heading h1 {
   margin: 0;
-  color: #111827;
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(124, 45, 18, .22);
   font-size: clamp(24px, 2.2vw, 31px);
   font-weight: 800;
   letter-spacing: -.55px;
@@ -2784,7 +2533,7 @@ onMounted(loadDashboard)
 
 .dashboard-subtitle {
   margin: 7px 0 0;
-  color: var(--text-3);
+  color: rgba(255, 255, 255, .86);
   font-size: 12px;
   line-height: 1.55;
 }
@@ -2847,11 +2596,11 @@ onMounted(loadDashboard)
   justify-content: center;
   gap: 7px;
   padding: 0 15px;
-  border: 1px solid #1d4ed8;
+  border: 1px solid rgba(255, 255, 255, .72);
   border-radius: 12px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  box-shadow: 0 8px 18px rgba(37, 99, 235, .22);
-  color: #fff;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 8px 18px rgba(124, 45, 18, .2);
+  color: #c2410c;
   font-size: 11px;
   font-weight: 750;
   cursor: pointer;
@@ -2863,7 +2612,7 @@ onMounted(loadDashboard)
 
 .dashboard-refresh-button:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 11px 24px rgba(37, 99, 235, .28);
+  box-shadow: 0 11px 24px rgba(124, 45, 18, .26);
 }
 
 .dashboard-refresh-button:active:not(:disabled) {
@@ -2971,23 +2720,23 @@ onMounted(loadDashboard)
 }
 
 .dashboard-kpi-card:nth-child(1)::before {
-  background: linear-gradient(#10b981, #34d399);
+  background: linear-gradient(#fb923c, #fdba74);
 }
 
 .dashboard-kpi-card:nth-child(2)::before {
-  background: linear-gradient(#2563eb, #60a5fa);
+  background: linear-gradient(#f97316, #fdba74);
 }
 
 .dashboard-kpi-card:nth-child(3)::before {
-  background: linear-gradient(#7c3aed, #a78bfa);
+  background: linear-gradient(#ea580c, #fb923c);
 }
 
 .dashboard-kpi-card:nth-child(4)::before {
-  background: linear-gradient(#f59e0b, #fbbf24);
+  background: linear-gradient(#f59e0b, #fdba74);
 }
 
 .dashboard-kpi-card:nth-child(5)::before {
-  background: linear-gradient(#0891b2, #22d3ee);
+  background: linear-gradient(#c2410c, #fb923c);
 }
 
 .dashboard-kpi-card:hover {
@@ -3099,7 +2848,7 @@ onMounted(loadDashboard)
   gap: 8px;
   margin-top: 12px;
   padding-top: 10px;
-  border-top: 1px dashed #e8edf3;
+  border-top: 1px solid #eef1f5;
 }
 
 .kpi-footer span {
@@ -3253,28 +3002,42 @@ onMounted(loadDashboard)
   min-height: 335px;
 }
 
-.chart-wrapper {
+.sales-chart-controls {
   display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sales-period-select {
+  min-height: 34px;
+  padding: 0 28px 0 10px;
+  border: 1px solid #dbe4f0;
+  border-radius: 9px;
+  background: #fff;
+  color: #334155;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 520px) {
+  .sales-chart-controls {
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+.chart-wrapper {
   min-height: 265px;
   padding: 18px 16px 12px 7px;
 }
 
-.chart-y-axis {
-  display: flex;
-  width: 56px;
-  flex: 0 0 56px;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 2px 9px 23px 0;
-  color: #94a3b8;
-  font-size: 9px;
-  font-weight: 600;
-  text-align: right;
-}
-
 .chart-body {
   position: relative;
-  flex: 1;
+  width: 100%;
+  height: 235px;
   min-width: 0;
 }
 
@@ -3288,7 +3051,7 @@ onMounted(loadDashboard)
 
 .chart-grid span {
   width: 100%;
-  border-top: 1px dashed #e7edf4;
+  border-top: 1px solid #eef1f5;
 }
 
 .sales-chart-svg {
@@ -3648,7 +3411,7 @@ onMounted(loadDashboard)
 
 .payment-icon.card,
 .payment-progress .card {
-  background-color: #2563eb;
+  background-color: #c2410c;
 }
 
 .payment-icon.bkash,
@@ -3663,7 +3426,7 @@ onMounted(loadDashboard)
 
 .payment-icon.bank-transfer,
 .payment-progress .bank-transfer {
-  background-color: #7c3aed;
+  background-color: #d97706;
 }
 
 .payment-icon.other,
@@ -3773,8 +3536,8 @@ onMounted(loadDashboard)
 }
 
 .top-item-row:nth-of-type(2) .item-rank {
-  background: #fff7ed;
-  color: #ea580c;
+  background: #fff1e6;
+  color: #c2410c;
 }
 
 .top-item-row:nth-of-type(3) .item-rank {
@@ -3814,7 +3577,7 @@ onMounted(loadDashboard)
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  background: linear-gradient(90deg, #c2410c, #fb923c);
 }
 
 .item-quantity {
@@ -3848,9 +3611,9 @@ onMounted(loadDashboard)
 
 .view-all-button:hover {
   transform: translateY(-1px);
-  border-color: #bfdbfe;
-  background: #dbeafe;
-  color: #1d4ed8;
+  border-color: #fed7aa;
+  background: #ffedd5;
+  color: #c2410c;
 }
 
 /* =========================================================
@@ -3937,7 +3700,7 @@ onMounted(loadDashboard)
 
 .status-preparing {
   background: #eff6ff;
-  color: #1d4ed8;
+  color: #c2410c;
 }
 
 .status-ready {
@@ -4047,7 +3810,7 @@ onMounted(loadDashboard)
   align-items: center;
   justify-content: space-between;
   padding: 9px 0;
-  border-bottom: 1px dashed #e8edf3;
+  border-bottom: 1px solid #eef1f5;
 }
 
 .accounting-row:last-child {
@@ -4298,12 +4061,6 @@ onMounted(loadDashboard)
     padding-right: 10px;
   }
 
-  .chart-y-axis {
-    width: 48px;
-    flex-basis: 48px;
-    font-size: 8px;
-  }
-
   .order-status-content {
     grid-template-columns: 1fr;
   }
@@ -4323,4 +4080,24 @@ onMounted(loadDashboard)
     min-width: 560px;
   }
 }
-</style>
+
+/* Warm card surfaces to match the orange reference theme */
+.dashboard-kpi-card {
+  border-color: var(--border);
+  background: #ffffff;
+}
+
+.dashboard-panel {
+  border-color: var(--border);
+  background: #ffffff;
+}
+.dashboard-panel .panel-header {
+  border-bottom-color: #edf1f5;
+  background: linear-gradient(180deg, #ffffff, #fcfdff);
+}
+
+.status-item:hover,
+.top-item-row:hover,
+.payment-item:hover {
+  background: #f8fafc;
+}</style>

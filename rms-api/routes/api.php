@@ -69,7 +69,6 @@ use App\Http\Controllers\Tenant\TenantEntryController;
 use App\Http\Controllers\Api\BusinessOverviewController;
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Public Tenant Entry

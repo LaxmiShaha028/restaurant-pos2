@@ -15,7 +15,7 @@
 
   overflow: visible;
 
-  background: #172033;
+  background: linear-gradient(180deg, #191919 0%, #111111 54%, #090909 100%);
   color: #ffffff;
 
   box-shadow: 2px 0 8px rgba(15, 23, 42, 0.08);
@@ -94,7 +94,7 @@
 
   border-radius: 5px;
 
-  background: #2563eb;
+  background: linear-gradient(135deg, #ff922b, #f97316);
 
   color: #ffffff;
 
@@ -196,10 +196,10 @@
 
   transform: translateY(-50%);
 
-  border: 2px solid #172033;
+  border: 2px solid #171717;
   border-radius: 50%;
 
-  background: #2563eb;
+  background: linear-gradient(135deg, #ff922b, #f97316);
 
   color: #ffffff;
 
@@ -212,7 +212,7 @@
 }
 
 .desktop-collapse-button:hover {
-  background: #1d4ed8;
+  background: #ea580c;
 }
 
 
@@ -485,20 +485,20 @@
 .sidebar-menu-link.router-link-active,
 .sidebar-menu-link.router-link-exact-active {
   border-color:
-    rgba(96, 165, 250, 0.1);
+    rgba(249, 115, 22, 0.2);
 
   background:
-    rgba(37, 99, 235, 0.24);
+    linear-gradient(100deg, rgba(249, 115, 22, .32), rgba(194, 65, 12, .2));
 
   color: #ffffff;
 
   box-shadow:
-    inset 2px 0 0 #60a5fa;
+    inset 2px 0 0 #fdba74;
 }
 
 .sidebar-menu-link.router-link-active .menu-icon,
 .sidebar-menu-link.router-link-exact-active .menu-icon {
-  color: #93c5fd;
+  color: #fed7aa;
 }
 
 .sidebar-menu-link.router-link-active .menu-label,
@@ -511,7 +511,7 @@
 .sidebar-menu-link.router-link-active:hover,
 .sidebar-menu-link.router-link-exact-active:hover {
   background:
-    rgba(37, 99, 235, 0.32);
+    rgba(249, 115, 22, 0.38);
 }
 
 
@@ -563,7 +563,7 @@
 
   border-radius: 4px;
 
-  background: #0f172a;
+  background: #171717;
 
   color: #ffffff;
 
@@ -598,7 +598,7 @@
     translateY(-50%)
     rotate(45deg);
 
-  background: #0f172a;
+  background: #171717;
 
   content: "";
 }
@@ -623,10 +623,10 @@
 .app-sidebar.sidebar-collapsed
 .sidebar-menu-link.router-link-exact-active {
   background:
-    rgba(37, 99, 235, 0.3);
+    rgba(249, 115, 22, 0.38);
 
   box-shadow:
-    inset 2px 0 0 #60a5fa;
+    inset 2px 0 0 #fdba74;
 }
 
 
@@ -677,7 +677,7 @@
 
   border-radius: 50%;
 
-  background: #2563eb;
+  background: linear-gradient(135deg, #ff922b, #f97316);
 
   color: #ffffff;
 

@@ -990,7 +990,7 @@ const router = createRouter({
 
           component: () =>
             import(
-              '@/views/pos/PosOrderView.vue'
+              '@/views/orders/CreateOrderView.vue'
             ),
 
           meta: {
@@ -2540,12 +2540,7 @@ router.beforeEach(
         !tenantKey
       ) {
 
-        return {
-
-          name:
-            'not-found',
-
-        }
+        return true
 
       }
 

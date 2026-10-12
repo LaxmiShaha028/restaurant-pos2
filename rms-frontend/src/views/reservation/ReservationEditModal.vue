@@ -23,7 +23,7 @@
 
                 <h3>
 
-                    <i class="bi bi-pencil-square"></i>
+                    <i class="bi bi-pencil"></i>
 
                     {{
                         reservation?.reservation_no

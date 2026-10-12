@@ -19,6 +19,7 @@ class MenuManagementSeeder extends Seeder
         DB::transaction(function (): void {
             $this->seedMenuCategoriesAndItems();
             $this->seedAddOns();
+            $this->removeBeefMenuEntries();
         });
     }
 
@@ -566,6 +567,22 @@ class MenuManagementSeeder extends Seeder
             ],
         ];
 
+        foreach ($menuData as &$categoryData) {
+            $categoryData['items'] = array_values(array_filter(
+                $categoryData['items'],
+                static function (array $item): bool {
+                    $searchableText = strtolower(implode(' ', [
+                        $item['menu_name'] ?? '',
+                        $item['ingredients'] ?? '',
+                        $item['description'] ?? '',
+                    ]));
+
+                    return !str_contains($searchableText, 'beef');
+                }
+            ));
+        }
+        unset($categoryData);
+
         foreach ($menuData as $categoryData) {
             $categoryAttributes = $categoryData['category'];
 
@@ -753,6 +770,17 @@ class MenuManagementSeeder extends Seeder
             ],
         ];
 
+        $addOns = array_values(array_filter(
+            $addOns,
+            static fn (array $addOn): bool => !str_contains(
+                strtolower(implode(' ', [
+                    $addOn['add_on_name'] ?? '',
+                    $addOn['description'] ?? '',
+                ])),
+                'beef'
+            )
+        ));
+
         foreach ($addOns as $addOnData) {
             $addOn = AddOn::withTrashed()->updateOrCreate(
                 [
@@ -765,5 +793,52 @@ class MenuManagementSeeder extends Seeder
                 $addOn->restore();
             }
         }
+    }
+
+    /**
+     * Hide previously seeded beef products while preserving order history.
+     */
+    private function removeBeefMenuEntries(): void
+    {
+        $beefItems = MenuItem::withTrashed()
+            ->where(function ($query): void {
+                $query
+                    ->where('menu_name', 'like', '%beef%')
+                    ->orWhere('ingredients', 'like', '%beef%')
+                    ->orWhere('description', 'like', '%beef%');
+            })
+            ->get();
+
+        $itemIds = $beefItems->modelKeys();
+
+        if ($itemIds !== []) {
+            MenuItemVariant::withTrashed()
+                ->whereIn('menu_item_id', $itemIds)
+                ->get()
+                ->each(function (MenuItemVariant $variant): void {
+                    if (!$variant->trashed()) {
+                        $variant->delete();
+                    }
+                });
+
+            $beefItems->each(function (MenuItem $item): void {
+                if (!$item->trashed()) {
+                    $item->delete();
+                }
+            });
+        }
+
+        AddOn::withTrashed()
+            ->where(function ($query): void {
+                $query
+                    ->where('add_on_name', 'like', '%beef%')
+                    ->orWhere('description', 'like', '%beef%');
+            })
+            ->get()
+            ->each(function (AddOn $addOn): void {
+                if (!$addOn->trashed()) {
+                    $addOn->delete();
+                }
+            });
     }
 }

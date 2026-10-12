@@ -1000,3 +1000,74 @@
     min-width: 0;
   }
 }
+
+/* TABLE MANAGEMENT PAGE SPACING */
+.table-management-page {
+  font-size: 13px;
+}
+
+.table-management-header {
+  min-height: 76px;
+  gap: 16px;
+  margin-bottom: 14px;
+  padding: 12px 16px;
+  border-radius: 12px;
+}
+
+.table-management-header-icon {
+  width: 38px;
+  height: 38px;
+  flex-basis: 38px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.table-management-title {
+  font-size: 20px;
+}
+
+.table-management-description {
+  font-size: 12px;
+}
+
+.table-management-add {
+  min-height: 40px;
+  gap: 8px;
+  padding: 0 14px;
+  border-radius: 9px;
+  font-size: 13px;
+}
+
+.table-management-card {
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgb(15 23 42 / 5%);
+}
+
+@media (max-width: 767.98px) {
+  .table-management-header {
+    min-height: 0;
+    margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .table-management-title {
+    font-size: 17px;
+  }
+
+  .table-management-card {
+    padding: 10px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 479.98px) {
+  .table-management-header {
+    padding: 10px;
+  }
+
+  .table-management-card {
+    padding: 8px;
+  }
+}

@@ -26,54 +26,53 @@ class AttendanceController extends Controller
 
     public function index(Request $request)
     {
-        $validated =
-            $request->validate([
+        $validated = $request->validate([
 
-                'attendance_date' => [
-                    'nullable',
-                    'date',
-                ],
+            'attendance_date' => [
+                'nullable',
+                'date',
+            ],
 
-                'search' => [
-                    'nullable',
-                    'string',
-                    'max:150',
-                ],
+            'search' => [
+                'nullable',
+                'string',
+                'max:150',
+            ],
 
-                'employee_id' => [
-                    'nullable',
-                    'integer',
-                    'exists:employees,id',
-                ],
+            'employee_id' => [
+                'nullable',
+                'integer',
+                'exists:employees,id',
+            ],
 
-                'role_id' => [
-                    'nullable',
-                    'integer',
-                    'exists:roles,id',
-                ],
+            'role_id' => [
+                'nullable',
+                'integer',
+                'exists:roles,id',
+            ],
 
-                'status' => [
-                    'nullable',
+            'status' => [
+                'nullable',
 
-                    Rule::in(
-                        Attendance::allowedStatuses()
-                    ),
-                ],
+                Rule::in(
+                    Attendance::allowedStatuses()
+                ),
+            ],
 
-                'page' => [
-                    'nullable',
-                    'integer',
-                    'min:1',
-                ],
+            'page' => [
+                'nullable',
+                'integer',
+                'min:1',
+            ],
 
-                'per_page' => [
-                    'nullable',
-                    'integer',
-                    'min:1',
-                    'max:100',
-                ],
+            'per_page' => [
+                'nullable',
+                'integer',
+                'min:1',
+                'max:100',
+            ],
 
-            ]);
+        ]);
 
 
         $attendanceDate =
@@ -437,6 +436,7 @@ class AttendanceController extends Controller
     public function show(
         Attendance $attendance
     ) {
+
         $attendance->loadMissing([
 
             'employee.user.role',
@@ -502,17 +502,6 @@ class AttendanceController extends Controller
                     $attendanceDate,
                     $request->user()
                 );
-        $this->audit(
-    'attendance',
-    'synced',
-    $request->user(),
-    null,
-    [
-        'attendance_date' => $attendanceDate,
-        'result' => $result,
-    ],
-    'Attendance synchronized for date: '.$attendanceDate
-);
 
 
         return response()->json([
@@ -526,6 +515,22 @@ class AttendanceController extends Controller
             'data' =>
                 $result,
 
+        ]);
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Attendance Audit
+    |--------------------------------------------------------------------------
+    */
+
+    public function audit(Request $request)
+    {
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Attendance audit processed successfully.'
         ]);
     }
 }

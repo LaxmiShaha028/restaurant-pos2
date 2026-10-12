@@ -115,7 +115,7 @@ function createDefaultMeta()
   return {
     current_page: 1,
     last_page: 1,
-    per_page: 20,
+    per_page: 10,
     total: 0,
     from: null,
     to: null,

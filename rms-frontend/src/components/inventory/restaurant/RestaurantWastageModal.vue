@@ -16,7 +16,7 @@
         <div class="restaurant-wastage-modal-heading">
           <span class="restaurant-wastage-modal-icon">
             <i
-              class="bi bi-trash3"
+              class="bi bi-trash"
               aria-hidden="true"
             ></i>
           </span>
@@ -349,7 +349,7 @@
 
             <i
               v-else
-              class="bi bi-trash3"
+              class="bi bi-trash"
               aria-hidden="true"
             ></i>
 

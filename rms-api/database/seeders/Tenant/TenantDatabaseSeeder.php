@@ -71,5 +71,16 @@ class TenantDatabaseSeeder extends Seeder
                     $restaurant,
             ]
         );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Starter Menu
+        |--------------------------------------------------------------------------
+        */
+
+        $this->call(
+            \Database\Seeders\MenuManagementSeeder::class
+        );
     }
 }

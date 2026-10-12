@@ -743,7 +743,7 @@ onBeforeUnmount(clearObjectUrl);
                       @click="removeImage"
                     >
                       <i
-                        class="bi bi-trash3 me-1"
+                        class="bi bi-trash me-1"
                       ></i>
 
                       Remove Image
