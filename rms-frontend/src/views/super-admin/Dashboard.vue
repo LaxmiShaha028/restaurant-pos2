@@ -639,7 +639,7 @@ const overviewCards =
         key: 'total-restaurants',
         title: 'Total Restaurants',
         value:
-          totalRestaurants.value,
+          formatNumber(totalRestaurants.value),
         helper:
           'Registered on the platform',
         icon:
@@ -651,7 +651,7 @@ const overviewCards =
         key: 'active-restaurants',
         title: 'Active Restaurants',
         value:
-          activeRestaurants.value,
+          formatNumber(activeRestaurants.value),
         helper:
           'Currently running',
         icon:
@@ -663,7 +663,7 @@ const overviewCards =
         key: 'active-subscriptions',
         title: 'Active Subscriptions',
         value:
-          activeSubscriptions.value,
+          formatNumber(activeSubscriptions.value),
         helper:
           'Paid and currently live',
         icon:
@@ -675,7 +675,7 @@ const overviewCards =
         key: 'active-tenant-dbs',
         title: 'Active Tenant Databases',
         value:
-          activeTenantDatabases.value,
+          formatNumber(activeTenantDatabases.value),
         helper:
           'Provisioned and available',
         icon:
@@ -741,13 +741,13 @@ const keyHighlights =
         label:
           'Platform Health',
         value:
-          `${activeRate}% restaurants active`,
+          `${formatNumber(activeRate)}% restaurants active`,
       },
       {
         label:
           'Pending Attention',
         value:
-          `${pendingRestaurants.value} restaurants pending review`,
+          `${formatNumber(pendingRestaurants.value)} restaurants pending review`,
       },
       {
         label:
@@ -764,7 +764,7 @@ const keyHighlights =
         label:
           'Paid Transactions',
         value:
-          `${selectedRevenueTransactions.value} successful payments`,
+          `${formatNumber(selectedRevenueTransactions.value)} successful payments`,
       },
     ]
 
@@ -880,12 +880,13 @@ function barHeight(
 function formatNumber(
   value
 ) {
+  const number = Number(value || 0)
 
-  return Number(
-    value || 0
-  ).toLocaleString(
-    'en-BD'
-  )
+  if (Number.isInteger(number) && Math.abs(number) < 10) {
+    return String(number).padStart(2, '0')
+  }
+
+  return number.toLocaleString('en-BD')
 }
 
 
@@ -1270,7 +1271,7 @@ onMounted(
             >
 
               <div class="dashboard-chart-value">
-                {{ item.value }}
+                {{ formatNumber(item.value) }}
               </div>
 
               <div class="dashboard-chart-track">

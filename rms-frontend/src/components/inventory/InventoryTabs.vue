@@ -57,7 +57,7 @@
         }"
         aria-hidden="true"
       >
-        {{ tab.badge }}
+        {{ displayBadge(tab.badge) }}
       </span>
 
 
@@ -121,6 +121,16 @@ const props = defineProps({
 const emit = defineEmits([
   'update:modelValue',
 ])
+
+function displayBadge(value) {
+  const numericValue = Number(value)
+
+  if (!Number.isFinite(numericValue) || numericValue < 0) {
+    return value
+  }
+
+  return String(Math.floor(numericValue)).padStart(2, '0')
+}
 
 
 /*

@@ -70,7 +70,7 @@
                 </span>
 
                 <strong class="reservation-summary-value">
-                    {{ summary.total }}
+                    {{ formatNumber(summary.total) }}
                 </strong>
 
             </div>
@@ -91,7 +91,7 @@
                 </span>
 
                 <strong class="reservation-summary-value">
-                    {{ summary.reserved }}
+                    {{ formatNumber(summary.reserved) }}
                 </strong>
 
             </div>
@@ -112,7 +112,7 @@
                 </span>
 
                 <strong class="reservation-summary-value">
-                    {{ summary.confirmed }}
+                    {{ formatNumber(summary.confirmed) }}
                 </strong>
 
             </div>
@@ -133,7 +133,7 @@
                 </span>
 
                 <strong class="reservation-summary-value">
-                    {{ summary.seated }}
+                    {{ formatNumber(summary.seated) }}
                 </strong>
 
             </div>
@@ -154,7 +154,7 @@
                 </span>
 
                 <strong class="reservation-summary-value">
-                    {{ summary.completed }}
+                    {{ formatNumber(summary.completed) }}
                 </strong>
 
             </div>
@@ -692,9 +692,7 @@
                                 <i class="bi bi-people"></i>
 
                                 {{
-                                    reservation.guest_count
-                                    ||
-                                    0
+                                    formatNumber(reservation.guest_count || 0)
                                 }}
 
                             </span>
@@ -988,19 +986,19 @@
                 Showing
 
                 <strong>
-                    {{ meta.from || 0 }}
+                    {{ formatNumber(meta.from || 0) }}
                 </strong>
 
                 to
 
                 <strong>
-                    {{ meta.to || 0 }}
+                    {{ formatNumber(meta.to || 0) }}
                 </strong>
 
                 of
 
                 <strong>
-                    {{ meta.total || 0 }}
+                    {{ formatNumber(meta.total || 0) }}
                 </strong>
 
                 reservations
@@ -2172,6 +2170,14 @@ function getCustomerInitial(
 | Date
 |--------------------------------------------------------------------------
 */
+
+function formatNumber(value) {
+    const number = Number(value || 0)
+    return Number.isInteger(number) && Math.abs(number) < 10
+        ? String(number).padStart(2, '0')
+        : number.toLocaleString('en-BD')
+}
+
 
 function formatReservationDate(
     date

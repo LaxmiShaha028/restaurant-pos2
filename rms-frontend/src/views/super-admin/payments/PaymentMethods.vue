@@ -142,6 +142,14 @@ const totalUsage =
   )
 
 
+function formatNumber(value) {
+  const number = Number(value || 0)
+  return Number.isInteger(number) && Math.abs(number) < 10
+    ? String(number).padStart(2, '0')
+    : number.toLocaleString('en-BD')
+}
+
+
 async function loadMethods() {
 
   if (
@@ -577,7 +585,7 @@ onMounted(
         </span>
         <div>
           <span>Total Methods</span>
-          <strong>{{ totalMethods }}</strong>
+          <strong>{{ formatNumber(totalMethods) }}</strong>
         </div>
       </article>
 
@@ -587,7 +595,7 @@ onMounted(
         </span>
         <div>
           <span>Enabled</span>
-          <strong>{{ activeMethods }}</strong>
+          <strong>{{ formatNumber(activeMethods) }}</strong>
         </div>
       </article>
 
@@ -597,7 +605,7 @@ onMounted(
         </span>
         <div>
           <span>Disabled</span>
-          <strong>{{ inactiveMethods }}</strong>
+          <strong>{{ formatNumber(inactiveMethods) }}</strong>
         </div>
       </article>
 
@@ -607,7 +615,7 @@ onMounted(
         </span>
         <div>
           <span>Recorded Usage</span>
-          <strong>{{ totalUsage }}</strong>
+          <strong>{{ formatNumber(totalUsage) }}</strong>
         </div>
       </article>
 
@@ -762,7 +770,7 @@ onMounted(
       </div>
 
       <span class="management-toolbar-count">
-        {{ filteredMethods.length }} method{{
+        {{ formatNumber(filteredMethods.length) }} method{{
           filteredMethods.length === 1
             ? ''
             : 's'
@@ -851,7 +859,7 @@ onMounted(
               <td data-label="Total Payments">
                 <strong>
                   {{
-                    method.usage?.total_payments || 0
+                    formatNumber(method.usage?.total_payments || 0)
                   }}
                 </strong>
               </td>
@@ -859,7 +867,7 @@ onMounted(
               <td data-label="Paid Payments">
                 <strong>
                   {{
-                    method.usage?.paid_payments || 0
+                    formatNumber(method.usage?.paid_payments || 0)
                   }}
                 </strong>
               </td>
@@ -873,20 +881,18 @@ onMounted(
                   <button
                     type="button"
                     class="btn btn-sm btn-outline-primary"
+                    aria-label="Edit payment method"
+                    title="Edit payment method"
                     @click="openEditForm(method)"
                   >
                     <i class="bi bi-pencil"></i>
-                    Edit
                   </button>
 
                   <button
                     type="button"
-                    class="btn btn-sm"
-                    :class="
-                      method.status
-                        ? 'btn-outline-danger'
-                        : 'btn-outline-success'
-                    "
+                    class="btn btn-sm btn-outline-primary"
+                    :aria-label="method.status ? 'Disable payment method' : 'Enable payment method'"
+                    :title="method.status ? 'Disable payment method' : 'Enable payment method'"
                     :disabled="
                       togglingId === method.id
                     "
@@ -908,11 +914,6 @@ onMounted(
                       "
                     ></i>
 
-                    {{
-                      method.status
-                        ? 'Disable'
-                        : 'Enable'
-                    }}
                   </button>
 
                 </div>

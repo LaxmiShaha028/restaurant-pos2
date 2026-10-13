@@ -64,11 +64,18 @@ const emit = defineEmits([
   "filter-status",
 ]);
 
+const formatNumber = (value) => {
+  const number = Number(value || 0);
+  return Number.isInteger(number) && Math.abs(number) < 10
+    ? String(number).padStart(2, "0")
+    : number.toLocaleString("en-BD");
+};
+
 const cards = computed(() => [
   {
     key: "total",
     label: "Total Orders",
-    value: props.summary.total_orders ?? 0,
+    value: formatNumber(props.summary.total_orders ?? 0),
     icon: "bi bi-receipt",
     iconClass: "summary-icon-dark",
     status: "",
@@ -76,8 +83,7 @@ const cards = computed(() => [
   {
     key: "pending",
     label: "Pending",
-    value:
-      props.summary.pending_orders ?? 0,
+    value: formatNumber(props.summary.pending_orders ?? 0),
     icon: "bi bi-hourglass-split",
     iconClass: "summary-icon-warning",
     status: "pending",
@@ -85,8 +91,7 @@ const cards = computed(() => [
   {
     key: "kitchen",
     label: "Kitchen Active",
-    value:
-      props.summary.kitchen_active ?? 0,
+    value: formatNumber(props.summary.kitchen_active ?? 0),
     icon: "bi bi-fire",
     iconClass: "summary-icon-info",
     status: "preparing",
@@ -94,8 +99,7 @@ const cards = computed(() => [
   {
     key: "served",
     label: "Served",
-    value:
-      props.summary.served_orders ?? 0,
+    value: formatNumber(props.summary.served_orders ?? 0),
     icon: "bi bi-check2-circle",
     iconClass: "summary-icon-primary",
     status: "served",
@@ -103,8 +107,7 @@ const cards = computed(() => [
   {
     key: "completed",
     label: "Completed",
-    value:
-      props.summary.completed_orders ?? 0,
+    value: formatNumber(props.summary.completed_orders ?? 0),
     icon: "bi bi-patch-check",
     iconClass: "summary-icon-success",
     status: "completed",

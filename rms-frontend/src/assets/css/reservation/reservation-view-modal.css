@@ -64,9 +64,9 @@
 
     padding: 8px 10px;
 
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid #eee3da;
 
-    background: #ffffff;
+    background: #fffaf5;
 }
 
 .reservation-view-title-wrap {
@@ -94,8 +94,8 @@
 
     border-radius: 4px;
 
-    background: #eff6ff;
-    color: #2563eb;
+    background: #fff1e6;
+    color: #f97316;
 
     font-size: 15px;
 }
@@ -105,7 +105,7 @@
 
     margin: 0 0 1px;
 
-    color: #2563eb;
+    color: #c2410c;
 
     font-size: 10px;
     font-weight: 700;
@@ -147,8 +147,8 @@
     border: 0;
     border-radius: 4px;
 
-    background: #f1f5f9;
-    color: #475569;
+    background: #fff1e6;
+    color: #667085;
 
     font-size: 11px;
 
@@ -160,8 +160,8 @@
 }
 
 .reservation-view-close:hover {
-    background: #e5e7eb;
-    color: #2563eb;
+    background: #ffedd5;
+    color: #c2410c;
 }
 
 
@@ -205,7 +205,7 @@
 
     padding: 7px 8px;
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #eee3da;
     border-radius: 5px;
 
     background: #ffffff;
@@ -263,7 +263,7 @@
 }
 
 .reservation-view-status.status-reserved {
-    color: #2563eb;
+    color: #c2410c;
 }
 
 .reservation-view-status.status-confirmed {
@@ -296,7 +296,7 @@
 
     padding: 8px;
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #eee3da;
     border-radius: 5px;
 
     background: #ffffff;
@@ -322,7 +322,7 @@
 }
 
 .reservation-view-section-title > i {
-    color: #2563eb;
+    color: #f97316;
     font-size: 11px;
 }
 
@@ -366,8 +366,8 @@
 
     border-radius: 5px;
 
-    background: #eff6ff;
-    color: #2563eb;
+    background: #fff1e6;
+    color: #f97316;
 
     font-size: 13px;
     font-weight: 700;
@@ -439,10 +439,10 @@
 
     padding: 7px;
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #eee3da;
     border-radius: 4px;
 
-    background: #f8fafc;
+    background: #fffaf5;
 }
 
 .reservation-view-table-icon {
@@ -460,7 +460,7 @@
     border-radius: 4px;
 
     background: #ffffff;
-    color: #2563eb;
+    color: #f97316;
 
     font-size: 11px;
 
@@ -550,10 +550,10 @@
 
     padding: 7px 8px;
 
-    border: 1px solid #f1f5f9;
+    border: 1px solid #f0e8e1;
     border-radius: 4px;
 
-    background: #f8fafc;
+    background: #fffaf5;
 }
 
 .reservation-view-payment-grid span,
@@ -601,10 +601,10 @@
 
     padding: 7px 8px;
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #eee3da;
     border-radius: 4px;
 
-    background: #f8fafc;
+    background: #fffaf5;
 }
 
 .reservation-view-order-card > div {
@@ -649,12 +649,12 @@
 .reservation-view-note {
     padding: 7px 8px;
 
-    border: 1px solid #fef3c7;
+    border: 1px solid #f5ddca;
     border-radius: 4px;
 
-    background: #fffbeb;
+    background: #fff8f1;
 
-    color: #78350f;
+    color: #9a3412;
 
     font-size: 10px;
     line-height: 1.4;
@@ -683,10 +683,10 @@
 
     padding: 7px 8px;
 
-    border: 1px solid #f1f5f9;
+    border: 1px solid #f0e8e1;
     border-radius: 4px;
 
-    background: #f8fafc;
+    background: #fffaf5;
 }
 
 .reservation-view-meta span,
@@ -734,9 +734,9 @@
 
     padding: 7px 10px;
 
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid #eee3da;
 
-    background: #ffffff;
+    background: #fffaf5;
 }
 
 .reservation-view-footer .btn {
@@ -764,7 +764,7 @@
 }
 
 .reservation-view-body::-webkit-scrollbar-track {
-    background: #f8fafc;
+    background: #f8f1e9;
 }
 
 .reservation-view-body::-webkit-scrollbar-thumb {

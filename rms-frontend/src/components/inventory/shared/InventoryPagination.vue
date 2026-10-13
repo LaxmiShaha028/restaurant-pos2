@@ -12,19 +12,19 @@
       Showing
 
       <strong>
-        {{ fromRecord }}
+        {{ formatCount(fromRecord) }}
       </strong>
 
       to
 
       <strong>
-        {{ toRecord }}
+        {{ formatCount(toRecord) }}
       </strong>
 
       of
 
       <strong>
-        {{ totalRecords }}
+        {{ formatCount(totalRecords) }}
       </strong>
 
       records
@@ -88,7 +88,7 @@
           )
         "
       >
-        {{ page }}
+        {{ formatCount(page) }}
       </button>
 
 
@@ -163,6 +163,16 @@ const props = defineProps({
 const emit = defineEmits([
   'page-change',
 ])
+
+function formatCount(value) {
+  const numericValue = Number(value)
+
+  if (!Number.isFinite(numericValue) || numericValue < 0) {
+    return '00'
+  }
+
+  return String(Math.floor(numericValue)).padStart(2, '0')
+}
 
 
 /*

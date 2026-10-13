@@ -6,11 +6,11 @@
 
         <p>
           Showing
-          {{ meta.from || 0 }}
+          {{ formatNumber(meta.from || 0) }}
           to
-          {{ meta.to || 0 }}
+          {{ formatNumber(meta.to || 0) }}
           of
-          {{ meta.total || 0 }}
+          {{ formatNumber(meta.total || 0) }}
           orders
         </p>
       </div>
@@ -643,6 +643,13 @@ const emit = defineEmits([
   "change-per-page",
   "retry",
 ]);
+
+const formatNumber = (value) => {
+  const number = Number(value || 0);
+  return Number.isInteger(number) && Math.abs(number) < 10
+    ? String(number).padStart(2, "0")
+    : number.toLocaleString("en-BD");
+};
 
 const statusFlow = [
   {

@@ -170,7 +170,7 @@
         </span>
 
         <span class="warehouse-view-tab-count">
-          {{ totalRecords }}
+          {{ formatCount(totalRecords) }}
         </span>
       </button>
 
@@ -204,7 +204,7 @@
         </span>
 
         <span class="warehouse-view-tab-count">
-          {{ lotSummary.open_lots }}
+          {{ formatCount(lotSummary.open_lots) }}
         </span>
       </button>
 
@@ -243,7 +243,7 @@
           "
           class="warehouse-view-tab-badge-risk"
         >
-          {{ lotSummary.expiry_watch_count }}
+          {{ formatCount(lotSummary.expiry_watch_count) }}
         </span>
       </button>
 
@@ -358,7 +358,7 @@
           </span>
 
           <strong>
-            {{ totalRecords }}
+            {{ formatCount(totalRecords) }}
           </strong>
         </article>
 
@@ -369,9 +369,9 @@
           </span>
 
           <strong>
-            {{ currentPage }}
+            {{ formatCount(currentPage) }}
             /
-            {{ lastPage }}
+            {{ formatCount(lastPage) }}
           </strong>
         </article>
 
@@ -387,7 +387,7 @@
           </span>
 
           <strong>
-            {{ limitedResultCount }}
+            {{ formatCount(limitedResultCount) }}
           </strong>
         </article>
 
@@ -403,7 +403,7 @@
           </span>
 
           <strong>
-            {{ outOfStockResultCount }}
+            {{ formatCount(outOfStockResultCount) }}
           </strong>
         </article>
       </div>
@@ -938,6 +938,16 @@ const currentPage = computed(() => {
   )
 })
 
+function formatCount(value) {
+  const numericValue = Number(value)
+
+  if (!Number.isFinite(numericValue) || numericValue < 0) {
+    return '00'
+  }
+
+  return String(Math.floor(numericValue)).padStart(2, '0')
+}
+
 const limitedResultCount = computed(() => {
   return stocks.value.filter(
     (stock) =>
@@ -967,14 +977,14 @@ const headerStatusLabel =
       activeWarehouseTab.value ===
       'batches-lots'
     ) {
-      return `${lotSummary.open_lots} Open Lots`
+      return `${formatCount(lotSummary.open_lots)} Open Lots`
     }
 
     if (
       activeWarehouseTab.value ===
       'expiring-soon'
     ) {
-      return `${lotSummary.expiry_watch_count} Expiry Alerts`
+      return `${formatCount(lotSummary.expiry_watch_count)} Expiry Alerts`
     }
 
     if (
@@ -992,7 +1002,7 @@ const headerStatusLabel =
     }
 
     return (
-      `${totalRecords.value} Stock Records`
+      `${formatCount(totalRecords.value)} Stock Records`
     )
   })
 

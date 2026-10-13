@@ -211,7 +211,7 @@
                 </span>
 
                 <strong>
-                    {{ summary.total }}
+                    {{ formatCount(summary.total) }}
                 </strong>
 
                 <small>
@@ -240,7 +240,7 @@
                 </span>
 
                 <strong>
-                    {{ presentNowCount }}
+                    {{ formatCount(presentNowCount) }}
                 </strong>
 
                 <small>
@@ -269,7 +269,7 @@
                 </span>
 
                 <strong>
-                    {{ summary.absent }}
+                    {{ formatCount(summary.absent) }}
                 </strong>
 
                 <small>
@@ -298,7 +298,7 @@
                 </span>
 
                 <strong>
-                    {{ summary.on_break }}
+                    {{ formatCount(summary.on_break) }}
                 </strong>
 
                 <small>
@@ -327,7 +327,7 @@
                 </span>
 
                 <strong>
-                    {{ summary.completed }}
+                    {{ formatCount(summary.completed) }}
                 </strong>
 
                 <small>
@@ -1535,6 +1535,12 @@ const totalWorkedHours = computed(() => {
     ).toFixed(2)
 
 })
+
+
+function formatCount(value)
+{
+    return String(Number(value) || 0).padStart(2, '0')
+}
 
 
 const formattedTotalBreak = computed(() => {

@@ -350,6 +350,14 @@ function formatPrice(
 }
 
 
+function formatNumber(value) {
+  const number = Number(value || 0)
+  return Number.isInteger(number) && Math.abs(number) < 10
+    ? String(number).padStart(2, '0')
+    : number.toLocaleString('en-BD')
+}
+
+
 function remainingLabel(
   value
 ) {
@@ -400,7 +408,7 @@ function remainingLabel(
   if (
     hours < 24
   ) {
-    return `${hours}h left`
+    return `${formatNumber(hours)}h left`
   }
 
 
@@ -411,7 +419,7 @@ function remainingLabel(
     )
 
 
-  return `${days}d left`
+  return `${formatNumber(days)}d left`
 }
 
 
@@ -627,7 +635,7 @@ watch(
           </span>
 
           <strong>
-            {{ totalCount }}
+            {{ formatNumber(totalCount) }}
           </strong>
 
         </div>
@@ -763,7 +771,7 @@ watch(
 
         <span class="subscriptions-count-badge">
 
-          {{ filteredSubscriptions.length }}
+          {{ formatNumber(filteredSubscriptions.length) }}
 
           record{{
             filteredSubscriptions.length === 1

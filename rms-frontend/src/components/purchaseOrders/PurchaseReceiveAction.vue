@@ -20,6 +20,7 @@
                 currentStatus === 'received'
             "
             :title="buttonTitle"
+            :aria-label="`${buttonLabel}: ${buttonTitle}`"
             @click="openModal"
         >
             <span

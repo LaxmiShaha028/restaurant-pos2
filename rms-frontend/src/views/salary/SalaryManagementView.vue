@@ -187,7 +187,7 @@
         </span>
 
         <strong>
-          {{ summary.total_payrolls }}
+          {{ formatCount(summary.total_payrolls) }}
         </strong>
 
         <small>
@@ -255,7 +255,7 @@
         </strong>
 
         <small>
-          {{ summary.paid_count }} employee(s)
+          {{ formatCount(summary.paid_count) }} employee(s)
         </small>
 
       </div>
@@ -416,7 +416,7 @@
         </div>
 
         <span class="salary-result-count">
-          {{ meta.total }} employee(s)
+          {{ formatCount(meta.total) }} employee(s)
         </span>
 
       </div>
@@ -558,7 +558,7 @@
               <!-- SL -->
 
               <td>
-                {{ serialNumber(index) }}
+                {{ formatCount(serialNumber(index)) }}
               </td>
 
 
@@ -830,12 +830,14 @@
 
           <strong>
             {{
-              meta.total === 0
-                ? 0
-                : (
-                    (meta.current_page - 1)
-                    * meta.per_page
-                  ) + 1
+              formatCount(
+                meta.total === 0
+                  ? 0
+                  : (
+                      (meta.current_page - 1)
+                      * meta.per_page
+                    ) + 1
+              )
             }}
           </strong>
 
@@ -844,12 +846,12 @@
           </span>
 
           <strong>
-            {{
+            {{ formatCount(
               Math.min(
                 meta.current_page * meta.per_page,
                 meta.total
               )
-            }}
+            ) }}
           </strong>
 
           <span class="salary-pagination-label">
@@ -857,7 +859,7 @@
           </span>
 
           <strong>
-            {{ meta.total }}
+            {{ formatCount(meta.total) }}
           </strong>
 
           <span class="salary-pagination-label">
@@ -898,7 +900,7 @@
             </span>
 
             <strong>
-              {{ meta.current_page }}
+              {{ formatCount(meta.current_page) }}
             </strong>
 
             <span>
@@ -906,7 +908,7 @@
             </span>
 
             <strong>
-              {{ meta.last_page }}
+              {{ formatCount(meta.last_page) }}
             </strong>
 
           </div>
@@ -2405,6 +2407,13 @@ function serialNumber(
   index
   +
   1
+
+}
+
+
+function formatCount(value) {
+
+  return String(Number(value) || 0).padStart(2, '0')
 
 }
 

@@ -48,15 +48,15 @@
   padding: 1.2rem 1.3rem;
 
   border-bottom:
-    1px solid #e5e7eb;
+    1px solid #eee3da;
 
-  background: #f8fafc;
+  background: #fffaf5;
 }
 
 .merge-table-eyebrow {
   margin: 0 0 0.2rem;
 
-  color: #d97706;
+  color: #c2410c;
 
   font-size: 0.65rem;
   font-weight: 800;
@@ -67,7 +67,7 @@
 .merge-table-header h2 {
   margin: 0 0 0.25rem;
 
-  color: #0f172a;
+  color: #172033;
 
   font-size: 1.3rem;
   font-weight: 800;
@@ -76,7 +76,7 @@
 .merge-table-header p {
   margin: 0;
 
-  color: #64748b;
+  color: #667085;
 
   font-size: 0.78rem;
 }
@@ -100,8 +100,8 @@
 }
 
 .merge-table-close:hover {
-  background: #fee2e2;
-  color: #b91c1c;
+  background: #fff1e6;
+  color: #c2410c;
 }
 
 .merge-table-close:disabled {
@@ -178,8 +178,8 @@
 
   border-radius: 999px;
 
-  background: #f1f5f9;
-  color: #475569;
+  background: #fff1e6;
+  color: #9a3412;
 
   font-size: 0.65rem;
   font-weight: 700;
@@ -194,7 +194,7 @@
 .merge-table-list {
   overflow: hidden;
 
-  border: 1px solid #e2e8f0;
+  border: 1px solid #eee3da;
   border-radius: 0.75rem;
 
   background: #ffffff;
@@ -212,7 +212,7 @@
 
   border: 0;
   border-bottom:
-    1px solid #eef2f7;
+    1px solid #f0e8e1;
 
   background: #ffffff;
 
@@ -224,7 +224,7 @@
 }
 
 .merge-table-list-item--connected {
-  background: #f8fafc;
+  background: #fffaf5;
 }
 
 .merge-table-list-item--selectable {
@@ -235,11 +235,11 @@
 }
 
 .merge-table-list-item--selectable:hover {
-  background: #fff7ed;
+  background: #fff8f1;
 }
 
 .merge-table-list-item--selected {
-  background: #fffbeb;
+  background: #fff1e6;
 }
 
 .merge-table-list-main {
@@ -255,7 +255,7 @@
 }
 
 .merge-table-list-main strong {
-  color: #1e293b;
+  color: #172033;
 
   font-size: 0.76rem;
 }
@@ -263,7 +263,7 @@
 .merge-table-list-main span {
   margin-top: 0.12rem;
 
-  color: #64748b;
+  color: #667085;
 
   font-size: 0.62rem;
 }
@@ -282,8 +282,8 @@
 }
 
 .merge-table-list-icon {
-  background: #e0e7ff;
-  color: #4338ca;
+  background: #fff1e6;
+  color: #f97316;
 }
 
 .merge-table-list-check {
@@ -295,7 +295,7 @@
 
 .merge-table-list-item--selected
   .merge-table-list-check {
-  background: #f59e0b;
+  background: #f97316;
   color: #ffffff;
 }
 
@@ -396,10 +396,10 @@
   padding: 0.8rem;
 
   border:
-    1px solid #e2e8f0;
+    1px solid #eee3da;
   border-radius: 0.75rem;
 
-  background: #f8fafc;
+  background: #fffaf5;
 }
 
 .merge-capacity-summary > div {
@@ -422,7 +422,7 @@
 .merge-capacity-summary strong {
   margin-top: 0.1rem;
 
-  color: #1e293b;
+  color: #172033;
 
   font-size: 1rem;
 }
@@ -432,11 +432,11 @@
 
   border-radius: 0.6rem;
 
-  background: #fef3c7;
+  background: #fff1e6;
 }
 
 .merge-capacity-total strong {
-  color: #b45309;
+  color: #c2410c;
 }
 
 /*
@@ -454,9 +454,9 @@
   padding: 0.9rem 1.3rem;
 
   border-top:
-    1px solid #e5e7eb;
+    1px solid #eee3da;
 
-  background: #f8fafc;
+  background: #fffaf5;
 }
 
 .merge-table-footer .btn {
@@ -464,6 +464,36 @@
 
   font-size: 0.78rem;
   font-weight: 650;
+}
+
+.merge-table-footer .btn-light {
+  border: 1px solid #eee3da;
+  background: #ffffff;
+  color: #667085;
+}
+
+.merge-table-footer .btn-light:hover:not(:disabled) {
+  border-color: #fdba74;
+  background: #fff1e6;
+  color: #c2410c;
+}
+
+.merge-table-footer .btn-warning {
+  border: 1px solid #292929;
+  background: #111111;
+  color: #f97316;
+}
+
+.merge-table-footer .btn-warning:hover:not(:disabled) {
+  border-color: #3b3b3b;
+  background: #242424;
+  color: #fb923c;
+}
+
+.merge-table-footer .btn-warning:disabled {
+  border-color: #eee3da;
+  background: #f8f1e9;
+  color: #98a2b3;
 }
 
 /*

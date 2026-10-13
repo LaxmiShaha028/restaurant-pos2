@@ -178,7 +178,7 @@ const lowStockMessage = computed(() => {
   }
 
   return (
-    `${lowStockCount.value} Low Stock Alert`
+    `${String(lowStockCount.value).padStart(2, '0')} Low Stock Alert`
     +
     (
       lowStockCount.value === 1

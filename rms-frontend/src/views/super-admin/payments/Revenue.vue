@@ -290,16 +290,24 @@ async function loadRevenue() {
 function formatAmount(
   value
 ) {
-
-  return `${selectedCurrency.value || ''} ${Number(
-    value || 0
-  ).toLocaleString(
+  const amount = Number(value || 0)
+  const formattedAmount = amount.toLocaleString(
     'en-BD',
-    {
-      maximumFractionDigits:
-        2,
-    }
-  )}`.trim()
+    { maximumFractionDigits: 2 }
+  )
+  const displayAmount = Number.isInteger(amount) && Math.abs(amount) < 10
+    ? String(amount).padStart(2, '0')
+    : formattedAmount
+
+  return `${selectedCurrency.value || ''} ${displayAmount}`.trim()
+}
+
+
+function formatNumber(value) {
+  const number = Number(value || 0)
+  return Number.isInteger(number) && Math.abs(number) < 10
+    ? String(number).padStart(2, '0')
+    : number.toLocaleString('en-BD')
 }
 
 
@@ -333,13 +341,7 @@ function formatCompactAmount(
   }
 
 
-  return amount.toLocaleString(
-    'en-BD',
-    {
-      maximumFractionDigits:
-        0,
-    }
-  )
+  return formatNumber(amount)
 }
 
 
@@ -696,7 +698,7 @@ onMounted(
           <div>
             <span>Paid Transactions</span>
             <strong>
-              {{ selectedSummary.total_transactions }}
+              {{ formatNumber(selectedSummary.total_transactions) }}
             </strong>
           </div>
 
@@ -861,7 +863,7 @@ onMounted(
                 </strong>
 
                 <span>
-                  {{ item.transactions }}
+                  {{ formatNumber(item.transactions) }}
                   transaction{{
                     Number(item.transactions) === 1
                       ? ''
@@ -943,7 +945,7 @@ onMounted(
               </strong>
 
               <span>
-                {{ item.transactions }}
+                {{ formatNumber(item.transactions) }}
               </span>
 
               <strong>

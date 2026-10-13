@@ -166,6 +166,14 @@ const trialPlans =
   )
 
 
+function formatNumber(value) {
+  const number = Number(value || 0)
+  return Number.isInteger(number) && Math.abs(number) < 10
+    ? String(number).padStart(2, '0')
+    : number.toLocaleString('en-BD')
+}
+
+
 /*
 |--------------------------------------------------------------------------
 | Load Plans
@@ -810,7 +818,7 @@ onMounted(
 
         <div>
           <span>Total Plans</span>
-          <strong>{{ totalPlans }}</strong>
+          <strong>{{ formatNumber(totalPlans) }}</strong>
         </div>
 
       </article>
@@ -824,7 +832,7 @@ onMounted(
 
         <div>
           <span>Active Plans</span>
-          <strong>{{ activePlans }}</strong>
+          <strong>{{ formatNumber(activePlans) }}</strong>
         </div>
 
       </article>
@@ -838,7 +846,7 @@ onMounted(
 
         <div>
           <span>Disabled Plans</span>
-          <strong>{{ inactivePlans }}</strong>
+          <strong>{{ formatNumber(inactivePlans) }}</strong>
         </div>
 
       </article>
@@ -852,7 +860,7 @@ onMounted(
 
         <div>
           <span>Free / Trial Plans</span>
-          <strong>{{ trialPlans }}</strong>
+          <strong>{{ formatNumber(trialPlans) }}</strong>
         </div>
 
       </article>
@@ -1180,7 +1188,7 @@ onMounted(
 
       <span class="management-toolbar-count">
 
-        {{ filteredPlans.length }}
+        {{ formatNumber(filteredPlans.length) }}
 
         plan{{
           filteredPlans.length === 1
@@ -1293,7 +1301,7 @@ onMounted(
 
               {{
                 Number(plan.trial_days || 0)
-                  ? `${plan.trial_days} days`
+                  ? `${formatNumber(plan.trial_days)} days`
                   : 'None'
               }}
 
@@ -1311,7 +1319,7 @@ onMounted(
             <strong>
 
               {{
-                plan.usage?.total_subscriptions || 0
+                formatNumber(plan.usage?.total_subscriptions || 0)
               }}
 
             </strong>
@@ -1328,7 +1336,7 @@ onMounted(
             <strong>
 
               {{
-                plan.usage?.active_subscriptions || 0
+                formatNumber(plan.usage?.active_subscriptions || 0)
               }}
 
             </strong>

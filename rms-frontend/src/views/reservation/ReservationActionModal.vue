@@ -389,11 +389,7 @@ function submit()
   justify-content: space-between;
   gap: 14px;
   padding: 20px 22px;
-  background: linear-gradient(
-    135deg,
-    #2563eb,
-    #1d4ed8
-  );
+  background: #c2410c;
   color: #ffffff;
 }
 
@@ -471,9 +467,9 @@ function submit()
 .reservation-action-summary > div {
   min-width: 0;
   padding: 11px 12px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #eee3da;
   border-radius: 11px;
-  background: #f8fafc;
+  background: #fffaf5;
 }
 
 .reservation-action-summary span,
@@ -510,9 +506,9 @@ function submit()
 }
 
 .reservation-action-info {
-  border: 1px solid #bfdbfe;
-  background: #eff6ff;
-  color: #1e40af;
+  border: 1px solid #f5ddca;
+  background: #fff8f1;
+  color: #9a3412;
 }
 
 .reservation-action-warning {
@@ -562,7 +558,7 @@ function submit()
   width: 100%;
   min-height: 92px;
   padding: 11px 12px;
-  border: 1px solid #d8e1ec;
+  border: 1px solid #eee3da;
   border-radius: 10px;
   outline: 0;
   color: #172033;
@@ -571,9 +567,9 @@ function submit()
 }
 
 .reservation-action-field textarea:focus {
-  border-color: #3b82f6;
+  border-color: #f97316;
   box-shadow:
-    0 0 0 3px rgba(59,130,246,.11);
+    0 0 0 3px rgba(249,115,22,.14);
 }
 
 .reservation-action-counter {
@@ -590,8 +586,8 @@ function submit()
   justify-content: flex-end;
   gap: 9px;
   padding: 13px 22px;
-  border-top: 1px solid #e2e8f0;
-  background: #ffffff;
+  border-top: 1px solid #eee3da;
+  background: #fffaf5;
 }
 
 .reservation-action-footer .btn {
@@ -604,6 +600,30 @@ function submit()
   border-radius: 9px;
   font-size: 12px;
   font-weight: 650;
+}
+
+.reservation-action-footer .btn-light {
+  border: 1px solid #eee3da;
+  background: #ffffff;
+  color: #667085;
+}
+
+.reservation-action-footer .btn-light:hover:not(:disabled) {
+  border-color: #fdba74;
+  background: #fff1e6;
+  color: #c2410c;
+}
+
+.reservation-action-footer .btn-primary {
+  border: 1px solid #292929;
+  background: #111111;
+  color: #f97316;
+}
+
+.reservation-action-footer .btn-primary:hover:not(:disabled) {
+  border-color: #3b3b3b;
+  background: #242424;
+  color: #fb923c;
 }
 
 @media (max-width: 560px) {

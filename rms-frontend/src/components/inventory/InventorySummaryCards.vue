@@ -286,12 +286,12 @@ function countValue(
     ||
     numericValue <= 0
   ) {
-    return 0
+    return '00'
   }
 
 
-  return Math.floor(
-    numericValue,
-  )
+  return String(
+    Math.floor(numericValue),
+  ).padStart(2, '0')
 }
 </script>

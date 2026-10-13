@@ -248,6 +248,14 @@ const failedCount =
   )
 
 
+function formatNumber(value) {
+  const number = Number(value || 0)
+  return Number.isInteger(number) && Math.abs(number) < 10
+    ? String(number).padStart(2, '0')
+    : number.toLocaleString('en-BD')
+}
+
+
 /*
 |--------------------------------------------------------------------------
 | Load
@@ -634,7 +642,7 @@ onMounted(
 
         <div>
           <span>Total Transactions</span>
-          <strong>{{ totalCount }}</strong>
+          <strong>{{ formatNumber(totalCount) }}</strong>
         </div>
 
       </article>
@@ -648,7 +656,7 @@ onMounted(
 
         <div>
           <span>Paid</span>
-          <strong>{{ paidCount }}</strong>
+          <strong>{{ formatNumber(paidCount) }}</strong>
         </div>
 
       </article>
@@ -662,7 +670,7 @@ onMounted(
 
         <div>
           <span>Pending</span>
-          <strong>{{ pendingCount }}</strong>
+          <strong>{{ formatNumber(pendingCount) }}</strong>
         </div>
 
       </article>
@@ -676,7 +684,7 @@ onMounted(
 
         <div>
           <span>Failed</span>
-          <strong>{{ failedCount }}</strong>
+          <strong>{{ formatNumber(failedCount) }}</strong>
         </div>
 
       </article>
@@ -865,7 +873,7 @@ onMounted(
 
         <span class="payments-count-badge">
 
-          {{ filteredTransactions.length }}
+          {{ formatNumber(filteredTransactions.length) }}
           record{{
             filteredTransactions.length === 1
               ? ''

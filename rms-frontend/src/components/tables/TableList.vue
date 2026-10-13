@@ -27,6 +27,19 @@ const emit = defineEmits([
   "refresh",
 ]);
 
+const formatNumber = (value) => {
+  const number = Number(value || 0);
+  return Number.isInteger(number) && Math.abs(number) < 10
+    ? String(number).padStart(2, "0")
+    : number.toLocaleString("en-BD");
+};
+
+const formatTableName = (value) => {
+  return String(value ?? "").replace(/(\d+)$/, (digits) =>
+    digits.length === 1 ? digits.padStart(2, "0") : digits,
+  );
+};
+
 const selectedStatus = ref("all");
 const selectedSection = ref("all");
 const searchQuery = ref("");
@@ -584,9 +597,9 @@ const handleSplit = (
           class="status-tab__count"
         >
           {{
-            getStatusCount(
+            formatNumber(getStatusCount(
               tab.value
-            )
+            ))
           }}
         </span>
       </button>
@@ -641,9 +654,7 @@ const handleSplit = (
       <span
         class="table-filters__result"
       >
-        {{
-          filteredTables.length
-        }}
+          {{ formatNumber(filteredTables.length) }}
         table{{
           filteredTables.length ===
           1
@@ -738,11 +749,11 @@ const handleSplit = (
             class="table-list-row__identity"
           >
             <strong>
-              {{ table.table_name }}
+              {{ formatTableName(table.table_name) }}
             </strong>
 
             <span>
-              Table #{{ table.id }}
+              Table #{{ formatNumber(table.id) }}
             </span>
 
             <small
@@ -764,9 +775,9 @@ const handleSplit = (
         >
           <strong>
             {{
-              getDisplayedCapacity(
+              formatNumber(getDisplayedCapacity(
                 table
-              )
+              ))
             }}
           </strong>
 
@@ -856,9 +867,9 @@ const handleSplit = (
             <small>
               Total capacity:
               {{
-                getDisplayedCapacity(
+                formatNumber(getDisplayedCapacity(
                   table
-                )
+                ))
               }}
             </small>
           </template>

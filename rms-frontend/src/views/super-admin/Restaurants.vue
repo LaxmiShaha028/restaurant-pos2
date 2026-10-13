@@ -78,7 +78,7 @@
         </span>
         <div>
           <span>Total</span>
-          <strong>{{ totalRestaurants }}</strong>
+          <strong>{{ formatNumber(totalRestaurants) }}</strong>
         </div>
       </article>
 
@@ -88,7 +88,7 @@
         </span>
         <div>
           <span>Active</span>
-          <strong>{{ activeRestaurants }}</strong>
+          <strong>{{ formatNumber(activeRestaurants) }}</strong>
         </div>
       </article>
 
@@ -98,7 +98,7 @@
         </span>
         <div>
           <span>Pending</span>
-          <strong>{{ pendingRestaurants }}</strong>
+          <strong>{{ formatNumber(pendingRestaurants) }}</strong>
         </div>
       </article>
 
@@ -108,7 +108,7 @@
         </span>
         <div>
           <span>Other / Inactive</span>
-          <strong>{{ inactiveRestaurants }}</strong>
+          <strong>{{ formatNumber(inactiveRestaurants) }}</strong>
         </div>
       </article>
 
@@ -186,7 +186,7 @@
         </div>
 
         <span class="restaurants-table-count">
-          {{ totalRestaurants }}
+          {{ formatNumber(totalRestaurants) }}
           restaurant{{ totalRestaurants === 1 ? '' : 's' }}
         </span>
       </div>
@@ -216,7 +216,7 @@
             >
 
               <td data-label="ID" class="restaurants-id-cell">
-                #{{ restaurant.id }}
+                #{{ formatNumber(restaurant.id) }}
               </td>
 
               <td data-label="Restaurant">
@@ -565,6 +565,14 @@ const inactiveRestaurants =
     ).length
 
   })
+
+
+function formatNumber(value) {
+  const number = Number(value || 0)
+  return Number.isInteger(number) && Math.abs(number) < 10
+    ? String(number).padStart(2, '0')
+    : number.toLocaleString('en-BD')
+}
 
 
 /*

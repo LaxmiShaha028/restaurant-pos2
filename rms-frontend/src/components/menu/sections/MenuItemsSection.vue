@@ -987,7 +987,7 @@ onMounted(async () => {
             <!-- Actions -->
             <td>
               <div
-                class="gap-2"
+                class="gap-2 menu-row-actions"
               >
                 <button
                   type="button"

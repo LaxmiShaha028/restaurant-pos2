@@ -11,7 +11,7 @@
         <span>Pending</span>
 
         <strong>
-          {{ pendingCount }}
+          {{ formatCount(pendingCount) }}
         </strong>
 
         <small>
@@ -31,7 +31,7 @@
         <span>Accepted</span>
 
         <strong>
-          {{ acceptedCount }}
+          {{ formatCount(acceptedCount) }}
         </strong>
 
         <small>
@@ -51,7 +51,7 @@
         <span>Preparing</span>
 
         <strong>
-          {{ preparingCount }}
+          {{ formatCount(preparingCount) }}
         </strong>
 
         <small>
@@ -71,7 +71,7 @@
         <span>Ready</span>
 
         <strong>
-          {{ readyCount }}
+          {{ formatCount(readyCount) }}
         </strong>
 
         <small>
@@ -91,6 +91,13 @@ const props = defineProps({
     default: () => [],
   },
 })
+
+function formatCount(value) {
+  const count = Number(value || 0)
+  return Number.isInteger(count) && Math.abs(count) < 10
+    ? String(count).padStart(2, '0')
+    : count.toLocaleString('en-BD')
+}
 
 /*
 |--------------------------------------------------------------------------

@@ -677,6 +677,9 @@
                         ? 'Record damaged or wasted restaurant stock'
                         : 'No restaurant stock is available to waste'
                     "
+                    :aria-label="
+                      `Record damage or waste for ${materialName(stock)}`
+                    "
                     @click="
                       openWastageModal(
                         stock
@@ -687,8 +690,6 @@
                       class="bi bi-trash"
                       aria-hidden="true"
                     ></i>
-
-                    Damage / Waste
                   </button>
 
                   <span

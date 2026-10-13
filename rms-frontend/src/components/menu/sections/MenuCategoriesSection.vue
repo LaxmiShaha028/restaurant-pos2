@@ -572,7 +572,7 @@ onMounted(() => {
 
               <td>
                 <div
-                  class="menu-category-actions"
+                  class="menu-category-actions menu-row-actions"
                 >
                   <button
                     type="button"

@@ -11,10 +11,15 @@
 #app .restaurant-dashboard .dashboard-kpi-card > .kpi-value,
 #app .restaurant-dashboard .dashboard-kpi-card > .kpi-footer strong,
 #app .super-admin-dashboard-page .dashboard-stat-copy strong,
-#app .super-admin-dashboard-page .dashboard-spotlight-metrics strong,
 #app .super-admin-dashboard-page .dashboard-highlight-list li strong {
   color: #334155 !important;
   font-weight: 650 !important;
+}
+
+/* Keep spotlight figures legible on the dark orange platform banner. */
+#app .super-admin-dashboard-page .dashboard-spotlight-metrics strong {
+  color: #fff !important;
+  font-weight: 750 !important;
 }
 
 /* Match typography across the restaurant and Super Admin dashboards. */
@@ -504,6 +509,67 @@ button[class*="apply" i] > i,
   color: #fb923c !important;
 }
 
+/* Inventory row actions use the same 36px orange icon buttons as All Restaurants. */
+#app .inventory-management-page .recipe-mapping-list-actions .btn,
+#app .inventory-management-page .warehouse-row-actions > button,
+#app .inventory-management-page .warehouse-action-history,
+#app .inventory-management-page .restaurant-wastage-action-btn {
+  display: inline-flex !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 8px !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+  line-height: 1.2 !important;
+}
+
+#app .inventory-management-page .recipe-mapping-list-actions,
+#app .inventory-management-page .warehouse-row-actions {
+  gap: 5px !important;
+}
+
+#app .inventory-management-page .recipe-mapping-list-actions .btn + .btn {
+  margin-left: 5px !important;
+}
+
+#app .inventory-management-page .warehouse-row-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+#app .inventory-management-page .recipe-mapping-list-actions .btn:hover:not(:disabled),
+#app .inventory-management-page .warehouse-row-actions > button:hover:not(:disabled),
+#app .inventory-management-page .warehouse-action-history:hover:not(:disabled),
+#app .inventory-management-page .restaurant-wastage-action-btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff8f1 !important;
+  color: #c2410c !important;
+}
+
+#app .inventory-management-page .recipe-mapping-list-actions .btn:disabled,
+#app .inventory-management-page .warehouse-row-actions > button:disabled,
+#app .inventory-management-page .restaurant-wastage-action-btn:disabled {
+  border-color: #eee3da !important;
+  background: #f8f1e9 !important;
+  color: #98a2b3 !important;
+  opacity: 1 !important;
+}
+
+#app .inventory-management-page .recipe-mapping-list-actions .btn i,
+#app .inventory-management-page .warehouse-row-actions > button i,
+#app .inventory-management-page .warehouse-action-history i,
+#app .inventory-management-page .restaurant-wastage-action-btn i {
+  color: inherit !important;
+}
+
 /* Warehouse Stock surfaces, controls, tabs, and icons use the shared theme. */
 .inventory-management-page .inventory-content-panel,
 .inventory-management-page .warehouse-view-panel,
@@ -624,6 +690,559 @@ button[class*="apply" i] > i,
 .inventory-management-page .warehouse-pagination-active,
 .inventory-management-page .inventory-pagination-active {
   color: #f97316 !important;
+}
+
+/* Warehouse adjustment modal uses the same orange and cream theme. */
+body .warehouse-adjustment-backdrop {
+  background: rgba(54, 34, 18, .62) !important;
+}
+
+body .warehouse-adjustment-modal {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 65px rgba(90, 58, 32, .22) !important;
+}
+
+body .warehouse-adjustment-header,
+body .warehouse-adjustment-material,
+body .warehouse-adjustment-footer {
+  border-color: #eee3da !important;
+}
+
+body .warehouse-adjustment-header,
+body .warehouse-adjustment-modal .warehouse-adjustment-body {
+  background: #ffffff !important;
+}
+
+body .warehouse-adjustment-material,
+body .warehouse-adjustment-footer {
+  background: #fffaf5 !important;
+}
+
+body .warehouse-adjustment-heading h2 {
+  color: #172554 !important;
+}
+
+body .warehouse-adjustment-header-in,
+body .warehouse-adjustment-header-out,
+body .warehouse-adjustment-material-icon,
+body .warehouse-adjustment-type-icon {
+  border: 1px solid #f5ddca !important;
+  background: #fff1e6 !important;
+  color: #ea580c !important;
+}
+
+body .warehouse-adjustment-close {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  color: #667085 !important;
+}
+
+body .warehouse-adjustment-close:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+body .warehouse-adjustment-type-option {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+}
+
+body .warehouse-adjustment-type-selected-in,
+body .warehouse-adjustment-type-selected-out {
+  border-color: #fb923c !important;
+  background: #fff8f1 !important;
+}
+
+body .warehouse-adjustment-form-group input:focus,
+body .warehouse-adjustment-form-group textarea:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
+}
+
+body .warehouse-adjustment-number-input > span,
+body .warehouse-adjustment-money-input > span,
+body .warehouse-adjustment-readonly {
+  border-color: #eee3da !important;
+  background: #fffaf5 !important;
+}
+
+body .warehouse-adjustment-preview-in,
+body .warehouse-adjustment-preview-out {
+  border-color: #f5ddca !important;
+  background: #fff8f1 !important;
+}
+
+body .warehouse-adjustment-cancel {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  color: #667085 !important;
+}
+
+body .warehouse-adjustment-cancel:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+body .warehouse-adjustment-submit,
+body .warehouse-adjustment-submit-out {
+  border: 1px solid #e7d8cb !important;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+}
+
+body .warehouse-adjustment-submit:hover:not(:disabled),
+body .warehouse-adjustment-submit-out:hover:not(:disabled) {
+  border-color: #3b3b3b !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+  color: #fb923c !important;
+}
+
+/* Raw material form modal follows the shared orange and cream theme. */
+body .raw-material-modal-backdrop {
+  background: rgba(54, 34, 18, .62) !important;
+}
+
+body .raw-material-modal {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 65px rgba(90, 58, 32, .22) !important;
+}
+
+body .raw-material-modal-header,
+body .raw-material-modal-footer,
+body .raw-material-form-section-heading {
+  border-color: #eee3da !important;
+}
+
+body .raw-material-modal-heading h2,
+body .raw-material-form-section-heading h3 {
+  color: #172554 !important;
+}
+
+body .raw-material-modal-footer,
+body .raw-material-form-section-heading {
+  background: #fffaf5 !important;
+}
+
+body .raw-material-modal-icon,
+body .raw-material-form-section-heading > i {
+  border-color: #f5ddca !important;
+  background: #fff1e6 !important;
+  color: #ea580c !important;
+}
+
+body .raw-material-modal-close {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  color: #667085 !important;
+}
+
+body .raw-material-modal-close:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+body .raw-material-form-section,
+body .raw-material-opening-section {
+  border-color: #f5ddca !important;
+}
+
+body .raw-material-form-group input:focus,
+body .raw-material-form-group select:focus,
+body .raw-material-form-group textarea:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
+}
+
+body .raw-material-number-input > span {
+  border-color: #eee3da !important;
+  background: #fffaf5 !important;
+}
+
+body .raw-material-status-switch input:checked + .raw-material-switch-track {
+  background: #f97316 !important;
+}
+
+body .raw-material-cancel-button {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  color: #667085 !important;
+}
+
+body .raw-material-cancel-button:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+body .raw-material-submit-button {
+  border-color: #e7d8cb !important;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+}
+
+body .raw-material-submit-button:hover:not(:disabled) {
+  border-color: #3b3b3b !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+  color: #fb923c !important;
+}
+
+/* Raw material confirmation modal follows the shared orange and cream theme. */
+body .raw-material-action-backdrop {
+  background: rgba(54, 34, 18, .62) !important;
+}
+
+body .raw-material-action-modal {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 65px rgba(90, 58, 32, .22) !important;
+}
+
+body .raw-material-action-header,
+body .raw-material-action-footer {
+  border-color: #eee3da !important;
+}
+
+body .raw-material-action-heading h2 {
+  color: #172554 !important;
+}
+
+body .raw-material-action-footer {
+  background: #fffaf5 !important;
+}
+
+body .raw-material-action-icon-activate,
+body .raw-material-action-icon-deactivate,
+body .raw-material-action-icon-delete,
+body .raw-material-action-material-icon {
+  border: 1px solid #f5ddca !important;
+  background: #fff1e6 !important;
+  color: #ea580c !important;
+}
+
+body .raw-material-action-close {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  color: #667085 !important;
+}
+
+body .raw-material-action-close:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+body .raw-material-action-material,
+body .raw-material-action-details > div {
+  border-color: #f5ddca !important;
+  background: #fffaf5 !important;
+}
+
+body .raw-material-action-notice-warning {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #9a3412 !important;
+}
+
+body .raw-material-action-cancel {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  color: #667085 !important;
+}
+
+body .raw-material-action-cancel:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+body .raw-material-action-confirm {
+  border: 1px solid #e7d8cb !important;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+}
+
+body .raw-material-action-confirm:hover:not(:disabled) {
+  border-color: #3b3b3b !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+  color: #fb923c !important;
+}
+
+body .raw-material-action-confirm:disabled {
+  border-color: #eee3da !important;
+  background: #f8f1e9 !important;
+  color: #98a2b3 !important;
+  opacity: 1 !important;
+}
+
+/* Warehouse to Restaurant Transfer modal follows the shared warm theme. */
+body .restaurant-transfer-backdrop {
+  background: rgba(54, 34, 18, .62) !important;
+}
+
+body .restaurant-transfer-modal {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 65px rgba(90, 58, 32, .22) !important;
+}
+
+body .restaurant-transfer-header,
+body .restaurant-transfer-footer,
+body .restaurant-transfer-section,
+body .restaurant-transfer-item {
+  border-color: #eee3da !important;
+}
+
+body .restaurant-transfer-header,
+body .restaurant-transfer-section {
+  background: #ffffff !important;
+}
+
+body .restaurant-transfer-body,
+body .restaurant-transfer-footer {
+  background: #fffaf5 !important;
+}
+
+body .restaurant-transfer-header-icon {
+  border: 1px solid #f5ddca !important;
+  background: #fff1e6 !important;
+  color: #ea580c !important;
+}
+
+body .restaurant-transfer-header h2,
+body .restaurant-transfer-section-heading h3 {
+  color: #172554 !important;
+}
+
+body .restaurant-transfer-close {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  color: #667085 !important;
+}
+
+body .restaurant-transfer-close:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+body .restaurant-transfer-item,
+body .restaurant-transfer-item-header,
+body .restaurant-transfer-readonly-field > strong,
+body .restaurant-transfer-quantity-input > span {
+  background: #fff8f1 !important;
+}
+
+body .restaurant-transfer-item-header,
+body .restaurant-transfer-item-summary {
+  border-color: #f5ddca !important;
+}
+
+body .restaurant-transfer-field input,
+body .restaurant-transfer-field select,
+body .restaurant-transfer-field textarea,
+body .restaurant-transfer-quantity-input > span {
+  border-color: #eee3da !important;
+}
+
+body .restaurant-transfer-field input:focus,
+body .restaurant-transfer-field select:focus,
+body .restaurant-transfer-field textarea:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, .14) !important;
+}
+
+body .restaurant-transfer-add-item {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+body .restaurant-transfer-add-item:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff8f1 !important;
+}
+
+body .restaurant-transfer-remove-item {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+body .restaurant-transfer-remove-item:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff8f1 !important;
+  color: #c2410c !important;
+}
+
+body .restaurant-transfer-item-summary strong {
+  color: #c2410c !important;
+}
+
+body .restaurant-transfer-cancel {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  color: #667085 !important;
+}
+
+body .restaurant-transfer-cancel:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+body .restaurant-transfer-submit {
+  border-color: #e7d8cb !important;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+}
+
+body .restaurant-transfer-submit:hover:not(:disabled) {
+  border-color: #3b3b3b !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+  color: #fb923c !important;
+}
+
+body .restaurant-transfer-cancel:focus-visible,
+body .restaurant-transfer-submit:focus-visible,
+body .restaurant-transfer-add-item:focus-visible,
+body .restaurant-transfer-remove-item:focus-visible,
+body .restaurant-transfer-empty button:focus-visible {
+  outline: 3px solid rgba(249, 115, 22, .2) !important;
+  outline-offset: 2px !important;
+}
+
+/* Daily Transfer modal follows the same orange and cream inventory theme. */
+body .daily-transfer-backdrop {
+  background: rgba(54, 34, 18, .62) !important;
+}
+
+body .daily-transfer-modal {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 65px rgba(90, 58, 32, .22) !important;
+}
+
+body .daily-transfer-header,
+body .daily-transfer-footer {
+  border-color: #eee3da !important;
+}
+
+body .daily-transfer-header {
+  background: #ffffff !important;
+}
+
+body .daily-transfer-header h2,
+body .daily-transfer-section-heading h3 {
+  color: #172554 !important;
+}
+
+body .daily-transfer-eyebrow {
+  color: #c2410c !important;
+}
+
+body .daily-transfer-body,
+body .daily-transfer-footer {
+  background: #fffaf5 !important;
+}
+
+body .daily-transfer-card,
+body .daily-transfer-item {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+}
+
+body .daily-transfer-item-warning {
+  border-color: #fdba74 !important;
+  background: #fff8f1 !important;
+}
+
+body .daily-transfer-icon-btn,
+body .daily-transfer-secondary-btn {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  color: #667085 !important;
+}
+
+body .daily-transfer-icon-btn:hover:not(:disabled),
+body .daily-transfer-secondary-btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+body .daily-transfer-field label {
+  color: #334155 !important;
+}
+
+body .daily-transfer-field input,
+body .daily-transfer-field select,
+body .daily-transfer-field textarea {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+}
+
+body .daily-transfer-field input:focus,
+body .daily-transfer-field select:focus,
+body .daily-transfer-field textarea:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, .14) !important;
+}
+
+body .daily-transfer-quantity span {
+  border-color: #eee3da !important;
+  background: #fffaf5 !important;
+}
+
+body .daily-transfer-availability strong {
+  color: #c2410c !important;
+}
+
+body .daily-transfer-remove-btn {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+body .daily-transfer-remove-btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff8f1 !important;
+  color: #c2410c !important;
+}
+
+body .daily-transfer-summary {
+  border-color: #f5ddca !important;
+}
+
+body .daily-transfer-primary-btn {
+  border-color: #e7d8cb !important;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+}
+
+body .daily-transfer-primary-btn:hover:not(:disabled) {
+  border-color: #3b3b3b !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+  color: #fb923c !important;
+}
+
+body .daily-transfer-primary-btn:disabled,
+body .daily-transfer-secondary-btn:disabled,
+body .daily-transfer-icon-btn:disabled,
+body .daily-transfer-remove-btn:disabled {
+  border-color: #eee3da !important;
+  background: #f8f1e9 !important;
+  color: #98a2b3 !important;
+  opacity: 1 !important;
 }
 
 /* Project-wide pagination controls follow the warm orange reference theme. */
@@ -814,6 +1433,83 @@ button[class*="apply" i] > i,
 }
 
 /* Menu Category modal matches the warm orange reference theme. */
+.menu-management-page .menu-row-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+}
+
+.menu-management-page .menu-row-actions .btn {
+  display: inline-flex !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 8px !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+}
+
+.menu-management-page .menu-row-actions .btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff8f1 !important;
+  color: #c2410c !important;
+}
+
+.menu-management-page .menu-row-actions .btn:disabled {
+  border-color: #eee3da !important;
+  background: #f8f1e9 !important;
+  color: #98a2b3 !important;
+}
+
+.menu-management-page .menu-row-actions .btn i {
+  color: inherit !important;
+}
+
+.menu-category-section .menu-category-actions {
+  gap: 5px !important;
+}
+
+.menu-category-section .menu-category-actions .btn {
+  display: inline-flex !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 8px !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+}
+
+.menu-category-section .menu-category-actions .btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff8f1 !important;
+  color: #c2410c !important;
+}
+
+.menu-category-section .menu-category-actions .btn:disabled {
+  border-color: #eee3da !important;
+  background: #f8f1e9 !important;
+  color: #98a2b3 !important;
+}
+
+.menu-category-section .menu-category-actions .btn i {
+  color: inherit !important;
+}
+
 body .menu-category-modal-content {
   border: 1px solid #eee3da !important;
   background: #ffffff !important;
@@ -869,6 +1565,205 @@ body .menu-category-modal-content .btn-outline-secondary {
 }
 
 body .menu-category-modal-content .btn-outline-secondary:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+/* Keep the menu item editor aligned with the restaurant's orange and cream theme. */
+body .menu-item-modal-content {
+  border: 1px solid #eee3da !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 65px rgba(90, 58, 32, .22) !important;
+}
+
+body .menu-item-modal-header,
+body .menu-item-modal-footer {
+  border-color: #eee3da !important;
+}
+
+body .menu-item-modal-header h2 {
+  color: #172554 !important;
+}
+
+body .menu-item-modal-footer {
+  background: #fffaf5 !important;
+}
+
+body .menu-item-switch-box,
+body .menu-item-image-preview {
+  border-color: #f5ddca !important;
+  background: #fff8f1 !important;
+}
+
+body .menu-item-modal-body .form-control:focus,
+body .menu-item-modal-body .form-select:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
+}
+
+body .menu-item-modal-content .form-check-input:checked {
+  border-color: #f97316 !important;
+  background-color: #f97316 !important;
+}
+
+body .menu-item-modal-content .form-check-input:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .18) !important;
+}
+
+body .menu-item-modal-content .btn-primary {
+  border-color: #e7d8cb !important;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+}
+
+body .menu-item-modal-content .btn-primary:hover:not(:disabled) {
+  border-color: #3b3b3b !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+  color: #fb923c !important;
+}
+
+body .menu-item-modal-content .btn-outline-secondary {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  color: #667085 !important;
+}
+
+body .menu-item-modal-content .btn-outline-secondary:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+/* Variant editor uses the same warm theme as the menu item editor. */
+body .variant-modal-content {
+  border: 1px solid #eee3da !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 65px rgba(90, 58, 32, .22) !important;
+}
+
+body .variant-modal-header,
+body .variant-modal-footer {
+  border-color: #eee3da !important;
+}
+
+body .variant-modal-header h2 {
+  color: #172554 !important;
+}
+
+body .variant-modal-footer {
+  background: #fffaf5 !important;
+}
+
+body .variant-switch-box {
+  border-color: #f5ddca !important;
+  background: #fff8f1 !important;
+}
+
+body .variant-modal-body .form-control:focus,
+body .variant-modal-body .form-select:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
+}
+
+body .variant-modal-content .form-check-input:checked {
+  border-color: #f97316 !important;
+  background-color: #f97316 !important;
+}
+
+body .variant-modal-content .form-check-input:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .18) !important;
+}
+
+body .variant-modal-content .btn-primary {
+  border-color: #e7d8cb !important;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+}
+
+body .variant-modal-content .btn-primary:hover:not(:disabled) {
+  border-color: #3b3b3b !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+  color: #fb923c !important;
+}
+
+body .variant-modal-content .btn-outline-secondary {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  color: #667085 !important;
+}
+
+body .variant-modal-content .btn-outline-secondary:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+/* Add-on editor follows the same orange, cream, and black theme. */
+body .add-on-modal-content {
+  border: 1px solid #eee3da !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 65px rgba(90, 58, 32, .22) !important;
+}
+
+body .add-on-modal-header,
+body .add-on-modal-footer {
+  border-color: #eee3da !important;
+}
+
+body .add-on-modal-header h2 {
+  color: #172554 !important;
+}
+
+body .add-on-modal-footer {
+  background: #fffaf5 !important;
+}
+
+body .add-on-availability-box {
+  border-color: #f5ddca !important;
+  background: #fff8f1 !important;
+}
+
+body .add-on-modal-body .form-control:focus,
+body .add-on-modal-body .form-select:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
+}
+
+body .add-on-modal-content .form-check-input:checked {
+  border-color: #f97316 !important;
+  background-color: #f97316 !important;
+}
+
+body .add-on-modal-content .form-check-input:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .18) !important;
+}
+
+body .add-on-modal-content .btn-primary {
+  border-color: #e7d8cb !important;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+}
+
+body .add-on-modal-content .btn-primary:hover:not(:disabled) {
+  border-color: #3b3b3b !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+  color: #fb923c !important;
+}
+
+body .add-on-modal-content .btn-outline-secondary {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  color: #667085 !important;
+}
+
+body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
   border-color: #fdba74 !important;
   background: #fff1e6 !important;
   color: #c2410c !important;
@@ -1063,6 +1958,46 @@ body .menu-category-modal-content .btn-outline-secondary:hover:not(:disabled) {
   border-color: #fdba74 !important;
   background: #fff1e6 !important;
   color: #c2410c !important;
+}
+
+#app .payment-methods-page .management-action-group .btn {
+  display: inline-flex !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  flex: 0 0 36px !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  background: #fff1e6;
+  color: #f97316;
+  line-height: 1.2;
+}
+
+#app .payment-methods-page .management-action-group {
+  gap: 5px;
+}
+
+#app .payment-methods-page .management-action-group .btn i {
+  position: static;
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+#app .payment-methods-page .management-action-group .btn-outline-primary {
+  border-color: #fed7aa;
+  background: #fff1e6;
+  color: #f97316;
+}
+
+#app .payment-methods-page .management-action-group .btn-outline-primary:hover:not(:disabled) {
+  border-color: #fdba74;
+  background: #fff8f1;
+  color: #c2410c;
 }
 
 #app .payment-methods-page .form-control:focus,
@@ -1436,5 +2371,647 @@ body .menu-category-modal-content .btn-outline-secondary:hover:not(:disabled) {
 #app .subscriptions-page .subscriptions-alert-icon {
   border-color: #f0d9c8 !important;
   background: #fff8f1 !important;
+  color: #c2410c !important;
+}
+
+/* Supplier and purchase order actions match the All Restaurants icon buttons. */
+#app .supplier-actions,
+#app .purchase-order-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  flex-wrap: wrap !important;
+}
+
+#app .supplier-actions .action-btn,
+#app .purchase-order-actions > .action-btn,
+#app .purchase-order-actions .purchase-receive-action-button {
+  display: inline-flex !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 8px !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+  line-height: 1.2 !important;
+}
+
+#app .purchase-order-actions .purchase-receive-action {
+  display: inline-flex !important;
+}
+
+#app .supplier-actions .action-btn:hover:not(:disabled),
+#app .purchase-order-actions > .action-btn:hover:not(:disabled),
+#app .purchase-order-actions .purchase-receive-action-button:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff8f1 !important;
+  color: #c2410c !important;
+}
+
+#app .supplier-actions .action-btn:disabled,
+#app .purchase-order-actions > .action-btn:disabled,
+#app .purchase-order-actions .purchase-receive-action-button:disabled {
+  border-color: #eee3da !important;
+  background: #f8f1e9 !important;
+  color: #98a2b3 !important;
+  opacity: 1 !important;
+}
+
+#app .supplier-actions .action-btn i,
+#app .purchase-order-actions > .action-btn i,
+#app .purchase-order-actions .purchase-receive-action-button i {
+  color: inherit !important;
+}
+
+#app .purchase-order-actions .purchase-receive-action-button > span:not(.spinner-border) {
+  display: none !important;
+}
+
+/* Purchase Order Details uses the same orange and cream business theme. */
+#app .po-details-page .po-details-page-header,
+#app .po-details-page .po-details-card,
+#app .po-details-page .po-details-loading,
+#app .po-details-page .po-details-empty-state {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  box-shadow: 0 3px 12px rgba(90, 58, 32, .06) !important;
+}
+
+#app .po-details-page .po-details-title-area h3,
+#app .po-details-page .po-details-card-header h4 {
+  color: #172554 !important;
+}
+
+#app .po-details-page .po-details-card-header {
+  border-color: #eee3da !important;
+}
+
+#app .po-details-page .po-details-card-header > i {
+  color: #f97316 !important;
+}
+
+#app .po-details-page .po-detail-item,
+#app .po-details-page .po-payment-row,
+#app .po-details-page .po-details-notes {
+  background: #fff8f1 !important;
+}
+
+#app .po-details-page .po-details-table th {
+  border-color: #eee3da !important;
+  background: #f8f1e9 !important;
+  color: #667085 !important;
+}
+
+#app .po-details-page .po-details-table td {
+  border-color: #f0e8e1 !important;
+}
+
+#app .po-details-page .po-details-table tbody tr:hover {
+  background: #fff8f1 !important;
+}
+
+#app .po-details-page .po-back-btn {
+  border: 1px solid #f5ddca !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+#app .po-details-page .po-back-btn:hover {
+  border-color: #fdba74 !important;
+  background: #fff8f1 !important;
+  color: #c2410c !important;
+}
+
+#app .po-details-page .po-details-pdf-btn,
+#app .po-details-page .po-grn-pdf-btn {
+  border-color: #fed7aa !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+#app .po-details-page .po-details-pdf-btn:hover:not(:disabled),
+#app .po-details-page .po-grn-pdf-btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff8f1 !important;
+  color: #9a3412 !important;
+}
+
+#app .po-details-page .po-details-edit-btn,
+#app .po-details-page .po-ledger-primary-button,
+#app .po-details-page .po-back-btn-text {
+  border: 1px solid #e7d8cb !important;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%) !important;
+  color: #f97316 !important;
+  box-shadow: none !important;
+}
+
+#app .po-details-page .po-details-edit-btn:hover,
+#app .po-details-page .po-ledger-primary-button:hover:not(:disabled),
+#app .po-details-page .po-back-btn-text:hover {
+  border-color: #3b3b3b !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+  color: #fb923c !important;
+}
+
+#app .po-details-page .po-ledger-secondary-button {
+  border-color: #eee3da !important;
+  background: #ffffff !important;
+  color: #667085 !important;
+}
+
+#app .po-details-page .po-ledger-secondary-button:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+  color: #c2410c !important;
+}
+
+#app .po-details-page .po-payment-entry-form,
+#app .po-details-page .po-grn-card-header {
+  border-color: #f5ddca !important;
+  background: #fffaf5 !important;
+}
+
+#app .po-details-page .po-ledger-form-group input,
+#app .po-details-page .po-ledger-form-group select,
+#app .po-details-page .po-ledger-form-group textarea,
+#app .po-details-page .po-money-field > span {
+  border-color: #eee3da !important;
+}
+
+#app .po-details-page .po-ledger-form-group input:focus,
+#app .po-details-page .po-ledger-form-group select:focus,
+#app .po-details-page .po-ledger-form-group textarea:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, .14) !important;
+}
+
+#app .po-details-page .po-payment-total {
+  border: 1px solid #f5ddca !important;
+  background: #fff1e6 !important;
+}
+
+#app .po-details-page .po-payment-total span,
+#app .po-details-page .po-payment-total strong {
+  color: #c2410c !important;
+}
+
+#app .po-details-page .po-details-spinner {
+  border-color: #f5ddca !important;
+  border-top-color: #f97316 !important;
+}
+
+/* Supplier purchase order form modal */
+body .po-form-overlay {
+  background: rgba(48, 32, 20, .62) !important;
+}
+
+body .po-form-modal {
+  border-color: #eee3da !important;
+  border-radius: 1rem !important;
+  background: #fff !important;
+  box-shadow: 0 1.5rem 4rem rgba(56, 36, 18, .24) !important;
+}
+
+body .po-form-header,
+body .po-form-footer {
+  border-color: #eee3da !important;
+}
+
+body .po-form-header {
+  background: #fff !important;
+}
+
+body .po-form-header-icon {
+  color: #f97316 !important;
+  background: #fff1e6 !important;
+}
+
+body .po-form-header h2,
+body .po-form-section-heading h3 {
+  color: #172554 !important;
+}
+
+body .po-form-header p,
+body .po-form-section-heading p {
+  color: #667085 !important;
+}
+
+body .po-form-close {
+  border-color: #eee3da !important;
+  color: #667085 !important;
+  background: #fff !important;
+}
+
+body .po-form-close:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  color: #c2410c !important;
+  background: #fff1e6 !important;
+}
+
+body .po-form-body {
+  background: #fffaf5 !important;
+}
+
+body .po-form-section {
+  border-color: #eee3da !important;
+  background: #fff !important;
+}
+
+body .po-form-group label {
+  color: #344054 !important;
+}
+
+body .po-form-group input,
+body .po-form-group select,
+body .po-form-group textarea {
+  border-color: #e7ded5 !important;
+  color: #172554 !important;
+  background-color: #fff !important;
+}
+
+body .po-form-group input:focus,
+body .po-form-group select:focus,
+body .po-form-group textarea:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, .14) !important;
+}
+
+body .po-readonly-input,
+body .po-unit-display,
+body .po-line-total,
+body .po-number-with-unit > span,
+body .po-money-input > span {
+  border-color: #eee3da !important;
+  color: #9a3412 !important;
+  background: #fffaf5 !important;
+}
+
+body .po-calculation-summary article {
+  border-color: #eee3da !important;
+  background: #fff !important;
+}
+
+body .po-calculation-summary .po-calculation-total {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+}
+
+body .po-calculation-total strong {
+  color: #c2410c !important;
+}
+
+body .po-paid-value {
+  color: #00804a !important;
+}
+
+body .po-due-value {
+  color: #c2410c !important;
+}
+
+body .po-form-footer {
+  background: #fffaf5 !important;
+}
+
+body .po-form-cancel-button {
+  border-color: #e7ded5 !important;
+  color: #344054 !important;
+  background: #fff !important;
+}
+
+body .po-form-cancel-button:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  color: #c2410c !important;
+  background: #fff1e6 !important;
+}
+
+body .po-form-submit-button {
+  border-color: #171717 !important;
+  color: #fb923c !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+}
+
+body .po-form-submit-button:hover:not(:disabled) {
+  border-color: #c2410c !important;
+  color: #fff7ed !important;
+  background: #c2410c !important;
+}
+
+body .po-add-item-button,
+body .po-quick-add-supplier-button {
+  border: 1px solid #171717 !important;
+  color: #fb923c !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+}
+
+body .po-add-item-button:hover:not(:disabled),
+body .po-quick-add-supplier-button:hover:not(:disabled) {
+  border-color: #c2410c !important;
+  color: #fff7ed !important;
+  background: #c2410c !important;
+}
+
+body .po-add-item-button:disabled,
+body .po-quick-add-supplier-button:disabled {
+  border-color: #e7ded5 !important;
+  color: #98a2b3 !important;
+  background: #f4f1ed !important;
+}
+
+/* Staff employee row actions match the compact All Restaurants controls. */
+#app .staff-management-page .employee-actions {
+  gap: 5px !important;
+}
+
+#app .staff-management-page .employee-action-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 8px !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease !important;
+}
+
+#app .staff-management-page .employee-action-btn i {
+  color: #f97316 !important;
+}
+
+#app .staff-management-page .employee-action-btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff8f1 !important;
+  color: #c2410c !important;
+}
+
+#app .staff-management-page .employee-action-btn:hover:not(:disabled) i {
+  color: #c2410c !important;
+}
+
+#app .staff-management-page .employee-action-btn:disabled {
+  border-color: #eee3da !important;
+  background: #f8f1e9 !important;
+  color: #98a2b3 !important;
+}
+
+#app .staff-management-page .shift-actions {
+  gap: 5px !important;
+}
+
+#app .staff-management-page .shift-action-btn {
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 8px !important;
+  color: #f97316 !important;
+  background: #fff1e6 !important;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease !important;
+}
+
+#app .staff-management-page .shift-action-btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  color: #c2410c !important;
+  background: #fff8f1 !important;
+}
+
+#app .staff-management-page .shift-action-btn:disabled {
+  border-color: #eee3da !important;
+  color: #98a2b3 !important;
+  background: #f8f1e9 !important;
+}
+
+#app .staff-management-page .attendance-sync-btn {
+  border: 1px solid #171717 !important;
+  border-radius: 8px !important;
+  color: #fb923c !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+}
+
+#app .staff-management-page .attendance-sync-btn:hover:not(:disabled) {
+  border-color: #c2410c !important;
+  color: #fff7ed !important;
+  background: #c2410c !important;
+}
+
+#app .staff-management-page .attendance-sync-btn:disabled {
+  border-color: #e7ded5 !important;
+  color: #98a2b3 !important;
+  background: #f4f1ed !important;
+}
+
+/* Recurring shift schedule modal follows the restaurant warm theme. */
+#app .staff-management-page .shift-modal-overlay {
+  background: rgba(48, 32, 20, .62) !important;
+}
+
+#app .staff-management-page .shift-modal {
+  border: 1px solid #eee3da !important;
+  border-radius: 16px !important;
+  color: #172554 !important;
+  background: #fffaf5 !important;
+  box-shadow: 0 25px 70px rgba(56, 36, 18, .26) !important;
+}
+
+#app .staff-management-page .shift-modal-header,
+#app .staff-management-page .shift-modal-footer {
+  border-color: #eee3da !important;
+  background: #fff !important;
+}
+
+#app .staff-management-page .shift-modal-header h3 i,
+#app .staff-management-page .shift-form-section-title i {
+  color: #f97316 !important;
+}
+
+#app .staff-management-page .shift-modal-header p,
+#app .staff-management-page .shift-form-help {
+  color: #667085 !important;
+}
+
+#app .staff-management-page .shift-modal-close {
+  border: 1px solid #eee3da !important;
+  color: #667085 !important;
+  background: #fff !important;
+}
+
+#app .staff-management-page .shift-modal-close:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  color: #c2410c !important;
+  background: #fff1e6 !important;
+}
+
+#app .staff-management-page .shift-form-section {
+  border-color: #eee3da !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+}
+
+#app .staff-management-page .shift-form-section-title,
+#app .staff-management-page .shift-form-group label {
+  color: #172554 !important;
+}
+
+#app .staff-management-page .shift-form-group input,
+#app .staff-management-page .shift-form-group select,
+#app .staff-management-page .shift-form-group textarea {
+  border-color: #e7ded5 !important;
+  border-radius: 8px !important;
+  color: #172554 !important;
+  background: #fff !important;
+}
+
+#app .staff-management-page .shift-form-group input:focus,
+#app .staff-management-page .shift-form-group select:focus,
+#app .staff-management-page .shift-form-group textarea:focus {
+  border-color: #fb923c !important;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, .14) !important;
+}
+
+#app .staff-management-page .shift-range-preview,
+#app .staff-management-page .shift-duration-preview {
+  border: 1px solid #fed7aa !important;
+  border-radius: 9px !important;
+  color: #9a3412 !important;
+  background: #fff1e6 !important;
+}
+
+#app .staff-management-page .shift-range-preview i,
+#app .staff-management-page .shift-duration-preview i,
+#app .staff-management-page .shift-duration-preview strong {
+  color: #c2410c !important;
+}
+
+#app .staff-management-page .shift-day-presets button {
+  border-color: #eee3da !important;
+  color: #344054 !important;
+  background: #fff !important;
+}
+
+#app .staff-management-page .shift-day-presets button:hover {
+  border-color: #fdba74 !important;
+  color: #c2410c !important;
+  background: #fff1e6 !important;
+}
+
+#app .staff-management-page .shift-day-option {
+  border-color: #eee3da !important;
+  background: #fff !important;
+}
+
+#app .staff-management-page .shift-day-option.selected {
+  border-color: #fb923c !important;
+  color: #c2410c !important;
+  background: #fff1e6 !important;
+}
+
+#app .staff-management-page .shift-day-full {
+  color: #667085 !important;
+}
+
+#app .staff-management-page .shift-cancel-btn {
+  border: 1px solid #e7ded5 !important;
+  border-radius: 8px !important;
+  color: #344054 !important;
+  background: #fff !important;
+}
+
+#app .staff-management-page .shift-cancel-btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  color: #c2410c !important;
+  background: #fff1e6 !important;
+}
+
+#app .staff-management-page .shift-save-btn {
+  border: 1px solid #171717 !important;
+  border-radius: 8px !important;
+  color: #fb923c !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+}
+
+#app .staff-management-page .shift-save-btn:hover:not(:disabled) {
+  border-color: #c2410c !important;
+  color: #fff7ed !important;
+  background: #c2410c !important;
+}
+
+#app .salary-management-page .salary-actions {
+  gap: 5px !important;
+}
+
+#app .salary-management-page .salary-action-btn {
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 8px !important;
+  color: #f97316 !important;
+  background: #fff1e6 !important;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease !important;
+}
+
+#app .salary-management-page .salary-action-btn i {
+  color: #f97316 !important;
+}
+
+#app .salary-management-page .salary-action-btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  color: #c2410c !important;
+  background: #fff8f1 !important;
+}
+
+#app .salary-management-page .salary-action-btn:hover:not(:disabled) i {
+  color: #c2410c !important;
+}
+
+#app .salary-management-page .salary-action-btn:disabled {
+  border-color: #eee3da !important;
+  color: #98a2b3 !important;
+  background: #f8f1e9 !important;
+}
+
+#app .salary-management-page .salary-details-refresh-btn {
+  border: 1px solid #171717 !important;
+  border-radius: 8px !important;
+  color: #fb923c !important;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%) !important;
+}
+
+#app .salary-management-page .salary-details-refresh-btn:hover:not(:disabled) {
+  border-color: #c2410c !important;
+  color: #fff7ed !important;
+  background: #c2410c !important;
+}
+
+#app .salary-management-page .salary-details-refresh-btn:disabled {
+  border-color: #e7ded5 !important;
+  color: #98a2b3 !important;
+  background: #f4f1ed !important;
+}
+
+#app .salary-management-page .salary-details-total-card {
+  border-color: #fdba74 !important;
+  background: #fff1e6 !important;
+}
+
+#app .salary-management-page .salary-details-total-card span,
+#app .salary-management-page .salary-details-total-card strong {
   color: #c2410c !important;
 }
