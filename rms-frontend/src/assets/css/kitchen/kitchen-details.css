@@ -209,20 +209,20 @@
 
   display: inline-flex;
 
-  min-height: 28px;
+  min-height: 40px;
 
   align-items: center;
   justify-content: center;
 
   gap: 4px;
 
-  padding: 0 7px;
+  padding: 0 12px;
 
-  border: 1px solid transparent;
-  border-radius: 4px;
+  border: 1px solid #e7d8cb;
+  border-radius: 9px;
 
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
 
   cursor: pointer;
 }
@@ -242,19 +242,16 @@
 ========================================================= */
 
 .invoice-button {
-  border-color: #dc2626;
-
-  background: #dc2626;
-
-  color: #ffffff;
-
-  box-shadow: none;
+  border-color: #292929;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%);
+  color: #f97316;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .14);
 }
 
 .invoice-button:hover:not(:disabled) {
-  border-color: var(--kitchen-danger);
-
-  background: var(--kitchen-danger);
+  border-color: #3b3b3b;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%);
+  color: #fb923c;
 }
 
 
@@ -263,19 +260,16 @@
 ========================================================= */
 
 .print-button {
-  border-color: var(--kitchen-blue);
-
-  background: var(--kitchen-blue);
-
-  color: #ffffff;
-
-  box-shadow: none;
+  border-color: #fdba74;
+  background: #fff1e6;
+  color: #c2410c;
+  box-shadow: 0 2px 6px rgba(124, 75, 35, .08);
 }
 
 .print-button:hover:not(:disabled) {
-  border-color: var(--kitchen-blue-dark);
-
-  background: var(--kitchen-blue-dark);
+  border-color: #f97316;
+  background: #fff8f1;
+  color: #9a3412;
 }
 
 

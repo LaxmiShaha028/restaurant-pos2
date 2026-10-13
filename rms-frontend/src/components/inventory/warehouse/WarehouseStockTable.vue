@@ -385,7 +385,7 @@
                 <div class="warehouse-row-actions">
                   <!-- Adjust -->
 
-                  <button
+                  <!-- <button
                     type="button"
                     class="warehouse-action-adjust"
                     :title="
@@ -432,7 +432,7 @@
                       class="bi bi-arrow-down-up"
                       aria-hidden="true"
                     ></i>
-                  </button>
+                  </button> -->
 
                   <!-- Edit -->
 

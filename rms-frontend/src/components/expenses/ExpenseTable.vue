@@ -433,22 +433,9 @@ const emit = defineEmits([
 
 
 function serialNumber(index){
-
-return (
-
-(
-props.meta.current_page - 1
-)
-*
-props.meta.per_page
-
-)
-
-+
-index
-+
-1
-
+  return String(
+    (props.meta.current_page - 1) * props.meta.per_page + index + 1
+  ).padStart(2, '0');
 }
 
 

@@ -4011,25 +4011,64 @@ onMounted(loadDashboard)
   }
 
   .dashboard-header {
+    gap: 10px;
     margin-bottom: 12px;
+    padding: 12px;
     border-radius: 15px;
   }
 
   .dashboard-heading h1 {
-    font-size: 22px;
+    font-size: 18px;
+    white-space: nowrap;
+  }
+
+  .dashboard-subtitle {
+    overflow: hidden;
+    margin-top: 4px;
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .dashboard-header-actions {
-    align-items: stretch;
-    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
   }
 
   .dashboard-date {
-    width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
+    gap: 7px;
+    padding: 6px 8px;
+    border-radius: 10px;
+  }
+
+  .dashboard-date > i {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+
+  .dashboard-date strong {
+    font-size: 10px;
+  }
+
+  .dashboard-date span {
+    font-size: 8px;
   }
 
   .dashboard-refresh-button {
-    width: 100%;
+    width: auto;
+    height: 38px;
+    flex: 0 0 auto;
+    gap: 5px;
+    padding: 0 11px;
+    border-radius: 10px;
+    font-size: 10px;
   }
 
   .dashboard-kpi-grid,

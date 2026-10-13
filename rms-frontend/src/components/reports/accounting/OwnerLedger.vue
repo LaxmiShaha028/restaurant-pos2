@@ -18,7 +18,7 @@
       <div class="d-flex gap-2">
 
         <button
-          class="btn btn-danger"
+          class="btn report-action-button"
           @click="downloadPdf"
           :disabled="pdfLoading"
         >
@@ -35,7 +35,7 @@
 
 
         <button
-          class="btn btn-dark"
+          class="btn report-action-button"
           @click="printLedger"
         >
           <i class="bi bi-printer me-1"></i>

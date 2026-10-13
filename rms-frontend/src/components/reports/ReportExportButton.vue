@@ -31,7 +31,7 @@
 
     <button
 
-        class="btn btn-danger"
+        class="btn report-export-button"
 
         @click="downloadPdf"
 
@@ -75,7 +75,7 @@
 
     <button
 
-        class="btn btn-success"
+        class="btn report-export-button"
 
         @click="downloadCsv"
 

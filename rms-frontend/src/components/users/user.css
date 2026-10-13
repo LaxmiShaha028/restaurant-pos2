@@ -791,7 +791,7 @@
 
     display:flex;
 
-    gap:7px;
+    gap:5px;
 
     align-items:center;
 
@@ -804,11 +804,22 @@
 .user-actions button {
 
 
-    border:none;
+    width:34px;
 
-    padding:7px 11px;
+    min-width:34px;
 
-    border-radius:7px;
+    height:34px;
+
+    padding:0;
+
+    border:1px solid #fed7aa;
+
+    background:#fff1e6;
+
+    color:#f97316;
+
+
+    border-radius:8px;
 
     cursor:pointer;
 
@@ -816,7 +827,8 @@
 
     font-weight:600;
 
-    transition:.2s;
+    transition:background-color .16s ease, border-color .16s ease,
+        color .16s ease, transform .16s ease;
 
 
 }
@@ -829,6 +841,12 @@
 
     transform:translateY(-1px);
 
+    border-color:#fdba74;
+
+    background:#fff8f1;
+
+    color:#c2410c;
+
 
 }
 
@@ -838,9 +856,12 @@
 .view-btn {
 
 
+
+    border-color:#fed7aa;
+
     background:#fff1e6;
 
-    color:#c2410c;
+    color:#f97316;
 
 
 }
@@ -852,9 +873,11 @@
 .edit-btn {
 
 
-    background:#fef3c7;
+    border-color:#fed7aa;
 
-    color:#92400e;
+    background:#fff1e6;
+
+    color:#f97316;
 
 
 }
@@ -866,9 +889,11 @@
 .status-btn {
 
 
-    background:#ffedd5;
+    border-color:#fed7aa;
 
-    color:#c2410c;
+    background:#fff1e6;
+
+    color:#f97316;
 
 
 }
@@ -880,10 +905,20 @@
 .delete-btn {
 
 
-    background:#fee2e2;
+    border-color:#fed7aa;
 
-    color:#b91c1c;
+    background:#fff1e6;
 
+    color:#f97316;
+
+
+}
+
+.user-actions button:focus-visible {
+
+    outline:3px solid rgba(249,115,22,.24);
+
+    outline-offset:2px;
 
 }
 

@@ -3015,3 +3015,239 @@ body .po-quick-add-supplier-button:disabled {
 #app .salary-management-page .salary-details-total-card strong {
   color: #c2410c !important;
 }
+
+/* Other Income row actions match the 36px orange icon controls on All Restaurants. */
+#app .other-income-page .income-row-actions {
+  gap: 5px !important;
+}
+
+#app .other-income-page .income-action-btn {
+  display: inline-flex !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 8px !important;
+  color: #f97316 !important;
+  background: #fff1e6 !important;
+  font-size: 14px !important;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease !important;
+}
+
+#app .other-income-page .income-action-btn i {
+  color: #f97316 !important;
+}
+
+#app .other-income-page .income-action-btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  color: #c2410c !important;
+  background: #fff8f1 !important;
+}
+
+#app .other-income-page .income-action-btn:hover:not(:disabled) i {
+  color: #c2410c !important;
+}
+
+#app .other-income-page .income-action-btn:disabled {
+  border-color: #eee3da !important;
+  color: #98a2b3 !important;
+  background: #f8f1e9 !important;
+  cursor: not-allowed !important;
+}
+
+/* Chart of Accounts row actions use the same controls as All Restaurants. */
+#app .coa-page .coa-actions {
+  gap: 5px !important;
+}
+
+#app .coa-page .coa-action-btn {
+  display: inline-flex !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 8px !important;
+  color: #f97316 !important;
+  background: #fff1e6 !important;
+  font-size: 14px !important;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease !important;
+}
+
+#app .coa-page .coa-action-btn i {
+  color: #f97316 !important;
+}
+
+#app .coa-page .coa-action-btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  color: #c2410c !important;
+  background: #fff8f1 !important;
+}
+
+#app .coa-page .coa-action-btn:hover:not(:disabled) i {
+  color: #c2410c !important;
+}
+
+#app .coa-page .coa-action-btn:disabled {
+  border-color: #eee3da !important;
+  color: #98a2b3 !important;
+  background: #f8f1e9 !important;
+  cursor: not-allowed !important;
+}
+
+/* Replace Chart of Accounts blue and purple accents with the restaurant orange. */
+#app .coa-page .coa-header-icon,
+#app .coa-page .coa-eyebrow,
+#app .coa-page .coa-code,
+#app .coa-page .coa-summary-primary span,
+#app .coa-page .coa-summary-primary strong,
+#app .coa-page .coa-type-badge.type-asset,
+#app .coa-page .coa-balance-badge.debit,
+#app .coa-page .coa-mapping-type.debit,
+#app .coa-page .coa-posting-yes,
+#app .coa-page .coa-payment-icon,
+#app .coa-page .coa-rule-preview strong,
+#app .coa-page .coa-info-banner > i,
+#app .coa-page .coa-info-banner strong {
+  color: #f97316 !important;
+}
+
+#app .coa-page .coa-header-icon,
+#app .coa-page .coa-type-badge.type-asset,
+#app .coa-page .coa-balance-badge.debit,
+#app .coa-page .coa-mapping-type.debit,
+#app .coa-page .coa-posting-yes,
+#app .coa-page .coa-payment-icon {
+  background: #fff1e6 !important;
+}
+
+#app .coa-page .coa-summary-primary,
+#app .coa-page .coa-info-banner {
+  border-color: #fed7aa !important;
+  background: #fff8f1 !important;
+}
+
+#app .coa-page .coa-tab-btn:hover,
+#app .coa-page .coa-field input:focus,
+#app .coa-page .coa-field select:focus,
+#app .coa-page .coa-field textarea:focus,
+#app .coa-page .coa-search-input:focus-within {
+  border-color: #fdba74 !important;
+  color: #c2410c !important;
+}
+
+/* Journal Entries blue and purple accents use the same orange palette. */
+#app .journal-page .journal-header-icon,
+#app .journal-page .journal-eyebrow,
+#app .journal-page .journal-number,
+#app .journal-page .journal-summary-primary span,
+#app .journal-page .journal-summary-primary strong,
+#app .journal-page .journal-type-badge.type-manual,
+#app .journal-page .journal-info-banner > i,
+#app .journal-page .journal-info-banner strong {
+  color: #f97316 !important;
+}
+
+#app .journal-page .journal-modal-header p {
+  color: #f97316 !important;
+}
+
+#app .journal-page .journal-reverse-modal .journal-modal-footer .journal-danger-btn,
+#app .journal-page .journal-reverse-modal .journal-modal-footer .journal-danger-btn i {
+  color: #ffffff !important;
+}
+
+#app .journal-page .journal-header-icon,
+#app .journal-page .journal-type-badge.type-manual {
+  background: #fff1e6 !important;
+}
+
+#app .journal-page .journal-summary-primary,
+#app .journal-page .journal-info-banner {
+  border-color: #fed7aa !important;
+  background: #fff8f1 !important;
+}
+
+#app .journal-page .journal-actions {
+  gap: 5px !important;
+}
+
+#app .journal-page .journal-actions .journal-action-btn {
+  display: inline-flex !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 8px !important;
+  color: #f97316 !important;
+  background: #fff1e6 !important;
+  font-size: 14px !important;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease !important;
+}
+
+#app .journal-page .journal-actions .journal-action-btn i {
+  color: #f97316 !important;
+}
+
+#app .journal-page .journal-actions .journal-action-btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  color: #c2410c !important;
+  background: #fff8f1 !important;
+}
+
+#app .journal-page .journal-actions .journal-action-btn:hover:not(:disabled) i {
+  color: #c2410c !important;
+}
+
+#app .journal-page .journal-actions .journal-action-btn:disabled {
+  border-color: #eee3da !important;
+  color: #98a2b3 !important;
+  background: #f8f1e9 !important;
+  cursor: not-allowed !important;
+}
+
+/* Expense row actions match the 36px orange icon controls on All Restaurants. */
+#app .expense-management-page .expense-actions {
+  gap: 5px !important;
+}
+
+#app .expense-management-page .expense-actions .action-btn {
+  display: inline-flex !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 8px !important;
+  color: #f97316 !important;
+  background: #fff1e6 !important;
+  font-size: 14px !important;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease !important;
+}
+
+#app .expense-management-page .expense-actions .action-btn i {
+  color: #f97316 !important;
+}
+
+#app .expense-management-page .expense-actions .action-btn:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  color: #c2410c !important;
+  background: #fff8f1 !important;
+}
+
+#app .expense-management-page .expense-actions .action-btn:hover:not(:disabled) i {
+  color: #c2410c !important;
+}
+
+#app .expense-management-page .expense-actions .action-btn:disabled {
+  border-color: #eee3da !important;
+  color: #98a2b3 !important;
+  background: #f8f1e9 !important;
+  cursor: not-allowed !important;
+}

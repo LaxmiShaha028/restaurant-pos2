@@ -804,6 +804,7 @@ function money(
 <style scoped>
 .accounting-dashboard {
   width: 100%;
+  color: #111827;
 }
 
 
@@ -813,8 +814,10 @@ function money(
 
 .summary-card {
   position: relative;
-  border-radius: 14px;
+  border: 1px solid #eee3da !important;
+  border-radius: 12px;
   overflow: hidden;
+  background: #fff !important;
 
   transition:
     transform 0.2s ease,
@@ -823,10 +826,10 @@ function money(
 
 
 .summary-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 
   box-shadow:
-    0 10px 28px rgba(0, 0, 0, 0.09)
+    0 8px 20px rgba(124, 75, 35, 0.12)
     !important;
 }
 
@@ -842,10 +845,10 @@ function money(
 
 
 .summary-icon {
-  width: 50px;
-  height: 50px;
+  width: 42px;
+  height: 42px;
 
-  border-radius: 13px;
+  border-radius: 11px;
 
   display: flex;
 
@@ -866,7 +869,34 @@ function money(
 
   bottom: 0;
 
-  width: 4px;
+  width: 5px;
+  background: linear-gradient(180deg, #fb923c, #c2410c) !important;
+}
+
+.summary-card .summary-icon {
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.summary-card .fs-5 {
+  color: #111827 !important;
+}
+
+.accounting-dashboard > .row > [class*="col-"] > .card,
+.accounting-dashboard .card:not(.summary-card) {
+  border: 1px solid #eee3da !important;
+  border-radius: 12px;
+  background: #fff !important;
+  box-shadow: 0 3px 12px rgba(124, 75, 35, .05) !important;
+}
+
+.accounting-dashboard h4,
+.accounting-dashboard h6 {
+  color: #111827 !important;
+}
+
+.accounting-dashboard .text-muted {
+  color: #667085 !important;
 }
 
 

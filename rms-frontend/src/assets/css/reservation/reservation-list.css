@@ -1076,7 +1076,7 @@
 /* Keep each reservation action type in a consistent column across rows. */
 .reservation-action-buttons {
   display: grid;
-  grid-template-columns: repeat(4, 26px);
+  grid-template-columns: repeat(4, 28px);
   justify-content: center;
   align-items: center;
   gap: 4px;
@@ -1084,8 +1084,8 @@
 
 .reservation-table tbody td.action-column .reservation-action-buttons > .btn {
   display: inline-flex;
-  width: 26px;
-  min-width: 26px;
+  width: 28px;
+  min-width: 28px;
   height: 28px;
   align-items: center;
   justify-content: center;
@@ -1224,6 +1224,31 @@
   border-color: #fed7aa !important;
   background: #fff1e6 !important;
   color: #f97316 !important;
+}
+
+.reservation-page .reservation-table tbody td.action-column .reservation-action-buttons > .reservation-action-edit {
+  width: 28px !important;
+  min-width: 28px !important;
+  height: 28px !important;
+  padding: 2px !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 8px !important;
+  background: #fff1e6 !important;
+  color: #f97316 !important;
+}
+
+.reservation-page .reservation-table tbody td.action-column .reservation-action-buttons > .reservation-action-edit i {
+  color: #f97316 !important;
+}
+
+.reservation-page .reservation-table tbody td.action-column .reservation-action-buttons > .reservation-action-edit:hover:not(:disabled) {
+  border-color: #fdba74 !important;
+  background: #fff8f1 !important;
+  color: #c2410c !important;
+}
+
+.reservation-page .reservation-table tbody td.action-column .reservation-action-buttons > .reservation-action-edit:hover:not(:disabled) i {
+  color: #c2410c !important;
 }
 
 .reservation-action-view i,
