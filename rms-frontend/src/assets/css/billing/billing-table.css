@@ -466,9 +466,9 @@
 }
 
 .billing-status-badge.status-served {
-  border-color: #ddd6fe;
-  background: #f5f3ff;
-  color: #6d28d9;
+  border-color: #fed7aa;
+  background: #fff5eb;
+  color: #c2410c;
 }
 
 .billing-status-badge.status-completed {
@@ -975,9 +975,9 @@
 }
 
 .billing-payment-method.payment-method-bank {
-  border-color: #ddd6fe;
-  background: #f5f3ff;
-  color: #6d28d9;
+  border-color: #fed7aa;
+  background: #fff5eb;
+  color: #c2410c;
 }
 
 .billing-payment-method.payment-method-mixed {

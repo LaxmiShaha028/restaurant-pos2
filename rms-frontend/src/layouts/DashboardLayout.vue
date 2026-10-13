@@ -324,6 +324,7 @@ const notificationError = ref('')
 const notificationSummary = ref({})
 const notificationSubscription = ref(null)
 const notificationUpdatedAt = ref(null)
+const seenNotificationKeys = ref(new Set())
 
 let notificationPollTimer = null
 
@@ -537,7 +538,12 @@ const notifications = computed(() => {
 })
 
 const notificationCount = computed(() => {
-  return notifications.value.length
+  return notifications.value.filter(
+    (notification) =>
+      !seenNotificationKeys.value.has(
+        notificationReadKey(notification),
+      ),
+  ).length
 })
 
 const notificationBadge = computed(() => {
@@ -567,6 +573,25 @@ function money(value) {
       maximumFractionDigits: 2,
     },
   )}`
+}
+
+function notificationReadKey(notification) {
+  const identity =
+    notification.key === 'subscription'
+      ? notificationSubscription.value?.id ||
+        notificationSubscription.value?.end_at
+      : notification.value
+
+  return `${notification.key}:${identity ?? ''}`
+}
+
+function markNotificationsRead() {
+  seenNotificationKeys.value = new Set([
+    ...seenNotificationKeys.value,
+    ...notifications.value.map(
+      notificationReadKey,
+    ),
+  ])
 }
 
 async function loadNotifications(silent = false) {
@@ -668,6 +693,10 @@ async function loadNotifications(silent = false) {
       Date.now()
 
     notificationError.value = ''
+
+    if (notificationOpen.value) {
+      markNotificationsRead()
+    }
   } catch (error) {
     if (
       !silent ||
@@ -690,6 +719,7 @@ function toggleNotifications() {
   closeUserDropdown()
 
   if (notificationOpen.value) {
+    markNotificationsRead()
     loadNotifications(true)
   }
 }
@@ -1121,8 +1151,8 @@ onBeforeUnmount(() => {
 }
 
 .notification-reservation .notification-item-icon {
-  background: #f5f3ff;
-  color: #7c3aed;
+  background: #fff5eb;
+  color: #f97316;
 }
 
 .notification-payment .notification-item-icon {
@@ -1330,8 +1360,8 @@ onBeforeUnmount(() => {
   background:
     linear-gradient(
       135deg,
-      #f97316,
-      #c2410c
+      #2563eb,
+      #4f46e5
     );
   color: #fff;
   font-weight: 700;

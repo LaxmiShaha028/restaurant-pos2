@@ -476,7 +476,7 @@
 
             <div class="panel-title-group">
 
-              <span class="panel-icon purple">
+              <span class="panel-icon orange">
 
                 <i class="bi bi-pie-chart-fill"></i>
 
@@ -617,7 +617,7 @@
 
             <div class="panel-title-group">
 
-              <span class="panel-icon cyan">
+              <span class="panel-icon orange">
 
                 <i class="bi bi-credit-card"></i>
 
@@ -3703,8 +3703,8 @@ onMounted(loadDashboard)
 }
 
 .status-ready {
-  background: #f5f3ff;
-  color: #6d28d9;
+  background: #fff5eb;
+  color: #c2410c;
 }
 
 .status-served {

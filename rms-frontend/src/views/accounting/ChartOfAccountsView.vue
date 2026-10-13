@@ -1271,7 +1271,7 @@ const filters =
 
     page: 1,
 
-    per_page: 50,
+    per_page: 10,
 
   })
 
@@ -1283,7 +1283,7 @@ const meta =
 
     last_page: 1,
 
-    per_page: 50,
+    per_page: 10,
 
     total: 0,
 
@@ -1625,7 +1625,7 @@ async function loadAccounts()
       {
         current_page: 1,
         last_page: 1,
-        per_page: 50,
+        per_page: 10,
         total: 0,
       }
     )

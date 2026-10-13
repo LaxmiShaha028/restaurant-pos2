@@ -74,10 +74,10 @@ const paymentColors = {
     '#0d6efd',
 
   card:
-    '#6f42c1',
+    '#c2410c',
 
   card_settlement:
-    '#6f42c1',
+    '#c2410c',
 
   bkash:
     '#d63384',
@@ -107,7 +107,7 @@ const fallbackColors = [
 
   '#198754',
   '#0d6efd',
-  '#6f42c1',
+  '#c2410c',
   '#d63384',
   '#fd7e14',
   '#ffc107',

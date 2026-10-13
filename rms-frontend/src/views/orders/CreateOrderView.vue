@@ -150,7 +150,10 @@
       ================================================= -->
       <section class="customer-details-card">
 
-        <div class="section-heading">
+        <div
+          v-if="$route.name !== 'pos-order-create'"
+          class="section-heading"
+        >
 
           <div class="section-heading-left">
 
@@ -176,7 +179,7 @@
             v-if="isEditMode"
             class="edit-mode-badge"
           >
-            <i class="bi bi-pencil-square"></i>
+            <i class="bi bi-pencil"></i>
             Edit Mode
           </span>
 
@@ -385,11 +388,58 @@
 
           </div>
 
+          <template v-if="$route.name === 'pos-order-create' && selectedReservation">
+            <div class="order-form-group">
+              <label class="order-form-label">Reservation Number</label>
+              <input
+                class="order-form-control"
+                :value="selectedReservation.reservation_no || ''"
+                readonly
+              />
+            </div>
+
+            <div class="order-form-group">
+              <label class="order-form-label">Reservation Date</label>
+              <input
+                class="order-form-control"
+                :value="selectedReservation.reservation_date || ''"
+                readonly
+              />
+            </div>
+
+            <div class="order-form-group">
+              <label class="order-form-label">Reservation Time</label>
+              <input
+                class="order-form-control"
+                :value="`${selectedReservation.start_time_formatted || selectedReservation.start_time || ''} - ${selectedReservation.end_time_formatted || selectedReservation.end_time || ''}`"
+                readonly
+              />
+            </div>
+
+            <div class="order-form-group">
+              <label class="order-form-label">Guests</label>
+              <input
+                class="order-form-control"
+                :value="selectedReservation.guest_count || 0"
+                readonly
+              />
+            </div>
+
+            <div class="order-form-group">
+              <label class="order-form-label">Reservation Status</label>
+              <input
+                class="order-form-control"
+                :value="selectedReservation.status_label || selectedReservation.status || 'Seated'"
+                readonly
+              />
+            </div>
+          </template>
+
           <!-- =============================================
                RESERVATION
           ============================================== -->
           <div
-            v-if="!isEditMode"
+            v-if="!isEditMode && $route.name !== 'pos-order-create'"
             class="order-form-group"
           >
             <label
@@ -410,13 +460,16 @@
               @change="handleReservationChange"
             >
 
-              <option value="">
+              <option
+                v-if="$route.name !== 'pos-order-create'"
+                value=""
+              >
                 Walk-in / No Reservation
               </option>
 
               <option
                 v-for="
-                  reservation in reservations
+                  reservation in reservationsForCurrentTable
                 "
                 :key="reservation.id"
                 :value="String(reservation.id)"
@@ -447,10 +500,10 @@
             </small>
 
             <small
-              v-else-if="!reservations.length"
+              v-else-if="!reservationsForCurrentTable.length"
               class="reservation-field-help"
             >
-              No seated reservations available.
+              {{ $route.name === "pos-order-create" ? "No seated reservations for the selected table." : "No seated reservations available." }}
             </small>
 
             <span
@@ -467,7 +520,8 @@
           <div
             v-if="
               selectedReservation &&
-              !isEditMode
+              !isEditMode &&
+              $route.name !== 'pos-order-create'
             "
             class="reservation-order-card"
           >
@@ -1107,7 +1161,7 @@
               >
 
                 <button
-                  v-for="menuItem in filteredMenuItems"
+                  v-for="menuItem in paginatedMenuItems"
                   :key="menuItem.id"
                   type="button"
                   class="menu-item-card"
@@ -1194,6 +1248,13 @@
                 </button>
 
               </div>
+
+              <PaginationControls
+                :page="menuPage"
+                :total="filteredMenuItems.length"
+                :per-page="menuPageSize"
+                @update:page="menuPage = $event"
+              />
 
             </div>
 
@@ -1606,7 +1667,7 @@
                             removeOrderItem(index)
                           "
                         >
-                          <i class="bi bi-trash3"></i>
+                          <i class="bi bi-trash"></i>
                         </button>
 
                       </div>
@@ -2275,6 +2336,15 @@
                 </span>
 
               </button>
+
+              <small
+                v-if="submitBlockedReason"
+                class="submit-blocked-hint"
+                role="status"
+                style="color: #b42318; font-size: 11px; line-height: 1.35; text-align: center;"
+              >
+                {{ submitBlockedReason }}
+              </small>
 
 
               <!-- RESET -->

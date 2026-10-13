@@ -1006,12 +1006,7 @@ function money(
 
 .bg-primary-subtle {
   background-color:
-    rgba(
-      13,
-      110,
-      253,
-      0.12
-    );
+    rgba(249, 115, 22, 0.12);
 }
 
 
@@ -1060,12 +1055,12 @@ function money(
 
 
 .text-purple {
-  color: #6f42c1 !important;
+  color: #c2410c !important;
 }
 
 
 .bg-purple {
-  background-color: #6f42c1 !important;
+  background-color: #c2410c !important;
 }
 
 

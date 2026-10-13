@@ -11,9 +11,9 @@
   gap: 0.35rem;
   min-height: 2rem;
   padding: 0.35rem 0.6rem;
-  border: 1px solid #6f42c1;
+  border: 1px solid #c2410c;
   border-radius: 0.55rem;
-  color: #6f42c1;
+  color: #c2410c;
   background: transparent;
   font-size: 0.72rem;
   font-weight: 600;
@@ -22,7 +22,7 @@
 
 .warehouse-action-history:hover {
   color: #ffffff;
-  background: #6f42c1;
+  background: #c2410c;
 }
 
 /*
@@ -62,7 +62,7 @@
   width: 2.7rem;
   height: 2.7rem;
   border-radius: 0.7rem;
-  color: #6f42c1;
+  color: #c2410c;
   background: rgba(111, 66, 193, 0.12);
   font-size: 1.15rem;
 }
@@ -290,9 +290,9 @@
 }
 
 .movement-apply-button {
-  border: 1px solid #6f42c1;
+  border: 1px solid #c2410c;
   color: #ffffff;
-  background: #6f42c1;
+  background: #c2410c;
 }
 
 /*
@@ -480,9 +480,9 @@
   align-items: center;
   gap: 0.25rem;
   padding: 0.25rem 0.4rem;
-  border: 1px solid #6f42c1;
+  border: 1px solid #c2410c;
   border-radius: 0.4rem;
-  color: #6f42c1;
+  color: #c2410c;
   background: transparent;
   font-size: 9px;
   font-weight: 600;
@@ -491,7 +491,7 @@
 
 .movement-details-button:hover {
   color: #ffffff;
-  background: #6f42c1;
+  background: #c2410c;
 }
 
 /*
@@ -544,7 +544,7 @@
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 0.9rem;
-  color: #6f42c1;
+  color: #c2410c;
   background: rgba(111, 66, 193, 0.12);
   font-size: 1.5rem;
 }
@@ -748,10 +748,10 @@
 .movement-details-footer button {
   min-height: 2.35rem;
   padding: 0.45rem 0.8rem;
-  border: 1px solid #6f42c1;
+  border: 1px solid #c2410c;
   border-radius: 0.6rem;
   color: #ffffff;
-  background: #6f42c1;
+  background: #c2410c;
   font-size: 0.75rem;
   font-weight: 600;
 }

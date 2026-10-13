@@ -1865,15 +1865,15 @@ onMounted(
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  background: #eff6ff;
-  color: #2563eb;
+  background: #fff1e6;
+  color: #f97316;
   font-size: 11px;
 }
 
 .reports-header-eyebrow {
   display: block;
   margin: 0 0 1px;
-  color: #2563eb;
+  color: #f97316;
   font-size: 7px;
   font-weight: 700;
   line-height: 1.1;
@@ -2010,10 +2010,10 @@ onMounted(
 .filter-icon {
 
     color:
-        #1d4ed8;
+        #c2410c;
 
     background:
-        #eff6ff;
+        #fff1e6;
 
 }
 
@@ -2160,16 +2160,11 @@ onMounted(
 .reports-input-wrapper .form-control:focus {
 
     border-color:
-        #93c5fd;
+        #fb923c;
 
     box-shadow:
         0 0 0 3px
-        rgba(
-            37,
-            99,
-            235,
-            0.08
-        );
+        rgba(249, 115, 22, 0.08);
 
 }
 
@@ -2235,7 +2230,7 @@ onMounted(
         #ffffff;
 
     background:
-        #2563eb;
+        #f97316;
 
 }
 
@@ -2243,7 +2238,7 @@ onMounted(
 .reports-primary-button:hover {
 
     background:
-        #1d4ed8;
+        #c2410c;
 
     transform:
         translateY(-1px);
@@ -2468,7 +2463,7 @@ onMounted(
 .sales-card::before {
 
     background:
-        #2563eb;
+        #f97316;
 
 }
 
@@ -2484,7 +2479,7 @@ onMounted(
 .orders-card::before {
 
     background:
-        #7c3aed;
+        #f97316;
 
 }
 
@@ -2598,15 +2593,10 @@ onMounted(
         11px;
 
     background:
-        rgba(
-            37,
-            99,
-            235,
-            0.08
-        );
+        rgba(249, 115, 22, 0.08);
 
     color:
-        #2563eb;
+        #f97316;
 
 }
 
@@ -2630,7 +2620,7 @@ onMounted(
 .orders-card .reports-summary-icon {
 
     color:
-        #7c3aed;
+        #f97316;
 
     background:
         rgba(
@@ -2840,21 +2830,16 @@ onMounted(
 
     border:
         1px solid
-        rgba(
-            37,
-            99,
-            235,
-            0.15
-        );
+        rgba(249, 115, 22, 0.15);
 
     border-radius:
         10px;
 
     color:
-        #1d4ed8;
+        #c2410c;
 
     background:
-        #eff6ff;
+        #fff1e6;
 
     font-size:
         10px;
@@ -2966,15 +2951,10 @@ onMounted(
 .report-group-button:hover {
 
     color:
-        #1d4ed8;
+        #c2410c;
 
     background:
-        rgba(
-            37,
-            99,
-            235,
-            0.05
-        );
+        rgba(249, 115, 22, 0.05);
 
 }
 
@@ -2985,16 +2965,11 @@ onMounted(
         #ffffff;
 
     background:
-        #2563eb;
+        #f97316;
 
     box-shadow:
         0 2px 7px
-        rgba(
-            37,
-            99,
-            235,
-            0.18
-        );
+        rgba(249, 115, 22, 0.18);
 
 }
 
@@ -3102,20 +3077,10 @@ onMounted(
 .reports-tab:hover {
 
     border-color:
-        rgba(
-            37,
-            99,
-            235,
-            0.2
-        );
+        rgba(249, 115, 22, 0.2);
 
     background:
-        rgba(
-            37,
-            99,
-            235,
-            0.025
-        );
+        rgba(249, 115, 22, 0.025);
 
 }
 
@@ -3123,18 +3088,13 @@ onMounted(
 .reports-tab.active {
 
     border-color:
-        rgba(
-            37,
-            99,
-            235,
-            0.22
-        );
+        rgba(249, 115, 22, 0.22);
 
     color:
-        #1d4ed8;
+        #c2410c;
 
     background:
-        #eff6ff;
+        #fff1e6;
 
 }
 
@@ -3179,15 +3139,10 @@ onMounted(
 .reports-tab.active .reports-tab-icon {
 
     color:
-        #2563eb;
+        #f97316;
 
     background:
-        rgba(
-            37,
-            99,
-            235,
-            0.1
-        );
+        rgba(249, 115, 22, 0.1);
 
 }
 
@@ -3269,7 +3224,7 @@ onMounted(
 .reports-tab.active .reports-tab-arrow {
 
     color:
-        #2563eb;
+        #f97316;
 
 }
 

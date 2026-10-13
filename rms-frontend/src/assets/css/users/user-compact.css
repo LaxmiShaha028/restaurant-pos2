@@ -12,7 +12,7 @@
     width: 100%;
     min-width: 0;
     padding: 8px;
-    background: #f8fafc;
+    background: #f4f1ed;
 }
 
 /* --------------------------------------------------------------------------
@@ -34,7 +34,7 @@
     min-width: 32px;
     border-radius: 8px;
     font-size: 15px;
-    box-shadow: 0 4px 10px rgba(37, 99, 235, .10);
+    box-shadow: 0 4px 10px rgba(249, 115, 22, .10);
 }
 
 .header-left h2 {
@@ -56,7 +56,7 @@
     padding: 0 9px;
     border: 0;
     border-radius: 6px;
-    background: #2563eb;
+    background: #f97316;
     color: #fff;
     font-size: 12px;
     font-weight: 600;
@@ -65,7 +65,7 @@
 
 .add-user-btn:hover,
 .refresh-btn:hover {
-    background: #1d4ed8;
+    background: #c2410c;
 }
 
 /* --------------------------------------------------------------------------
@@ -804,4 +804,21 @@
 .dark .user-name,
 .dark .username {
     color: #f9fafb;
+}
+
+.users-page {
+  background: #f4f1ed;
+}
+
+.add-user-btn,
+.refresh-btn {
+  border: 1px solid #e7d8cb;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%);
+  color: #f97316;
+}
+
+.add-user-btn:hover,
+.refresh-btn:hover {
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%);
+  color: #fb923c;
 }

@@ -334,9 +334,9 @@ onMounted(async () => {
 ========================================================= */
 
 .stat-occupied_tables .stat-icon {
-  background: #f5f3ff;
+  background: #fff5eb;
 
-  color: #7c3aed;
+  color: #f97316;
 }
 
 

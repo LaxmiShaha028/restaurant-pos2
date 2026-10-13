@@ -1114,7 +1114,7 @@ watch(
 table thead{
 
 
-    background:#f8f9fa;
+    background:#f8f1e9;
 
 
 }
@@ -1164,7 +1164,7 @@ tbody tr{
 tbody tr:hover{
 
 
-    background:#f8fbff;
+    background:#fff8f1;
 
 
 }
@@ -1176,9 +1176,9 @@ tbody tr:hover{
 .sl-number{
 
 
-    background:#e8f0ff;
+    background:#fff1e6;
 
-    color:#0d6efd;
+    color:#f97316;
 
     padding:5px 11px;
 
@@ -1302,7 +1302,7 @@ tbody tr:hover{
 
     border:none;
 
-    background:#0d6efd;
+    background:#f97316;
 
     color:white;
 

@@ -623,7 +623,7 @@ onMounted(async () => {
                   "
                 >
                   <i
-                    class="bi bi-trash3"
+                    class="bi bi-trash"
                   ></i>
                 </button>
               </div>

@@ -20,8 +20,8 @@
   --order-danger: #b91c1c;
   --order-danger-soft: #fef2f2;
 
-  --order-purple: #6d28d9;
-  --order-purple-soft: #f5f3ff;
+  --order-purple: #c2410c;
+  --order-purple-soft: #fff5eb;
 
   --order-text: #172033;
   --order-text-secondary: #344054;
@@ -643,7 +643,7 @@
 }
 
 .status-served {
-  border-color: #c4b5fd;
+  border-color: #fdba74;
 
   background: var(--order-purple-soft);
 
@@ -1249,7 +1249,7 @@
 
   padding: 2px 4px;
 
-  border: 1px solid #ddd6fe;
+  border: 1px solid #fed7aa;
   border-radius: 3px;
 
   background: var(--order-purple-soft);

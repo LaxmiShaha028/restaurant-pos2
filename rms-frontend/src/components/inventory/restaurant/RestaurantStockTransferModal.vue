@@ -259,7 +259,7 @@
                         @click="removeItem(index)"
                       >
                         <i
-                          class="bi bi-trash3"
+                          class="bi bi-trash"
                           aria-hidden="true"
                         ></i>
                       </button>

@@ -211,7 +211,7 @@
           <tbody>
 
             <tr
-              v-for="restaurant in restaurants"
+              v-for="restaurant in paginatedRestaurants"
               :key="restaurant.id"
             >
 
@@ -339,8 +339,6 @@
                   <button
                     type="button"
                     class="restaurant-action-button restaurant-action-view"
-                    :aria-label="`View ${restaurant.name}`"
-                    :title="`View ${restaurant.name}`"
                     @click="viewRestaurant(restaurant.id)"
                   >
                     <i class="bi bi-eye"></i>
@@ -350,11 +348,6 @@
                   <button
                     type="button"
                     class="restaurant-action-button restaurant-action-status"
-                    :aria-label="
-                      restaurant.status === 'active'
-                        ? `Deactivate ${restaurant.name}`
-                        : `Activate ${restaurant.name}`
-                    "
                     :class="
                       restaurant.status === 'active'
                         ? 'restaurant-action-status-active'
@@ -404,8 +397,6 @@
                     "
                     type="button"
                     class="restaurant-action-button restaurant-action-open"
-                    :aria-label="`Open ${restaurant.name}`"
-                    :title="`Open ${restaurant.name}`"
                     @click="openRestaurant(restaurant)"
                   >
                     <i class="bi bi-box-arrow-up-right"></i>
@@ -422,6 +413,12 @@
         </table>
 
       </div>
+
+      <PaginationControls
+        v-model:page="currentPage"
+        :total="restaurants.length"
+        :per-page="pageSize"
+      />
 
     </section>
 
@@ -473,6 +470,8 @@ import {
   updateRestaurantStatus,
 } from '@/services/superAdminApi'
 
+import PaginationControls from '@/components/shared/PaginationControls.vue'
+
 
 /*
 |--------------------------------------------------------------------------
@@ -492,6 +491,14 @@ const router =
 
 const restaurants =
   ref([])
+
+const currentPage = ref(1)
+const pageSize = 10
+
+const paginatedRestaurants = computed(() => {
+  const start = (currentPage.value - 1) * pageSize
+  return restaurants.value.slice(start, start + pageSize)
+})
 
 const loading =
   ref(false)
@@ -1083,3 +1090,4 @@ onMounted(
   opacity: 0.55;
 }
 </style>
+

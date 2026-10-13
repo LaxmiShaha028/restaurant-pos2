@@ -429,8 +429,8 @@ onMounted(async () => {
 }
 
 .variants-icon {
-  background: #f5f3ff;
-  color: #7c3aed;
+  background: #fff5eb;
+  color: #f97316;
 }
 
 .addon-category-icon {

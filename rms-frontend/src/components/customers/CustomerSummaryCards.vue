@@ -83,7 +83,7 @@
 
 .customer-total-card .customer-summary-icon { background: #eff6ff; color: #2563eb; }
 .customer-active-card .customer-summary-icon { background: #ecfdf3; color: #027a48; }
-.customer-new-card .customer-summary-icon { background: #f5f3ff; color: #7c3aed; }
+.customer-new-card .customer-summary-icon { background: #fff5eb; color: #f97316; }
 .customer-spend-card .customer-summary-icon { background: #fff7ed; color: #c2410c; }
 
 .customer-summary-badge {
@@ -425,6 +425,9 @@ function formatInteger(
     value,
   ).toLocaleString(
     'en-GB',
+    {
+      minimumIntegerDigits: 2,
+    },
   )
 }
 

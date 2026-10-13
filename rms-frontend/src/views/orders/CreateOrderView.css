@@ -11,16 +11,16 @@
   --order-muted: #667085;
   --order-border: #e5e7eb;
   --order-border-dark: #d0d5dd;
-  --order-accent: #2563eb;
-  --order-accent-dark: #1d4ed8;
-  --order-accent-soft: #eff6ff;
+  --order-accent: #f97316;
+  --order-accent-dark: #c2410c;
+  --order-accent-soft: #fff1e6;
   --order-success: #027a48;
   --order-success-soft: #ecfdf3;
   --order-danger: #b42318;
   --order-danger-dark: #912018;
   --order-danger-soft: #fef3f2;
   --order-info: #175cd3;
-  --order-info-soft: #eff8ff;
+  --order-info-soft: #fff8f1;
   --order-shadow: none;
   --order-shadow-large: 0 4px 12px rgba(15, 23, 42, 0.06);
 
@@ -224,7 +224,7 @@
 }
 
 .order-alert-info {
-  border-color: #b2ddff;
+  border-color: #fed7aa;
   background: var(--order-info-soft);
   color: #1849a9;
 }
@@ -299,9 +299,9 @@
   gap: 3px;
   min-height: 19px;
   padding: 0 5px;
-  border: 1px solid #bfdbfe;
+  border: 1px solid #fed7aa;
   border-radius: 4px;
-  background: #eff6ff;
+  background: #fff1e6;
   color: var(--order-accent-dark);
   font-size: 10px;
   font-weight: 700;
@@ -376,7 +376,7 @@
 
 .order-form-control:focus {
   border-color: var(--order-accent);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
 }
 
 .order-form-control::placeholder {
@@ -578,7 +578,7 @@ textarea.order-form-control {
 
 .merged-dropdown-trigger.active {
   border-color: var(--order-accent);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
 }
 
 .merged-dropdown-trigger.invalid {
@@ -802,9 +802,9 @@ textarea.order-form-control {
   width: 100%;
   margin-top: 0;
   padding: 6px 7px;
-  border: 1px solid #bfdbfe;
+  border: 1px solid #fed7aa;
   border-radius: 4px;
-  background: linear-gradient(180deg, #f8fbff 0%, #f0f7ff 100%);
+  background: linear-gradient(180deg, #fff8f1 0%, #fffaf5 100%);
 }
 
 .reservation-order-card-header {
@@ -895,7 +895,7 @@ textarea.order-form-control {
 }
 
 .has-selected-reservation {
-  background: #f8fbff;
+  background: #fff8f1;
 }
 
 
@@ -1114,7 +1114,7 @@ textarea.order-form-control {
 .menu-item-card:focus-visible {
   outline: none;
   border-color: var(--order-accent);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
 }
 
 .menu-item-disabled {
@@ -1540,7 +1540,7 @@ select.summary-item-option-control {
 
 .summary-item-option-control:focus {
   border-color: var(--order-accent);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.08);
 }
 
 .summary-item-option-control:disabled {

@@ -27,10 +27,8 @@ import {
 |--------------------------------------------------------------------------
 */
 
-const TenantEntryView = () =>
-  import(
-    '@/views/tenant/TenantEntry.vue'
-  )
+import TenantEntryView
+  from '@/views/tenant/TenantEntry.vue'
 
 
 /*
@@ -39,20 +37,14 @@ const TenantEntryView = () =>
 |--------------------------------------------------------------------------
 */
 
-const LoginView = () =>
-  import(
-    '@/views/LoginView.vue'
-  )
+import LoginView
+  from '@/views/LoginView.vue'
 
-const ForbiddenView = () =>
-  import(
-    '@/views/ForbiddenView.vue'
-  )
+import ForbiddenView
+  from '@/views/ForbiddenView.vue'
 
-const NotFoundView = () =>
-  import(
-    '@/views/NotFoundView.vue'
-  )
+import NotFoundView
+  from '@/views/NotFoundView.vue'
 
 
 /*
@@ -61,30 +53,20 @@ const NotFoundView = () =>
 |--------------------------------------------------------------------------
 */
 
-const ProfitLossReport = () =>
-  import(
-    '@/components/reports/accounting/ProfitLossReport.vue'
-  )
+import ProfitLossReport
+  from '@/components/reports/accounting/ProfitLossReport.vue'
 
-const BalanceSheetReport = () =>
-  import(
-    '@/components/reports/accounting/BalanceSheetReport.vue'
-  )
+import BalanceSheetReport
+  from '@/components/reports/accounting/BalanceSheetReport.vue'
 
-const TrialBalanceReport = () =>
-  import(
-    '@/components/reports/accounting/TrialBalanceReport.vue'
-  )
+import TrialBalanceReport
+  from '@/components/reports/accounting/TrialBalanceReport.vue'
 
-const GeneralLedgerReport = () =>
-  import(
-    '@/components/reports/accounting/GeneralLedgerReport.vue'
-  )
+import GeneralLedgerReport
+  from '@/components/reports/accounting/GeneralLedgerReport.vue'
 
-const AccountingDashboard = () =>
-  import(
-    '@/components/reports/accounting/AccountingDashboard.vue'
-  )
+import AccountingDashboard
+from '@/components/reports/accounting/AccountingDashboard.vue'
 
 
 /*
@@ -93,10 +75,8 @@ const AccountingDashboard = () =>
 |--------------------------------------------------------------------------
 */
 
-const DashboardLayout = () =>
-  import(
-    '@/layouts/DashboardLayout.vue'
-  )
+import DashboardLayout
+  from '@/layouts/DashboardLayout.vue'
 
 
 /*
@@ -105,10 +85,8 @@ const DashboardLayout = () =>
 |--------------------------------------------------------------------------
 */
 
-const SuperAdminLayout = () =>
-  import(
-    '@/layouts/super-admin/SuperAdminLayout.vue'
-  )
+import SuperAdminLayout
+  from '@/layouts/super-admin/SuperAdminLayout.vue'
 
 
 /*
@@ -117,20 +95,14 @@ const SuperAdminLayout = () =>
 |--------------------------------------------------------------------------
 */
 
-const DashboardView = () =>
-  import(
-    '@/views/DashboardView.vue'
-  )
+import DashboardView
+  from '@/views/DashboardView.vue'
 
-const AdminOverviewView = () =>
-  import(
-    '@/views/AdminOverviewView.vue'
-  )
+import AdminOverviewView
+  from '@/views/AdminOverviewView.vue'
 
-const ManagerOverviewView = () =>
-  import(
-    '@/views/ManagerOverviewView.vue'
-  )
+import ManagerOverviewView
+  from '@/views/ManagerOverviewView.vue'
 
 
 /*
@@ -139,10 +111,8 @@ const ManagerOverviewView = () =>
 |--------------------------------------------------------------------------
 */
 
-const ModulePlaceholderView = () =>
-  import(
-    '@/views/ModulePlaceholderView.vue'
-  )
+import ModulePlaceholderView
+  from '@/views/ModulePlaceholderView.vue'
 
 
 /*
@@ -151,20 +121,14 @@ const ModulePlaceholderView = () =>
 |--------------------------------------------------------------------------
 */
 
-const OrderManagement = () =>
-  import(
-    '@/views/orders/OrderManagement.vue'
-  )
+import OrderManagement
+  from '@/views/orders/OrderManagement.vue'
 
-const CreateOrderView = () =>
-  import(
-    '@/views/orders/CreateOrderView.vue'
-  )
+import CreateOrderView
+  from '@/views/orders/CreateOrderView.vue'
 
-const OrderDetailsView = () =>
-  import(
-    '@/views/orders/OrderDetailsView.vue'
-  )
+import OrderDetailsView
+  from '@/views/orders/OrderDetailsView.vue'
 
 
 /*
@@ -173,15 +137,11 @@ const OrderDetailsView = () =>
 |--------------------------------------------------------------------------
 */
 
-const KitchenOverviewView = () =>
-  import(
-    '@/views/kitchen/KitchenOverviewView.vue'
-  )
+import KitchenOverviewView
+  from '@/views/kitchen/KitchenOverviewView.vue'
 
-const KitchenOrderDetailsView = () =>
-  import(
-    '@/views/kitchen/KitchenOrderDetailsView.vue'
-  )
+import KitchenOrderDetailsView
+  from '@/views/kitchen/KitchenOrderDetailsView.vue'
 
 
 /*
@@ -190,10 +150,8 @@ const KitchenOrderDetailsView = () =>
 |--------------------------------------------------------------------------
 */
 
-const BillingOverviewView = () =>
-  import(
-    '@/views/billing/BillingOverviewView.vue'
-  )
+import BillingOverviewView
+  from '@/views/billing/BillingOverviewView.vue'
 
 
 /*
@@ -202,10 +160,8 @@ const BillingOverviewView = () =>
 |--------------------------------------------------------------------------
 */
 
-const TableManagementView = () =>
-  import(
-    '@/views/tables/TableManagement.vue'
-  )
+import TableManagementView
+  from '@/views/tables/TableManagement.vue'
 
 
 /*
@@ -214,10 +170,8 @@ const TableManagementView = () =>
 |--------------------------------------------------------------------------
 */
 
-const MenuManagementView = () =>
-  import(
-    '@/views/menu/MenuManagementView.vue'
-  )
+import MenuManagementView
+  from '@/views/menu/MenuManagementView.vue'
 
 
 /*
@@ -226,20 +180,14 @@ const MenuManagementView = () =>
 |--------------------------------------------------------------------------
 */
 
-const CustomerManagementView = () =>
-  import(
-    '@/views/customers/CustomerManagementView.vue'
-  )
+import CustomerManagementView
+  from '@/views/customers/CustomerManagementView.vue'
 
-const CustomerEditView = () =>
-  import(
-    '@/components/customers/CustomerEditView.vue'
-  )
+import CustomerEditView
+  from '@/components/customers/CustomerEditView.vue'
 
-const CustomerDetailsView = () =>
-  import(
-    '@/views/customers/CustomerDetailsView.vue'
-  )
+import CustomerDetailsView
+  from '@/views/customers/CustomerDetailsView.vue'
 
 
 /*
@@ -248,10 +196,8 @@ const CustomerDetailsView = () =>
 |--------------------------------------------------------------------------
 */
 
-const SupplierManagementView = () =>
-  import(
-    '@/views/suppliers/SupplierManagementView.vue'
-  )
+import SupplierManagementView
+  from '@/views/suppliers/SupplierManagementView.vue'
 
 
 /*
@@ -260,10 +206,8 @@ const SupplierManagementView = () =>
 |--------------------------------------------------------------------------
 */
 
-const StaffManagementView = () =>
-  import(
-    '@/views/staff/StaffManagementView.vue'
-  )
+import StaffManagementView
+  from '@/views/staff/StaffManagementView.vue'
 
 
 /*
@@ -272,10 +216,8 @@ const StaffManagementView = () =>
 |--------------------------------------------------------------------------
 */
 
-const SalaryManagementView = () =>
-  import(
-    '@/views/salary/SalaryManagementView.vue'
-  )
+import SalaryManagementView
+  from '@/views/salary/SalaryManagementView.vue'
 
 
 /*
@@ -284,10 +226,8 @@ const SalaryManagementView = () =>
 |--------------------------------------------------------------------------
 */
 
-const InventoryManagementView = () =>
-  import(
-    '@/views/inventory/InventoryManagementView.vue'
-  )
+import InventoryManagementView
+  from '@/views/inventory/InventoryManagementView.vue'
 
 
 /*
@@ -296,10 +236,8 @@ const InventoryManagementView = () =>
 |--------------------------------------------------------------------------
 */
 
-const ReportsView = () =>
-  import(
-    '@/views/reports/ReportsManagementView.vue'
-  )
+import ReportsView
+  from '@/views/reports/ReportsManagementView.vue'
 
 
 /*
@@ -308,10 +246,8 @@ const ReportsView = () =>
 |--------------------------------------------------------------------------
 */
 
-const SystemSettingsView = () =>
-  import(
-    '@/views/settings/SystemSettingsView.vue'
-  )
+import SystemSettingsView
+  from '@/views/settings/SystemSettingsView.vue'
 
 
 /*
@@ -320,15 +256,11 @@ const SystemSettingsView = () =>
 |--------------------------------------------------------------------------
 */
 
-const SuperAdminLoginView = () =>
-  import(
-    '@/views/super-admin/SuperAdminLoginView.vue'
-  )
+import SuperAdminLoginView
+  from '@/views/super-admin/SuperAdminLoginView.vue'
 
-const SuperAdminDashboardView = () =>
-  import(
-    '@/views/super-admin/Dashboard.vue'
-  )
+import SuperAdminDashboardView
+  from '@/views/super-admin/Dashboard.vue'
 
 
 /*
@@ -1058,7 +990,7 @@ const router = createRouter({
 
           component: () =>
             import(
-              '@/views/pos/PosOrderView.vue'
+              '@/views/orders/CreateOrderView.vue'
             ),
 
           meta: {
@@ -2608,12 +2540,7 @@ router.beforeEach(
         !tenantKey
       ) {
 
-        return {
-
-          name:
-            'not-found',
-
-        }
+        return true
 
       }
 

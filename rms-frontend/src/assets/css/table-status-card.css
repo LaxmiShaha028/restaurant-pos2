@@ -180,14 +180,14 @@
 
 .table-status-filter--cleaning
   .table-status-filter__icon {
-  background: #ede9fe;
-  color: #6d28d9;
+  background: #ffedd5;
+  color: #c2410c;
 }
 
 .table-status-filter--cleaning
   .table-status-filter__count {
-  background: #f5f3ff;
-  color: #6d28d9;
+  background: #fff5eb;
+  color: #c2410c;
 }
 
 /*
@@ -239,7 +239,7 @@
 
 .table-status-filter--cleaning.table-status-filter--active {
   border-color: #a78bfa;
-  background: #f5f3ff;
+  background: #fff5eb;
 }
 
 /*
