@@ -1,0 +1,129 @@
+﻿commit 2f1b3866f530e0d289350bdd60afa8a0b575d82d
+Merge: 8367ed0 5dc8a83
+Author: Tasnima <shraboniakter554@gmail.com>
+Date:   Mon Oct 12 22:47:45 2026 +0600
+
+    Resolve merge conflicts
+
+diff --git a/rms-api/app/Http/Controllers/Api/AttendanceController.php b/rms-api/app/Http/Controllers/Api/AttendanceController.php
+remerge CONFLICT (add/add): Merge conflict in rms-api/app/Http/Controllers/Api/AttendanceController.php
+index e1cbc38..21ce0db 100644
+--- a/rms-api/app/Http/Controllers/Api/AttendanceController.php
++++ b/rms-api/app/Http/Controllers/Api/AttendanceController.php
+@@ -26,55 +26,6 @@ public function __construct(
+ 
+     public function index(Request $request)
+     {
+-<<<<<<< 8367ed0 (Update restaurant POS backend)
+-        $validated = $request->validate([
+-
+-            'attendance_date' => [
+-                'nullable',
+-                'date',
+-            ],
+-
+-            'search' => [
+-                'nullable',
+-                'string',
+-                'max:150',
+-            ],
+-
+-            'employee_id' => [
+-                'nullable',
+-                'integer',
+-                'exists:employees,id',
+-            ],
+-
+-            'role_id' => [
+-                'nullable',
+-                'integer',
+-                'exists:roles,id',
+-            ],
+-
+-            'status' => [
+-                'nullable',
+-
+-                Rule::in(
+-                    Attendance::allowedStatuses()
+-                ),
+-            ],
+-
+-            'page' => [
+-                'nullable',
+-                'integer',
+-                'min:1',
+-            ],
+-
+-            'per_page' => [
+-                'nullable',
+-                'integer',
+-                'min:1',
+-                'max:100',
+-            ],
+-
+-        ]);
+-=======
+         $validated =
+             $request->validate([
+ 
+@@ -123,7 +74,6 @@ public function index(Request $request)
+                 ],
+ 
+             ]);
+->>>>>>> 5dc8a83 (Update restaurant POS project)
+ 
+ 
+         $attendanceDate =
+@@ -487,10 +437,6 @@ function ($userQuery) use ($roleId) {
+     public function show(
+         Attendance $attendance
+     ) {
+-<<<<<<< 8367ed0 (Update restaurant POS backend)
+-
+-=======
+->>>>>>> 5dc8a83 (Update restaurant POS project)
+         $attendance->loadMissing([
+ 
+             'employee.user.role',
+@@ -556,8 +502,6 @@ public function sync(Request $request)
+                     $attendanceDate,
+                     $request->user()
+                 );
+-<<<<<<< 8367ed0 (Update restaurant POS backend)
+-=======
+         $this->audit(
+     'attendance',
+     'synced',
+@@ -569,7 +513,6 @@ public function sync(Request $request)
+     ],
+     'Attendance synchronized for date: '.$attendanceDate
+ );
+->>>>>>> 5dc8a83 (Update restaurant POS project)
+ 
+ 
+         return response()->json([
+@@ -585,23 +528,4 @@ public function sync(Request $request)
+ 
+         ]);
+     }
+-<<<<<<< 8367ed0 (Update restaurant POS backend)
+-
+-
+-    /*
+-    |--------------------------------------------------------------------------
+-    | Attendance Audit
+-    |--------------------------------------------------------------------------
+-    */
+-
+-    public function audit(Request $request)
+-    {
+-
+-        return response()->json([
+-            'status' => 'success',
+-            'message' => 'Attendance audit processed successfully.'
+-        ]);
+-    }
+-=======
+->>>>>>> 5dc8a83 (Update restaurant POS project)
+ }
+\ No newline at end of file
