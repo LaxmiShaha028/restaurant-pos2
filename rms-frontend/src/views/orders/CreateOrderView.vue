@@ -1,5 +1,5 @@
 <template>
-  <div class="new-order-page">
+  <div class="new-order-page" @click="closeReservationDropdown" @keydown.esc="closeReservationDropdown">
 
     <!-- =====================================================
          PAGE HEADER
@@ -449,10 +449,53 @@
               Reservation
             </label>
 
+              <div class="order-themed-select-picker">
+              <button
+                id="reservation_id"
+                type="button"
+                class="order-form-control order-themed-select-trigger"
+                :class="{ invalid: getFieldError('reservation_id') }"
+                :disabled="isSubmitting || isLoadingReservations"
+                :aria-expanded="reservationDropdownOpen"
+                aria-haspopup="listbox"
+                @click.stop="toggleReservationDropdown"
+              >
+                <span>{{ selectedReservationOptionLabel }}</span>
+                <i class="bi bi-chevron-down" aria-hidden="true"></i>
+              </button>
+              <Transition name="order-themed-select-menu">
+                <div v-if="reservationDropdownOpen" class="order-themed-select-menu" role="listbox" aria-label="Reservations">
+                  <button
+                    v-if="$route.name !== 'pos-order-create'"
+                    type="button"
+                    class="order-themed-select-option"
+                    :class="{ 'is-selected': !selectedReservationId }"
+                    role="option"
+                    :aria-selected="!selectedReservationId"
+                    @click="selectReservation('')"
+                  >Walk-in / No Reservation</button>
+                  <button
+                    v-for="reservation in reservationsForCurrentTable"
+                    :key="reservation.id"
+                    type="button"
+                    class="order-themed-select-option"
+                    :class="{ 'is-selected': String(reservation.id) === String(selectedReservationId) }"
+                    role="option"
+                    :aria-selected="String(reservation.id) === String(selectedReservationId)"
+                    @click="selectReservation(String(reservation.id))"
+                  >
+                    <span>{{ reservation.reservation_no }} — {{ reservation.customer?.name || 'Customer' }}</span>
+                    <small>{{ reservation.start_time_formatted || reservation.start_time || '' }}</small>
+                    <i v-if="String(reservation.id) === String(selectedReservationId)" class="bi bi-check2" aria-hidden="true"></i>
+                  </button>
+                  <p v-if="!reservationsForCurrentTable.length" class="order-themed-select-empty">No seated reservations available.</p>
+                </div>
+              </Transition>
+            </div>
+
             <select
-              id="reservation_id"
+              class="order-themed-select-native"
               v-model="selectedReservationId"
-              class="order-form-control"
               :disabled="
                 isSubmitting ||
                 isLoadingReservations
@@ -644,33 +687,51 @@
               Table
             </label>
 
-            <select
-              id="restaurant_table_id"
-              v-model="form.restaurant_table_id"
-              class="order-form-control"
-              :class="{
-                invalid: getFieldError('restaurant_table_id'),
-              }"
-              :disabled="
-                isSubmitting ||
-                isServedEditMode ||
-                hasSelectedReservation
-              "
-              @change="handlePrimaryTableChange"
-            >
-
-              <option value="">
-                Select table
-              </option>
-
-              <option
-                v-for="table in tables"
-                :key="table.id"
-                :value="String(table.id)"
+            <div class="order-themed-select-picker">
+              <button
+                id="restaurant_table_id"
+                type="button"
+                class="order-form-control order-themed-select-trigger"
+                :class="{ invalid: getFieldError('restaurant_table_id') }"
+                :disabled="isSubmitting || isServedEditMode || hasSelectedReservation"
+                :aria-expanded="tableDropdownOpen"
+                aria-haspopup="listbox"
+                @click.stop="toggleTableDropdown"
               >
-                {{ getTableDisplayName(table) }}
-              </option>
+                <span>{{ selectedTableOptionLabel }}</span>
+                <i class="bi bi-chevron-down" aria-hidden="true"></i>
+              </button>
+              <Transition name="order-themed-select-menu">
+                <div v-if="tableDropdownOpen" class="order-themed-select-menu" role="listbox" aria-label="Restaurant table">
+                  <button
+                    type="button"
+                    class="order-themed-select-option"
+                    :class="{ 'is-selected': !form.restaurant_table_id }"
+                    role="option"
+                    :aria-selected="!form.restaurant_table_id"
+                    @click="selectPrimaryTable('')"
+                  >Select table</button>
+                  <button
+                    v-for="table in tables"
+                    :key="table.id"
+                    type="button"
+                    class="order-themed-select-option"
+                    :class="{ 'is-selected': String(form.restaurant_table_id) === String(table.id) }"
+                    role="option"
+                    :aria-selected="String(form.restaurant_table_id) === String(table.id)"
+                    @click="selectPrimaryTable(String(table.id))"
+                  >
+                    <span>{{ getTableDisplayName(table) }}</span>
+                    <i v-if="String(form.restaurant_table_id) === String(table.id)" class="bi bi-check2" aria-hidden="true"></i>
+                  </button>
+                  <p v-if="!tables.length" class="order-themed-select-empty">No tables available.</p>
+                </div>
+              </Transition>
+            </div>
 
+            <select class="order-themed-select-native" v-model="form.restaurant_table_id" :disabled="isSubmitting || isServedEditMode || hasSelectedReservation">
+              <option value="">Select table</option>
+              <option v-for="table in tables" :key="table.id" :value="String(table.id)">{{ getTableDisplayName(table) }}</option>
             </select>
 
             <span
@@ -873,18 +934,40 @@
               Status
             </label>
 
-            <select
-              id="status"
-              v-model="form.status"
-              class="order-form-control"
-              :class="{
-                invalid: getFieldError('status'),
-              }"
-              :disabled="
-                isSubmitting ||
-                isEditMode
-              "
-            >
+            <div class="order-themed-select-picker">
+              <button
+                id="status"
+                type="button"
+                class="order-form-control order-themed-select-trigger"
+                :class="{ invalid: getFieldError('status') }"
+                :disabled="isSubmitting || isEditMode"
+                :aria-expanded="statusDropdownOpen"
+                aria-haspopup="listbox"
+                @click.stop="toggleStatusDropdown"
+              >
+                <span>{{ selectedStatusOptionLabel }}</span>
+                <i class="bi bi-chevron-down" aria-hidden="true"></i>
+              </button>
+              <Transition name="order-themed-select-menu">
+                <div v-if="statusDropdownOpen" class="order-themed-select-menu" role="listbox" aria-label="Order status">
+                  <button
+                    v-for="status in statuses"
+                    :key="status.value"
+                    type="button"
+                    class="order-themed-select-option"
+                    :class="{ 'is-selected': form.status === status.value }"
+                    role="option"
+                    :aria-selected="form.status === status.value"
+                    @click="selectOrderStatus(status.value)"
+                  >
+                    <span>{{ status.label }}</span>
+                    <i v-if="form.status === status.value" class="bi bi-check2" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </Transition>
+            </div>
+
+            <select class="order-themed-select-native" v-model="form.status" :disabled="isSubmitting || isEditMode">
 
               <option
                 v-for="status in statuses"

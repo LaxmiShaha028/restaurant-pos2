@@ -389,7 +389,7 @@ function submit()
   justify-content: space-between;
   gap: 14px;
   padding: 20px 22px;
-  background: #c2410c;
+  background: linear-gradient(135deg, #ff922b 0%, #f97316 58%, #ea580c 100%);
   color: #ffffff;
 }
 
@@ -416,7 +416,7 @@ function submit()
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  background: rgba(255,255,255,.16);
+  background: rgba(255,255,255,.2);
   font-size: 19px;
 }
 
@@ -449,8 +449,20 @@ function submit()
   flex: 0 0 40px;
   border: 0;
   border-radius: 50%;
-  background: rgba(255,255,255,.14);
+  background: rgba(255,255,255,.18);
   color: #ffffff;
+  cursor: pointer;
+  transition: background .18s ease, transform .18s ease;
+}
+
+.reservation-action-close:hover:not(:disabled) {
+  background: rgba(255,255,255,.28);
+  transform: rotate(90deg);
+}
+
+.reservation-action-close:disabled {
+  cursor: not-allowed;
+  opacity: .65;
 }
 
 .reservation-action-body {
@@ -467,7 +479,7 @@ function submit()
 .reservation-action-summary > div {
   min-width: 0;
   padding: 11px 12px;
-  border: 1px solid #eee3da;
+  border: 1px solid #f1e3d5;
   border-radius: 11px;
   background: #fffaf5;
 }
@@ -586,7 +598,7 @@ function submit()
   justify-content: flex-end;
   gap: 9px;
   padding: 13px 22px;
-  border-top: 1px solid #eee3da;
+  border-top: 1px solid #f1e3d5;
   background: #fffaf5;
 }
 
@@ -603,7 +615,7 @@ function submit()
 }
 
 .reservation-action-footer .btn-light {
-  border: 1px solid #eee3da;
+  border: 1px solid #f1e3d5;
   background: #ffffff;
   color: #667085;
 }
@@ -624,6 +636,11 @@ function submit()
   border-color: #3b3b3b;
   background: #242424;
   color: #fb923c;
+}
+
+.reservation-action-footer .btn:disabled {
+  cursor: not-allowed;
+  opacity: .65;
 }
 
 @media (max-width: 560px) {

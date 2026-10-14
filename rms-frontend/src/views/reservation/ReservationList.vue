@@ -228,36 +228,36 @@
                     Status
                 </label>
 
-                <select
-                    v-model="filters.status"
-                    class="form-select"
-                >
-
-                    <option value="">
-                        All Statuses
-                    </option>
-
-                    <option value="reserved">
-                        Reserved
-                    </option>
-
-                    <option value="confirmed">
-                        Confirmed
-                    </option>
-
-                    <option value="seated">
-                        Seated
-                    </option>
-
-                    <option value="completed">
-                        Completed
-                    </option>
-
-                    <option value="cancelled">
-                        Cancelled
-                    </option>
-
-                </select>
+                <div ref="statusFilterRoot" class="reservation-filter-status-picker">
+                    <button
+                        type="button"
+                        class="reservation-filter-status-trigger"
+                        :aria-expanded="statusFilterOpen"
+                        aria-haspopup="listbox"
+                        @click.stop="statusFilterOpen = !statusFilterOpen"
+                        @keydown.esc="statusFilterOpen = false"
+                    >
+                        <span>{{ selectedFilterStatusLabel }}</span>
+                        <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <Transition name="reservation-filter-status-menu">
+                        <div v-if="statusFilterOpen" class="reservation-filter-status-menu" role="listbox" aria-label="Reservation status">
+                            <button
+                                v-for="option in reservationFilterStatuses"
+                                :key="option.value"
+                                type="button"
+                                class="reservation-filter-status-option"
+                                :class="{ 'is-selected': filters.status === option.value }"
+                                role="option"
+                                :aria-selected="filters.status === option.value"
+                                @click="selectFilterStatus(option.value)"
+                            >
+                                <span>{{ option.label }}</span>
+                                <i v-if="filters.status === option.value" class="bi bi-check2" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </Transition>
+                </div>
 
             </div>
 
@@ -270,11 +270,7 @@
                     Reservation Date
                 </label>
 
-                <input
-                    v-model="filters.reservation_date"
-                    type="date"
-                    class="form-control"
-                />
+                <ReservationFilterDatePicker v-model="filters.reservation_date" id="reservation-filter-date" label="reservation date" />
 
             </div>
 
@@ -287,11 +283,7 @@
                     From
                 </label>
 
-                <input
-                    v-model="filters.date_from"
-                    type="date"
-                    class="form-control"
-                />
+                <ReservationFilterDatePicker v-model="filters.date_from" id="reservation-filter-from" label="start date" />
 
             </div>
 
@@ -304,11 +296,7 @@
                     To
                 </label>
 
-                <input
-                    v-model="filters.date_to"
-                    type="date"
-                    class="form-control"
-                />
+                <ReservationFilterDatePicker v-model="filters.date_to" id="reservation-filter-to" label="end date" />
 
             </div>
 
@@ -1118,6 +1106,7 @@
 <script setup>
 
 import {
+    computed,
     onBeforeUnmount,
     onMounted,
     reactive,
@@ -1143,6 +1132,9 @@ import ReservationActionModal
 
 import ReservationToast
     from './ReservationToast.vue'
+
+import ReservationFilterDatePicker
+    from '@/components/reservation/ReservationFilterDatePicker.vue'
 
 
 /*
@@ -1411,6 +1403,31 @@ const filters =
             10,
 
     })
+
+const reservationFilterStatuses = [
+    { value: '', label: 'All Statuses' },
+    { value: 'reserved', label: 'Reserved' },
+    { value: 'confirmed', label: 'Confirmed' },
+    { value: 'seated', label: 'Seated' },
+    { value: 'completed', label: 'Completed' },
+    { value: 'cancelled', label: 'Cancelled' },
+]
+const statusFilterRoot = ref(null)
+const statusFilterOpen = ref(false)
+const selectedFilterStatusLabel = computed(() =>
+    reservationFilterStatuses.find(option => option.value === filters.status)?.label || 'All Statuses'
+)
+
+function selectFilterStatus(status) {
+    filters.status = status
+    statusFilterOpen.value = false
+}
+
+function handleFilterDocumentClick(event) {
+    if (!statusFilterRoot.value?.contains(event.target)) {
+        statusFilterOpen.value = false
+    }
+}
 
 
 /*
@@ -2342,6 +2359,8 @@ function getStatusClass(
 onMounted(
     async () => {
 
+        document.addEventListener('click', handleFilterDocumentClick)
+
         await loadReservations()
 
 
@@ -2383,6 +2402,8 @@ onMounted(
 
 onBeforeUnmount(
     () => {
+
+        document.removeEventListener('click', handleFilterDocumentClick)
 
         if (toastTimer) {
 

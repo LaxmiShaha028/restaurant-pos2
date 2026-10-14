@@ -105,6 +105,9 @@ export default {
       reservations: [],
       selectedReservation: null,
       selectedReservationId: "",
+      reservationDropdownOpen: false,
+      statusDropdownOpen: false,
+      tableDropdownOpen: false,
       isLoadingReservations: false,
 
       /*
@@ -248,6 +251,42 @@ export default {
   */
 
   computed: {
+    selectedReservationOptionLabel() {
+      if (!this.selectedReservationId) {
+        return "Walk-in / No Reservation";
+      }
+
+      const reservation =
+        this.reservations.find((item) =>
+          String(item?.id) === String(this.selectedReservationId),
+        ) || this.selectedReservation;
+
+      if (!reservation) {
+        return "Select Reservation";
+      }
+
+      return [
+        reservation.reservation_no,
+        reservation.customer?.name || "Customer",
+        reservation.start_time_formatted || reservation.start_time || "",
+      ]
+        .filter(Boolean)
+        .join(" — ");
+    },
+
+    selectedStatusOptionLabel() {
+      return this.statuses.find((status) =>
+        status.value === this.form.status,
+      )?.label || "Select Status";
+    },
+
+    selectedTableOptionLabel() {
+      const table = this.tables.find((item) =>
+        String(item.id) === String(this.form.restaurant_table_id),
+      );
+      return table ? this.getTableDisplayName(table) : "Select table";
+    },
+
     reservationsForCurrentTable() {
       if (this.$route.name !== "pos-order-create") {
         return this.reservations;
@@ -1243,6 +1282,50 @@ watch: {
   */
 
   methods: {
+
+    toggleReservationDropdown() {
+      if (this.isSubmitting || this.isLoadingReservations) return;
+      this.statusDropdownOpen = false;
+      this.tableDropdownOpen = false;
+      this.reservationDropdownOpen = !this.reservationDropdownOpen;
+    },
+
+    closeReservationDropdown() {
+      this.reservationDropdownOpen = false;
+      this.statusDropdownOpen = false;
+      this.tableDropdownOpen = false;
+    },
+
+    selectReservation(reservationId) {
+      this.selectedReservationId = reservationId;
+      this.reservationDropdownOpen = false;
+      this.handleReservationChange();
+    },
+
+    toggleStatusDropdown() {
+      if (this.isSubmitting || this.isEditMode) return;
+      this.reservationDropdownOpen = false;
+      this.tableDropdownOpen = false;
+      this.statusDropdownOpen = !this.statusDropdownOpen;
+    },
+
+    selectOrderStatus(status) {
+      this.form.status = status;
+      this.statusDropdownOpen = false;
+    },
+
+    toggleTableDropdown() {
+      if (this.isSubmitting || this.isServedEditMode || this.hasSelectedReservation) return;
+      this.reservationDropdownOpen = false;
+      this.statusDropdownOpen = false;
+      this.tableDropdownOpen = !this.tableDropdownOpen;
+    },
+
+    selectPrimaryTable(tableId) {
+      this.form.restaurant_table_id = tableId;
+      this.tableDropdownOpen = false;
+      this.handlePrimaryTableChange();
+    },
 
     /*
 |--------------------------------------------------------------------------

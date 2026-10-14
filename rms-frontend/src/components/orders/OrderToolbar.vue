@@ -103,28 +103,13 @@
           Order Status
         </label>
 
-        <select
-          :value="status"
-          class="form-select"
-          @change="
-            emit(
-              'update:status',
-              $event.target.value
-            )
-          "
-        >
-          <option value="">
-            All Statuses
-          </option>
-
-          <option
-            v-for="option in statusOptions"
-            :key="option.value"
-            :value="option.value"
-          >
-            {{ option.label }}
-          </option>
-        </select>
+        <OrderFilterSelect
+          :model-value="status"
+          :options="statusOptions"
+          placeholder="All Statuses"
+          label="Order status"
+          @update:model-value="emit('update:status', $event)"
+        />
       </div>
 
       <div class="filter-field">
@@ -132,28 +117,13 @@
           Payment Status
         </label>
 
-        <select
-          :value="paymentStatus"
-          class="form-select"
-          @change="
-            emit(
-              'update:paymentStatus',
-              $event.target.value
-            )
-          "
-        >
-          <option value="">
-            All Payments
-          </option>
-
-          <option
-            v-for="option in paymentStatusOptions"
-            :key="option.value"
-            :value="option.value"
-          >
-            {{ option.label }}
-          </option>
-        </select>
+        <OrderFilterSelect
+          :model-value="paymentStatus"
+          :options="paymentStatusOptions"
+          placeholder="All Payments"
+          label="Payment status"
+          @update:model-value="emit('update:paymentStatus', $event)"
+        />
       </div>
 
       <div class="filter-field">
@@ -161,28 +131,13 @@
           Payment Method
         </label>
 
-        <select
-          :value="paymentMethod"
-          class="form-select"
-          @change="
-            emit(
-              'update:paymentMethod',
-              $event.target.value
-            )
-          "
-        >
-          <option value="">
-            All Methods
-          </option>
-
-          <option
-            v-for="option in paymentMethodOptions"
-            :key="option.value"
-            :value="option.value"
-          >
-            {{ option.label }}
-          </option>
-        </select>
+        <OrderFilterSelect
+          :model-value="paymentMethod"
+          :options="paymentMethodOptions"
+          placeholder="All Methods"
+          label="Payment method"
+          @update:model-value="emit('update:paymentMethod', $event)"
+        />
       </div>
 
       <div class="filter-field">
@@ -190,16 +145,11 @@
           Date From
         </label>
 
-        <input
-          :value="dateFrom"
-          type="date"
-          class="form-control"
-          @input="
-            emit(
-              'update:dateFrom',
-              $event.target.value
-            )
-          "
+        <ReservationFilterDatePicker
+          :model-value="dateFrom"
+          id="order-filter-date-from"
+          label="order start date"
+          @update:model-value="emit('update:dateFrom', $event)"
         />
       </div>
 
@@ -208,17 +158,12 @@
           Date To
         </label>
 
-        <input
-          :value="dateTo"
-          type="date"
-          class="form-control"
-          :min="dateFrom || undefined"
-          @input="
-            emit(
-              'update:dateTo',
-              $event.target.value
-            )
-          "
+        <ReservationFilterDatePicker
+          :model-value="dateTo"
+          :min="dateFrom"
+          id="order-filter-date-to"
+          label="order end date"
+          @update:model-value="emit('update:dateTo', $event)"
         />
       </div>
 
@@ -247,6 +192,9 @@
 </template>
 
 <script setup>
+import OrderFilterSelect from "@/components/orders/OrderFilterSelect.vue";
+import ReservationFilterDatePicker from "@/components/reservation/ReservationFilterDatePicker.vue";
+
 defineProps({
   search: {
     type: String,

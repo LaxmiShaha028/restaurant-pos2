@@ -762,28 +762,46 @@
 
                     <div class="reservation-form-group">
 
-                        <label>
+                        <label id="reservation-status-label">
                             Status
                         </label>
 
+                        <div ref="statusPickerRoot" class="reservation-customer-picker">
+                            <button
+                                type="button"
+                                class="reservation-customer-trigger"
+                                :disabled="saving"
+                                :aria-expanded="statusDropdownOpen"
+                                aria-haspopup="listbox"
+                                aria-labelledby="reservation-status-label"
+                                @click.stop="toggleStatusDropdown"
+                            >
+                                <span>{{ selectedStatusLabel }}</span>
+                                <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                            </button>
+                            <Transition name="reservation-customer-menu">
+                                <div v-if="statusDropdownOpen" class="reservation-customer-menu reservation-status-menu">
+                                    <div class="reservation-customer-options" role="listbox" aria-label="Reservation status">
+                                        <button
+                                            v-for="option in reservationStatusOptions"
+                                            :key="option.value"
+                                            type="button"
+                                            class="reservation-customer-option"
+                                            :class="{ 'is-selected': form.status === option.value }"
+                                            role="option"
+                                            :aria-selected="form.status === option.value"
+                                            @click="selectStatus(option.value)"
+                                        >
+                                            <span>{{ option.label }}</span>
+                                            <i v-if="form.status === option.value" class="bi bi-check2" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </Transition>
+                        </div>
 
-                        <select
-                            v-model="form.status"
-                            :disabled="saving"
-                        >
-
-                            <option value="reserved">
-                                Reserved
-                            </option>
-
-                            <option value="confirmed">
-                                Confirmed
-                            </option>
-
-                            <option value="seated">
-                                Seated
-                            </option>
-
+                        <select class="reservation-native-select" tabindex="-1" aria-hidden="true" v-model="form.status" :disabled="saving">
+                            <option v-for="option in reservationStatusOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                         </select>
 
 
@@ -1089,6 +1107,13 @@ const selectedTableIds =
 const customerDropdownRoot = ref(null)
 const customerDropdownOpen = ref(false)
 const customerSearchQuery = ref('')
+const statusPickerRoot = ref(null)
+const statusDropdownOpen = ref(false)
+const reservationStatusOptions = [
+    { value: 'reserved', label: 'Reserved' },
+    { value: 'confirmed', label: 'Confirmed' },
+    { value: 'seated', label: 'Seated' },
+]
 const reservationDatePickerRoot = ref(null)
 const reservationCalendarOpen = ref(false)
 const calendarMonth = ref(new Date())
@@ -1102,6 +1127,10 @@ const selectedCustomerLabel = computed(() => {
         ? `${customer.name} — ${customer.phone}`
         : customer.name
 })
+
+const selectedStatusLabel = computed(() =>
+    reservationStatusOptions.find(option => option.value === form.value.status)?.label || 'Select status'
+)
 
 const filteredCustomers = computed(() => {
     const query = customerSearchQuery.value.trim().toLowerCase()
@@ -1199,6 +1228,7 @@ function formatEditDate(value)
 function toggleCustomerDropdown()
 {
     reservationCalendarOpen.value = false
+    statusDropdownOpen.value = false
     customerDropdownOpen.value = !customerDropdownOpen.value
     if (customerDropdownOpen.value) customerSearchQuery.value = ''
 }
@@ -1216,6 +1246,7 @@ function selectCustomer(customerId)
 function toggleReservationCalendar()
 {
     customerDropdownOpen.value = false
+    statusDropdownOpen.value = false
     if (!reservationCalendarOpen.value) {
         const value = form.value.reservation_date || todayDate
         const [year, month] = String(value).slice(0, 10).split('-').map(Number)
@@ -1223,6 +1254,19 @@ function toggleReservationCalendar()
         calendarMonth.value = date
     }
     reservationCalendarOpen.value = !reservationCalendarOpen.value
+}
+
+function toggleStatusDropdown()
+{
+    customerDropdownOpen.value = false
+    reservationCalendarOpen.value = false
+    statusDropdownOpen.value = !statusDropdownOpen.value
+}
+
+function selectStatus(status)
+{
+    form.value.status = status
+    statusDropdownOpen.value = false
 }
 
 function moveCalendar(offset)
@@ -1260,6 +1304,9 @@ function handleEditModalClick(event)
     if (!customerDropdownRoot.value?.contains(event.target)) {
         customerDropdownOpen.value = false
     }
+    if (!statusPickerRoot.value?.contains(event.target)) {
+        statusDropdownOpen.value = false
+    }
     if (!reservationDatePickerRoot.value?.contains(event.target)) {
         reservationCalendarOpen.value = false
     }
@@ -1268,6 +1315,7 @@ function handleEditModalClick(event)
 function closePickers()
 {
     customerDropdownOpen.value = false
+    statusDropdownOpen.value = false
     reservationCalendarOpen.value = false
 }
 
