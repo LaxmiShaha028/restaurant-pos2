@@ -427,17 +427,42 @@
             </div>
 
             <div class="sales-chart-controls">
-              <select
-                v-model="salesPeriod"
-                class="sales-period-select"
-                aria-label="Sales chart period"
-                @change="loadSalesChart"
-              >
-                <option value="day">Day</option>
-                <option value="month">Month</option>
-                <option value="year">Year</option>
-                <option value="last_year">Last Year</option>
-              </select>
+              <div class="sales-period-picker">
+                <button
+                  type="button"
+                  class="sales-period-select"
+                  aria-label="Sales chart period"
+                  :aria-expanded="salesPeriodMenuOpen"
+                  aria-haspopup="listbox"
+                  @click="salesPeriodMenuOpen = !salesPeriodMenuOpen"
+                  @keydown.esc="salesPeriodMenuOpen = false"
+                >
+                  <span>{{ salesPeriodOptions.find(option => option.value === salesPeriod)?.label }}</span>
+                  <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                </button>
+                <Transition name="sales-period-menu">
+                  <div
+                    v-if="salesPeriodMenuOpen"
+                    class="sales-period-menu"
+                    role="listbox"
+                    aria-label="Sales chart period"
+                  >
+                    <button
+                      v-for="option in salesPeriodOptions"
+                      :key="option.value"
+                      type="button"
+                      role="option"
+                      class="sales-period-option"
+                      :class="{ 'is-selected': salesPeriod === option.value }"
+                      :aria-selected="salesPeriod === option.value"
+                      @click="selectSalesPeriod(option.value)"
+                    >
+                      {{ option.label }}
+                      <i v-if="salesPeriod === option.value" class="bi bi-check2" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </Transition>
+              </div>
 
               <div class="chart-total">
                 <span>{{ salesPeriodLabel }}</span>
@@ -1378,7 +1403,20 @@ const errorMessage = ref('')
 const dashboard = ref({})
 
 const salesPeriod = ref('month')
+const salesPeriodMenuOpen = ref(false)
+const salesPeriodOptions = [
+  { value: 'day', label: 'Day' },
+  { value: 'month', label: 'Month' },
+  { value: 'year', label: 'Year' },
+  { value: 'last_year', label: 'Last Year' },
+]
 const salesChartRequestId = ref(0)
+
+function selectSalesPeriod(period) {
+  salesPeriod.value = period
+  salesPeriodMenuOpen.value = false
+  loadSalesChart()
+}
 
 
 const hoveredStatus = ref(null)
@@ -3007,17 +3045,98 @@ onMounted(loadDashboard)
   gap: 12px;
 }
 
+.sales-period-picker {
+  position: relative;
+  z-index: 5;
+}
+
 .sales-period-select {
+  display: flex;
+  width: 112px;
   min-height: 34px;
-  padding: 0 28px 0 10px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 11px;
   border: 1px solid #dbe4f0;
   border-radius: 9px;
   background: #fff;
-  color: #334155;
+  color: #172554;
   font: inherit;
   font-size: 10px;
   font-weight: 700;
   cursor: pointer;
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+
+.sales-period-select:hover,
+.sales-period-select[aria-expanded="true"] {
+  border-color: #fdba74;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, .1);
+}
+
+.sales-period-select i {
+  color: #475569;
+  font-size: 10px;
+}
+
+.sales-period-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #e6eaf0;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, .14);
+}
+
+.sales-period-option {
+  display: flex;
+  width: 100%;
+  min-height: 32px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #334155;
+  font: inherit;
+  font-size: 11px;
+  text-align: left;
+  cursor: pointer;
+  transition: background .14s ease, color .14s ease;
+}
+
+.sales-period-option:hover,
+.sales-period-option:focus-visible {
+  outline: none;
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.sales-period-option.is-selected {
+  background: #fff1e6;
+  color: #c2410c;
+  font-weight: 700;
+}
+
+.sales-period-option i {
+  color: #ea580c;
+}
+
+.sales-period-menu-enter-active,
+.sales-period-menu-leave-active {
+  transition: opacity .12s ease, transform .12s ease;
+  transform-origin: top right;
+}
+
+.sales-period-menu-enter-from,
+.sales-period-menu-leave-to {
+  opacity: 0;
+  transform: translateY(-4px) scale(.98);
 }
 
 @media (max-width: 520px) {

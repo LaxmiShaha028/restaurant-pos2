@@ -29,10 +29,11 @@ class DashboardController extends Controller
         $user = $request->user();
         $tenant = $request->attributes->get('tenant');
         $cacheKey = sprintf(
-            'dashboard-overview:%s:%s:%s',
+            'dashboard-overview:%s:%s:%s:%s',
             $tenant?->id ?? 'unknown',
             $user?->id ?? 'unknown',
-            now()->format('Y-m')
+            now()->format('Y-m'),
+            $request->query('sales_period', 'month')
         );
 
         $payload = null;
@@ -271,84 +272,80 @@ class DashboardController extends Controller
         $availableTables =
             (int) $tableStats->available_tables;
 
-        /*
-        |--------------------------------------------------------------------------
-        | Sales Chart
-        |--------------------------------------------------------------------------
-        |
-        | Daily sales for current month.
-        |
-        */
+        /* Sales Chart: build buckets for the selected period. */
+        $salesPeriod = $request->query('sales_period', 'month');
+        if (! in_array($salesPeriod, ['day', 'month', 'year', 'last_year'], true)) {
+            $salesPeriod = 'month';
+        }
 
-        $salesChartRows =
-            Order::query()
-                ->selectRaw(
-                    'DATE(created_at) as sale_date'
-                )
-                ->selectRaw(
-                    'SUM(total_amount) as total_sales'
-                )
-                ->whereBetween(
-                    'created_at',
-                    [
-                        $currentMonthStart,
-                        $currentMonthEnd,
-                    ]
-                )
-                ->where(
-                    'status',
-                    '!=',
-                    Order::STATUS_CANCELED
-                )
-                ->groupBy(
-                    DB::raw('DATE(created_at)')
-                )
-                ->orderBy(
-                    'sale_date'
-                )
-                ->get();
+        if ($salesPeriod === 'day') {
+            $chartStart = $now->copy()->startOfDay();
+            $chartEnd = $chartStart->copy()->addDay();
+            $bucketExpression = 'HOUR(created_at)';
+            $bucketFormat = 'hour';
+        } elseif ($salesPeriod === 'year' || $salesPeriod === 'last_year') {
+            $chartStart = $now->copy()->startOfYear();
+            if ($salesPeriod === 'last_year') {
+                $chartStart->subYear();
+            }
+            $chartEnd = $chartStart->copy()->addYear();
+            $bucketExpression = 'MONTH(created_at)';
+            $bucketFormat = 'month';
+        } else {
+            $chartStart = $currentMonthStart->copy();
+            $chartEnd = $currentMonthEnd->copy()->addDay()->startOfDay();
+            $bucketExpression = 'DATE(created_at)';
+            $bucketFormat = 'date';
+        }
 
-        $salesChartLookup =
-            $salesChartRows
-                ->mapWithKeys(
-                    function ($row): array {
-                        return [
-                            Carbon::parse(
-                                $row->sale_date
-                            )->format('Y-m-d')
-                                =>
-                            round(
-                                (float) $row->total_sales,
-                                2
-                            ),
-                        ];
-                    }
-                );
+        $salesChartRows = Order::query()
+            ->selectRaw("{$bucketExpression} as sale_bucket")
+            ->selectRaw('SUM(total_amount) as total_sales')
+            ->where('created_at', '>=', $chartStart)
+            ->where('created_at', '<', $chartEnd)
+            ->where('status', '!=', Order::STATUS_CANCELED)
+            ->groupBy(DB::raw($bucketExpression))
+            ->orderBy('sale_bucket')
+            ->get();
+
+        $salesChartLookup = $salesChartRows->mapWithKeys(
+            function ($row) use ($bucketFormat): array {
+                $bucket = $bucketFormat === 'date'
+                    ? Carbon::parse($row->sale_bucket)->format('Y-m-d')
+                    : (string) $row->sale_bucket;
+
+                return [$bucket => round((float) $row->total_sales, 2)];
+            }
+        );
 
         $salesChart = [];
-
-        $chartDate =
-            $currentMonthStart->copy();
-
-        while (
-            $chartDate->lessThanOrEqualTo(
-                $currentMonthEnd
-            )
-        ) {
-            $dateKey =
-                $chartDate->format('Y-m-d');
-
-            $salesChart[] = [
-                'date' => $dateKey,
-                'label' => $chartDate->format('d M'),
-                'sales' =>
-                    (float) (
-                        $salesChartLookup[$dateKey]
-                        ?? 0
-                    ),
-            ];
-
-            $chartDate->addDay();
+        if ($bucketFormat === 'hour') {
+            for ($hour = 0; $hour < 24; $hour++) {
+                $salesChart[] = [
+                    'date' => sprintf('%02d:00', $hour),
+                    'label' => Carbon::createFromTime($hour)->format('g A'),
+                    'sales' => (float) ($salesChartLookup[(string) $hour] ?? 0),
+                ];
+            }
+        } elseif ($bucketFormat === 'month') {
+            for ($month = 1; $month <= 12; $month++) {
+                $salesChart[] = [
+                    'date' => $chartStart->copy()->month($month)->format('Y-m'),
+                    'label' => $chartStart->copy()->month($month)->format('M'),
+                    'sales' => (float) ($salesChartLookup[(string) $month] ?? 0),
+                ];
+            }
+        } else {
+            $chartDate = $chartStart->copy();
+            while ($chartDate->lessThan($chartEnd)) {
+                $dateKey = $chartDate->format('Y-m-d');
+                $salesChart[] = [
+                    'date' => $dateKey,
+                    'label' => $chartDate->format('d M'),
+                    'sales' => (float) ($salesChartLookup[$dateKey] ?? 0),
+                ];
+                $chartDate->addDay();
+            }
         }
 
         /*
