@@ -6,7 +6,7 @@
     @mousedown.self="closeModal"
 >
 
-    <div class="reservation-modal reservation-edit-modal">
+    <div class="reservation-modal reservation-edit-modal" @click="handleEditModalClick" @keydown.esc="closePickers">
 
 
         <!-- ============================================================
@@ -109,7 +109,38 @@
                         </label>
 
 
+                        <div ref="customerDropdownRoot" class="reservation-customer-picker">
+                            <button
+                                type="button"
+                                class="reservation-customer-trigger"
+                                :class="{ 'reservation-input-error': hasError('customer_id') }"
+                                :disabled="customersLoading || saving"
+                                :aria-expanded="customerDropdownOpen"
+                                aria-haspopup="listbox"
+                                @click.stop="toggleCustomerDropdown"
+                            >
+                                <span :class="{ 'is-placeholder': !form.customer_id }">{{ selectedCustomerLabel || 'Select Customer' }}</span>
+                                <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                            </button>
+                            <Transition name="reservation-customer-menu">
+                                <div v-if="customerDropdownOpen" class="reservation-customer-menu">
+                                    <input v-model="customerSearchQuery" type="search" class="reservation-customer-search" placeholder="Search customers..." aria-label="Search customers" @click.stop />
+                                    <div class="reservation-customer-options" role="listbox" aria-label="Customers">
+                                        <button type="button" class="reservation-customer-option" :class="{ 'is-selected': !form.customer_id }" role="option" :aria-selected="!form.customer_id" @click="selectCustomer('')">Select Customer</button>
+                                        <button v-for="customer in filteredCustomers" :key="customer.id" type="button" class="reservation-customer-option" :class="{ 'is-selected': form.customer_id === String(customer.id) }" role="option" :aria-selected="form.customer_id === String(customer.id)" @click="selectCustomer(String(customer.id))">
+                                            <span>{{ customer.name }}<small v-if="customer.phone">{{ customer.phone }}</small></span>
+                                            <i v-if="form.customer_id === String(customer.id)" class="bi bi-check2" aria-hidden="true"></i>
+                                        </button>
+                                        <p v-if="filteredCustomers.length === 0" class="reservation-customer-empty">No customers found.</p>
+                                    </div>
+                                </div>
+                            </Transition>
+                        </div>
+
                         <select
+                            class="reservation-native-select"
+                            tabindex="-1"
+                            aria-hidden="true"
                             v-model="form.customer_id"
                             :disabled="customersLoading || saving"
                             :class="{
@@ -192,7 +223,44 @@
                             </label>
 
 
+                            <div ref="reservationDatePickerRoot" class="reservation-edit-date-picker">
+                                <button
+                                    type="button"
+                                    class="reservation-edit-date-trigger"
+                                    :class="{ 'reservation-input-error': hasError('reservation_date') }"
+                                    :disabled="saving"
+                                    :aria-expanded="reservationCalendarOpen"
+                                    aria-haspopup="dialog"
+                                    @click.stop="toggleReservationCalendar"
+                                >
+                                    <span>{{ formatEditDate(form.reservation_date) }}</span>
+                                    <i class="bi bi-calendar3" aria-hidden="true"></i>
+                                </button>
+                                <Transition name="reservation-edit-calendar">
+                                    <div v-if="reservationCalendarOpen" class="reservation-edit-calendar" role="dialog" aria-label="Choose reservation date">
+                                        <div class="reservation-edit-calendar-heading">
+                                            <strong>{{ calendarMonthLabel }}</strong>
+                                            <div>
+                                                <button type="button" aria-label="Previous month" @click="moveCalendar(-1)"><i class="bi bi-chevron-left" aria-hidden="true"></i></button>
+                                                <button type="button" aria-label="Next month" @click="moveCalendar(1)"><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="reservation-edit-calendar-weekdays"><span v-for="day in calendarWeekdays" :key="day">{{ day }}</span></div>
+                                        <div class="reservation-edit-calendar-days">
+                                            <button v-for="day in calendarDays" :key="day.key" type="button" :class="{ 'is-outside': !day.isCurrentMonth, 'is-selected': day.key === form.reservation_date, 'is-today': day.key === todayDate }" :disabled="day.key < todayDate || saving" :aria-label="day.ariaLabel" :aria-pressed="day.key === form.reservation_date" @click="selectCalendarDate(day.key)">{{ day.day }}</button>
+                                        </div>
+                                        <div class="reservation-edit-calendar-footer">
+                                            <button type="button" @click="clearCalendarDate">Clear</button>
+                                            <button type="button" @click="selectCalendarDate(todayDate)">Today</button>
+                                        </div>
+                                    </div>
+                                </Transition>
+                            </div>
+
                             <input
+                                class="reservation-native-date"
+                                tabindex="-1"
+                                aria-hidden="true"
                                 v-model="form.reservation_date"
                                 type="date"
                                 :min="todayDate"
@@ -242,16 +310,11 @@
                             </label>
 
 
-                            <input
+                            <ReservationTimePicker
                                 v-model="form.start_time"
-                                type="time"
                                 :disabled="saving"
-                                :class="{
-                                    'reservation-input-error':
-                                        hasError(
-                                            'start_time'
-                                        ),
-                                }"
+                                :invalid="hasError('start_time')"
+                                placeholder="Select start time"
                                 @change="refreshAvailableTables"
                             />
 
@@ -291,16 +354,11 @@
                             </label>
 
 
-                            <input
+                            <ReservationTimePicker
                                 v-model="form.end_time"
-                                type="time"
                                 :disabled="saving"
-                                :class="{
-                                    'reservation-input-error':
-                                        hasError(
-                                            'end_time'
-                                        ),
-                                }"
+                                :invalid="hasError('end_time')"
+                                placeholder="Select end time"
                                 @change="refreshAvailableTables"
                             />
 
@@ -950,6 +1008,9 @@ import {
     watch,
 } from 'vue'
 
+import ReservationTimePicker
+    from '@/components/reservation/ReservationTimePicker.vue'
+
 import reservationService
     from '@/services/reservationService'
 
@@ -1025,6 +1086,56 @@ const availableTables =
 const selectedTableIds =
     ref([])
 
+const customerDropdownRoot = ref(null)
+const customerDropdownOpen = ref(false)
+const customerSearchQuery = ref('')
+const reservationDatePickerRoot = ref(null)
+const reservationCalendarOpen = ref(false)
+const calendarMonth = ref(new Date())
+
+const selectedCustomerLabel = computed(() => {
+    const customer = customers.value.find(
+        item => String(item.id) === String(form.value.customer_id)
+    )
+    if (!customer) return ''
+    return customer.phone
+        ? `${customer.name} — ${customer.phone}`
+        : customer.name
+})
+
+const filteredCustomers = computed(() => {
+    const query = customerSearchQuery.value.trim().toLowerCase()
+    if (!query) return customers.value
+    return customers.value.filter(customer =>
+        `${customer.name || ''} ${customer.phone || ''}`.toLowerCase().includes(query)
+    )
+})
+
+const calendarWeekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+const calendarMonthLabel = computed(() => calendarMonth.value.toLocaleDateString(undefined, {
+    month: 'long',
+    year: 'numeric',
+}))
+const calendarDays = computed(() => {
+    const year = calendarMonth.value.getFullYear()
+    const month = calendarMonth.value.getMonth()
+    const first = new Date(year, month, 1)
+    const start = new Date(year, month, 1 - first.getDay())
+
+    return Array.from({ length: 42 }, (_, index) => {
+        const date = new Date(start.getFullYear(), start.getMonth(), start.getDate() + index)
+        const key = localDateKey(date)
+        return {
+            key,
+            day: date.getDate(),
+            isCurrentMonth: date.getMonth() === month,
+            ariaLabel: date.toLocaleDateString(undefined, {
+                weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
+            }),
+        }
+    })
+})
+
 
 /*
 |--------------------------------------------------------------------------
@@ -1066,6 +1177,99 @@ function getLocalDate()
 
 const todayDate =
     getLocalDate()
+
+function localDateKey(date)
+{
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+}
+
+function formatEditDate(value)
+{
+    if (!value) return 'Select a date'
+    const [year, month, day] = String(value).slice(0, 10).split('-').map(Number)
+    if (!year || !month || !day) return 'Select a date'
+    return new Date(year, month - 1, day).toLocaleDateString(undefined, {
+        month: '2-digit', day: '2-digit', year: 'numeric',
+    })
+}
+
+function toggleCustomerDropdown()
+{
+    reservationCalendarOpen.value = false
+    customerDropdownOpen.value = !customerDropdownOpen.value
+    if (customerDropdownOpen.value) customerSearchQuery.value = ''
+}
+
+function selectCustomer(customerId)
+{
+    form.value.customer_id = customerId
+    const nextErrors = { ...validationErrors.value }
+    delete nextErrors.customer_id
+    validationErrors.value = nextErrors
+    customerDropdownOpen.value = false
+    customerSearchQuery.value = ''
+}
+
+function toggleReservationCalendar()
+{
+    customerDropdownOpen.value = false
+    if (!reservationCalendarOpen.value) {
+        const value = form.value.reservation_date || todayDate
+        const [year, month] = String(value).slice(0, 10).split('-').map(Number)
+        const date = year && month ? new Date(year, month - 1, 1) : new Date()
+        calendarMonth.value = date
+    }
+    reservationCalendarOpen.value = !reservationCalendarOpen.value
+}
+
+function moveCalendar(offset)
+{
+    calendarMonth.value = new Date(
+        calendarMonth.value.getFullYear(),
+        calendarMonth.value.getMonth() + offset,
+        1,
+    )
+}
+
+function selectCalendarDate(dateKey)
+{
+    if (dateKey < todayDate) return
+    form.value.reservation_date = dateKey
+    const nextErrors = { ...validationErrors.value }
+    delete nextErrors.reservation_date
+    validationErrors.value = nextErrors
+    reservationCalendarOpen.value = false
+    refreshAvailableTables()
+}
+
+function clearCalendarDate()
+{
+    form.value.reservation_date = ''
+    reservationCalendarOpen.value = false
+    const nextErrors = { ...validationErrors.value }
+    delete nextErrors.reservation_date
+    validationErrors.value = nextErrors
+    refreshAvailableTables()
+}
+
+function handleEditModalClick(event)
+{
+    if (!customerDropdownRoot.value?.contains(event.target)) {
+        customerDropdownOpen.value = false
+    }
+    if (!reservationDatePickerRoot.value?.contains(event.target)) {
+        reservationCalendarOpen.value = false
+    }
+}
+
+function closePickers()
+{
+    customerDropdownOpen.value = false
+    reservationCalendarOpen.value = false
+}
 
 
 /*
@@ -1428,6 +1632,9 @@ async function initializeForm()
 
 function resetState()
 {
+    closePickers()
+    customerSearchQuery.value = ''
+
     customers.value =
         []
 
@@ -2314,7 +2521,7 @@ function formatDate(
 
     padding: 22px 28px;
 
-    background: #c2410c;
+    background: linear-gradient(135deg, #fb923c 0%, #f97316 58%, #ea580c 100%);
 
     color: #ffffff;
 }
@@ -2593,6 +2800,288 @@ function formatDate(
     line-height: 1.4;
 
     color: #475569;
+}
+
+.reservation-native-select,
+.reservation-native-date {
+    display: none !important;
+}
+
+.reservation-customer-picker,
+.reservation-edit-date-picker {
+    position: relative;
+    width: 100%;
+}
+
+.reservation-customer-trigger,
+.reservation-edit-date-trigger {
+    display: flex;
+    width: 100%;
+    height: 46px;
+    min-height: 46px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0 13px;
+    border: 1px solid #d8e1ec;
+    border-radius: 10px;
+    background: #fff;
+    color: #172033;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.reservation-customer-trigger:hover,
+.reservation-edit-date-trigger:hover,
+.reservation-customer-trigger[aria-expanded="true"],
+.reservation-edit-date-trigger[aria-expanded="true"] {
+    border-color: #fb923c;
+}
+
+.reservation-customer-trigger:focus-visible,
+.reservation-edit-date-trigger:focus-visible {
+    outline: none;
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, .14);
+}
+
+.reservation-customer-trigger > i,
+.reservation-edit-date-trigger > i {
+    color: #ea580c;
+}
+
+.reservation-customer-trigger .is-placeholder {
+    color: #94a3b8;
+}
+
+.reservation-customer-trigger:disabled,
+.reservation-edit-date-trigger:disabled {
+    background: #f1f5f9;
+    color: #64748b;
+    cursor: not-allowed;
+}
+
+.reservation-customer-menu,
+.reservation-edit-calendar {
+    position: absolute;
+    z-index: 80;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #eee3da;
+    border-radius: 11px;
+    background: #fff;
+    box-shadow: 0 14px 32px rgba(23, 32, 51, .16);
+}
+
+.reservation-customer-search {
+    width: 100%;
+    height: 36px !important;
+    min-height: 36px !important;
+    margin-bottom: 6px;
+    padding: 0 10px !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 7px !important;
+    background: #fff !important;
+    font-size: 12px !important;
+}
+
+.reservation-customer-search:focus {
+    border-color: #fb923c !important;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, .1) !important;
+}
+
+.reservation-customer-options {
+    max-height: 230px;
+    overflow-y: auto;
+}
+
+.reservation-customer-option {
+    display: flex;
+    width: 100%;
+    min-height: 38px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 9px;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #334155;
+    font: inherit;
+    font-size: 12px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.reservation-customer-option:hover,
+.reservation-customer-option.is-selected {
+    background: #fff1e6;
+    color: #c2410c;
+}
+
+.reservation-customer-option small {
+    display: block;
+    margin-top: 2px;
+    color: #8491a3;
+    font-size: 10px;
+}
+
+.reservation-customer-option i {
+    color: #ea580c;
+}
+
+.reservation-customer-empty {
+    margin: 0;
+    padding: 12px 9px;
+    color: #8491a3;
+    font-size: 11px;
+    text-align: center;
+}
+
+.reservation-edit-calendar {
+    width: 300px;
+    padding: 12px;
+}
+
+.reservation-edit-calendar-heading,
+.reservation-edit-calendar-heading > div,
+.reservation-edit-calendar-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.reservation-edit-calendar-heading {
+    margin-bottom: 8px;
+    color: #172033;
+    font-size: 13px;
+}
+
+.reservation-edit-calendar-heading > div {
+    gap: 4px;
+}
+
+.reservation-edit-calendar-heading button {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #475569;
+    cursor: pointer;
+}
+
+.reservation-edit-calendar-heading button:hover {
+    background: #fff1e6;
+    color: #c2410c;
+}
+
+.reservation-edit-calendar-weekdays,
+.reservation-edit-calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    text-align: center;
+}
+
+.reservation-edit-calendar-weekdays {
+    margin-bottom: 4px;
+    color: #8491a3;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.reservation-edit-calendar-weekdays span {
+    padding: 5px 0;
+}
+
+.reservation-edit-calendar-days {
+    gap: 2px;
+}
+
+.reservation-edit-calendar-days button {
+    display: grid;
+    min-width: 0;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    background: transparent;
+    color: #172033;
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.reservation-edit-calendar-days button:hover:not(:disabled) {
+    border-color: #fed7aa;
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.reservation-edit-calendar-days button.is-outside {
+    color: #b6c0cd;
+}
+
+.reservation-edit-calendar-days button.is-today:not(.is-selected) {
+    border-color: #fdba74;
+    color: #c2410c;
+    font-weight: 700;
+}
+
+.reservation-edit-calendar-days button.is-selected {
+    background: #f97316;
+    color: #fff;
+    font-weight: 700;
+}
+
+.reservation-edit-calendar-days button:disabled {
+    color: #cbd5e1;
+    cursor: not-allowed;
+}
+
+.reservation-edit-calendar-footer {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #f1eee9;
+}
+
+.reservation-edit-calendar-footer button {
+    padding: 5px 7px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #c2410c;
+    font-size: 11px;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.reservation-edit-calendar-footer button:hover {
+    background: #fff1e6;
+}
+
+.reservation-customer-menu-enter-active,
+.reservation-customer-menu-leave-active,
+.reservation-edit-calendar-enter-active,
+.reservation-edit-calendar-leave-active {
+    transform-origin: top left;
+    transition: opacity .14s ease, transform .14s ease;
+}
+
+.reservation-customer-menu-enter-from,
+.reservation-customer-menu-leave-to,
+.reservation-edit-calendar-enter-from,
+.reservation-edit-calendar-leave-to {
+    opacity: 0;
+    transform: translateY(-4px) scale(.98);
 }
 
 .reservation-required {

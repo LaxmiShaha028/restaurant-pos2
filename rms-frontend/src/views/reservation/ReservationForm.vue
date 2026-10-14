@@ -456,14 +456,83 @@
               </label>
 
 
-              <input
-                id="reservation-date"
-                v-model="form.reservation_date"
-                type="date"
-                :min="today"
-                class="reservation-input"
-                @change="resetAvailability"
-              />
+              <div
+                ref="reservationDatePicker"
+                class="reservation-date-picker"
+                @keydown.esc="reservationCalendarOpen = false"
+              >
+                <button
+                  id="reservation-date"
+                  type="button"
+                  class="reservation-input reservation-date-trigger"
+                  :aria-expanded="reservationCalendarOpen"
+                  aria-haspopup="dialog"
+                  @click="toggleReservationCalendar"
+                >
+                  <span :class="{ 'is-placeholder': !form.reservation_date }">
+                    {{ formatReservationDateDisplay(form.reservation_date) || 'Select a date' }}
+                  </span>
+                  <i class="bi bi-calendar3" aria-hidden="true"></i>
+                </button>
+
+                <Transition name="reservation-calendar">
+                  <div
+                    v-if="reservationCalendarOpen"
+                    class="reservation-calendar-popover"
+                    role="dialog"
+                    aria-label="Choose reservation date"
+                  >
+                    <div class="reservation-calendar-header">
+                      <strong>{{ reservationCalendarMonthLabel }}</strong>
+                      <div class="reservation-calendar-navigation">
+                        <button
+                          type="button"
+                          aria-label="Previous month"
+                          @click="moveReservationCalendar(-1)"
+                        >
+                          <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                        </button>
+                        <button
+                          type="button"
+                          aria-label="Next month"
+                          @click="moveReservationCalendar(1)"
+                        >
+                          <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="reservation-calendar-weekdays" aria-hidden="true">
+                      <span v-for="day in reservationCalendarWeekdays" :key="day">{{ day }}</span>
+                    </div>
+
+                    <div class="reservation-calendar-days">
+                      <button
+                        v-for="day in reservationCalendarDays"
+                        :key="day.key"
+                        type="button"
+                        class="reservation-calendar-day"
+                        :class="{
+                          'is-outside-month': !day.isCurrentMonth,
+                          'is-selected': day.key === form.reservation_date,
+                          'is-today': day.key === today,
+                        }"
+                        :disabled="day.isPast"
+                        :aria-label="day.ariaLabel"
+                        :aria-pressed="day.key === form.reservation_date"
+                        @click="selectReservationDate(day.key)"
+                      >
+                        {{ day.dayNumber }}
+                      </button>
+                    </div>
+
+                    <div class="reservation-calendar-footer">
+                      <button type="button" class="calendar-clear" @click="clearReservationDate">Clear</button>
+                      <button type="button" class="calendar-today" @click="selectReservationDate(today)">Today</button>
+                    </div>
+                  </div>
+                </Transition>
+              </div>
 
 
               <div
@@ -494,11 +563,11 @@
               </label>
 
 
-              <input
+              <ReservationTimePicker
                 id="reservation-start"
                 v-model="form.start_time"
-                type="time"
-                class="reservation-input"
+                :invalid="Boolean(errors.start_time)"
+                placeholder="Select start time"
                 @change="resetAvailability"
               />
 
@@ -531,11 +600,11 @@
               </label>
 
 
-              <input
+              <ReservationTimePicker
                 id="reservation-end"
                 v-model="form.end_time"
-                type="time"
-                class="reservation-input"
+                :invalid="Boolean(errors.end_time)"
+                placeholder="Select end time"
                 @change="resetAvailability"
               />
 
@@ -1150,6 +1219,7 @@ import {
 import { useRouter } from "vue-router";
 
 import reservationService from "@/services/reservationService";
+import ReservationTimePicker from "@/components/reservation/ReservationTimePicker.vue";
 
 import "@/assets/css/reservation/reservation-form.css";
 
@@ -1339,6 +1409,105 @@ const today =
     return `${year}-${month}-${day}`;
 
   });
+
+const reservationDatePicker = ref(null);
+const reservationCalendarOpen = ref(false);
+const reservationCalendarMonth = ref(new Date());
+const reservationCalendarWeekdays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+
+const reservationCalendarMonthLabel = computed(() =>
+  reservationCalendarMonth.value.toLocaleDateString(undefined, {
+    month: "long",
+    year: "numeric",
+  })
+);
+
+const reservationCalendarDays = computed(() => {
+  const year = reservationCalendarMonth.value.getFullYear();
+  const month = reservationCalendarMonth.value.getMonth();
+  const firstDay = new Date(year, month, 1);
+  const gridStart = new Date(year, month, 1 - firstDay.getDay());
+
+  return Array.from({ length: 42 }, (_, index) => {
+    const date = new Date(
+      gridStart.getFullYear(),
+      gridStart.getMonth(),
+      gridStart.getDate() + index,
+    );
+    const key = formatLocalDateKey(date);
+
+    return {
+      key,
+      dayNumber: date.getDate(),
+      isCurrentMonth: date.getMonth() === month,
+      isPast: key < today.value,
+      ariaLabel: date.toLocaleDateString(undefined, {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      }),
+    };
+  });
+});
+
+function formatLocalDateKey(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function parseLocalDate(value) {
+  if (!value) return null;
+  const [year, month, day] = value.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
+
+function formatReservationDateDisplay(value) {
+  const date = parseLocalDate(value);
+  return date
+    ? date.toLocaleDateString(undefined, {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      })
+    : "";
+}
+
+function toggleReservationCalendar() {
+  if (!reservationCalendarOpen.value) {
+    const selectedDate = parseLocalDate(form.reservation_date);
+    const initialDate = selectedDate || parseLocalDate(today.value);
+    reservationCalendarMonth.value = new Date(
+      initialDate.getFullYear(),
+      initialDate.getMonth(),
+      1,
+    );
+  }
+  reservationCalendarOpen.value = !reservationCalendarOpen.value;
+}
+
+function moveReservationCalendar(offset) {
+  reservationCalendarMonth.value = new Date(
+    reservationCalendarMonth.value.getFullYear(),
+    reservationCalendarMonth.value.getMonth() + offset,
+    1,
+  );
+}
+
+function selectReservationDate(dateKey) {
+  if (dateKey < today.value) return;
+  form.reservation_date = dateKey;
+  reservationCalendarOpen.value = false;
+  resetAvailability();
+}
+
+function clearReservationDate() {
+  form.reservation_date = "";
+  reservationCalendarOpen.value = false;
+  resetAvailability();
+}
 
 
 /*
@@ -1654,6 +1823,13 @@ const handleDocumentClick =
 
     const target =
       event.target;
+
+    if (
+      reservationCalendarOpen.value &&
+      !reservationDatePicker.value?.contains(target)
+    ) {
+      reservationCalendarOpen.value = false;
+    }
 
 
     if (

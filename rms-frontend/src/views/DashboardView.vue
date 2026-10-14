@@ -1375,6 +1375,8 @@ import {
 
   computed,
 
+  onBeforeUnmount,
+
   onMounted,
 
   ref,
@@ -1411,6 +1413,7 @@ const salesPeriodOptions = [
   { value: 'last_year', label: 'Last Year' },
 ]
 const salesChartRequestId = ref(0)
+let reservationRefreshTimer = null
 
 function selectSalesPeriod(period) {
   salesPeriod.value = period
@@ -2398,6 +2401,36 @@ async function loadDashboard() {
 
 }
 
+async function refreshUpcomingReservations() {
+  try {
+    const response = await api.get('/dashboard', {
+      params: {
+        sales_period: salesPeriod.value,
+        refresh: true,
+      },
+    })
+
+    const nextCount = response?.data?.data?.summary?.upcoming_reservations
+    if (nextCount !== undefined && dashboard.value.summary) {
+      dashboard.value = {
+        ...dashboard.value,
+        summary: {
+          ...dashboard.value.summary,
+          upcoming_reservations: Number(nextCount),
+        },
+      }
+    }
+  } catch {
+    // Keep the current count visible if a background refresh fails.
+  }
+}
+
+function handleDashboardVisibilityChange() {
+  if (document.visibilityState === 'visible') {
+    refreshUpcomingReservations()
+  }
+}
+
 async function loadSalesChart() {
   const requestId = ++salesChartRequestId.value
 
@@ -2427,7 +2460,27 @@ async function loadSalesChart() {
 
 
 
-onMounted(loadDashboard)
+onMounted(() => {
+  loadDashboard()
+  reservationRefreshTimer = window.setInterval(
+    refreshUpcomingReservations,
+    30000,
+  )
+  document.addEventListener(
+    'visibilitychange',
+    handleDashboardVisibilityChange,
+  )
+})
+
+onBeforeUnmount(() => {
+  if (reservationRefreshTimer) {
+    window.clearInterval(reservationRefreshTimer)
+  }
+  document.removeEventListener(
+    'visibilitychange',
+    handleDashboardVisibilityChange,
+  )
+})
 
 </script>
 
