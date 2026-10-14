@@ -1954,3 +1954,558 @@
   border-color: #eee3da;
   background: #fff8f1;
 }
+
+/* POS table picker: project theme, selectable list and visual floor layout. */
+.pos-table-selection-page {
+  --pos-picker-accent: var(--restaurant-accent, #f97316);
+  --pos-picker-accent-dark: var(--restaurant-accent-dark, #c2410c);
+  --pos-picker-accent-soft: var(--restaurant-accent-soft, #fff1e6);
+  --pos-picker-border: var(--restaurant-border, #eee3da);
+  --pos-picker-ink: var(--restaurant-ink, #111827);
+}
+
+.pos-table-workspace {
+  display: grid;
+  grid-template-columns: minmax(260px, .85fr) minmax(0, 2.15fr);
+  align-items: start;
+  gap: 12px;
+}
+
+.pos-table-list-panel,
+.pos-floor-layout-panel {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--pos-picker-border);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+}
+
+.pos-floor-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.pos-floor-panel-heading h2 {
+  margin: 0;
+  color: var(--pos-picker-ink);
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.pos-floor-panel-heading p {
+  margin: 3px 0 0;
+  color: #6b7280;
+  font-size: 11px;
+}
+
+.pos-floor-count {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--pos-picker-accent-soft);
+  color: var(--pos-picker-accent-dark);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.pos-table-list {
+  display: grid;
+  gap: 6px;
+}
+
+.pos-table-list-item {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--pos-picker-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--pos-picker-ink);
+  text-align: left;
+  transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
+}
+
+.pos-table-list-item:hover,
+.pos-table-list-item.is-selected {
+  border-color: var(--pos-picker-accent);
+  background: var(--pos-picker-accent-soft);
+}
+
+.pos-table-list-item:focus-visible,
+.pos-floor-table:focus-visible {
+  outline: 2px solid var(--pos-picker-accent);
+  outline-offset: 2px;
+}
+
+.pos-table-list-check {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  place-items: center;
+  border-radius: 7px;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.pos-table-list-item.is-selected .pos-table-list-check {
+  background: var(--pos-picker-accent);
+  color: #fff;
+}
+
+.pos-table-list-copy,
+.pos-table-list-meta {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.pos-table-list-copy {
+  flex: 1;
+}
+
+.pos-table-list-copy strong,
+.pos-table-list-meta strong {
+  overflow: hidden;
+  color: var(--pos-picker-ink);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pos-table-list-copy small,
+.pos-table-list-meta small {
+  overflow: hidden;
+  color: #6b7280;
+  font-size: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pos-table-list-meta {
+  flex: 0 0 auto;
+  text-align: right;
+}
+
+.pos-table-list-meta small.reserved {
+  color: #c2410c;
+}
+
+.pos-table-list-panel .pagination-controls {
+  flex-wrap: wrap;
+  padding: 10px 0 0;
+}
+
+.pos-floor-map-heading {
+  margin-bottom: 14px;
+}
+
+.pos-floor-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: #6b7280;
+  font-size: 10px;
+}
+
+.pos-floor-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pos-floor-legend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fed7aa;
+}
+
+.pos-floor-legend i.reserved {
+  background: #c2410c;
+}
+
+.pos-floor-legend i.selected {
+  background: #f97316;
+}
+
+.pos-floor-map {
+  display: grid;
+  min-height: 360px;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  align-content: start;
+  gap: 16px 12px;
+  padding: 18px;
+  border: 1px dashed var(--pos-picker-border);
+  border-radius: 10px;
+  background-color: #fffdfa;
+  background-image: radial-gradient(#ead8c8 .7px, transparent .7px);
+  background-size: 18px 18px;
+}
+
+.pos-floor-table-position {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.pos-floor-table-middle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.pos-floor-seat-row {
+  display: flex;
+  min-height: 19px;
+  justify-content: center;
+  gap: 6px;
+}
+
+.pos-floor-seat-column {
+  display: flex;
+  min-width: 18px;
+  min-height: 18px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.pos-floor-seat-row span,
+.pos-floor-seat-column span {
+  position: relative;
+  display: block;
+  width: 17px;
+  height: 19px;
+  flex: 0 0 19px;
+}
+
+.pos-floor-seat-row span::before,
+.pos-floor-seat-column span::before {
+  position: absolute;
+  top: 0;
+  left: 4px;
+  width: 9px;
+  height: 6px;
+  border: 1px solid #c2410c;
+  border-radius: 3px 3px 1px 1px;
+  background: #fdba74;
+  content: '';
+}
+
+.pos-floor-seat-row span::after,
+.pos-floor-seat-column span::after {
+  position: absolute;
+  top: 7px;
+  left: 2px;
+  width: 13px;
+  height: 8px;
+  border: 1px solid #c2410c;
+  border-radius: 2px;
+  background: #ffedd5;
+  box-shadow: -2px 7px 0 -2px #c2410c, 2px 7px 0 -2px #c2410c;
+  content: '';
+}
+
+.pos-floor-table-position > .pos-floor-seat-row.is-bottom span {
+  transform: rotate(180deg);
+}
+
+.pos-floor-seat-column.is-left span {
+  transform: rotate(-90deg);
+}
+
+.pos-floor-seat-column.is-right span {
+  transform: rotate(90deg);
+}
+
+.pos-floor-table-position.is-reserved .pos-floor-seat-row span::before,
+.pos-floor-table-position.is-reserved .pos-floor-seat-column span::before {
+  border-color: #9a3412;
+  background: #fb923c;
+}
+
+.pos-floor-table-position.is-reserved .pos-floor-seat-row span::after,
+.pos-floor-table-position.is-reserved .pos-floor-seat-column span::after {
+  border-color: #9a3412;
+  background: #fed7aa;
+  box-shadow: -2px 7px 0 -2px #9a3412, 2px 7px 0 -2px #9a3412;
+}
+
+.pos-floor-table-position.is-selected .pos-floor-seat-row span::before,
+.pos-floor-table-position.is-selected .pos-floor-seat-column span::before {
+  border-color: var(--pos-picker-accent-dark);
+  background: #fdba9a;
+}
+
+.pos-floor-table-position.is-selected .pos-floor-seat-row span::after,
+.pos-floor-table-position.is-selected .pos-floor-seat-column span::after {
+  border-color: var(--pos-picker-accent-dark);
+  background: var(--pos-picker-accent-soft);
+  box-shadow: -2px 7px 0 -2px var(--pos-picker-accent-dark), 2px 7px 0 -2px var(--pos-picker-accent-dark);
+}
+
+.pos-floor-table {
+  position: relative;
+  display: grid;
+  width: min(100%, 240px);
+  height: 130px;
+  min-height: 0;
+  flex: 0 1 auto;
+  align-content: center;
+  justify-items: center;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid #fdba74;
+  border-radius: 12px;
+  background: #ffedd5;
+  color: #9a3412;
+  text-align: center;
+  transition: .15s ease;
+}
+
+.pos-floor-table.seats-capacity-2 {
+  width: min(100%, 90px);
+  height: 90px;
+}
+
+.pos-floor-table.seats-capacity-4 {
+  width: min(100%, 110px);
+  height: 110px;
+}
+
+.pos-floor-table.seats-capacity-6 {
+  width: min(100%, 150px);
+  height: 100px;
+}
+
+.pos-floor-table.seats-capacity-8 {
+  width: min(100%, 180px);
+  height: 110px;
+}
+
+.pos-floor-table.seats-capacity-10 {
+  width: min(100%, 210px);
+  height: 120px;
+}
+
+.pos-floor-table.seats-capacity-12 {
+  width: min(100%, 240px);
+  height: 130px;
+}
+
+.pos-floor-table.shape-square {
+  border-radius: 10px;
+}
+
+.pos-floor-table.shape-round {
+  border-radius: 50%;
+}
+
+.pos-floor-table.shape-oval {
+  border-radius: 999px;
+}
+
+.pos-floor-table:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(194, 65, 12, .14);
+}
+
+.pos-floor-table.is-reserved {
+  border-color: #c2410c;
+  background: #fed7aa;
+  color: #7c2d12;
+}
+
+.pos-floor-table.is-selected {
+  border-color: var(--pos-picker-accent);
+  outline: 2px solid var(--pos-picker-accent);
+  outline-offset: 2px;
+  background: var(--pos-picker-accent-soft);
+  color: var(--pos-picker-accent-dark);
+  box-shadow: 0 5px 14px rgba(249, 115, 22, .14);
+}
+
+.pos-floor-table strong {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pos-floor-table > span {
+  max-width: 100%;
+  overflow: hidden;
+  color: inherit;
+  font-size: 9px;
+  opacity: .75;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pos-floor-table small {
+  font-size: 9px;
+}
+
+.pos-floor-primary {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: var(--pos-picker-accent);
+  color: #fff;
+  font-size: 8px;
+}
+
+@media (max-width: 1100px) {
+  .pos-table-workspace {
+    grid-template-columns: minmax(230px, .9fr) minmax(0, 1.8fr);
+    gap: 9px;
+  }
+
+  .pos-floor-map {
+    grid-template-columns: repeat(2, minmax(110px, 1fr));
+    gap: 12px 8px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 760px) {
+  .pos-table-workspace {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .pos-table-list-panel,
+  .pos-floor-layout-panel {
+    padding: 10px;
+  }
+
+  .pos-floor-map {
+    min-height: 240px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pos-floor-table {
+    max-width: 100%;
+  }
+
+  .pos-floor-table.seats-capacity-10 {
+    width: min(100%, 190px);
+  }
+
+  .pos-floor-table.seats-capacity-12 {
+    width: min(100%, 210px);
+  }
+}
+
+@media (max-width: 420px) {
+  .pos-floor-map {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pos-floor-map-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* =========================================================
+   Floor map: capacity-based table sizes, auto chairs, shapes.
+   Sizes are driven by --table-w / --table-h (unitless px) so
+   the aspect ratio holds when a table has to shrink.
+========================================================= */
+
+/* Equal-width cells keep every row aligned; each table is centred in its cell. */
+.pos-floor-map {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  align-items: center;
+  align-content: start;
+  justify-items: center;
+  gap: 28px 20px;
+  padding: 22px 16px;
+}
+
+.pos-floor-table-position {
+  max-width: 100%;
+  justify-self: center;
+  align-self: center;
+}
+
+.pos-floor-table-middle {
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* --tw / --th come from the Vue view (one size per capacity).
+   The button selector is more specific than the old .seats-capacity-N rules. */
+.pos-floor-map button.pos-floor-table {
+  width: calc(var(--tw, 240) * 1px);
+  height: auto;
+  min-width: 0;
+  max-width: 100%;
+  aspect-ratio: var(--tw, 240) / var(--th, 130);
+}
+
+/* Shapes: rectangle is the default; round/oval follow the size box. */
+.pos-floor-table.shape-rectangle { border-radius: 12px; }
+.pos-floor-table.shape-square    { border-radius: 10px; }
+.pos-floor-table.shape-round     { border-radius: 50%; }
+.pos-floor-table.shape-oval      { border-radius: 999px; }
+
+/* Round and oval corners clip text, so give the label some air. */
+.pos-floor-table.shape-round,
+.pos-floor-table.shape-oval {
+  padding: 14px;
+}
+
+/* Chair rows/columns only exist for sides that have chairs; keep chairs inside the table edge. */
+.pos-floor-seat-row,
+.pos-floor-seat-column {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Chairs spread evenly along the side they belong to. */
+.pos-floor-seat-row {
+  width: calc(var(--tw, 240) * 1px);
+  max-width: 100%;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  gap: 0;
+}
+
+.pos-floor-seat-column {
+  height: calc(var(--th, 130) * 1px);
+  justify-content: space-evenly;
+  gap: 0;
+}
+
+@media (max-width: 760px) {
+  .pos-floor-map {
+    gap: 22px 12px;
+    padding: 16px 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .pos-floor-map {
+    padding: 12px 8px;
+  }
+}
