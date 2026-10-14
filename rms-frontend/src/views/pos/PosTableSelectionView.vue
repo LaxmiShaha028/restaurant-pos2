@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <button type="button" class="pos-light-button" :disabled="loading" @click="loadTables">
+      <button type="button" class="pos-light-button pos-refresh-button" :disabled="loading" @click="loadTables">
         <i class="bi bi-arrow-clockwise" :class="{ 'pos-spin': loading }"></i>
         Refresh
       </button>

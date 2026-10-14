@@ -123,6 +123,27 @@
   cursor: pointer;
 }
 
+.billing-range-field .reservation-filter-date-picker .reservation-filter-date-trigger {
+  width: 100%;
+  min-height: 28px;
+  height: 28px;
+  padding: 0 5px;
+  border-color: #e5e7eb;
+  border-radius: 4px;
+  color: #172033;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.billing-range-field .reservation-filter-date-picker .reservation-filter-date-trigger i {
+  color: #f97316;
+}
+
+.billing-range-field .reservation-filter-date-picker .reservation-filter-date-trigger:focus-visible {
+  border-color: #fb923c;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, .12);
+}
+
 .billing-range-field input:focus {
   border-color: #2563eb;
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.08);

@@ -29,7 +29,7 @@
     =================================================== -->
     <div class="billing-header-actions">
       <!-- From Date -->
-      <label class="billing-range-field">
+      <div class="billing-range-field">
         <span class="billing-range-label">
           <i
             class="bi bi-calendar3"
@@ -38,17 +38,17 @@
           From Date
         </span>
 
-        <input
-          :value="dateFrom"
-          type="date"
+        <ReservationFilterDatePicker
+          :model-value="dateFrom"
           :max="resolvedFromMax"
-          aria-label="Select billing from date"
-          @change="handleFromDateChange"
+          id="billing-date-from"
+          label="billing from date"
+          @update:model-value="emit('update:date-from', $event)"
         />
-      </label>
+      </div>
 
       <!-- To Date -->
-      <label class="billing-range-field">
+      <div class="billing-range-field">
         <span class="billing-range-label">
           <i
             class="bi bi-calendar3"
@@ -57,15 +57,15 @@
           To Date
         </span>
 
-        <input
-          :value="dateTo"
-          type="date"
+        <ReservationFilterDatePicker
+          :model-value="dateTo"
           :min="resolvedToMin"
           :max="today"
-          aria-label="Select billing to date"
-          @change="handleToDateChange"
+          id="billing-date-to"
+          label="billing to date"
+          @update:model-value="emit('update:date-to', $event)"
         />
-      </label>
+      </div>
 
       <!-- Refresh Button -->
       <button
@@ -104,6 +104,7 @@
 import {
   computed,
 } from "vue";
+import ReservationFilterDatePicker from "@/components/reservation/ReservationFilterDatePicker.vue";
 
 /*
 |--------------------------------------------------------------------------
@@ -172,42 +173,6 @@ const resolvedToMin =
       undefined
     );
   });
-
-/*
-|--------------------------------------------------------------------------
-| Handle From Date Change
-|--------------------------------------------------------------------------
-*/
-
-function handleFromDateChange(
-  event
-) {
-  const selectedDate =
-    event?.target?.value || "";
-
-  emit(
-    "update:date-from",
-    selectedDate
-  );
-}
-
-/*
-|--------------------------------------------------------------------------
-| Handle To Date Change
-|--------------------------------------------------------------------------
-*/
-
-function handleToDateChange(
-  event
-) {
-  const selectedDate =
-    event?.target?.value || "";
-
-  emit(
-    "update:date-to",
-    selectedDate
-  );
-}
 
 /*
 |--------------------------------------------------------------------------

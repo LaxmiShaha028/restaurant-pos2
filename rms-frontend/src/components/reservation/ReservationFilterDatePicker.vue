@@ -4,6 +4,7 @@
       :id="id"
       type="button"
       class="reservation-filter-date-trigger"
+      :aria-label="`Choose ${label}`"
       :aria-expanded="open"
       aria-haspopup="dialog"
       @click="togglePicker"
@@ -34,13 +35,13 @@
             :class="{ 'is-outside': !day.isCurrentMonth, 'is-selected': day.key === modelValue, 'is-today': day.key === todayKey }"
             :aria-label="day.ariaLabel"
             :aria-selected="day.key === modelValue"
-            :disabled="day.isBeforeMin"
+            :disabled="day.isBeforeMin || day.isAfterMax"
             @click="selectDate(day.key)"
           >{{ day.day }}</button>
         </div>
         <div class="reservation-filter-date-footer">
           <button type="button" @click="clearDate">Clear</button>
-          <button type="button" :disabled="min && todayKey < min" @click="selectDate(todayKey)">Today</button>
+          <button type="button" :disabled="(min && todayKey < min) || (max && todayKey > max)" @click="selectDate(todayKey)">Today</button>
         </div>
       </div>
     </Transition>
@@ -53,6 +54,7 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 const props = defineProps({
   modelValue: { type: String, default: '' },
   min: { type: String, default: '' },
+  max: { type: String, default: '' },
   id: { type: String, required: true },
   label: { type: String, required: true },
 })
@@ -80,6 +82,7 @@ const days = computed(() => {
       day: date.getDate(),
       isCurrentMonth: date.getMonth() === first.getMonth(),
       isBeforeMin: Boolean(props.min && localDateKey(date) < props.min),
+      isAfterMax: Boolean(props.max && localDateKey(date) > props.max),
       ariaLabel: date.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }),
     }
   })
