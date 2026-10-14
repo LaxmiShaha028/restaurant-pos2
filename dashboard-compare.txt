@@ -1,0 +1,401 @@
+﻿diff --git a/dashboard-development2.txt b/dashboard-laxmi.txt
+index 2cb0738..ead2eb1 100644
+--- a/dashboard-development2.txt
++++ b/dashboard-laxmi.txt
+@@ -5,16 +5,13 @@ namespace App\Http\Controllers\Api;
+ use App\Http\Controllers\Controller;
+ use App\Models\Order;
+ use App\Models\Permission;
+-use App\Models\Reservation;
+ use App\Models\RestaurantTable;
+ use App\Models\Role;
+ use App\Models\User;
+ use Carbon\Carbon;
+ use Illuminate\Http\JsonResponse;
+ use Illuminate\Http\Request;
+-use Illuminate\Support\Facades\Cache;
+ use Illuminate\Support\Facades\DB;
+-use Throwable;
+ 
+ class DashboardController extends Controller
+ {
+@@ -25,45 +22,6 @@ class DashboardController extends Controller
+     */
+ 
+     public function overview(Request $request): JsonResponse
+-    {
+-        $user = $request->user();
+-        $tenant = $request->attributes->get('tenant');
+-        $cacheKey = sprintf(
+-            'dashboard-overview:%s:%s:%s',
+-            $tenant?->id ?? 'unknown',
+-            $user?->id ?? 'unknown',
+-            now()->format('Y-m')
+-        );
+-
+-        $payload = null;
+-
+-        if (! $request->boolean('refresh')) {
+-            try {
+-                $payload = Cache::store('file')->get($cacheKey);
+-            } catch (Throwable) {
+-                // The dashboard remains available if the cache is unavailable.
+-            }
+-        }
+-
+-        if (! is_array($payload)) {
+-            $payload = $this->buildOverviewData($request);
+-
+-            try {
+-                Cache::store('file')->put(
+-                    $cacheKey,
+-                    $payload,
+-                    now()->addSeconds(3)
+-                );
+-            } catch (Throwable) {
+-                // Cache writes are best-effort; the live payload is still returned.
+-            }
+-        }
+-
+-        return response()->json($payload);
+-    }
+-
+-
+-    private function buildOverviewData(Request $request): array
+     {
+         $user = $request->user();
+ 
+@@ -131,6 +89,15 @@ class DashboardController extends Controller
+         |
+         */
+ 
++        $currentMonthSales =
++            (clone $currentMonthOrdersQuery)
++                ->where(
++                    'status',
++                    '!=',
++                    Order::STATUS_CANCELED
++                )
++                ->sum('total_amount');
++
+         $previousMonthSales =
+             Order::query()
+                 ->whereBetween(
+@@ -178,60 +145,31 @@ class DashboardController extends Controller
+         |--------------------------------------------------------------------------
+         */
+ 
+-        $currentOrderStats =
+-            (clone $currentMonthOrdersQuery)
+-                ->selectRaw('COUNT(*) as total_orders')
+-                ->selectRaw(
+-                    'COALESCE(SUM(CASE WHEN status <> ? THEN total_amount ELSE 0 END), 0) as current_month_sales',
+-                    [Order::STATUS_CANCELED]
+-                )
+-                ->selectRaw(
+-                    'COALESCE(SUM(CASE WHEN status = ? THEN 1 ELSE 0 END), 0) as completed_orders',
+-                    [Order::STATUS_COMPLETED]
+-                )
+-                ->selectRaw(
+-                    'COALESCE(SUM(CASE WHEN status IN (?, ?, ?, ?) THEN 1 ELSE 0 END), 0) as active_orders',
+-                    $activeOrderStatuses
+-                )
+-                ->selectRaw(
+-                    'COALESCE(SUM(CASE WHEN status = ? THEN 1 ELSE 0 END), 0) as pending_kitchen_orders',
+-                    [Order::STATUS_PENDING]
+-                )
+-                ->selectRaw(
+-                    'COALESCE(SUM(CASE WHEN status <> ? THEN paid_amount ELSE 0 END), 0) as paid_amount',
+-                    [Order::STATUS_CANCELED]
+-                )
+-                ->selectRaw(
+-                    'COALESCE(SUM(CASE WHEN status <> ? THEN due_amount ELSE 0 END), 0) as due_amount',
+-                    [Order::STATUS_CANCELED]
+-                )
+-                ->first();
+-
+-        $currentMonthSales =
+-            (float) $currentOrderStats->current_month_sales;
+-
+         $totalOrders =
+-            (int) $currentOrderStats->total_orders;
++            (clone $currentMonthOrdersQuery)
++                ->count();
+ 
+         $completedOrders =
+-            (int) $currentOrderStats->completed_orders;
++            (clone $currentMonthOrdersQuery)
++                ->where(
++                    'status',
++                    Order::STATUS_COMPLETED
++                )
++                ->count();
+ 
+         $activeOrders =
+-            (int) $currentOrderStats->active_orders;
+-
+-        $pendingKitchenOrders =
+-            (int) $currentOrderStats->pending_kitchen_orders;
+-
+-        $upcomingReservations =
+-            Reservation::query()
++            (clone $currentMonthOrdersQuery)
+                 ->whereIn(
+                     'status',
+-                    Reservation::activeStatuses()
++                    $activeOrderStatuses
+                 )
++                ->count();
++
++        $pendingKitchenOrders =
++            (clone $currentMonthOrdersQuery)
+                 ->where(
+-                    'start_time',
+-                    '>=',
+-                    $now
++                    'status',
++                    Order::STATUS_PENDING
+                 )
+                 ->count();
+ 
+@@ -242,10 +180,22 @@ class DashboardController extends Controller
+         */
+ 
+         $paidAmount =
+-            (float) $currentOrderStats->paid_amount;
++            (clone $currentMonthOrdersQuery)
++                ->where(
++                    'status',
++                    '!=',
++                    Order::STATUS_CANCELED
++                )
++                ->sum('paid_amount');
+ 
+         $dueAmount =
+-            (float) $currentOrderStats->due_amount;
++            (clone $currentMonthOrdersQuery)
++                ->where(
++                    'status',
++                    '!=',
++                    Order::STATUS_CANCELED
++                )
++                ->sum('due_amount');
+ 
+         /*
+         |--------------------------------------------------------------------------
+@@ -253,102 +203,106 @@ class DashboardController extends Controller
+         |--------------------------------------------------------------------------
+         */
+ 
+-        $tableStats =
++        $occupiedTables =
+             RestaurantTable::query()
+-                ->selectRaw(
+-                    'COALESCE(SUM(CASE WHEN status = ? THEN 1 ELSE 0 END), 0) as occupied_tables',
+-                    [RestaurantTable::STATUS_OCCUPIED]
+-                )
+-                ->selectRaw(
+-                    'COALESCE(SUM(CASE WHEN status = ? THEN 1 ELSE 0 END), 0) as available_tables',
+-                    [RestaurantTable::STATUS_AVAILABLE]
++                ->where(
++                    'status',
++                    RestaurantTable::STATUS_OCCUPIED
+                 )
+-                ->first();
+-
+-        $occupiedTables =
+-            (int) $tableStats->occupied_tables;
++                ->count();
+ 
+         $availableTables =
+-            (int) $tableStats->available_tables;
++            RestaurantTable::query()
++                ->where(
++                    'status',
++                    RestaurantTable::STATUS_AVAILABLE
++                )
++                ->count();
+ 
+         /*
+         |--------------------------------------------------------------------------
+         | Sales Chart
+         |--------------------------------------------------------------------------
+-        |
+-        | Daily sales for current month.
+-        |
+         */
+ 
+-        $salesChartRows =
+-            Order::query()
+-                ->selectRaw(
+-                    'DATE(created_at) as sale_date'
+-                )
+-                ->selectRaw(
+-                    'SUM(total_amount) as total_sales'
+-                )
+-                ->whereBetween(
+-                    'created_at',
+-                    [
+-                        $currentMonthStart,
+-                        $currentMonthEnd,
+-                    ]
+-                )
+-                ->where(
+-                    'status',
+-                    '!=',
+-                    Order::STATUS_CANCELED
+-                )
+-                ->groupBy(
+-                    DB::raw('DATE(created_at)')
+-                )
+-                ->orderBy(
+-                    'sale_date'
+-                )
+-                ->get();
++        $salesPeriod = $request->query('sales_period', 'month');
+ 
+-        $salesChartLookup =
+-            $salesChartRows
+-                ->mapWithKeys(
+-                    function ($row): array {
+-                        return [
+-                            Carbon::parse(
+-                                $row->sale_date
+-                            )->format('Y-m-d')
+-                                =>
+-                            round(
+-                                (float) $row->total_sales,
+-                                2
+-                            ),
+-                        ];
+-                    }
+-                );
++        if (! in_array($salesPeriod, ['day', 'month', 'year', 'last_year'], true)) {
++            $salesPeriod = 'month';
++        }
+ 
+-        $salesChart = [];
++        if ($salesPeriod === 'day') {
++            $chartStart = $now->copy()->startOfDay();
++            $chartEnd = $now->copy()->endOfDay();
++            $chartSelect = 'HOUR(created_at) as period_key';
++            $chartGroup = 'HOUR(created_at)';
++        } elseif ($salesPeriod === 'year') {
++            $chartStart = $now->copy()->startOfYear();
++            $chartEnd = $now->copy()->endOfYear();
++            $chartSelect = 'MONTH(created_at) as period_key';
++            $chartGroup = 'MONTH(created_at)';
++        } elseif ($salesPeriod === 'last_year') {
++            $chartStart = $now->copy()->subYearNoOverflow()->startOfYear();
++            $chartEnd = $now->copy()->subYearNoOverflow()->endOfYear();
++            $chartSelect = 'MONTH(created_at) as period_key';
++            $chartGroup = 'MONTH(created_at)';
++        } else {
++            $chartStart = $currentMonthStart;
++            $chartEnd = $currentMonthEnd;
++            $chartSelect = 'DATE(created_at) as period_key';
++            $chartGroup = 'DATE(created_at)';
++        }
+ 
+-        $chartDate =
+-            $currentMonthStart->copy();
+-
+-        while (
+-            $chartDate->lessThanOrEqualTo(
+-                $currentMonthEnd
+-            )
+-        ) {
+-            $dateKey =
+-                $chartDate->format('Y-m-d');
+-
+-            $salesChart[] = [
+-                'date' => $dateKey,
+-                'label' => $chartDate->format('d M'),
+-                'sales' =>
+-                    (float) (
+-                        $salesChartLookup[$dateKey]
+-                        ?? 0
+-                    ),
+-            ];
++        $salesChartRows = Order::query()
++            ->selectRaw($chartSelect)
++            ->selectRaw('SUM(total_amount) as total_sales')
++            ->whereBetween('created_at', [$chartStart, $chartEnd])
++            ->where('status', '!=', Order::STATUS_CANCELED)
++            ->groupBy(DB::raw($chartGroup))
++            ->orderBy('period_key')
++            ->get();
++
++        $salesChartLookup = $salesChartRows->mapWithKeys(function ($row) use ($salesPeriod): array {
++            $key = $salesPeriod === 'day'
++                ? (int) $row->period_key
++                : ($salesPeriod === 'month'
++                    ? Carbon::parse($row->period_key)->format('Y-m-d')
++                    : (int) $row->period_key);
++
++            return [$key => round((float) $row->total_sales, 2)];
++        });
+ 
+-            $chartDate->addDay();
++        $salesChart = [];
++
++        if ($salesPeriod === 'day') {
++            for ($hour = 0; $hour < 24; $hour++) {
++                $salesChart[] = [
++                    'date' => sprintf('%02d:00', $hour),
++                    'label' => Carbon::createFromTime($hour)->format('g A'),
++                    'sales' => (float) ($salesChartLookup[$hour] ?? 0),
++                ];
++            }
++        } elseif ($salesPeriod === 'month') {
++            $chartDate = $chartStart->copy();
++
++            while ($chartDate->lessThanOrEqualTo($chartEnd)) {
++                $dateKey = $chartDate->format('Y-m-d');
++                $salesChart[] = [
++                    'date' => $dateKey,
++                    'label' => $chartDate->format('d M'),
++                    'sales' => (float) ($salesChartLookup[$dateKey] ?? 0),
++                ];
++                $chartDate->addDay();
++            }
++        } else {
++            for ($month = 1; $month <= 12; $month++) {
++                $chartDate = $chartStart->copy()->month($month)->startOfMonth();
++                $salesChart[] = [
++                    'date' => $chartDate->format('Y-m'),
++                    'label' => $chartDate->format('M'),
++                    'sales' => (float) ($salesChartLookup[$month] ?? 0),
++                ];
++            }
+         }
+ 
+         /*
+@@ -628,7 +582,7 @@ $orderStatus =
+         |--------------------------------------------------------------------------
+         */
+ 
+-        return [
++        return response()->json([
+             'success' => true,
+ 
+             'message' =>
+@@ -685,9 +639,6 @@ $orderStatus =
+                     'pending_kitchen_orders' =>
+                         $pendingKitchenOrders,
+ 
+-                    'upcoming_reservations' =>
+-                        $upcomingReservations,
+-
+                     'paid_amount' =>
+                         round(
+                             (float) $paidAmount,
+@@ -778,7 +729,7 @@ $orderStatus =
+             ],
+ 
+             'errors' => null,
+-        ];
++        ]);
+     }
+ 
+     /*
