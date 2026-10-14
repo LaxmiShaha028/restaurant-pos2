@@ -193,6 +193,16 @@
             </div>
           </div>
 
+          <RouterLink
+            v-if="canOpenPosOrder"
+            :to="{ name: 'pos-order-tables' }"
+            class="topbar-icon-button pos-order-shortcut"
+            title="POS Order"
+            aria-label="Open POS Order"
+          >
+            <i class="bi bi-columns-gap" aria-hidden="true"></i>
+          </RouterLink>
+
           <!-- User dropdown -->
           <div
             ref="userDropdownContainer"
@@ -308,6 +318,14 @@ const SIDEBAR_STORAGE_KEY = 'rms_sidebar_collapsed'
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
+
+const canOpenPosOrder = computed(() => {
+  if (typeof authStore.hasPermission !== 'function') {
+    return false
+  }
+
+  return authStore.hasPermission('orders.create')
+})
 
 const mobileSidebarOpen = ref(false)
 const desktopSidebarCollapsed = ref(
@@ -983,6 +1001,10 @@ onBeforeUnmount(() => {
   border-color: #bfdbfe;
   background: #eff6ff;
   color: #2563eb;
+}
+
+.pos-order-shortcut {
+  text-decoration: none;
 }
 
 /* =========================================================

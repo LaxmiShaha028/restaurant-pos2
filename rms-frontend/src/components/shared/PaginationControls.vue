@@ -18,6 +18,10 @@ const props = defineProps({
     type: Number,
     default: 10,
   },
+  showSummary: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 const emit = defineEmits(['update:page'])
@@ -52,7 +56,7 @@ function goToPage(page) {
     class="pagination-controls"
     aria-label="Pagination"
   >
-    <span class="pagination-summary">
+    <span v-if="showSummary" class="pagination-summary">
       Showing {{ rangeStart }}–{{ rangeEnd }} of {{ total }}
     </span>
 

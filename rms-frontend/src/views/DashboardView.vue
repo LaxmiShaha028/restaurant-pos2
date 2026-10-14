@@ -1000,7 +1000,7 @@
 
                 <tr>
 
-                  <th>#</th>
+                  <th>Order</th>
 
                   <th>Customer</th>
 
@@ -1030,7 +1030,7 @@
 
                     <strong class="order-number">
 
-                      {{ order.order_number || `#${order.id}` }}
+                      {{ orderDisplayName(order) }}
 
                     </strong>
 
@@ -1503,6 +1503,13 @@ const recentOrders = computed(
       : []
 
 )
+
+function orderDisplayName(order) {
+  const suffix = String(order?.order_number ?? '').match(/(?:^|-)(\d+)$/)?.[1]
+  const label = suffix || order?.id
+
+  return label ? `Order ${label}` : 'Order'
+}
 
 const orderStatus = computed(
 
@@ -4310,4 +4317,50 @@ onBeforeUnmount(() => {
 .top-item-row:hover,
 .payment-item:hover {
   background: #f8fafc;
-}</style>
+}
+/* Keep the Recent Orders table inside its card without a horizontal scrollbar. */
+.orders-table-wrapper {
+  overflow: hidden;
+}
+
+.dashboard-orders-table {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+}
+
+.dashboard-orders-table th,
+.dashboard-orders-table td {
+  box-sizing: border-box;
+  padding-right: 6px;
+  padding-left: 6px;
+}
+
+.dashboard-orders-table th {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-orders-table th:nth-child(1),
+.dashboard-orders-table td:nth-child(1) { width: 14%; }
+.dashboard-orders-table th:nth-child(2),
+.dashboard-orders-table td:nth-child(2) { width: 25%; }
+.dashboard-orders-table th:nth-child(3),
+.dashboard-orders-table td:nth-child(3) { width: 15%; }
+.dashboard-orders-table th:nth-child(4),
+.dashboard-orders-table td:nth-child(4) { width: 15%; }
+.dashboard-orders-table th:nth-child(5),
+.dashboard-orders-table td:nth-child(5) { width: 14%; }
+.dashboard-orders-table th:nth-child(6),
+.dashboard-orders-table td:nth-child(6) { width: 17%; }
+
+.customer-name,
+.order-time {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>

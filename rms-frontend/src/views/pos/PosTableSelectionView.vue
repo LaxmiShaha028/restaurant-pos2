@@ -15,10 +15,25 @@
         </div>
       </div>
 
-      <button type="button" class="pos-light-button pos-refresh-button" :disabled="loading" @click="loadTables">
-        <i class="bi bi-arrow-clockwise" :class="{ 'pos-spin': loading }"></i>
-        Refresh
-      </button>
+      <div class="pos-table-header-actions">
+        <button type="button" class="pos-secondary-button" :disabled="loading" @click="clearSelection">
+          <i class="bi bi-x-circle"></i>
+          Clear
+        </button>
+        <button
+          type="button"
+          class="pos-primary-button"
+          :disabled="loading"
+          @click="continueToOrder"
+        >
+          <i class="bi bi-arrow-right-circle"></i>
+          {{ selectedIds.length ? 'Continue to Order' : 'Continue Without Table' }}
+        </button>
+        <button type="button" class="pos-light-button pos-refresh-button" :disabled="loading" @click="loadTables">
+          <i class="bi bi-arrow-clockwise" :class="{ 'pos-spin': loading }"></i>
+          Refresh
+        </button>
+      </div>
     </header>
 
     <div v-if="errorMessage" class="pos-alert pos-alert-danger">
@@ -64,6 +79,7 @@
           v-model:page="currentPage"
           :total="filteredTables.length"
           :per-page="pageSize"
+          :show-summary="false"
         />
       </template>
 
@@ -74,30 +90,6 @@
       </div>
     </template>
 
-    <footer v-if="!loading" class="pos-table-selection-footer">
-      <div class="pos-selected-summary">
-        <div>
-          <span>Primary Table</span>
-          <strong>{{ primaryTable?.table_name || 'Not selected' }}</strong>
-        </div>
-        <div>
-          <span>Total Capacity</span>
-          <strong>{{ totalCapacity }} seats</strong>
-        </div>
-      </div>
-
-      <div class="pos-footer-actions">
-        <button type="button" class="pos-secondary-button" @click="clearSelection">Clear</button>
-        <button
-          type="button"
-          class="pos-primary-button"
-          @click="continueToOrder"
-        >
-          {{ selectedIds.length ? 'Continue to Order' : 'Continue Without Table' }}
-          <i class="bi bi-arrow-right"></i>
-        </button>
-      </div>
-    </footer>
   </section>
 </template>
 
@@ -139,17 +131,6 @@ const paginatedTables = computed(() => {
 watch(search, () => {
   currentPage.value = 1
 })
-
-const selectedTables = computed(() =>
-  selectedIds.value
-    .map((id) => tables.value.find((table) => Number(table.id) === Number(id)))
-    .filter(Boolean),
-)
-
-const primaryTable = computed(() => selectedTables.value[0] ?? null)
-const totalCapacity = computed(() =>
-  selectedTables.value.reduce((total, table) => total + Number(table?.capacity || 0), 0),
-)
 
 function isSelected(tableId) {
   return selectedIds.value.some((id) => Number(id) === Number(tableId))

@@ -418,6 +418,14 @@
   min-width: 0;
 }
 
+.pos-table-header-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
 .pos-page-header-icon {
   display: inline-flex;
   width: 28px;
@@ -1814,6 +1822,11 @@
 
   .pos-page-subtitle {
     white-space: normal;
+  }
+
+  .pos-table-header-actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
   }
 
   .pos-workspace-header-actions {
