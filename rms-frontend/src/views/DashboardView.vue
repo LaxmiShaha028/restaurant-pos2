@@ -4334,6 +4334,7 @@ onBeforeUnmount(() => {
   box-sizing: border-box;
   padding-right: 6px;
   padding-left: 6px;
+  text-align: center;
 }
 
 .dashboard-orders-table th {
