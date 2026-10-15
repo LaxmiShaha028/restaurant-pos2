@@ -1394,6 +1394,7 @@ onBeforeUnmount(() => {
   height: 24px;
   flex-shrink: 0;
   font-size: 8px;
+  background: linear-gradient(135deg, #ff922b, #f97316);
 }
 
 .user-dropdown-details {

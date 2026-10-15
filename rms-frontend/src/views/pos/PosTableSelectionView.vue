@@ -239,6 +239,10 @@ function isPrimary(tableId) {
 }
 
 function tableStatus(table) {
+  if (table?.is_merged) {
+    return `Merged: ${(table.merged_table_names || []).join(', ')}`
+  }
+
   return table?.has_seated_reservation ? 'Reserved' : 'Available'
 }
 function tableSizeClass(table) {

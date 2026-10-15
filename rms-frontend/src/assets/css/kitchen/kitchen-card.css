@@ -1343,13 +1343,39 @@
 }
 
 .accept-button {
-  border-color: var(--kitchen-blue);
+  border-color: #292929;
 
-  background: var(--kitchen-blue);
+  border-radius: 9px;
 
-  color: #ffffff;
+  background: linear-gradient(
+    145deg,
+    #191919 0%,
+    #111111 54%,
+    #090909 100%
+  );
 
-  box-shadow: none;
+  color: #f97316;
+
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.14);
+}
+
+.accept-button:hover:not(:disabled) {
+  border-color: #3b3b3b;
+
+  background: linear-gradient(
+    145deg,
+    #242424 0%,
+    #171717 54%,
+    #101010 100%
+  );
+
+  color: #fb923c;
+}
+
+.accept-button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
 }
 
 .preparing-button {

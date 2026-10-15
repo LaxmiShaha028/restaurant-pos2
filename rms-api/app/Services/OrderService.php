@@ -688,7 +688,7 @@ if ($reservation) {
     |--------------------------------------------------------------------------
     */
 
-    $this->ensureTableIsAvailable(
+    $this->ensurePrimaryTableIsAvailable(
         table: $primaryTable,
         field: 'restaurant_table_id'
     );
@@ -880,6 +880,46 @@ if ($reservation) {
                     $this->loadMergedTables(
                         $mergedTableIds
                     );
+
+                if ($primaryTable) {
+                    $preMergedTables =
+                        RestaurantTable::query()
+                            ->where(
+                                'merged_with_id',
+                                $primaryTable->id
+                            )
+                            ->lockForUpdate()
+                            ->get();
+
+                    foreach ($preMergedTables as $preMergedTable) {
+                        if (
+                            $preMergedTable->section !==
+                            $primaryTable->section ||
+                            !in_array(
+                                $preMergedTable->current_status,
+                                [
+                                    RestaurantTable::STATUS_AVAILABLE,
+                                    RestaurantTable::STATUS_OCCUPIED,
+                                ],
+                                true
+                            ) ||
+                            $preMergedTable->activeOrders()
+                                ->lockForUpdate()
+                                ->exists()
+                        ) {
+                            throw ValidationException::withMessages([
+                                'restaurant_table_id' => [
+                                    'The merged table group is not available for a new order.',
+                                ],
+                            ]);
+                        }
+                    }
+
+                    $mergedTables = $mergedTables
+                        ->concat($preMergedTables)
+                        ->unique('id')
+                        ->values();
+                }
 
 
             }
@@ -4306,6 +4346,56 @@ private function resolveItemAddons(
                 ->exists();
 
         if ($hasActiveOrder) {
+            throw ValidationException::withMessages([
+                $field => [
+                    "{$table->table_name} already has an active order.",
+                ],
+            ]);
+        }
+    }
+
+    /**
+     * Validate a primary table, allowing a pre-merged group with no order.
+     */
+    private function ensurePrimaryTableIsAvailable(
+        RestaurantTable $table,
+        string $field
+    ): void {
+        $hasMergedMembers = RestaurantTable::query()
+            ->where('merged_with_id', $table->id)
+            ->lockForUpdate()
+            ->exists();
+
+        if (!$hasMergedMembers) {
+            $this->ensureTableIsAvailable($table, $field);
+
+            return;
+        }
+
+        if ($table->merged_with_id !== null) {
+            throw ValidationException::withMessages([
+                $field => [
+                    'Select the master table for this merged group.',
+                ],
+            ]);
+        }
+
+        if (!in_array(
+            $table->current_status,
+            [
+                RestaurantTable::STATUS_AVAILABLE,
+                RestaurantTable::STATUS_OCCUPIED,
+            ],
+            true
+        )) {
+            throw ValidationException::withMessages([
+                $field => [
+                    "{$table->table_name} is not currently available.",
+                ],
+            ]);
+        }
+
+        if ($table->activeOrders()->lockForUpdate()->exists()) {
             throw ValidationException::withMessages([
                 $field => [
                     "{$table->table_name} already has an active order.",

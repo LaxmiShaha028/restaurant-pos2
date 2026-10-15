@@ -26,7 +26,7 @@ public function create(
     |--------------------------------------------------------------------------
     */
 
-    $availableTables =
+    $availableStandaloneTables =
         RestaurantTable::query()
             ->availableNow()
             ->whereNull(
@@ -109,6 +109,111 @@ public function create(
                 }
             )
             ->values();
+
+    $availableMergedGroups =
+        RestaurantTable::query()
+            ->whereIn(
+                'status',
+                [
+                    RestaurantTable::STATUS_AVAILABLE,
+                    RestaurantTable::STATUS_OCCUPIED,
+                ]
+            )
+            ->whereNull('merged_with_id')
+            ->whereHas('mergedTables')
+            ->whereDoesntHave('activeOrders')
+            ->whereDoesntHave('mergedTables.activeOrders')
+            ->with([
+                'mergedTables' => static function ($query): void {
+                    $query->select([
+                        'id',
+                        'table_name',
+                        'capacity',
+                        'section',
+                        'status',
+                        'merged_with_id',
+                    ]);
+                },
+            ])
+            ->orderBy('table_name')
+            ->get([
+                'id',
+                'table_name',
+                'capacity',
+                'section',
+                'status',
+                'merged_with_id',
+                'reservation_start_at',
+                'reservation_end_at',
+            ])
+            ->filter(
+                static fn (RestaurantTable $table): bool =>
+                    in_array(
+                        $table->current_status,
+                        [
+                            RestaurantTable::STATUS_AVAILABLE,
+                            RestaurantTable::STATUS_OCCUPIED,
+                        ],
+                        true
+                    ) &&
+                    $table->mergedTables->every(
+                        static fn (RestaurantTable $member): bool =>
+                            $member->section === $table->section &&
+                            in_array(
+                                $member->current_status,
+                                [
+                                    RestaurantTable::STATUS_AVAILABLE,
+                                    RestaurantTable::STATUS_OCCUPIED,
+                                ],
+                                true
+                            )
+                    )
+            )
+            ->map(
+                static function (
+                    RestaurantTable $table
+                ): array {
+                    $sectionLabel = match ($table->section) {
+                        RestaurantTable::SECTION_AC => 'AC',
+                        RestaurantTable::SECTION_NON_AC => 'Non-AC',
+                        RestaurantTable::SECTION_OUTDOOR => 'Outdoor',
+                        default => ucfirst(str_replace('_', ' ', $table->section)),
+                    };
+
+                    $members = $table->mergedTables;
+                    $groupTables = collect([$table])->concat($members);
+
+                    return [
+                        'id' => (int) $table->id,
+                        'table_name' => $table->table_name,
+                        'capacity' => (int) $groupTables->sum('capacity'),
+                        'section' => $table->section,
+                        'section_label' => $sectionLabel,
+                        'status' => $table->current_status,
+                        'is_merged' => true,
+                        'merged_table_names' => $members
+                            ->pluck('table_name')
+                            ->filter()
+                            ->values(),
+                        'merged_table_ids' => $members
+                            ->pluck('id')
+                            ->map(static fn ($id): int => (int) $id)
+                            ->values(),
+                        'display_name' => sprintf(
+                            'Merged: %s + %s — %s — Capacity %d',
+                            $table->table_name,
+                            $members->pluck('table_name')->implode(' + '),
+                            $sectionLabel,
+                            (int) $groupTables->sum('capacity')
+                        ),
+                    ];
+                }
+            )
+            ->values();
+
+    $availableTables = $availableStandaloneTables
+        ->concat($availableMergedGroups)
+        ->values();
 
 
     /*
@@ -472,7 +577,7 @@ public function create(
                 $availableTables,
 
             'merge_tables' =>
-                $availableTables,
+                $availableStandaloneTables,
 
             'categories' =>
                 $categories,

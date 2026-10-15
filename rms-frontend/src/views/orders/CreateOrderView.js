@@ -2487,6 +2487,10 @@ getTableDisplayName(table) {
         return "Table";
       }
 
+      if (table.is_merged && table.display_name) {
+        return table.display_name;
+      }
+
       const name =
         table.table_name ??
         table.name ??
