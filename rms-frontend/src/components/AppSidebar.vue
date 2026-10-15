@@ -384,6 +384,8 @@ import {
   useAuthStore,
 } from '@/stores/auth'
 
+import api from '@/services/api'
+
 import '@/assets/css/app-sidebar.css'
 
 
@@ -477,17 +479,23 @@ function normalizeRestaurantLogoUrl(
   }
 
 
-  /*
-  |--------------------------------------------------------------------------
-  | Already absolute URL
-  |--------------------------------------------------------------------------
-  */
+  if (value.startsWith('data:')) return value
 
-  if (
-    value.startsWith('http://') ||
-    value.startsWith('https://') ||
-    value.startsWith('data:')
-  ) {
+  // Uploaded files are served by Laravel. Resolve their URLs against the
+  // configured API host, since the frontend and API commonly use different
+  // ports during local development.
+  const apiOrigin = new URL(
+    api.defaults.baseURL,
+    window.location.origin,
+  ).origin
+
+  if (/^https?:\/\//i.test(value)) {
+    const parsed = new URL(value)
+
+    if (parsed.pathname.includes('/storage/')) {
+      return `${apiOrigin}${parsed.pathname}${parsed.search}${parsed.hash}`
+    }
+
     return value
   }
 
@@ -498,13 +506,9 @@ function normalizeRestaurantLogoUrl(
   |--------------------------------------------------------------------------
   */
 
-  if (
-    value.startsWith('/')
-  ) {
+  if (value.startsWith('/storage/')) return `${apiOrigin}${value}`
 
-    return value
-
-  }
+  if (value.startsWith('/')) return value
 
 
   /*
@@ -517,7 +521,7 @@ function normalizeRestaurantLogoUrl(
     value.startsWith('storage/')
   ) {
 
-    return `/${value}`
+    return `${apiOrigin}/${value}`
 
   }
 
@@ -528,7 +532,7 @@ function normalizeRestaurantLogoUrl(
   |--------------------------------------------------------------------------
   */
 
-  return `/storage/${value}`
+  return `${apiOrigin}/storage/${value}`
 }
 
 
