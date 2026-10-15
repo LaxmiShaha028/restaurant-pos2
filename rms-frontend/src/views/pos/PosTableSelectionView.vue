@@ -85,7 +85,7 @@
                 <i :class="isSelected(table.id) ? 'bi bi-check-lg' : 'bi bi-plus-lg'"></i>
               </span>
               <span class="pos-table-list-copy">
-                <strong>{{ table.table_name || ('Table ' + table.id) }}</strong>
+                <strong>{{ formatTableName(table.table_name || ('Table ' + table.id)) }}</strong>
                 <small>{{ table.section || 'Restaurant Floor' }}</small>
               </span>
               <span class="pos-table-list-meta">
@@ -106,14 +106,26 @@
 
         <section class="pos-floor-layout-panel">
           <div class="pos-floor-panel-heading pos-floor-map-heading">
-            <div>
-              <p class="pos-eyebrow">Restaurant Floor</p>
-              <h2>Table Layout</h2>
-            </div>
-            <div class="pos-floor-legend">
-              <span><i class="available"></i> Available</span>
-              <span><i class="reserved"></i> Reserved</span>
-              <span><i class="selected"></i> Selected</span>
+            <h2 class="pos-manage-tables-title">Manage Tables</h2>
+            <div class="pos-floor-header-row">
+              <div class="pos-floor-title-and-legend">
+                <div class="pos-floor-legend">
+                  <span><i class="available"></i> Available</span>
+                  <span><i class="reserved"></i> Reserved</span>
+                  <span><i class="selected"></i> Selected</span>
+                </div>
+              </div>
+              <div class="pos-floor-section-tabs" role="tablist" aria-label="Restaurant sections">
+                <button
+                  v-for="section in sections"
+                  :key="section.value"
+                  type="button"
+                  role="tab"
+                  :aria-selected="activeSection === section.value"
+                  :class="{ 'is-active': activeSection === section.value }"
+                  @click="activeSection = section.value"
+                >{{ section.label }}</button>
+              </div>
             </div>
           </div>
 
@@ -135,7 +147,7 @@
                   :aria-pressed="isSelected(table.id)"
                   @click="toggleTable(table)"
                 >
-                  <strong>{{ table.table_name || ('Table ' + table.id) }}</strong>
+                  <strong>{{ formatTableName(table.table_name || ('Table ' + table.id)) }}</strong>
                   <span>{{ table.section || 'Restaurant Floor' }}</span>
                   <small><i class="bi bi-people"></i> {{ table.capacity || 0 }} seats</small>
                   <b v-if="isPrimary(table.id)" class="pos-floor-primary">Primary</b>
@@ -176,21 +188,28 @@ const loading = ref(true)
 const errorMessage = ref('')
 const tables = ref([])
 const selectedIds = ref([])
+const activeSection = ref('ac')
+const sections = [
+  { value: 'ac', label: 'AC' },
+  { value: 'non_ac', label: 'Non-AC' },
+  { value: 'outdoor', label: 'Outdoor' },
+]
 const search = ref('')
 const currentPage = ref(1)
 const pageSize = 12
 
 const filteredTables = computed(() => {
   const term = search.value.trim().toLowerCase()
-  if (!term) return tables.value
+  return tables.value.filter((table) => {
+    if (String(table?.section || '').toLowerCase() !== activeSection.value) return false
+    if (!term) return true
 
-  return tables.value.filter((table) =>
-    [table?.table_name, table?.section]
+    return [table?.table_name, table?.section]
       .filter(Boolean)
       .join(' ')
       .toLowerCase()
-      .includes(term),
-  )
+      .includes(term)
+  })
 })
 
 const paginatedTables = computed(() => {
@@ -206,6 +225,11 @@ watch(search, () => {
   currentPage.value = 1
 })
 
+function formatTableName(value) {
+  return String(value ?? '').replace(/(\d+)$/, (digits) =>
+    digits.length === 1 ? digits.padStart(2, '0') : digits,
+  )
+}
 function isSelected(tableId) {
   return selectedIds.value.some((id) => Number(id) === Number(tableId))
 }

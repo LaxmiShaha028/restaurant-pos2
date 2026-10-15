@@ -2509,3 +2509,85 @@
     padding: 12px 8px;
   }
 }
+/* POS floor header: title and status legend on the left, section tabs on the right. */
+.pos-floor-section-tabs {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: 8px;
+}
+
+.pos-floor-section-tabs button {
+  min-width: 72px;
+  min-height: 31px;
+  padding: 0 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  color: #344054;
+  font-size: 10px;
+  font-weight: 700;
+  transition: .15s ease;
+}
+
+.pos-floor-section-tabs button:hover {
+  border-color: var(--pos-picker-accent);
+  color: var(--pos-picker-accent-dark);
+}
+
+.pos-floor-section-tabs button.is-active {
+  border-color: #149e98;
+  background: #149e98;
+  color: #fff;
+}
+
+.pos-floor-layout-panel .pos-floor-map-heading {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.pos-manage-tables-title {
+  margin: 0;
+  color: var(--pos-picker-ink);
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.pos-floor-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pos-floor-title-and-legend {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+}
+
+.pos-floor-title-and-legend .pos-eyebrow {
+  margin: 0;
+}
+
+.pos-floor-title-and-legend .pos-floor-legend {
+  justify-content: flex-start;
+}
+
+@media (max-width: 520px) {
+  .pos-floor-header-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pos-floor-section-tabs {
+    width: 100%;
+  }
+
+  .pos-floor-section-tabs button {
+    flex: 1;
+  }
+}

@@ -153,13 +153,7 @@ const systemSettingService = {
             const response =
                 await api.post(
                     SETTINGS_BASE_URL,
-                    payload,
-                    {
-                        headers: {
-                            "Content-Type":
-                                "multipart/form-data",
-                        },
-                    }
+                    payload
                 );
 
             return getResponseBody(
