@@ -37,7 +37,7 @@ class UpdateSystemSettingRequest
 
             'restaurant_logo' => [
                 'nullable',
-                'image',
+                'file',
                 'mimes:jpg,jpeg,png,webp',
                 'max:2048',
             ],
