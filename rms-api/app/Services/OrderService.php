@@ -893,8 +893,6 @@ if ($reservation) {
 
                     foreach ($preMergedTables as $preMergedTable) {
                         if (
-                            $preMergedTable->section !==
-                            $primaryTable->section ||
                             !in_array(
                                 $preMergedTable->current_status,
                                 [

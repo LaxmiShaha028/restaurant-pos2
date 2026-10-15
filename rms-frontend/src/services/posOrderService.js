@@ -64,7 +64,7 @@ function normalizeBootstrap(response) {
   const data = unwrap(response)
 
   return {
-    tables: asArray(data?.tables),
+    tables: asArray(data?.pos_tables ?? data?.tables),
     categories: asArray(data?.categories),
     menuItems: asArray(data?.menu_items),
     addons: asArray(data?.addons),

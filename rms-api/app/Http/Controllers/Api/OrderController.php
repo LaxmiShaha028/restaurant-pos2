@@ -38,21 +38,92 @@ class OrderController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    $tables = RestaurantTable::query()
-        ->where(
-            'status',
-            'available'
-        )
-        ->orderBy(
-            'table_name'
-        )
-        ->get([
-            'id',
-            'table_name',
-            'capacity',
-            'section',
-            'status',
-        ]);
+    $floorTables = RestaurantTable::query()
+        ->with('mergedTables')
+        ->orderBy('table_name')
+        ->get();
+
+    $tables = collect();
+    $mergeTables = collect();
+    $mergeGroupAvailability = [];
+
+    foreach ($floorTables as $table) {
+        if ($table->merged_with_id !== null) {
+            continue;
+        }
+
+        $children = $table->mergedTables;
+        if ($children->isEmpty()) {
+            if ($table->status === RestaurantTable::STATUS_AVAILABLE) {
+                $tables->push($table);
+                $mergeTables->push($table);
+            }
+            continue;
+        }
+
+        $group = collect([$table])->concat($children)->values();
+        $groupIsFree = $group->every(function (RestaurantTable $member): bool {
+            return in_array($member->status, [
+                    RestaurantTable::STATUS_AVAILABLE,
+                    RestaurantTable::STATUS_OCCUPIED,
+                ], true)
+                && !$member->activeOrders()->exists();
+        });
+        $mergeGroupAvailability[(int) $table->id] = $groupIsFree;
+
+        if (!$groupIsFree) {
+            continue;
+        }
+
+        $memberIds = $children->pluck('id')->map(fn ($id) => (int) $id)->values();
+        $memberNames = $children->pluck('table_name')->values();
+        $totalCapacity = (int) $group->sum('capacity');
+
+        $table->setAttribute('is_merged', true);
+        $table->setAttribute('is_merge_master', true);
+        $table->setAttribute('merged_table_ids', $memberIds);
+        $table->setAttribute('merged_table_names', $memberNames);
+        $table->setAttribute('merged_table_members', $children->map(fn (RestaurantTable $child) => [
+            'id' => (int) $child->id,
+            'table_name' => $child->table_name,
+            'capacity' => (int) $child->capacity,
+            'section' => $child->section,
+        ])->values());
+        $table->setAttribute('merged_total_capacity', $totalCapacity);
+        $tables->push($table);
+    }
+
+    $posTables = $floorTables->filter(function (RestaurantTable $table): bool {
+        return $table->merged_with_id !== null
+            || $table->mergedTables->isNotEmpty()
+            || $table->status === RestaurantTable::STATUS_AVAILABLE;
+    })->values();
+
+    foreach ($posTables as $table) {
+        if ($table->merged_with_id !== null) {
+            $master = $floorTables->firstWhere('id', (int) $table->merged_with_id);
+            $table->setAttribute('is_merged', true);
+            $table->setAttribute('is_merge_child', true);
+            $table->setAttribute('merge_master_id', (int) $table->merged_with_id);
+            $table->setAttribute('merged_with_table_name', $master?->table_name ?? 'the master table');
+            $table->setAttribute('can_order', false);
+            continue;
+        }
+
+        $children = $table->mergedTables;
+        if ($children->isNotEmpty()) {
+            $group = collect([$table])->concat($children)->values();
+            $table->setAttribute('is_merged', true);
+            $table->setAttribute('is_merge_master', true);
+            $table->setAttribute('merged_table_ids', $children->pluck('id')->map(fn ($id) => (int) $id)->values());
+            $table->setAttribute('merged_table_names', $children->pluck('table_name')->values());
+            $table->setAttribute('merged_total_capacity', (int) $group->sum('capacity'));
+            $table->setAttribute('can_order', (bool) ($mergeGroupAvailability[(int) $table->id] ?? false));
+            continue;
+        }
+
+        $table->setAttribute('can_order', true);
+    }
 
 
     /*
@@ -138,6 +209,10 @@ class OrderController extends Controller
             */
 
             'tables' => $tables,
+
+            'merge_tables' => $mergeTables->unique('id')->values(),
+
+            'pos_tables' => $posTables,
 
 
             /*

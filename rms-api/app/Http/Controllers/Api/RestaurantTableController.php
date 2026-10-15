@@ -751,21 +751,6 @@ class RestaurantTableController extends Controller
                                 (int) $id
                         );
 
-                if (
-                    $currentGroup->count() > 1 &&
-                    $currentGroup->contains(
-                        fn (RestaurantTable $table): bool =>
-                            $table->section !==
-                            $validated['section']
-                    )
-                ) {
-                    throw ValidationException::withMessages([
-                        'section' => [
-                            'Split the merged table group before changing its section.',
-                        ],
-                    ]);
-                }
-
                 /*
                 |--------------------------------------------------------------------------
                 | Only newly selected tables
@@ -833,17 +818,6 @@ class RestaurantTableController extends Controller
                         $selectedTables
                         as $selectedTable
                     ) {
-                        if (
-                            $selectedTable->section !==
-                            $validated['section']
-                        ) {
-                            throw ValidationException::withMessages([
-                                'merge_table_ids' => [
-                                    "{$selectedTable->table_name} must be in the same section as the selected table ({$validated['section']}).",
-                                ],
-                            ]);
-                        }
-
                         if (
                             $selectedTable->status !==
                             RestaurantTable::STATUS_AVAILABLE
@@ -1113,21 +1087,11 @@ class RestaurantTableController extends Controller
                         (int) $id
                 );
 
-        $currentSection =
-            $currentGroup
-                ->firstWhere('id', $masterId)
-                ?->section ??
-            $restaurantTable->section;
-
         $availableTables =
             RestaurantTable::query()
                 ->where(
                     'status',
                     RestaurantTable::STATUS_AVAILABLE
-                )
-                ->where(
-                    'section',
-                    $currentSection
                 )
                 ->whereNull(
                     'merged_with_id'
@@ -1342,12 +1306,6 @@ class RestaurantTableController extends Controller
         $isExistingGroup =
             $groupTables->count() > 1;
 
-        $groupSection =
-            $groupTables
-                ->firstWhere('id', $masterId)
-                ?->section ??
-            $restaurantTable->section;
-
         if (
             !$isExistingGroup &&
             $restaurantTable
@@ -1374,10 +1332,6 @@ class RestaurantTableController extends Controller
                 ->where(
                     'status',
                     RestaurantTable::STATUS_AVAILABLE
-                )
-                ->where(
-                    'section',
-                    $groupSection
                 )
                 ->whereNull(
                     'merged_with_id'
@@ -1625,17 +1579,6 @@ class RestaurantTableController extends Controller
                     $selectedTables
                     as $selectedTable
                 ) {
-                    if (
-                        $selectedTable->section !==
-                        $currentTable->section
-                    ) {
-                        throw ValidationException::withMessages([
-                            'table_ids' => [
-                                "{$selectedTable->table_name} must be in the same section as the selected table ({$currentTable->section}).",
-                            ],
-                        ]);
-                    }
-
                     if (
                         $currentGroupIds
                             ->contains(

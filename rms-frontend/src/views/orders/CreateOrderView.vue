@@ -833,7 +833,8 @@
                     :disabled="
                       isSubmitting ||
                       isServedEditMode ||
-                      hasSelectedReservation
+                      hasSelectedReservation ||
+                      (selectedPrimaryTable?.merged_table_ids || []).map(String).includes(String(table.id))
                     "
                   />
 

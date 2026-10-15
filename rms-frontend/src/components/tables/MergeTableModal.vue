@@ -612,12 +612,11 @@ const submitMerge = async () => {
                   ></i>
 
                   <strong>
-                    No available tables in this section
+                    No available tables
                   </strong>
 
                   <span>
-                    Tables can only be merged with tables in the same
-                    section (AC, Non-AC or Outdoor).
+                    You can merge this table with any available table.
                   </span>
                 </div>
               </section>

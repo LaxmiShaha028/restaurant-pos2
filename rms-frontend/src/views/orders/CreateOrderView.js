@@ -523,14 +523,19 @@ export default {
     },
 
     selectedMergedTables() {
-      return this.mergeTables.filter(
+      const primaryMembers = this.selectedPrimaryTable?.merged_table_members || [];
+      const primaryMemberIds = new Set(primaryMembers.map((table) => String(table.id)));
+      const additionalTables = this.mergeTables.filter(
         (table) =>
+          !primaryMemberIds.has(String(table.id)) &&
           this.form.merged_table_ids.some(
             (tableId) =>
               String(tableId) ===
               String(table.id)
           )
       );
+
+      return [...primaryMembers, ...additionalTables];
     },
 
     selectedMergedTableNames() {
@@ -2331,7 +2336,13 @@ this.selectedReservationId =
         "restaurant_table_id"
       );
 
-      this.form.merged_table_ids = [];
+      const primaryTable = this.tables.find(
+        (table) => String(table.id) === String(this.form.restaurant_table_id),
+      );
+
+      this.form.merged_table_ids = Array.isArray(primaryTable?.merged_table_ids)
+        ? primaryTable.merged_table_ids.map(String)
+        : [];
 
       this.showMergedDropdown = false;
       this.activeAddonDropdown = null;
@@ -2487,10 +2498,6 @@ getTableDisplayName(table) {
         return "Table";
       }
 
-      if (table.is_merged && table.display_name) {
-        return table.display_name;
-      }
-
       const name =
         table.table_name ??
         table.name ??
@@ -2536,7 +2543,9 @@ getTableDisplayName(table) {
         return;
       }
 
-      this.form.merged_table_ids = [];
+      this.form.merged_table_ids = (
+        this.selectedPrimaryTable?.merged_table_ids || []
+      ).map(String);
 
       this.clearValidationField(
         "merged_table_ids"
@@ -3892,6 +3901,9 @@ clearReservationSelection() {
             this.form.merged_table_ids ||
             []
           )
+            .filter((id) => !(
+              this.selectedPrimaryTable?.merged_table_ids || []
+            ).map(Number).includes(Number(id)))
             .map((id) => Number(id))
             .filter((id) => id > 0),
 

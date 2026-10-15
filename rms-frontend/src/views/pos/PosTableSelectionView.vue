@@ -78,19 +78,20 @@
               :key="table.id"
               type="button"
               class="pos-table-list-item"
-              :class="{ 'is-selected': isSelected(table.id), 'is-primary': isPrimary(table.id) }"
+              :class="{ 'is-selected': isSelected(table.id), 'is-primary': isPrimary(table.id), 'is-merged-child': table.is_merge_child }"
+              :disabled="table.is_merge_child || table.can_order === false"
               @click="toggleTable(table)"
             >
               <span class="pos-table-list-check">
-                <i :class="isSelected(table.id) ? 'bi bi-check-lg' : 'bi bi-plus-lg'"></i>
+                <i :class="table.is_merge_child ? 'bi bi-link-45deg' : isSelected(table.id) ? 'bi bi-check-lg' : 'bi bi-plus-lg'"></i>
               </span>
               <span class="pos-table-list-copy">
                 <strong>{{ formatTableName(table.table_name || ('Table ' + table.id)) }}</strong>
                 <small>{{ table.section || 'Restaurant Floor' }}</small>
               </span>
               <span class="pos-table-list-meta">
-                <strong>{{ table.capacity || 0 }} seats</strong>
-                <small :class="{ reserved: table.has_seated_reservation }">{{ tableStatus(table) }}</small>
+                <strong>{{ table.merged_total_capacity || table.capacity || 0 }} seats</strong>
+                <small :class="{ reserved: table.has_seated_reservation, 'merged-link-text': table.is_merge_child }">{{ tableStatus(table) }}</small>
               </span>
             </button>
           </div>
@@ -144,12 +145,15 @@
                   type="button"
                   class="pos-floor-table"
                   :class="[{ 'is-selected': isSelected(table.id), 'is-reserved': table.has_seated_reservation }, tableSizeClass(table), tableShapeClass(table)]"
+                  :disabled="table.is_merge_child || table.can_order === false"
                   :aria-pressed="isSelected(table.id)"
                   @click="toggleTable(table)"
                 >
                   <strong>{{ formatTableName(table.table_name || ('Table ' + table.id)) }}</strong>
                   <span>{{ table.section || 'Restaurant Floor' }}</span>
-                  <small><i class="bi bi-people"></i> {{ table.capacity || 0 }} seats</small>
+                  <small><i class="bi bi-people"></i> {{ table.merged_total_capacity || table.capacity || 0 }} seats</small>
+                  <b v-if="table.is_merge_child" class="pos-floor-merged-link">Combine with {{ formatTableName(table.merged_with_table_name) }}</b>
+                  <b v-else-if="table.is_merged" class="pos-floor-merged-link">Combined</b>
                   <b v-if="isPrimary(table.id)" class="pos-floor-primary">Primary</b>
                 </button>
 
@@ -239,8 +243,15 @@ function isPrimary(tableId) {
 }
 
 function tableStatus(table) {
+  if (table?.is_merge_child) {
+    return `Combine with ${table.merged_with_table_name || 'master table'}`
+  }
+
   if (table?.is_merged) {
-    return `Merged: ${(table.merged_table_names || []).join(', ')}`
+    const names = Array.isArray(table.merged_table_names)
+      ? table.merged_table_names
+      : []
+    return `Combined with: ${names.join(', ')}`
   }
 
   return table?.has_seated_reservation ? 'Reserved' : 'Available'
@@ -327,15 +338,19 @@ function seatLayout(table) {
 }
 
 function toggleTable(table) {
+  if (table?.is_merge_child || table?.can_order === false) return
+
   const id = Number(table?.id)
   if (!id) return
 
   if (isSelected(id)) {
-    selectedIds.value = selectedIds.value.filter((currentId) => Number(currentId) !== id)
+    const groupIds = [id, ...(table.merged_table_ids || []).map(Number)]
+    selectedIds.value = selectedIds.value.filter((currentId) => !groupIds.includes(Number(currentId)))
     return
   }
 
-  selectedIds.value = [...selectedIds.value, id]
+  const groupIds = [id, ...(table.merged_table_ids || []).map(Number)]
+  selectedIds.value = [...new Set([...selectedIds.value, ...groupIds])]
 }
 
 function clearSelection() {

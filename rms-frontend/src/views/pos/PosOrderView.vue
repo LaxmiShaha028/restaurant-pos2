@@ -212,7 +212,10 @@ const selectedTables = computed(() =>
     .filter(Boolean),
 )
 const primaryTable = computed(() => selectedTables.value[0] ?? null)
-const selectedTableNames = computed(() => selectedTables.value.map((t) => t.table_name).filter(Boolean).join(', '))
+const selectedTableNames = computed(() => selectedTables.value.flatMap((table) => {
+  if (!table?.table_name) return []
+  return [table.table_name, ...(table.merged_table_names || [])]
+}).join(', '))
 const waiterName = computed(() => waiter.value?.name || waiter.value?.username || 'Current User')
 
 const filteredMenuItems = computed(() => {
@@ -435,9 +438,10 @@ function buildPayload(payment = null) {
   ? Number(primaryTable.value.id)
   : null,
 
-merged_table_ids: selectedTables.value
+merged_table_ids: selectedTableIds.value
   .slice(1)
-  .map((table) => Number(table.id)),
+  .filter((id) => !(primaryTable.value?.merged_table_ids || []).map(Number).includes(Number(id)))
+  .map(Number),
     customer_id: customer?.id ? Number(customer.id) : null,
     customer_name: draft?.name || customer?.name || null,
     customer_phone: draft?.phone || customer?.phone || null,
@@ -502,7 +506,10 @@ async function loadPage() {
 
     const requestedIds = parseTableQuery()
     const availableIds = new Set(
-      tables.value.map((table) => Number(table.id))
+      tables.value.flatMap((table) => [
+        Number(table.id),
+        ...(table.merged_table_ids || []).map(Number),
+      ])
     )
 
     selectedTableIds.value =
