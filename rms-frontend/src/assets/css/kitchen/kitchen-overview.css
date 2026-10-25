@@ -777,7 +777,7 @@
 
   background: var(--kitchen-blue-soft) !important;
 
-  color: var(--kitchen-blue) !important;
+  color: #f96f00  !important;
 }
 
 .compact-status-preparing {
@@ -1126,7 +1126,7 @@
 
   overflow: hidden;
 
-  color: var(--kitchen-blue);
+  color: #f96f00;
 
   font-size: 12px;
   font-weight: 700;
