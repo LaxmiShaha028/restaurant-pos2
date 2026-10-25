@@ -219,7 +219,7 @@
 
   background: var(--kitchen-blue-soft) !important;
 
-  color: var(--kitchen-blue) !important;
+  color: #f96f00  !important;
 }
 
 .kitchen-status-preparing {
@@ -412,7 +412,7 @@
 
   background: #ffffff;
 
-  color: var(--kitchen-blue);
+  color: #f96f00;
 
   font-size: 12px;
 }
@@ -1279,7 +1279,7 @@
 
   background: var(--kitchen-blue-soft);
 
-  color: var(--kitchen-blue);
+  color: #f96f00;
 }
 
 .kitchen-assignment-info small {
