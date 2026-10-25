@@ -62,6 +62,22 @@ const reportService = {
     },
 
 
+    async getDemandForecast(
+        params = {}
+    ) {
+
+        const response =
+            await api.get(
+                '/reports/demand-forecast',
+                { params }
+            )
+
+
+        return response.data
+
+    },
+
+
     /*
     |--------------------------------------------------------------------------
     | Sales Report

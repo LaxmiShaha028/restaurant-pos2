@@ -3722,6 +3722,13 @@ Route::get(
         ->group(function (): void {
 
             Route::get(
+                '/demand-forecast',
+                'demandForecast'
+            )->name(
+                'demand-forecast'
+            );
+
+            Route::get(
                 '/orders',
                 'orders'
             )->name(

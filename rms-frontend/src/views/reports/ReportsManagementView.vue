@@ -642,6 +642,11 @@
                 />
 
 
+                <DemandForecastReport
+                    v-else-if="activeTab === 'demand-forecast'"
+                />
+
+
                 <!-- Expenses -->
 
                 <ExpensesReport
@@ -789,6 +794,9 @@ import reportService
 
 import OrdersReport
     from '@/components/reports/OrdersReport.vue'
+
+import DemandForecastReport
+    from '@/components/reports/DemandForecastReport.vue'
 
 
 import ExpensesReport
@@ -999,6 +1007,14 @@ const businessTabs = [
 
         icon:
             'bi-receipt-cutoff',
+    },
+
+
+    {
+        key: 'demand-forecast',
+        label: 'Demand Forecast',
+        description: 'Forecast sales and ingredient needs',
+        icon: 'bi-graph-up-arrow',
     },
 
 
@@ -1252,6 +1268,15 @@ function syncReportStateFromRoute()
     activeReportGroup.value =
         'business'
 
+    const requestedTab = route.query.tab
+    if (
+        typeof requestedTab === 'string'
+        && businessTabs.some(tab => tab.key === requestedTab)
+    ) {
+        activeTab.value = requestedTab
+        return
+    }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -1366,7 +1391,7 @@ async function openAccountingReports()
 watch(
 
     () =>
-        route.name,
+        [route.name, route.query.tab],
 
     () => {
 

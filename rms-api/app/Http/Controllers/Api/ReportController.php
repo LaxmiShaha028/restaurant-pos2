@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\ReportService;
+use App\Services\DemandForecastService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -62,6 +63,28 @@ class ReportController extends Controller
         return $this->successResponse(
             $orders,
             'Orders report loaded successfully.'
+        );
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Demand Forecast
+    |--------------------------------------------------------------------------
+    */
+
+    public function demandForecast(
+        Request $request,
+        DemandForecastService $forecastService
+    ): JsonResponse {
+
+        $filters = $request->validate([
+            'forecast_days' => ['sometimes', 'integer', 'in:1,7'],
+        ]);
+
+        return $this->successResponse(
+            $forecastService->build((int) ($filters['forecast_days'] ?? 7)),
+            'Demand forecast loaded successfully.'
         );
     }
 

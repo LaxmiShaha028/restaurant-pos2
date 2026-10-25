@@ -1364,6 +1364,29 @@
 
       </div>
 
+      <!-- DEMAND FORECAST SUMMARY -->
+      <section class="dashboard-forecast-card">
+        <div class="dashboard-forecast-heading">
+          <span class="dashboard-forecast-icon"><i class="bi bi-graph-up-arrow"></i></span>
+          <div>
+            <h2>Demand Forecast</h2>
+            <p>Next 7 days, based on recent sales</p>
+          </div>
+        </div>
+        <div v-if="forecastSummaryLoading" class="dashboard-forecast-detail">Loading forecast…</div>
+        <div v-else-if="forecastSummaryError" class="dashboard-forecast-detail">
+          Forecast summary is unavailable right now.
+        </div>
+        <div v-else class="dashboard-forecast-metrics">
+          <div><span>Expected items</span><strong>{{ forecastNumber(forecastSummary.total) }}</strong></div>
+          <div><span>Peak hour</span><strong>{{ forecastSummary.peakHour || 'No data' }}</strong></div>
+          <div><span>Missing recipes</span><strong>{{ forecastSummary.unmappedCount }}</strong></div>
+        </div>
+        <button type="button" class="dashboard-forecast-link" @click="openDemandForecast">
+          View full report <i class="bi bi-arrow-right"></i>
+        </button>
+      </section>
+
     </template>
 
   </section>
@@ -1393,6 +1416,7 @@ import {
 } from 'vue-router'
 
 import api from '@/services/api'
+import reportService from '@/services/reportService'
 
 
 
@@ -1403,6 +1427,9 @@ const loading = ref(true)
 const errorMessage = ref('')
 
 const dashboard = ref({})
+const forecastSummaryLoading = ref(false)
+const forecastSummaryError = ref(false)
+const forecastSummary = ref({ total: 0, peakHour: '', unmappedCount: 0 })
 
 const salesPeriod = ref('month')
 const salesPeriodMenuOpen = ref(false)
@@ -2366,6 +2393,39 @@ function goToMenu() {
 
 }
 
+function forecastNumber(value) {
+  return Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 1 })
+}
+
+function forecastHour(hour) {
+  const date = new Date()
+  date.setHours(Number(hour), 0, 0, 0)
+  return date.toLocaleTimeString(undefined, { hour: 'numeric', hour12: true })
+}
+
+function openDemandForecast() {
+  router.push({ name: 'reports', query: { tab: 'demand-forecast' } })
+}
+
+async function loadForecastSummary() {
+  forecastSummaryLoading.value = true
+  forecastSummaryError.value = false
+  try {
+    const response = await reportService.getDemandForecast({ forecast_days: 7 })
+    const data = response?.data || {}
+    const forecastRows = (data.forecast || []).flatMap(day => day.items || [])
+    forecastSummary.value = {
+      total: forecastRows.reduce((sum, row) => sum + Number(row.forecast_quantity || 0), 0),
+      peakHour: data.peak_hours?.[0] ? forecastHour(data.peak_hours[0].hour) : '',
+      unmappedCount: data.ingredient_recommendations?.unmapped_menu_items?.length || 0,
+    }
+  } catch {
+    forecastSummaryError.value = true
+  } finally {
+    forecastSummaryLoading.value = false
+  }
+}
+
 /* =========================================================
 
    LOAD
@@ -2469,6 +2529,7 @@ async function loadSalesChart() {
 
 onMounted(() => {
   loadDashboard()
+  loadForecastSummary()
   reservationRefreshTimer = window.setInterval(
     refreshUpcomingReservations,
     30000,
@@ -4087,6 +4148,38 @@ onBeforeUnmount(() => {
   white-space: nowrap;
 }
 
+.dashboard-forecast-card {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(0, 2fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-forecast-heading { display: flex; align-items: center; gap: 11px; }
+.dashboard-forecast-icon {
+  display: grid; width: 40px; height: 40px; flex: 0 0 40px; place-items: center;
+  border-radius: 11px; background: #fff1e7; color: var(--primary);
+}
+.dashboard-forecast-heading h2 { margin: 0; color: var(--text); font-size: 14px; font-weight: 800; }
+.dashboard-forecast-heading p { margin: 4px 0 0; color: var(--text-3); font-size: 10px; }
+.dashboard-forecast-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.dashboard-forecast-metrics > div { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
+.dashboard-forecast-metrics span, .dashboard-forecast-detail { color: var(--text-3); font-size: 10px; }
+.dashboard-forecast-metrics strong {
+  overflow: hidden; color: var(--text); font-size: 14px; text-overflow: ellipsis; white-space: nowrap;
+}
+.dashboard-forecast-link {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 9px 12px; border: 0; border-radius: 9px; background: #111; color: #ff6b00;
+  font-size: 11px; font-weight: 750; white-space: nowrap;
+}
+.dashboard-forecast-link:hover { background: #262626; }
+
 /* Existing helper classes preserved */
 .status-item-hover,
 .payment-item-hover,
@@ -4149,6 +4242,21 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 820px) {
+  .dashboard-forecast-card {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .dashboard-forecast-metrics,
+  .dashboard-forecast-detail {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .dashboard-forecast-link {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
   .restaurant-dashboard {
     padding: 10px;
     border-radius: 18px;
@@ -4184,6 +4292,23 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 560px) {
+  .dashboard-forecast-card {
+    gap: 12px;
+    padding: 13px;
+  }
+
+  .dashboard-forecast-metrics {
+    gap: 7px;
+  }
+
+  .dashboard-forecast-metrics span {
+    font-size: 9px;
+  }
+
+  .dashboard-forecast-metrics strong {
+    font-size: 12px;
+  }
+
   .restaurant-dashboard {
     padding: 8px;
     background: #f7f9fc;
