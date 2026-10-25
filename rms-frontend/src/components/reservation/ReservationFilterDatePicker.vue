@@ -41,7 +41,11 @@
         </div>
         <div class="reservation-filter-date-footer">
           <button type="button" @click="clearDate">Clear</button>
-          <button type="button" :disabled="!allowToday && ((min && todayKey < min) || (max && todayKey > max))" @click="selectDate(todayKey)">Today</button>
+          <button
+            type="button"
+            :disabled="isTodayDisabled"
+            @click="selectDate(todayKey)"
+          >Today</button>
         </div>
       </div>
     </Transition>
@@ -67,6 +71,17 @@ const month = ref(monthStart(props.modelValue ? parseDate(props.modelValue) : ne
 const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
 
 const todayKey = localDateKey(new Date())
+const isTodayDisabled = computed(() => {
+  if (props.allowToday) return false
+
+  const min = String(props.min || '').slice(0, 10)
+  const max = String(props.max || '').slice(0, 10)
+
+  return Boolean(
+    (min && todayKey < min) ||
+    (max && todayKey > max),
+  )
+})
 const displayValue = computed(() => {
   if (!props.modelValue) return ''
   const [year, monthNumber, day] = props.modelValue.split('-')
