@@ -41,7 +41,7 @@
         </div>
         <div class="reservation-filter-date-footer">
           <button type="button" @click="clearDate">Clear</button>
-          <button type="button" :disabled="(min && todayKey < min) || (max && todayKey > max)" @click="selectDate(todayKey)">Today</button>
+          <button type="button" :disabled="!allowToday && ((min && todayKey < min) || (max && todayKey > max))" @click="selectDate(todayKey)">Today</button>
         </div>
       </div>
     </Transition>
@@ -55,6 +55,7 @@ const props = defineProps({
   modelValue: { type: String, default: '' },
   min: { type: String, default: '' },
   max: { type: String, default: '' },
+  allowToday: { type: Boolean, default: false },
   id: { type: String, required: true },
   label: { type: String, required: true },
 })

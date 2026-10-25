@@ -60,6 +60,7 @@
           <label for="pos-reservation-date">Reservation Date</label>
           <ReservationFilterDatePicker
             :model-value="reservationDate"
+            :allow-today="true"
             id="pos-reservation-date"
             label="reservation date"
             @update:model-value="reservationDate = $event"
