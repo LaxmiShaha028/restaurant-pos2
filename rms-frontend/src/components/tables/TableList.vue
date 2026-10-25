@@ -915,8 +915,8 @@ const handleSplit = (
             "
             type="button"
             class="table-list-row__button table-list-row__button--merge"
-            title="Merge table"
-            aria-label="Merge table"
+            title="Combine table"
+            aria-label="Combine table"
             @click="
               handleMerge(table)
             "

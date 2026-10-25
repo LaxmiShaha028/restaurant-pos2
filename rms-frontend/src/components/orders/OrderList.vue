@@ -97,7 +97,7 @@
 
                 <div class="order-time">
                     <i class="bi bi-clock"></i>
-                    {{ order.time || "—" }}
+                    {{ getOrderLocalDateTime(order).time }}
                 </div>
 
                 <div
@@ -110,11 +110,11 @@
 
                 <td>
                 <div class="order-date">
-                    {{ order.date || "—" }}
+                    {{ getOrderLocalDateTime(order).date }}
                 </div>
 
                 <small class="order-day">
-                    {{ order.day || "" }}
+                    {{ getOrderLocalDateTime(order).day }}
                 </small>
                 </td>
 
@@ -480,6 +480,45 @@ import orderService
   from "@/services/orderService";
 
 const router = useRouter();
+
+const orderDateFormat = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Asia/Dhaka",
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+});
+
+const orderTimeFormat = new Intl.DateTimeFormat("en-US", {
+  timeZone: "Asia/Dhaka",
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: true,
+});
+
+const orderDayFormat = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Asia/Dhaka",
+  weekday: "long",
+});
+
+const getOrderLocalDateTime = (order) => {
+  const timestamp = order?.created_at
+    ? new Date(order.created_at)
+    : null;
+
+  if (!timestamp || Number.isNaN(timestamp.getTime())) {
+    return {
+      date: order?.date || "—",
+      time: order?.time || "—",
+      day: order?.day || "",
+    };
+  }
+
+  return {
+    date: orderDateFormat.format(timestamp),
+    time: orderTimeFormat.format(timestamp),
+    day: orderDayFormat.format(timestamp),
+  };
+};
 
 const downloadingInvoiceId =
   ref(null);

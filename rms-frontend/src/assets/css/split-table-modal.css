@@ -395,7 +395,7 @@
   border-radius: 0.55rem;
 
   background: #e0e7ff;
-  color: #4338ca;
+  color: #f97316;
 }
 
 .split-group-item strong,
@@ -430,7 +430,7 @@
 
 .split-group-badge--master {
   background: #dbeafe;
-  color: #1d4ed8;
+  color: black;
 }
 
 .split-group-badge--connected {
