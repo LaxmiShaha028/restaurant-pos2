@@ -4176,9 +4176,10 @@ onBeforeUnmount(() => {
 
 .dashboard-forecast-card {
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) minmax(0, 2fr) auto;
+  grid-template-columns: minmax(0, 1fr) max-content max-content;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
+  margin-top: 14px;
   padding: 16px 18px;
   border: 1px solid var(--border);
   border-radius: 14px;
@@ -4187,13 +4188,23 @@ onBeforeUnmount(() => {
 }
 
 .dashboard-forecast-heading { display: flex; align-items: center; gap: 11px; }
+.dashboard-forecast-heading { grid-column: 1; grid-row: 1; }
 .dashboard-forecast-icon {
   display: grid; width: 40px; height: 40px; flex: 0 0 40px; place-items: center;
   border-radius: 11px; background: #fff1e7; color: var(--primary);
 }
 .dashboard-forecast-heading h2 { margin: 0; color: var(--text); font-size: 14px; font-weight: 800; }
 .dashboard-forecast-heading p { margin: 4px 0 0; color: var(--text-3); font-size: 10px; }
-.dashboard-forecast-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.dashboard-forecast-metrics {
+  display: grid;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: start;
+  margin-right: 20px;
+  grid-template-columns: repeat(2, max-content);
+  gap: 24px;
+}
+.dashboard-forecast-detail { grid-column: 2; grid-row: 1; }
 .dashboard-forecast-metrics > div { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
 .dashboard-forecast-metrics span, .dashboard-forecast-detail { color: var(--text-3); font-size: 10px; }
 .dashboard-forecast-metrics strong {
