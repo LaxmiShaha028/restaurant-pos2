@@ -80,10 +80,14 @@ class ReportController extends Controller
 
         $filters = $request->validate([
             'forecast_days' => ['sometimes', 'integer', 'in:1,7'],
+            'chart_days' => ['sometimes', 'integer', 'in:1,7,28'],
         ]);
 
         return $this->successResponse(
-            $forecastService->build((int) ($filters['forecast_days'] ?? 7)),
+            $forecastService->build(
+                (int) ($filters['forecast_days'] ?? 7),
+                (int) ($filters['chart_days'] ?? 28)
+            ),
             'Demand forecast loaded successfully.'
         );
     }

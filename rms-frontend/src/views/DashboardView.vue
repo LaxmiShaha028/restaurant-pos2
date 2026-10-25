@@ -1370,7 +1370,7 @@
           <span class="dashboard-forecast-icon"><i class="bi bi-graph-up-arrow"></i></span>
           <div>
             <h2>Demand Forecast</h2>
-            <p>Next 7 days, based on recent sales</p>
+            <p>Hourly best sellers and ingredient needs · last 28 days</p>
           </div>
         </div>
         <div v-if="forecastSummaryLoading" class="dashboard-forecast-detail">Loading forecast…</div>
@@ -1380,7 +1380,32 @@
         <div v-else class="dashboard-forecast-metrics">
           <div><span>Expected items</span><strong>{{ forecastNumber(forecastSummary.total) }}</strong></div>
           <div><span>Peak hour</span><strong>{{ forecastSummary.peakHour || 'No data' }}</strong></div>
-          <div><span>Missing recipes</span><strong>{{ forecastSummary.unmappedCount }}</strong></div>
+          <!-- <div><span>Missing recipes</span><strong>{{ forecastSummary.unmappedCount }}</strong></div> -->
+        </div>
+        <div v-if="!forecastSummaryLoading && !forecastSummaryError && forecastSummary.hourlyRecipes.length" class="dashboard-forecast-recipes">
+          <div class="dashboard-forecast-table-wrap">
+            <table class="dashboard-forecast-table">
+              <thead>
+                <tr><th>Hour</th><th>Best seller</th><th>Sold</th><th>Share</th><th>Ingredients needed</th></tr>
+              </thead>
+              <tbody>
+                <tr v-for="recipe in forecastSummary.hourlyRecipes" :key="recipe.hour">
+                  <td class="dashboard-forecast-hour">{{ forecastHour(recipe.hour) }}</td>
+                  <td class="dashboard-forecast-recipe-name">{{ recipe.item_name }}</td>
+                  <td>{{ forecastNumber(recipe.quantity_sold) }}</td>
+                  <td>{{ forecastNumber(recipe.sales_share_percent) }}%</td>
+                  <td>
+                    <span v-if="recipe.ingredients.length" class="dashboard-forecast-ingredient-list">
+                      <span v-for="ingredient in recipe.ingredients" :key="ingredient.raw_material_id">
+                        {{ ingredient.material_name }}: {{ forecastNumber(ingredient.quantity_required) }} {{ ingredient.unit }}<small v-if="ingredient.unit_mismatch"> (unit mismatch)</small>
+                      </span>
+                    </span>
+                    <span v-else class="dashboard-forecast-no-recipe">No recipe mapped</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <button type="button" class="dashboard-forecast-link" @click="openDemandForecast">
           View full report <i class="bi bi-arrow-right"></i>
@@ -1429,7 +1454,7 @@ const errorMessage = ref('')
 const dashboard = ref({})
 const forecastSummaryLoading = ref(false)
 const forecastSummaryError = ref(false)
-const forecastSummary = ref({ total: 0, peakHour: '', unmappedCount: 0 })
+const forecastSummary = ref({ total: 0, peakHour: '', unmappedCount: 0, hourlyRecipes: [] })
 
 const salesPeriod = ref('month')
 const salesPeriodMenuOpen = ref(false)
@@ -2398,9 +2423,8 @@ function forecastNumber(value) {
 }
 
 function forecastHour(hour) {
-  const date = new Date()
-  date.setHours(Number(hour), 0, 0, 0)
-  return date.toLocaleTimeString(undefined, { hour: 'numeric', hour12: true })
+  const localHour = ((Number(hour) % 24) + 24) % 24
+  return `${localHour % 12 || 12} ${localHour < 12 ? 'AM' : 'PM'}`
 }
 
 function openDemandForecast() {
@@ -2417,7 +2441,9 @@ async function loadForecastSummary() {
     forecastSummary.value = {
       total: forecastRows.reduce((sum, row) => sum + Number(row.forecast_quantity || 0), 0),
       peakHour: data.peak_hours?.[0] ? forecastHour(data.peak_hours[0].hour) : '',
-      unmappedCount: data.ingredient_recommendations?.unmapped_menu_items?.length || 0,
+      unmappedCount: (data.ingredient_recommendations?.unmapped_menu_items?.length || 0)
+        + (data.ingredient_recommendations?.unmapped_addons?.length || 0),
+      hourlyRecipes: data.hourly_top_recipes || [],
     }
   } catch {
     forecastSummaryError.value = true
@@ -4173,8 +4199,21 @@ onBeforeUnmount(() => {
 .dashboard-forecast-metrics strong {
   overflow: hidden; color: var(--text); font-size: 14px; text-overflow: ellipsis; white-space: nowrap;
 }
+.dashboard-forecast-recipes { grid-column: 1 / -1; width: 100%; min-width: 0; }
+.dashboard-forecast-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 9px; }
+.dashboard-forecast-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+.dashboard-forecast-table th, .dashboard-forecast-table td { padding: 7px 9px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+.dashboard-forecast-table th { background: #fff8f1; color: var(--text-3); font-size: 9px; font-weight: 750; white-space: nowrap; }
+.dashboard-forecast-table tbody tr:last-child td { border-bottom: 0; }
+.dashboard-forecast-table td { color: var(--text-2); }
+.dashboard-forecast-table .dashboard-forecast-hour { color: var(--primary); font-weight: 800; white-space: nowrap; }
+.dashboard-forecast-table .dashboard-forecast-recipe-name { color: var(--text); font-weight: 750; white-space: nowrap; }
+.dashboard-forecast-ingredient-list { display: flex; flex-wrap: wrap; gap: 3px 12px; }
+.dashboard-forecast-ingredient-list > span { white-space: nowrap; }
+.dashboard-forecast-ingredient-list small, .dashboard-forecast-no-recipe { color: var(--text-3); }
 .dashboard-forecast-link {
   display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  grid-column: 3; grid-row: 1; justify-self: end;
   padding: 9px 12px; border: 0; border-radius: 9px; background: #111; color: #ff6b00;
   font-size: 11px; font-weight: 750; white-space: nowrap;
 }
