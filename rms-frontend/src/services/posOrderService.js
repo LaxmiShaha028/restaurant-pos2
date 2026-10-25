@@ -140,10 +140,16 @@ function normalizeCustomerSearch(response) {
 }
 
 const posOrderService = {
-  async loadBootstrap() {
+  async loadBootstrap(filters = {}) {
+    const reservationParams = {
+      per_page: 100,
+      ...(filters?.reservation_date
+        ? { reservation_date: filters.reservation_date }
+        : {}),
+    }
     const [optionsResponse, reservationsResponse] = await Promise.all([
       orderService.getCreateOptions(),
-      orderService.getSeatedReservations({ per_page: 100 }),
+      orderService.getSeatedReservations(reservationParams),
     ])
     const data = normalizeBootstrap(optionsResponse)
 

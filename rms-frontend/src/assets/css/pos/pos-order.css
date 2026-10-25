@@ -591,9 +591,16 @@
 /* Table selection toolbar */
 
 .pos-table-selection-toolbar {
+<<<<<<< HEAD
   display: grid;
   grid-template-columns: minmax(180px, 1.5fr) minmax(145px, .8fr) minmax(120px, .7fr) auto auto;
   align-items: end;
+=======
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+>>>>>>> a609f36 (Frontend & Backend Development)
   gap: 6px;
   width: 100%;
   margin: 0 0 8px;
@@ -602,6 +609,18 @@
   border-radius: 5px;
   background: #ffffff;
 }
+
+.pos-table-filter-field { flex: 1 1 170px; min-width: 145px; }
+.pos-table-filter-field > label { display: block; margin: 0 0 2px; color: #344054; font-size: 11px; font-weight: 600; line-height: 1.1; }
+.pos-table-filter-field .reservation-filter-date-picker { min-height: 28px; }
+.pos-table-filter-field .reservation-filter-date-trigger { min-height: 28px; height: 28px; padding: 3px 9px; border-radius: 4px; font-size: 12px; }
+.pos-table-filter-actions { display: flex; align-items: flex-end; gap: 5px; }
+.pos-filter-apply-button,
+.pos-filter-clear-button { display: inline-flex; min-height: 28px; align-items: center; justify-content: center; gap: 4px; padding: 0 9px; border: 1px solid transparent; border-radius: 4px; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; }
+.pos-filter-apply-button { border-color: #292929; background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%); color: #f97316; }
+.pos-filter-clear-button { border-color: #dfe5ec; background: #fff; color: #344054; }
+.pos-filter-apply-button:hover { background: #292929; }
+.pos-filter-clear-button:hover { border-color: #fb923c; background: #fff7ed; }
 
 .pos-search-control {
   position: relative;

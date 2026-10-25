@@ -56,26 +56,35 @@
           <input v-model.trim="search" type="search" placeholder="Search table or section..." />
         </div>
 
-        <div class="pos-reservation-date-filter">
+        <div class="pos-table-filter-field">
           <label for="pos-reservation-date">Reservation Date</label>
-          <input id="pos-reservation-date" v-model="reservationDateDraft" type="date" />
+          <ReservationFilterDatePicker
+            :model-value="reservationDate"
+            id="pos-reservation-date"
+            label="reservation date"
+            @update:model-value="reservationDate = $event"
+          />
         </div>
 
-        <div class="pos-reservation-date-filter pos-table-status-filter">
-          <label for="pos-table-status">Availability</label>
-          <select id="pos-table-status" v-model="statusDraft">
-            <option value="all">All</option>
-            <option value="available">Available</option>
-            <option value="reserved">Reserved</option>
-          </select>
+        <div class="pos-table-filter-field">
+          <label>Availability</label>
+          <OrderFilterSelect
+            :model-value="availabilityFilter"
+            :options="availabilityOptions"
+            placeholder="All"
+            label="Table availability"
+            @update:model-value="availabilityFilter = $event"
+          />
         </div>
 
         <div class="pos-table-filter-actions">
-          <button type="button" class="pos-filter-button apply" @click="applyFilters">
-            <i class="bi bi-search"></i> Apply
+          <button type="button" class="pos-filter-apply-button" @click="applyFilters">
+            <i class="bi bi-funnel"></i>
+            Apply
           </button>
-          <button type="button" class="pos-filter-button clear" :disabled="!hasActiveFilters" @click="clearFilters">
-            <i class="bi bi-eraser"></i> Clear
+          <button type="button" class="pos-filter-clear-button" @click="clearFilters">
+            <i class="bi bi-eraser"></i>
+            Clear
           </button>
         </div>
 
@@ -207,6 +216,8 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import PaginationControls from '@/components/shared/PaginationControls.vue'
+import OrderFilterSelect from '@/components/orders/OrderFilterSelect.vue'
+import ReservationFilterDatePicker from '@/components/reservation/ReservationFilterDatePicker.vue'
 import posOrderService from '@/services/posOrderService'
 import '@/assets/css/pos/pos-order.css'
 
@@ -222,10 +233,14 @@ const sections = [
   { value: 'outdoor', label: 'Outdoor' },
 ]
 const search = ref('')
-const reservationDateDraft = ref('')
+const reservationDate = ref('')
+const availabilityFilter = ref('')
 const appliedReservationDate = ref('')
-const statusDraft = ref('all')
-const appliedStatus = ref('all')
+const appliedAvailability = ref('')
+const availabilityOptions = [
+  { value: 'available', label: 'Available' },
+  { value: 'reserved', label: 'Reserved' },
+]
 const currentPage = ref(1)
 const pageSize = 12
 const hasActiveFilters = computed(() => Boolean(
@@ -240,12 +255,8 @@ const filteredTables = computed(() => {
   const term = search.value.trim().toLowerCase()
   return tables.value.filter((table) => {
     if (String(table?.section || '').toLowerCase() !== activeSection.value) return false
-    if (
-      appliedReservationDate.value &&
-      String(table?.reservation_date || '').slice(0, 10) !== appliedReservationDate.value
-    ) return false
-    if (appliedStatus.value === 'reserved' && !table?.has_seated_reservation) return false
-    if (appliedStatus.value === 'available' && table?.has_seated_reservation) return false
+    if (appliedAvailability.value === 'available' && table?.has_seated_reservation) return false
+    if (appliedAvailability.value === 'reserved' && !table?.has_seated_reservation) return false
     if (!term) return true
 
     return [table?.table_name, table?.section]
@@ -265,31 +276,23 @@ const floorTables = computed(() =>
   paginatedTables.value.map((table) => ({ table, seats: seatLayout(table) })),
 )
 
-watch(search, () => {
+watch([search, appliedAvailability, activeSection], () => {
   currentPage.value = 1
 })
 
-watch(appliedReservationDate, () => {
-  currentPage.value = 1
-})
-
-watch(appliedStatus, () => {
-  currentPage.value = 1
-})
-
-function applyFilters() {
-  appliedReservationDate.value = reservationDateDraft.value
-  appliedStatus.value = statusDraft.value
-  currentPage.value = 1
+async function applyFilters() {
+  appliedReservationDate.value = reservationDate.value
+  appliedAvailability.value = availabilityFilter.value
+  await loadTables()
 }
 
-function clearFilters() {
-  search.value = ''
-  reservationDateDraft.value = ''
+async function clearFilters() {
+  reservationDate.value = ''
+  availabilityFilter.value = ''
   appliedReservationDate.value = ''
-  statusDraft.value = 'all'
-  appliedStatus.value = 'all'
-  currentPage.value = 1
+  appliedAvailability.value = ''
+  search.value = ''
+  await loadTables()
 }
 
 function formatTableName(value) {
@@ -425,7 +428,9 @@ async function loadTables() {
   errorMessage.value = ''
 
   try {
-    const data = await posOrderService.loadBootstrap()
+    const data = await posOrderService.loadBootstrap({
+      reservation_date: appliedReservationDate.value,
+    })
     tables.value = Array.isArray(data?.tables) ? data.tables : []
 
     const availableIds = new Set(tables.value.map((table) => Number(table.id)))
