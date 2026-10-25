@@ -226,7 +226,7 @@
 .order-alert-info {
   border-color: #fed7aa;
   background: var(--order-info-soft);
-  color: #1849a9;
+  color: #dc0000;
 }
 
 .served-order-alert {

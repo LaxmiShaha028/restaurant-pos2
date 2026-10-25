@@ -2112,46 +2112,31 @@
                   Payment Method
                 </label>
 
-                <select
-                  id="payment_method"
+                <OrderFilterSelect
                   v-model="form.payment_method"
-                  class="summary-payment-select"
+                  label="Payment method"
+                  :options="paymentMethods"
+                  :placeholder="requiresNewPaymentMethod
+                    ? 'Select payment method'
+                    : isEditMode
+                      ? 'No new payment'
+                      : 'No payment received'"
+                  :disabled="
+                    isSubmitting ||
+                    !requiresNewPaymentMethod
+                  "
+                  @update:model-value="
+                    clearValidationField(
+                      'payment_method'
+                    )
+                  "
                   :class="{
                     invalid:
                       getFieldError(
                         'payment_method'
                       ),
                   }"
-                  :disabled="
-                    isSubmitting ||
-                    !requiresNewPaymentMethod
-                  "
-                  @change="
-                    clearValidationField(
-                      'payment_method'
-                    )
-                  "
-                >
-
-                  <option value="">
-                    {{
-                      requiresNewPaymentMethod
-                        ? "Select payment method"
-                        : isEditMode
-                          ? "No new payment"
-                          : "No payment received"
-                    }}
-                  </option>
-
-                  <option
-                    v-for="method in paymentMethods"
-                    :key="method.value"
-                    :value="method.value"
-                  >
-                    {{ method.label }}
-                  </option>
-
-                </select>
+                />
 
                 <span
                   v-if="

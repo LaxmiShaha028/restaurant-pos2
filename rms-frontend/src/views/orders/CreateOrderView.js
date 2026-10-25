@@ -1,6 +1,7 @@
 import orderService from "@/services/orderService";
 import systemSettingService from "@/services/systemSettingService";
 import PaginationControls from "@/components/shared/PaginationControls.vue";
+import OrderFilterSelect from "@/components/orders/OrderFilterSelect.vue";
 const BACKEND_URL = (
   import.meta.env.VITE_BACKEND_URL ||
   "http://127.0.0.1:8000"
@@ -11,6 +12,7 @@ export default {
 
   components: {
     PaginationControls,
+    OrderFilterSelect,
   },
 
   /*

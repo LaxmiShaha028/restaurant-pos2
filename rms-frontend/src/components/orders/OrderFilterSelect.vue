@@ -6,6 +6,7 @@
       :aria-label="label"
       :aria-expanded="open"
       aria-haspopup="listbox"
+      :disabled="disabled"
       @click="toggleMenu"
       @keydown.esc="closeMenu"
     >
@@ -52,6 +53,7 @@ const props = defineProps({
   options: { type: Array, default: () => [] },
   placeholder: { type: String, required: true },
   label: { type: String, required: true },
+  disabled: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -109,6 +111,8 @@ onBeforeUnmount(() => document.removeEventListener('click', handleDocumentClick)
 .order-filter-select-trigger:hover,
 .order-filter-select-trigger[aria-expanded="true"] { border-color: #fb923c; }
 .order-filter-select-trigger:focus-visible { outline: none; border-color: #f97316; box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14); }
+.order-filter-select.invalid .order-filter-select-trigger { border-color: #dc2626; }
+.order-filter-select-trigger:disabled { cursor: not-allowed; background: #f9fafb; color: #98a2b3; }
 .order-filter-select-menu {
   position: absolute;
   z-index: 1200;
