@@ -95,6 +95,11 @@
         </div>
       </div>
 
+      <div v-if="selectionError" class="pos-alert pos-alert-danger">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>{{ selectionError }}</span>
+      </div>
+
       <div v-if="filteredTables.length" class="pos-table-workspace">
         <aside class="pos-table-list-panel">
           <div class="pos-floor-panel-heading">
@@ -227,6 +232,7 @@ const loading = ref(true)
 const errorMessage = ref('')
 const tables = ref([])
 const selectedIds = ref([])
+const selectionError = ref('')
 const activeSection = ref('ac')
 const sections = [
   { value: 'ac', label: 'AC' },
@@ -247,15 +253,19 @@ const pageSize = 12
 const hasActiveFilters = computed(() => Boolean(
   search.value ||
   appliedReservationDate.value ||
-  reservationDateDraft.value ||
-  appliedStatus.value !== 'all' ||
-  statusDraft.value !== 'all',
+  reservationDate.value ||
+  appliedAvailability.value ||
+  availabilityFilter.value,
 ))
 
 const filteredTables = computed(() => {
   const term = search.value.trim().toLowerCase()
   return tables.value.filter((table) => {
     if (String(table?.section || '').toLowerCase() !== activeSection.value) return false
+    if (
+      appliedReservationDate.value &&
+      String(table?.reservation_date || '').slice(0, 10) !== appliedReservationDate.value
+    ) return false
     if (appliedAvailability.value === 'available' && table?.has_seated_reservation) return false
     if (appliedAvailability.value === 'reserved' && !table?.has_seated_reservation) return false
     if (!term) return true
@@ -276,6 +286,11 @@ const paginatedTables = computed(() => {
 const floorTables = computed(() =>
   paginatedTables.value.map((table) => ({ table, seats: seatLayout(table) })),
 )
+
+const selectedSection = computed(() => {
+  const primaryId = selectedIds.value[0]
+  return tables.value.find((table) => Number(table.id) === Number(primaryId))?.section || ''
+})
 
 watch([search, appliedAvailability, activeSection], () => {
   currentPage.value = 1
@@ -407,6 +422,15 @@ function seatLayout(table) {
 function toggleTable(table) {
   if (table?.is_merge_child || table?.can_order === false) return
 
+  if (isSelected(table.id)) {
+    selectionError.value = ''
+  } else if (selectedSection.value && table.section !== selectedSection.value) {
+    selectionError.value = 'Tables can only be combined with tables from the same section.'
+    return
+  } else {
+    selectionError.value = ''
+  }
+
   const id = Number(table?.id)
   if (!id) return
 
@@ -422,6 +446,7 @@ function toggleTable(table) {
 
 function clearSelection() {
   selectedIds.value = []
+  selectionError.value = ''
 }
 
 async function loadTables() {

@@ -926,6 +926,18 @@ if ($reservation) {
 
 
 
+            if ($primaryTable) {
+                foreach ($mergedTables as $mergedTable) {
+                    if ($mergedTable->section !== $primaryTable->section) {
+                        throw ValidationException::withMessages([
+                            'merged_table_ids' => [
+                                'Tables can only be combined within the same section.',
+                            ],
+                        ]);
+                    }
+                }
+            }
+
             /*
             |--------------------------------------------------------------------------
             | Reservation customer protection
@@ -2103,6 +2115,18 @@ if (
                         'One or more selected merged tables no longer exist.',
                     ],
                 ]);
+            }
+
+            if ($primaryTable) {
+                foreach ($mergedTables as $mergedTable) {
+                    if ($mergedTable->section !== $primaryTable->section) {
+                        throw ValidationException::withMessages([
+                            'merged_table_ids' => [
+                                'Tables can only be combined within the same section.',
+                            ],
+                        ]);
+                    }
+                }
             }
 
             /*

@@ -44,13 +44,19 @@ const masterTableId = ref(null);
 */
 
 const selectedTables = computed(() => {
-  return availableTables.value.filter(
+  return sectionCompatibleTables.value.filter(
     (table) =>
       selectedTableIds.value.includes(
         Number(table.id)
       )
   );
 });
+
+const sectionCompatibleTables = computed(() =>
+  availableTables.value.filter(
+    (table) => table.section === props.table?.section,
+  ),
+);
 
 const currentCapacity = computed(() => {
   return currentGroup.value.reduce(
@@ -524,14 +530,14 @@ const submitMerge = async () => {
 
                 <div
                   v-if="
-                    availableTables.length
+                    sectionCompatibleTables.length
                   "
                   class="merge-table-list"
                 >
                   <button
                     v-for="
                       availableTable in
-                      availableTables
+                      sectionCompatibleTables
                     "
                     :key="
                       availableTable.id
@@ -616,7 +622,7 @@ const submitMerge = async () => {
                   </strong>
 
                   <span>
-                    You can merge this table with any available table.
+                    You can merge this table with available tables in this section.
                   </span>
                 </div>
               </section>

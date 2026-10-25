@@ -743,6 +743,17 @@ class RestaurantTableController extends Controller
                         ->lockForUpdate()
                         ->get();
 
+                if ($currentGroup->count() > 1 && $currentGroup->contains(
+                    fn (RestaurantTable $table): bool =>
+                        $table->section !== $validated['section']
+                )) {
+                    throw ValidationException::withMessages([
+                        'section' => [
+                            'All tables in a merge group must use the same section.',
+                        ],
+                    ]);
+                }
+
                 $currentGroupIds =
                     $currentGroup
                         ->pluck('id')
@@ -818,6 +829,14 @@ class RestaurantTableController extends Controller
                         $selectedTables
                         as $selectedTable
                     ) {
+                        if ($selectedTable->section !== $validated['section']) {
+                            throw ValidationException::withMessages([
+                                'merge_table_ids' => [
+                                    "{$selectedTable->table_name} must be in the same section as the current table.",
+                                ],
+                            ]);
+                        }
+
                         if (
                             $selectedTable->status !==
                             RestaurantTable::STATUS_AVAILABLE
@@ -1333,6 +1352,7 @@ class RestaurantTableController extends Controller
                     'status',
                     RestaurantTable::STATUS_AVAILABLE
                 )
+                ->where('section', $restaurantTable->section)
                 ->whereNull(
                     'merged_with_id'
                 )
@@ -1532,6 +1552,17 @@ class RestaurantTableController extends Controller
                 $isExistingGroup =
                     $currentGroup->count() > 1;
 
+                if ($currentGroup->contains(
+                    fn (RestaurantTable $table): bool =>
+                        $table->section !== $currentTable->section
+                )) {
+                    throw ValidationException::withMessages([
+                        'table_ids' => [
+                            'All tables in a merge group must use the same section.',
+                        ],
+                    ]);
+                }
+
                 if (
                     !$isExistingGroup &&
                     $currentTable
@@ -1579,6 +1610,14 @@ class RestaurantTableController extends Controller
                     $selectedTables
                     as $selectedTable
                 ) {
+                    if ($selectedTable->section !== $currentTable->section) {
+                        throw ValidationException::withMessages([
+                            'table_ids' => [
+                                "{$selectedTable->table_name} must be in the same section as the current table.",
+                            ],
+                        ]);
+                    }
+
                     if (
                         $currentGroupIds
                             ->contains(

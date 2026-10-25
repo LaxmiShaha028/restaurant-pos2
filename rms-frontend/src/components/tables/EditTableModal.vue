@@ -75,13 +75,19 @@ const isMerged = computed(() => {
 });
 
 const selectedMergeTables = computed(() => {
-  return availableMergeTables.value.filter(
+  return sectionCompatibleMergeTables.value.filter(
     (table) =>
       form.merge_table_ids.includes(
         Number(table.id)
       )
   );
 });
+
+const sectionCompatibleMergeTables = computed(() =>
+  availableMergeTables.value.filter(
+    (table) => table.section === form.section,
+  ),
+);
 
 const selectedMergeCapacity = computed(() => {
   return selectedMergeTables.value.reduce(
@@ -351,6 +357,17 @@ watch(
 
     resetErrors();
   }
+);
+
+watch(
+  () => form.section,
+  (section) => {
+    form.merge_table_ids = form.merge_table_ids.filter((id) =>
+      availableMergeTables.value.some(
+        (table) => Number(table.id) === Number(id) && table.section === section,
+      ),
+    );
+  },
 );
 
 /*
@@ -1276,7 +1293,7 @@ const submitForm = async () => {
                   <!-- Available table list -->
                   <div
                     v-if="
-                      availableMergeTables
+                      sectionCompatibleMergeTables
                         .length
                     "
                   >
@@ -1292,7 +1309,7 @@ const submitForm = async () => {
                       <button
                         v-for="
                           availableTable in
-                          availableMergeTables
+                          sectionCompatibleMergeTables
                         "
                         :key="
                           availableTable.id
@@ -1381,7 +1398,8 @@ const submitForm = async () => {
                       <span>
                         No other table is
                         currently available
-                        for merging.
+                        in this section for
+                        merging.
                       </span>
                     </div>
                   </div>
