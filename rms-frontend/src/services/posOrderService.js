@@ -92,6 +92,7 @@ function addSeatedReservationTables(tables, response) {
         ...(existing || table),
         has_seated_reservation: true,
         reservation_no: reservation.reservation_no || '',
+        reservation_date: reservation.reservation_date || reservation.date || '',
       })
     })
   })

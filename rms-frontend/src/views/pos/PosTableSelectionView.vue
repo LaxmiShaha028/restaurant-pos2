@@ -56,6 +56,29 @@
           <input v-model.trim="search" type="search" placeholder="Search table or section..." />
         </div>
 
+        <div class="pos-reservation-date-filter">
+          <label for="pos-reservation-date">Reservation Date</label>
+          <input id="pos-reservation-date" v-model="reservationDateDraft" type="date" />
+        </div>
+
+        <div class="pos-reservation-date-filter pos-table-status-filter">
+          <label for="pos-table-status">Availability</label>
+          <select id="pos-table-status" v-model="statusDraft">
+            <option value="all">All</option>
+            <option value="available">Available</option>
+            <option value="reserved">Reserved</option>
+          </select>
+        </div>
+
+        <div class="pos-table-filter-actions">
+          <button type="button" class="pos-filter-button apply" @click="applyFilters">
+            <i class="bi bi-search"></i> Apply
+          </button>
+          <button type="button" class="pos-filter-button clear" :disabled="!hasActiveFilters" @click="clearFilters">
+            <i class="bi bi-eraser"></i> Clear
+          </button>
+        </div>
+
         <div class="pos-selection-count">
           <strong>{{ selectedIds.length }}</strong>
           <span>tables selected</span>
@@ -199,13 +222,30 @@ const sections = [
   { value: 'outdoor', label: 'Outdoor' },
 ]
 const search = ref('')
+const reservationDateDraft = ref('')
+const appliedReservationDate = ref('')
+const statusDraft = ref('all')
+const appliedStatus = ref('all')
 const currentPage = ref(1)
 const pageSize = 12
+const hasActiveFilters = computed(() => Boolean(
+  search.value ||
+  appliedReservationDate.value ||
+  reservationDateDraft.value ||
+  appliedStatus.value !== 'all' ||
+  statusDraft.value !== 'all',
+))
 
 const filteredTables = computed(() => {
   const term = search.value.trim().toLowerCase()
   return tables.value.filter((table) => {
     if (String(table?.section || '').toLowerCase() !== activeSection.value) return false
+    if (
+      appliedReservationDate.value &&
+      String(table?.reservation_date || '').slice(0, 10) !== appliedReservationDate.value
+    ) return false
+    if (appliedStatus.value === 'reserved' && !table?.has_seated_reservation) return false
+    if (appliedStatus.value === 'available' && table?.has_seated_reservation) return false
     if (!term) return true
 
     return [table?.table_name, table?.section]
@@ -228,6 +268,29 @@ const floorTables = computed(() =>
 watch(search, () => {
   currentPage.value = 1
 })
+
+watch(appliedReservationDate, () => {
+  currentPage.value = 1
+})
+
+watch(appliedStatus, () => {
+  currentPage.value = 1
+})
+
+function applyFilters() {
+  appliedReservationDate.value = reservationDateDraft.value
+  appliedStatus.value = statusDraft.value
+  currentPage.value = 1
+}
+
+function clearFilters() {
+  search.value = ''
+  reservationDateDraft.value = ''
+  appliedReservationDate.value = ''
+  statusDraft.value = 'all'
+  appliedStatus.value = 'all'
+  currentPage.value = 1
+}
 
 function formatTableName(value) {
   return String(value ?? '').replace(/(\d+)$/, (digits) =>

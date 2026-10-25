@@ -591,9 +591,13 @@
 /* Table selection toolbar */
 
 .pos-table-selection-toolbar {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.5fr) minmax(145px, .8fr) minmax(120px, .7fr) auto auto;
+  align-items: end;
   gap: 6px;
+  width: 100%;
   margin: 0 0 8px;
-  padding: 7px;
+  padding: 6px;
   border: 1px solid #e5e7eb;
   border-radius: 5px;
   background: #ffffff;
@@ -601,7 +605,8 @@
 
 .pos-search-control {
   position: relative;
-  width: min(380px, 100%);
+  width: 100%;
+  min-width: 0;
   min-height: 28px;
   gap: 5px;
   padding: 0 8px 0 25px;
@@ -626,7 +631,91 @@
   font-size: 12px;
 }
 
+.pos-reservation-date-filter {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pos-reservation-date-filter label {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.pos-reservation-date-filter input {
+  min-height: 28px;
+  padding: 0 6px;
+  border: 1px solid #dfe5ec;
+  border-radius: 4px;
+  color: #344054;
+  background: #fff;
+  font: inherit;
+}
+
+.pos-reservation-date-filter select {
+  min-height: 28px;
+  padding: 0 22px 0 6px;
+  border: 1px solid #dfe5ec;
+  border-radius: 4px;
+  color: #344054;
+  background: #fff;
+  font: inherit;
+}
+
+.pos-table-status-filter {
+  min-width: 0;
+}
+
+.pos-table-filter-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pos-filter-button {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.pos-filter-button:hover:not(:disabled) {
+  transform: none;
+}
+
+.pos-filter-button.apply {
+  border-color: #ea580c;
+  color: #fff;
+  background: #ea580c;
+}
+
+.pos-filter-button.clear {
+  border-color: #e5e7eb;
+  color: #6b7280;
+  background: #fff;
+}
+
+.pos-filter-button:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+}
+
 .pos-selection-count {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  white-space: nowrap;
   gap: 4px;
   color: #667085;
   font-size: 10px;
@@ -1824,6 +1913,19 @@
     white-space: normal;
   }
 
+  .pos-table-selection-toolbar {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .pos-table-filter-actions {
+    justify-content: flex-end;
+  }
+
+  .pos-selection-count {
+    justify-content: flex-start;
+  }
+
   .pos-table-header-actions {
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -2567,9 +2669,9 @@
 }
 
 .pos-floor-section-tabs button.is-active {
-  border-color: #149e98;
-  background: #149e98;
-  color: #fff;
+  border-color: #000000;
+  background: #000000;
+  color: #f96f00;
 }
 
 .pos-floor-layout-panel .pos-floor-map-heading {
