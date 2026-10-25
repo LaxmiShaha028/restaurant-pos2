@@ -1355,6 +1355,11 @@ $totalAmount = round(
                         'restaurant_table_id' =>
     $primaryTable?->id,
 
+                        'fulfillment_type' =>
+                            ($data['fulfillment_type'] ?? 'dine_in') === 'takeaway'
+                                ? 'takeaway'
+                                : 'dine_in',
+
 
 
                         /*
@@ -1816,6 +1821,14 @@ $allSelectedTableIds =
                 ]);
 
 
+            if ($order->fulfillment_type === 'takeaway') {
+                $order->forceFill([
+                    'pickup_token' => 'T-' . str_pad((string) $order->id, 5, '0', STR_PAD_LEFT),
+                    'pickup_status' => 'uncollected',
+                ])->save();
+            }
+
+
 
 
 
@@ -1845,8 +1858,6 @@ $allSelectedTableIds =
                             $primaryTable?->id,
 
                     ]);
-
-
 
                 $primaryTable->update([
 
@@ -3143,12 +3154,22 @@ public function updateStatus(
                             Order::STATUS_SERVED,
                     ]);
 
-                $lockedOrder->update([
+                $servedOrderUpdates = [
                     'status' =>
                         Order::STATUS_SERVED,
                     'served_at' =>
                         $servedAt,
-                ]);
+                ];
+
+                if (
+                    $lockedOrder->fulfillment_type === 'takeaway'
+                    && $lockedOrder->pickup_status !== 'collected'
+                ) {
+                    $servedOrderUpdates['pickup_status'] = 'collected';
+                    $servedOrderUpdates['picked_up_at'] = $servedAt;
+                }
+
+                $lockedOrder->update($servedOrderUpdates);
 
                 return $this->freshOrder(
                     $lockedOrder

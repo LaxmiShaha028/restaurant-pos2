@@ -1,6 +1,7 @@
 <template>
-  <div class="dashboard-layout">
+  <div class="dashboard-layout" :class="{ 'pickup-kiosk-layout': isPickupKiosk }">
     <AppSidebar
+      v-if="!isPickupKiosk"
       :mobile-open="mobileSidebarOpen"
       :collapsed="desktopSidebarCollapsed"
       @close="closeMobileSidebar"
@@ -12,9 +13,10 @@
       class="main-wrapper"
       :class="{
         'main-wrapper-collapsed': desktopSidebarCollapsed,
+        'pickup-kiosk-main': isPickupKiosk,
       }"
     >
-      <header class="app-topbar">
+      <header v-if="!isPickupKiosk" class="app-topbar">
         <div class="topbar-left">
           <button
             type="button"
@@ -318,6 +320,8 @@ const SIDEBAR_STORAGE_KEY = 'rms_sidebar_collapsed'
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
+
+const isPickupKiosk = computed(() => route.name === 'pickup-display')
 
 const canOpenPosOrder = computed(() => {
   if (typeof authStore.hasPermission !== 'function') {
@@ -933,6 +937,17 @@ onBeforeUnmount(() => {
     100% - var(--sidebar-collapsed-width)
   );
   margin-left: var(--sidebar-collapsed-width);
+}
+
+.pickup-kiosk-layout .main-wrapper,
+.pickup-kiosk-layout .main-wrapper.main-wrapper-collapsed {
+  width: 100%;
+  margin-left: 0;
+}
+
+.pickup-kiosk-layout .dashboard-content {
+  min-height: 100vh;
+  padding: 0;
 }
 
 /* =========================================================

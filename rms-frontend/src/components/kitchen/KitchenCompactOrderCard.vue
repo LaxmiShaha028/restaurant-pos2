@@ -20,6 +20,8 @@
             {{ order.order_number }}
           </h3>
 
+          <span v-if="order.pickup_token" class="compact-pickup-token">Pickup {{ order.pickup_token }}</span>
+
           <div class="compact-batch-meta">
             <span class="compact-batch-badge">
               <i class="bi bi-layers"></i>
@@ -546,4 +548,6 @@ function formatLabel(value) {
 
   color: #2563eb;
 }
+
+.compact-pickup-token{display:inline-flex;margin-top:3px;padding:2px 6px;border-radius:999px;background:#fff0df;color:#dc5d00;font-size:11px;font-weight:800;}
 </style>

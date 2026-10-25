@@ -214,6 +214,17 @@ function getDownloadFileName(
 
 const orderService = {
 
+  async getPickupBoard() {
+    const response = await api.get(`${ORDER_BASE_URL}/pickup-board`);
+    return getResponseBody(response);
+  },
+
+  async markPickupCollected(orderId) {
+    const id = resolvePositiveId(orderId, "Order ID");
+    const response = await api.post(`${ORDER_URL}/${id}/pickup-collected`);
+    return getResponseBody(response);
+  },
+
   /*
   |--------------------------------------------------------------------------
   | Order List

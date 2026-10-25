@@ -99,6 +99,18 @@ class OrderResource extends JsonResource
             'order_number' =>
                 $this->order_number,
 
+            'fulfillment_type' =>
+                $this->fulfillment_type,
+
+            'pickup_token' =>
+                $this->pickup_token,
+
+            'pickup_status' =>
+                $this->pickup_status,
+
+            'picked_up_at' =>
+                $this->picked_up_at?->toISOString(),
+
             'restaurant_table_id' =>
     $this->restaurant_table_id
         ? (int) $this->restaurant_table_id
@@ -260,7 +272,10 @@ class OrderResource extends JsonResource
 
 
                 'name' =>
-                    $this->customer_name,
+                    $this->customer_name
+                    ?: ($this->fulfillment_type === 'takeaway'
+                        ? 'Walk-in Customer'
+                        : null),
 
 
                 'phone' =>

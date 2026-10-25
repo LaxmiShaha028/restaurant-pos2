@@ -524,7 +524,7 @@
             @if($invoiceSettings['show_token_number'])
                 <tr>
                     <td class="info-label">Token</td>
-                    <td class="info-value">{{ $order->order_number }}</td>
+                    <td class="info-value">{{ $order->pickup_token ?: $order->order_number }}</td>
                 </tr>
             @endif
 

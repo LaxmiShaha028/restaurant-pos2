@@ -32,6 +32,8 @@
             {{ order.order_number }}
           </h2>
 
+          <span v-if="order.pickup_token" class="kitchen-pickup-token">Takeaway · {{ order.pickup_token }}</span>
+
           <div class="kitchen-batch-identity">
             <span class="kitchen-batch-badge">
               <i class="bi bi-layers"></i>
@@ -1158,6 +1160,8 @@ function calculateElapsedTime(
   font-weight: 700;
   line-height: 1.2;
 }
+
+.kitchen-pickup-token{display:inline-flex;margin-top:5px;padding:3px 8px;border-radius:999px;background:#fff0df;color:#dc5d00;font-size:.75rem;font-weight:800;}
 
 .kitchen-extension-badge {
   border-color: rgba(13, 110, 253, 0.2);

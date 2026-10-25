@@ -321,6 +321,37 @@
   gap: 6px;
 }
 
+.walkin-customer-badge {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border: 1px solid #f3d7b8;
+  border-radius: 7px;
+  background: #fff8ef;
+  color: #e76500;
+}
+
+.walkin-customer-badge > i {
+  font-size: 18px;
+}
+
+.walkin-customer-badge span {
+  display: grid;
+  gap: 1px;
+}
+
+.walkin-customer-badge strong {
+  color: #172033;
+  font-size: 11px;
+}
+
+.walkin-customer-badge small {
+  color: #667085;
+  font-size: 9px;
+}
+
 .customer-name-group {
   grid-column: span 2;
 }

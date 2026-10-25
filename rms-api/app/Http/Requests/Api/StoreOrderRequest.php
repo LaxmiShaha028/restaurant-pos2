@@ -44,6 +44,8 @@ class StoreOrderRequest extends FormRequest
             'payment_reference'
         );
 
+        $fulfillmentType = $this->input('fulfillment_type');
+
         $items = collect(
             $this->input('items', [])
         )
@@ -149,6 +151,11 @@ class StoreOrderRequest extends FormRequest
                     ? $this->input('status')
                     : Order::STATUS_PENDING,
 
+            'fulfillment_type' =>
+                in_array($fulfillmentType, ['dine_in', 'takeaway'], true)
+                    ? $fulfillmentType
+                    : ($this->filled('restaurant_table_id') ? 'dine_in' : 'takeaway'),
+
             'discount_amount' =>
                 $this->filled(
                     'discount_amount'
@@ -223,6 +230,11 @@ class StoreOrderRequest extends FormRequest
                 'nullable',
                 'integer',
                 'exists:restaurant_tables,id',
+            ],
+            'fulfillment_type' => [
+                'required',
+                'string',
+                Rule::in(['dine_in', 'takeaway']),
             ],
             'reservation_id' => [
     'nullable',

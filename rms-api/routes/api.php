@@ -67,6 +67,7 @@ use App\Http\Controllers\Api\TestAttendanceController;
 use App\Http\Controllers\Central\PaymentMethodController;
 use App\Http\Controllers\Tenant\TenantEntryController;
 use App\Http\Controllers\Api\BusinessOverviewController;
+use App\Http\Controllers\Api\PickupController;
 
 
 
@@ -1276,6 +1277,14 @@ Route::prefix('reservations')
         Route::prefix('order-management')
             ->name('order-management.')
             ->group(function (): void {
+
+                Route::get('/pickup-board', [PickupController::class, 'board'])
+                    ->middleware('permission:orders.view')
+                    ->name('pickup-board');
+
+                Route::post('/orders/{order}/pickup-collected', [PickupController::class, 'markCollected'])
+                    ->middleware('permission:orders.update,orders.create')
+                    ->name('orders.pickup-collected');
 
                 /*
                 |--------------------------------------------------------------------------

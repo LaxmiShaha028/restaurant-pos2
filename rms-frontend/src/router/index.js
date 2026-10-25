@@ -143,7 +143,6 @@ import KitchenOverviewView
 import KitchenOrderDetailsView
   from '@/views/kitchen/KitchenOrderDetailsView.vue'
 
-
 /*
 |--------------------------------------------------------------------------
 | Billing Management View
@@ -1311,6 +1310,18 @@ const router = createRouter({
 
           },
 
+        },
+
+        {
+          path: 'pickup-display',
+          name: 'pickup-display',
+          component: () => import('@/views/pickup/PickupDisplayView.vue'),
+          meta: {
+            permission: 'orders.view',
+            title: 'Pickup Display',
+            description: 'Show takeaway order progress and ready tokens',
+            icon: 'bi bi-megaphone',
+          },
         },
 
 

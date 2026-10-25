@@ -67,6 +67,10 @@ class Order extends Model
 
         'restaurant_table_id',
         'reservation_id',
+        'fulfillment_type',
+        'pickup_token',
+        'pickup_status',
+        'picked_up_at',
         'status',
 
         'subtotal',
@@ -108,6 +112,7 @@ class Order extends Model
             'customer_id' => 'integer',
             'restaurant_table_id' => 'integer',
             'reservation_id' => 'integer',
+            'picked_up_at' => 'datetime',
             'created_by' => 'integer',
             'chef_id' => 'integer',
 

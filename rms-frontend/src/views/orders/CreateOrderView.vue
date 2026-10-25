@@ -188,10 +188,15 @@
 
         <div class="customer-details-grid">
 
+          <div v-if="isTakeawayOrder" class="walkin-customer-badge">
+            <i class="bi bi-person-walking"></i>
+            <span><strong>Walk-in Customer</strong><small>No customer or table details are needed for takeaway.</small></span>
+          </div>
+
           <!-- =============================================
                CUSTOMER NAME
           ============================================== -->
-          <div class="order-form-group customer-name-group">
+          <div v-if="!isTakeawayOrder" class="order-form-group customer-name-group">
 
             <label
               for="customer_name"
@@ -298,7 +303,7 @@
           <!-- =============================================
                CUSTOMER PHONE
           ============================================== -->
-          <div class="order-form-group">
+          <div v-if="!isTakeawayOrder" class="order-form-group">
 
             <label
               for="customer_phone"
@@ -345,7 +350,7 @@
           <!-- =============================================
                CUSTOMER EMAIL
           ============================================== -->
-          <div class="order-form-group">
+          <div v-if="!isTakeawayOrder" class="order-form-group">
 
             <label
               for="customer_email"
@@ -678,7 +683,7 @@
           <!-- =============================================
                TABLE
           ============================================== -->
-          <div class="order-form-group">
+          <div v-if="!isTakeawayOrder" class="order-form-group">
 
             <label
               for="restaurant_table_id"
@@ -748,6 +753,7 @@
                MERGED TABLES
           ============================================== -->
           <div
+            v-if="!isTakeawayOrder"
             ref="mergedDropdownRef"
             class="order-form-group merged-dropdown-group"
           >
@@ -993,7 +999,7 @@
           <!-- =============================================
                CAPACITY
           ============================================== -->
-          <div class="order-form-group">
+          <div v-if="!isTakeawayOrder" class="order-form-group">
 
             <label class="order-form-label">
               Capacity

@@ -68,6 +68,12 @@ class KitchenOrderResource extends JsonResource
             'order_number' =>
                 $this->order_number,
 
+            'fulfillment_type' =>
+                $this->fulfillment_type,
+
+            'pickup_token' =>
+                $this->pickup_token,
+
             'status' =>
                 $this->status,
 

@@ -22,14 +22,24 @@
     </div>
   </div>
 
-  <button
-    type="button"
-    class="btn add-order-button"
-    @click="goToCreateOrder"
-  >
-    <i class="bi bi-plus-lg"></i>
-    Add Order
-  </button>
+  <div class="order-page-header-actions">
+    <button
+      type="button"
+      class="btn add-order-button"
+      @click="router.push({ name: 'pickup-display' })"
+    >
+      <i class="bi bi-megaphone"></i>
+      Pickup Display
+    </button>
+    <button
+      type="button"
+      class="btn add-order-button"
+      @click="goToCreateOrder"
+    >
+      <i class="bi bi-plus-lg"></i>
+      Add Order
+    </button>
+  </div>
 </div>
 
     <!-- Success Alert -->
@@ -118,6 +128,7 @@
       "
       :can-view-kitchen="canViewKitchen()"
       @change-status="handleStatusChange"
+      @mark-collected="handlePickupCollected"
       @edit="handleEditOrder"
       @extend="handleExtendOrder"
       @chef="handleChefAction"
@@ -829,6 +840,21 @@ const handleStatusChange = async ({
         error,
         "Unable to update order status."
       );
+  } finally {
+    updatingOrderId.value = null;
+  }
+};
+
+const handlePickupCollected = async (order) => {
+  if (!order?.id || updatingOrderId.value) return;
+  updatingOrderId.value = order.id;
+  errorMessage.value = "";
+  try {
+    const response = await orderService.markPickupCollected(order.id);
+    showSuccess(response?.message ?? "Takeaway order marked as collected.");
+    await fetchOrders();
+  } catch (error) {
+    errorMessage.value = getErrorMessage(error, "Unable to mark this order as collected.");
   } finally {
     updatingOrderId.value = null;
   }

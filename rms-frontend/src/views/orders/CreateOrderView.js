@@ -200,6 +200,8 @@ export default {
 
         reservation_id: null,
 
+        fulfillment_type: "dine_in",
+
         /*
         |--------------------------------------------------------------------------
         | Customer information
@@ -253,6 +255,10 @@ export default {
   */
 
   computed: {
+    isTakeawayOrder() {
+      return this.form.fulfillment_type === "takeaway";
+    },
+
     selectedReservationOptionLabel() {
       if (!this.selectedReservationId) {
         return "Walk-in / No Reservation";
@@ -345,6 +351,9 @@ export default {
 
     pageSubtitle() {
       if (!this.isEditMode) {
+        if (this.isTakeawayOrder) {
+          return "Create a takeaway order for a walk-in customer";
+        }
         return "Create a new dine-in restaurant order";
       }
 
@@ -951,7 +960,7 @@ grandTotal() {
       const hasTable =
         Boolean(
           this.form.restaurant_table_id
-        );
+        ) || this.isTakeawayOrder;
 
       const hasItems =
         this.form.items.length > 0;
@@ -1005,7 +1014,7 @@ grandTotal() {
         return "";
       }
 
-      if (!this.form.restaurant_table_id) {
+      if (!this.form.restaurant_table_id && !this.isTakeawayOrder) {
         return "Select an available table above to create this order.";
       }
 
@@ -1057,6 +1066,10 @@ grandTotal() {
 */
 
 watch: {
+  "$route.fullPath"() {
+    this.syncPosFulfillmentMode();
+  },
+
   "form.discount_amount"() {
     this.syncCalculatedCharges();
   },
@@ -1147,6 +1160,7 @@ watch: {
         await this.loadReservations();
 
         if (this.$route.name === "pos-order-create") {
+          this.syncPosFulfillmentMode();
           const requestedTableIds = String(this.$route.query?.tables ?? "")
             .split(",")
             .map((id) => id.trim())
@@ -1289,6 +1303,25 @@ watch: {
   */
 
   methods: {
+
+    syncPosFulfillmentMode() {
+      if (this.$route.name !== "pos-order-create") return;
+      this.form.fulfillment_type = this.$route.query?.fulfillment_type === "takeaway"
+        ? "takeaway"
+        : "dine_in";
+      if (!this.isTakeawayOrder) return;
+
+      this.form.restaurant_table_id = "";
+      this.form.merged_table_ids = [];
+      this.form.reservation_id = null;
+      this.form.customer_id = null;
+      this.form.customer_name = "";
+      this.form.customer_phone = "";
+      this.form.customer_email = "";
+      this.selectedCustomer = null;
+      this.selectedReservation = null;
+      this.selectedReservationId = "";
+    },
 
     toggleReservationDropdown() {
       if (this.isSubmitting || this.isLoadingReservations) return;
@@ -2079,6 +2112,9 @@ this.form.reservation_id =
         order.reservation_id
       )
     : null;
+
+      this.form.fulfillment_type =
+        order.fulfillment_type || (order.primary_table ? "dine_in" : "takeaway");
 
 
     this.selectedReservation =
@@ -3898,6 +3934,9 @@ clearReservationSelection() {
             this.form.restaurant_table_id
           ) || null,
 
+        fulfillment_type:
+          this.form.fulfillment_type || "dine_in",
+
         merged_table_ids:
           (
             this.form.merged_table_ids ||
@@ -4530,6 +4569,10 @@ if (
             successMessage =
               "Order updated successfully.";
           }
+        }
+
+        if (!this.isEditMode && order?.pickup_token) {
+          successMessage = `Takeaway order saved. Pickup token: ${order.pickup_token}.`;
         }
 
         /*

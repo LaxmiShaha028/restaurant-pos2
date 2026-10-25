@@ -474,6 +474,9 @@ async function continueToOrder() {
 
   if (selectedIds.value.length) {
     query.tables = selectedIds.value.join(',')
+    query.fulfillment_type = 'dine_in'
+  } else {
+    query.fulfillment_type = 'takeaway'
   }
 
   await router.push({

@@ -100,6 +100,11 @@
                     {{ getOrderLocalDateTime(order).time }}
                 </div>
 
+                <div v-if="order.pickup_token" class="pickup-order-token">
+                  {{ order.pickup_token }}
+                  <span>{{ order.pickup_status === 'collected' ? 'Collected' : 'Uncollected' }}</span>
+                </div>
+
                 <div
                     v-if="order.customer?.name"
                     class="order-customer"
@@ -255,6 +260,16 @@
 
                 <td>
                 <div class="order-action-group">
+                    <button
+                      v-if="order.pickup_token && order.status === 'ready' && order.pickup_status === 'uncollected' && (canUpdateOrders || canCreateOrders)"
+                      type="button"
+                      class="order-action-button pickup-collected-action"
+                      title="Mark takeaway order as collected"
+                      :disabled="isUpdating(order)"
+                      @click="emit('mark-collected', order)"
+                    >
+                      <i class="bi bi-bag-check"></i>
+                    </button>
                     <button
     type="button"
     class="order-action-button view-action"
@@ -681,6 +696,7 @@ const emit = defineEmits([
   "change-page",
   "change-per-page",
   "retry",
+  "mark-collected",
 ]);
 
 const formatNumber = (value) => {
@@ -987,4 +1003,6 @@ const formatMoney = (amount) => {
   cursor: not-allowed;
   opacity: .6;
 }
+
+.pickup-order-token{display:flex;align-items:center;gap:6px;margin-top:3px;color:#df6100;font-size:12px;font-weight:800}.pickup-order-token span{padding:2px 6px;border-radius:999px;background:#fff1e3;color:#a84e00;font-size:10px;text-transform:uppercase}.pickup-collected-action{border-color:#a8e5c4!important;background:#e7f8ee!important;color:#087c4a!important}
 </style>
