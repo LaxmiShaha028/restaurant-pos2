@@ -40,31 +40,13 @@
         Status
       </label>
 
-      <select
-        id="kitchen-status-filter"
-        :value="status"
-        @change="
-          updateStatus(
-            $event.target.value
-          )
-        "
-      >
-        <option value="">
-          All Statuses
-        </option>
-
-        <option value="pending">
-          Pending
-        </option>
-
-        <option value="preparing">
-          Preparing
-        </option>
-
-        <option value="ready">
-          Ready
-        </option>
-      </select>
+      <OrderFilterSelect
+        :model-value="status"
+        :options="statusOptions"
+        placeholder="All Statuses"
+        label="Kitchen order status"
+        @update:model-value="updateStatus"
+      />
     </div>
 
     <!-- ==========================================
@@ -75,27 +57,13 @@
         Assignment
       </label>
 
-      <select
-        id="kitchen-assignment-filter"
-        :value="assignment"
-        @change="
-          updateAssignment(
-            $event.target.value
-          )
-        "
-      >
-        <option value="">
-          All Orders
-        </option>
-
-        <option value="unassigned">
-          Unassigned
-        </option>
-
-        <option value="assigned">
-          Assigned
-        </option>
-      </select>
+      <OrderFilterSelect
+        :model-value="assignment"
+        :options="assignmentOptions"
+        placeholder="All Orders"
+        label="Kitchen order assignment"
+        @update:model-value="updateAssignment"
+      />
     </div>
 
     <!-- ==========================================
@@ -140,6 +108,18 @@
 import {
   computed,
 } from 'vue'
+import OrderFilterSelect from '@/components/orders/OrderFilterSelect.vue'
+
+const statusOptions = [
+  { value: 'pending', label: 'Pending' },
+  { value: 'preparing', label: 'Preparing' },
+  { value: 'ready', label: 'Ready' },
+]
+
+const assignmentOptions = [
+  { value: 'unassigned', label: 'Unassigned' },
+  { value: 'assigned', label: 'Assigned' },
+]
 
 const props = defineProps({
   search: {

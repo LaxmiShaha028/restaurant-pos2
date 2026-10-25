@@ -232,10 +232,11 @@
 }
 
 .kitchen-page .kitchen-filter-bar .search-button,
+.kitchen-page .kitchen-filter-bar .search-button:hover:not(:disabled),
 .kitchen-page .kitchen-filter-bar .search-button i {
-  border-color: #c2410c !important;
-  background: linear-gradient(135deg, #c2410c, #f97316) !important;
-  color: #111827 !important;
+  border-color: #292929 !important;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%) !important;
+  color: #f97316 !important;
 }
 
 .kitchen-page .kitchen-filter-bar .clear-button {
