@@ -726,7 +726,7 @@ const handleSplit = (
         <span>Capacity</span>
         <span>Section</span>
         <span>Status</span>
-        <span>Merge information</span>
+        <span>Combine information</span>
         <span>Actions</span>
       </div>
 
@@ -847,7 +847,7 @@ const handleSplit = (
                 class="bi bi-intersect"
               ></i>
 
-              Merged
+              Combined
             </span>
 
             <strong
@@ -930,8 +930,8 @@ const handleSplit = (
             "
             type="button"
             class="table-list-row__button table-list-row__button--split"
-            title="Split merged group"
-            aria-label="Split merged group"
+            title="Split combined group"
+            aria-label="Split combined group"
             @click="
               handleSplit(table)
             "
