@@ -25,6 +25,10 @@ class TenantDemoDataSeeder extends Seeder
             throw new RuntimeException('Demo data is already seeded for this tenant. Existing data was left unchanged.');
         }
 
+        if ($db->table('users')->where('username', 'like', 'demo100-staff-%')->exists()) {
+            throw new RuntimeException('DEMO100 staff accounts already exist; refusing to duplicate the demo seed.');
+        }
+
         return $db->transaction(function () use ($db, $count): array {
             $now = now();
             $adminId = $db->table('users')->orderBy('id')->value('id');
@@ -49,8 +53,8 @@ class TenantDemoDataSeeder extends Seeder
                 $userId = $db->table('users')->insertGetId([
                     'role_id' => $i === 1 ? ($roleIds['chef'] ?? $staffRoleId) : $staffRoleId,
                     'name' => "Demo Staff {$n}",
-                    'username' => "demo-staff-{$n}",
-                    'email' => "demo-staff-{$n}@local.test",
+                    'username' => "demo100-staff-{$n}",
+                    'email' => "demo100-staff-{$n}@local.test",
                     'password' => Hash::make($i === 1 ? 'DemoChef123!' : Str::random(48)),
                     'is_active' => true,
                     'must_change_password' => $i !== 1,

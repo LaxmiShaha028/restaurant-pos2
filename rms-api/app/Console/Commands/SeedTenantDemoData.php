@@ -41,6 +41,19 @@ class SeedTenantDemoData extends Command
                 throw new RuntimeException("Tenant database safety check failed. Expected [{$expectedDatabase}], connected to [{$actualDatabase}].");
             }
 
+            $existingDemoOrders = DB::connection('tenant')
+                ->table('orders')
+                ->where('order_number', 'like', 'DEMO100-ORD-%')
+                ->count();
+
+            if ($existingDemoOrders > 0) {
+                $this->info("DEMO100 demo data is already present for {$restaurant->name} in {$actualDatabase}.");
+                $this->line("- orders: {$existingDemoOrders}");
+                $this->line('No rows were added or changed.');
+
+                return self::SUCCESS;
+            }
+
             $counts = app(TenantDemoDataSeeder::class)->run();
             $this->info("Seeded demo records for {$restaurant->name} in {$actualDatabase}:");
             foreach ($counts as $module => $count) {
