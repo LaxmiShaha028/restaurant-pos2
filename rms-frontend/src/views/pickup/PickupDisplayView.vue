@@ -12,6 +12,10 @@
       </div>
       <div class="pickup-header-actions">
         <span class="pickup-live"><i></i> Live updates</span>
+        <button v-if="!isFullscreen" type="button" class="control-button" @click="goBack">
+          <i class="bi bi-arrow-left"></i>
+          Back
+        </button>
         <button type="button" class="control-button" :aria-pressed="soundEnabled" @click="toggleSound">
           <i :class="soundEnabled ? 'bi bi-volume-up' : 'bi bi-volume-mute'"></i>
           Sound {{ soundEnabled ? 'On' : 'Off' }}
@@ -71,9 +75,11 @@
 
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import orderService from '@/services/orderService'
 import { useSystemSettingStore } from '@/stores/systemSetting'
 
+const router = useRouter()
 const settingsStore = useSystemSettingStore()
 const orders = ref([])
 const errorMessage = ref('')
@@ -174,6 +180,10 @@ async function toggleFullscreen() {
 
 function syncFullscreenState() {
   isFullscreen.value = Boolean(document.fullscreenElement)
+}
+
+function goBack() {
+  router.push({ name: 'order-management' })
 }
 
 function playChime() {
