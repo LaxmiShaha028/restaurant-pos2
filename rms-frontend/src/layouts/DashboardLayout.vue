@@ -205,6 +205,46 @@
             <i class="bi bi-columns-gap" aria-hidden="true"></i>
           </RouterLink>
 
+          <RouterLink
+            v-if="canOpenSuppliers"
+            :to="{ name: 'suppliers' }"
+            class="topbar-icon-button pos-order-shortcut"
+            title="Suppliers"
+            aria-label="Open Suppliers"
+          >
+            <i class="bi bi-truck" aria-hidden="true"></i>
+          </RouterLink>
+
+          <RouterLink
+            v-if="canOpenStaff"
+            :to="{ name: 'staff' }"
+            class="topbar-icon-button pos-order-shortcut"
+            title="Staff"
+            aria-label="Open Staff"
+          >
+            <i class="bi bi-person-badge" aria-hidden="true"></i>
+          </RouterLink>
+
+          <RouterLink
+            v-if="canOpenReports"
+            :to="{ name: 'reports' }"
+            class="topbar-icon-button pos-order-shortcut"
+            title="Reports"
+            aria-label="Open Reports"
+          >
+            <i class="bi bi-bar-chart" aria-hidden="true"></i>
+          </RouterLink>
+
+          <RouterLink
+            v-if="canOpenReservations"
+            :to="{ name: 'reservations' }"
+            class="topbar-icon-button pos-order-shortcut"
+            title="Reservations"
+            aria-label="Open Reservations"
+          >
+            <i class="bi bi-calendar2-check" aria-hidden="true"></i>
+          </RouterLink>
+
           <!-- User dropdown -->
           <div
             ref="userDropdownContainer"
@@ -329,6 +369,26 @@ const canOpenPosOrder = computed(() => {
   }
 
   return authStore.hasPermission('orders.create')
+})
+
+const canOpenSuppliers = computed(() => {
+  return typeof authStore.hasPermission === 'function' &&
+    authStore.hasPermission('suppliers.manage')
+})
+
+const canOpenStaff = computed(() => {
+  return typeof authStore.hasPermission === 'function' &&
+    authStore.hasPermission('staff.manage')
+})
+
+const canOpenReports = computed(() => {
+  return typeof authStore.hasPermission === 'function' &&
+    authStore.hasPermission('reports.view')
+})
+
+const canOpenReservations = computed(() => {
+  return typeof authStore.hasPermission === 'function' &&
+    authStore.hasPermission('reservations.manage')
 })
 
 const mobileSidebarOpen = ref(false)
