@@ -39,7 +39,7 @@
         <div v-if="!preparingOrders.length" class="pickup-empty">No orders preparing</div>
         <div v-else class="pickup-order-grid" :style="gridStyle(preparingOrders.length)">
           <article v-for="order in preparingOrders" :key="order.id" class="pickup-order-card" :class="{ 'is-delayed': isDelayed(order) }">
-            <strong class="pickup-token">{{ order.token }}</strong>
+            <strong class="pickup-token" :style="tokenStyle(preparingOrders.length)">{{ order.token }}</strong>
             <span class="pickup-wait" :class="{ 'is-delayed-label': isDelayed(order) }">
               <i :class="isDelayed(order) ? 'bi bi-exclamation-triangle-fill' : 'bi bi-clock'"></i>
               {{ isDelayed(order) ? 'Delayed' : `Est. ${estimatedWait(order)} min` }}
@@ -58,7 +58,7 @@
         <div v-if="!readyOrders.length" class="pickup-empty">No orders ready yet</div>
         <div v-else class="pickup-order-grid" :style="gridStyle(readyOrders.length)">
           <article v-for="order in readyOrders" :key="order.id" class="pickup-order-card ready-order-card">
-            <strong class="pickup-token">{{ order.token }}</strong>
+            <strong class="pickup-token" :style="tokenStyle(readyOrders.length)">{{ order.token }}</strong>
             <span class="pickup-ready-label"><i class="bi bi-bell-fill"></i> READY</span>
             <p class="order-details">{{ itemSummary(order) }}</p>
           </article>
@@ -109,8 +109,15 @@ function itemSummary(order) {
 }
 
 function gridStyle(count) {
-  const columns = Math.max(1, Math.ceil(Math.sqrt(count * 1.6)))
-  return { '--card-columns': columns }
+  const columns = Math.min(count, Math.max(1, Math.ceil(Math.sqrt(count * 1.6))))
+  return {
+    '--card-columns': columns,
+    gridTemplateRows: count <= 4 ? 'minmax(210px, min(24vh, 260px))' : undefined,
+  }
+}
+
+function tokenStyle(count) {
+  return { fontSize: count <= 4 ? 'clamp(26px, 2.2vw, 42px)' : 'clamp(18px, 18cqi, 42px)' }
 }
 
 async function loadBoard() {
@@ -212,6 +219,6 @@ onBeforeUnmount(() => {
 .pickup-error{flex:none;padding:10px 14px;border-radius:9px;background:#fff0ee;color:#bd2b20;font-size:14px}
 .pickup-columns{display:grid;min-height:0;flex:1;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,1.4vw,20px)}.pickup-column{display:flex;min-width:0;min-height:0;flex-direction:column;overflow:hidden;padding:clamp(10px,1.5vw,22px);background:#fff;border:1px solid #eee0cf;border-radius:18px;box-shadow:0 4px 18px #1b24300a}
 .pickup-column-heading{display:flex;flex:none;align-items:center;gap:clamp(8px,1vw,13px);padding-bottom:clamp(8px,1.2vh,17px);border-bottom:1px solid #f0e7dc}.pickup-status-icon{display:grid;width:clamp(34px,4vw,48px);height:clamp(34px,4vw,48px);flex:none;place-items:center;border-radius:13px;background:#fff1e2;color:#f36b00;font-size:clamp(17px,2vw,22px)}.ready-column .pickup-status-icon{background:#e6f8ee;color:#07834e}.pickup-column-heading h2{margin:0;font-size:clamp(16px,2vw,23px);font-weight:800}.pickup-column-heading p{margin:3px 0 0;color:#78829c;font-size:clamp(10px,1vw,13px)}.pickup-column-heading>strong{display:grid;width:clamp(30px,3.2vw,38px);height:clamp(30px,3.2vw,38px);flex:none;place-items:center;margin-left:auto;border-radius:50%;background:#fff2e2;color:#e96400;font-size:clamp(14px,1.5vw,18px)}.ready-column .pickup-column-heading>strong{background:#e6f8ee;color:#07834e}
-.pickup-empty{display:grid;min-height:0;flex:1;place-items:center;color:#8991a4;font-size:clamp(14px,1.5vw,20px)}.pickup-order-grid{display:grid;min-height:0;flex:1;grid-template-columns:repeat(var(--card-columns),minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:clamp(6px,.8vw,12px);overflow:hidden;padding-top:clamp(7px,1vh,14px)}.pickup-order-card{display:flex;min-width:0;min-height:0;flex-direction:column;justify-content:center;overflow:hidden;padding:clamp(7px,1vw,16px);border:1px solid #eee0cf;border-left:5px solid #f47709;border-radius:13px;background:#fffdfa}.ready-order-card{border-color:#b7e8ce;border-left-color:#15955b;background:#f7fff9}.pickup-order-card.is-delayed{border-color:#efc078;border-left-color:#dc5b22;background:#fff8ed}.pickup-token{display:block;overflow:hidden;color:#101a32;font-size:clamp(24px,4vw,64px);font-weight:900;letter-spacing:.04em;line-height:1.05;text-overflow:ellipsis;white-space:nowrap}.pickup-wait{display:inline-flex;align-self:flex-start;align-items:center;gap:5px;margin-top:clamp(3px,.5vh,8px);color:#64748b;font-size:clamp(9px,.9vw,13px);font-weight:700}.pickup-wait.is-delayed-label{color:#b54708}.order-details{display:-webkit-box;overflow:hidden;margin:clamp(4px,.7vh,10px) 0 0;color:#57627c;font-size:clamp(10px,1.1vw,15px);line-height:1.3;-webkit-box-orient:vertical;-webkit-line-clamp:2}.pickup-ready-label{display:inline-flex;align-items:center;gap:5px;margin-top:clamp(4px,.7vh,10px);padding:5px 8px;align-self:flex-start;border-radius:99px;background:#dff6e9;color:#07834e;font-size:clamp(9px,.9vw,12px);font-weight:900;letter-spacing:.04em}.pickup-footer{flex:none;padding:2px;text-align:center;color:#78829c;font-size:clamp(10px,.95vw,13px);font-weight:600}
-@media(max-width:760px){.pickup-display{height:100dvh;padding:8px;gap:7px}.pickup-header{align-items:flex-start;padding:10px;gap:8px}.brand-block{gap:8px}.restaurant-logo,.restaurant-logo-fallback{width:38px;height:38px;border-radius:9px;font-size:21px}.pickup-header-actions{flex-wrap:wrap;justify-content:flex-end;gap:5px}.pickup-live{display:none}.control-button{min-height:32px;padding:6px 8px}.pickup-columns{gap:7px}.pickup-column{padding:8px;border-radius:12px}.pickup-column-heading{gap:6px}.pickup-column-heading p{display:none}.pickup-order-grid{grid-template-columns:repeat(min(var(--card-columns),2),minmax(0,1fr));gap:5px}.pickup-order-card{padding:6px;border-left-width:3px;border-radius:8px}.pickup-token{font-size:clamp(20px,6vw,38px)}.order-details{font-size:9px}}
+.pickup-empty{display:grid;min-height:0;flex:1;place-items:center;color:#8991a4;font-size:clamp(14px,1.5vw,20px)}.pickup-order-grid{display:grid;min-height:0;flex:1;grid-template-columns:repeat(var(--card-columns),minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:clamp(6px,.8vw,12px);overflow:hidden;padding-top:clamp(7px,1vh,14px)}.pickup-order-card{container-type:inline-size;display:flex;min-width:0;min-height:0;flex-direction:column;justify-content:center;overflow:hidden;padding:clamp(7px,1vw,16px);border:1px solid #eee0cf;border-left:5px solid #f47709;border-radius:13px;background:#fffdfa}.ready-order-card{border-color:#b7e8ce;border-left-color:#15955b;background:#f7fff9}.pickup-order-card.is-delayed{border-color:#efc078;border-left-color:#dc5b22;background:#fff8ed}.pickup-token{display:block;overflow:hidden;color:#101a32;font-size:clamp(20px,20cqi,64px);font-weight:900;letter-spacing:.04em;line-height:1.05;text-overflow:ellipsis;white-space:nowrap}.pickup-wait{display:inline-flex;align-self:flex-start;align-items:center;gap:5px;margin-top:clamp(3px,.5vh,8px);color:#64748b;font-size:clamp(9px,.9vw,13px);font-weight:700}.pickup-wait.is-delayed-label{color:#b54708}.order-details{display:-webkit-box;overflow:hidden;margin:clamp(4px,.7vh,10px) 0 0;color:#57627c;font-size:clamp(10px,1.1vw,15px);line-height:1.3;-webkit-box-orient:vertical;-webkit-line-clamp:2}.pickup-ready-label{display:inline-flex;align-items:center;gap:5px;margin-top:clamp(4px,.7vh,10px);padding:5px 8px;align-self:flex-start;border-radius:99px;background:#dff6e9;color:#07834e;font-size:clamp(9px,.9vw,12px);font-weight:900;letter-spacing:.04em}.pickup-footer{flex:none;padding:2px;text-align:center;color:#78829c;font-size:clamp(10px,.95vw,13px);font-weight:600}
+@media(max-width:760px){.pickup-display{height:100dvh;padding:8px;gap:7px}.pickup-header{align-items:flex-start;padding:10px;gap:8px}.brand-block{gap:8px}.restaurant-logo,.restaurant-logo-fallback{width:38px;height:38px;border-radius:9px;font-size:21px}.pickup-header-actions{flex-wrap:wrap;justify-content:flex-end;gap:5px}.pickup-live{display:none}.control-button{min-height:32px;padding:6px 8px}.pickup-columns{gap:7px}.pickup-column{padding:8px;border-radius:12px}.pickup-column-heading{gap:6px}.pickup-column-heading p{display:none}.pickup-order-grid{grid-template-columns:repeat(min(var(--card-columns),2),minmax(0,1fr));gap:5px}.pickup-order-card{padding:6px;border-left-width:3px;border-radius:8px}.pickup-token{font-size:clamp(18px,20cqi,32px)}.order-details{font-size:9px}}
 </style>
