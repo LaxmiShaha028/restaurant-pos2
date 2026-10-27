@@ -284,13 +284,32 @@ function announceReadyOrders(readyOrders, force = false) {
   const Utterance = window.SpeechSynthesisUtterance
   if ((!soundEnabled.value && !force) || !speech || typeof Utterance !== 'function') return
 
+  const englishVoices = speech.getVoices().filter((voice) => voice.lang?.toLowerCase().startsWith('en'))
+  const preferredVoice = englishVoices
+    .map((voice) => {
+      const name = voice.name.toLowerCase()
+      let score = voice.lang?.toLowerCase() === 'en-us' ? 20 : 0
+      if (/natural|neural|online|premium|enhanced/.test(name)) score += 100
+      if (!voice.localService) score += 30
+      if (/google|microsoft|aria|jenny|ava|samantha|zira/.test(name)) score += 15
+      if (voice.default) score += 2
+      return { voice, score }
+    })
+    .sort((first, second) => second.score - first.score)[0]?.voice
+
   readyOrders.forEach((order) => {
     const token = String(order.token ?? '').trim()
     if (!token) return
 
     const announcement = new Utterance(`Order ${token} is ready for pickup.`)
-    announcement.lang = 'en-US'
-    announcement.rate = 0.9
+    if (preferredVoice) {
+      announcement.voice = preferredVoice
+      announcement.lang = preferredVoice.lang
+    } else {
+      announcement.lang = 'en-US'
+    }
+    announcement.rate = 0.96
+    announcement.pitch = 1
     announcement.volume = 0.9
     speech.speak(announcement)
   })
