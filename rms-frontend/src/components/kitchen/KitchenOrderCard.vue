@@ -1120,6 +1120,15 @@ function calculateElapsedTime(
       difference / 60000
     )
 
+  if (totalMinutes >= 1440) {
+    const days = Math.floor(totalMinutes / 1440)
+    const remainingMinutes = totalMinutes % 1440
+    const hours = Math.floor(remainingMinutes / 60)
+    const minutes = remainingMinutes % 60
+
+    return `${days}d ${hours}h ${minutes}m`
+  }
+
   if (totalMinutes < 60) {
     return `${totalMinutes} min`
   }
