@@ -283,6 +283,76 @@
 
 }
 
+.pickup-sound-settings {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 12px;
+    padding: 14px 16px;
+    border: 1px solid #eee0cf;
+    border-radius: 10px;
+    background: #f7f4ef;
+}
+
+.pickup-sound-copy {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 12px;
+}
+
+.pickup-sound-icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: none;
+    place-items: center;
+    border-radius: 9px;
+    background: #fff0df;
+    color: #ed6500;
+    font-size: 18px;
+}
+
+.pickup-sound-copy h2 {
+    margin: 0;
+    color: #101a32;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.pickup-sound-copy p {
+    margin: 3px 0 0;
+    color: #75809b;
+    font-size: 12px;
+}
+
+.pickup-sound-toggle {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 9px;
+    color: #101a32;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.pickup-sound-toggle input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: #ed6500;
+    cursor: pointer;
+}
+
+@media (max-width: 560px) {
+    .pickup-sound-settings {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
 
 
 

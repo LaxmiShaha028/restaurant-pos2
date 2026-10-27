@@ -68,6 +68,10 @@ export default {
 
       successMessage: "",
 
+      pickupSoundEnabled:
+        typeof window !== "undefined" &&
+        window.localStorage.getItem("pickup_display_sound") === "true",
+
 
 
       validationErrors: {},
@@ -205,6 +209,14 @@ export default {
 
 
   methods:{
+
+    setPickupSoundEnabled(enabled){
+      this.pickupSoundEnabled = Boolean(enabled);
+      window.localStorage.setItem(
+        "pickup_display_sound",
+        this.pickupSoundEnabled ? "true" : "false"
+      );
+    },
 
 
 
