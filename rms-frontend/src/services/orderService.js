@@ -219,6 +219,12 @@ const orderService = {
     return getResponseBody(response);
   },
 
+  async announcePickupOrder(orderId) {
+    const id = resolvePositiveId(orderId, "Order ID");
+    const response = await api.post(`${ORDER_URL}/${id}/pickup-announce`);
+    return getResponseBody(response);
+  },
+
   async markPickupCollected(orderId) {
     const id = resolvePositiveId(orderId, "Order ID");
     const response = await api.post(`${ORDER_URL}/${id}/pickup-collected`);

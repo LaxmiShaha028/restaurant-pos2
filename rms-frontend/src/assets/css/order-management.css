@@ -115,6 +115,143 @@
   color: #ffffff;
 }
 
+.call-order-button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid #b7e8ce;
+  border-radius: 12px;
+  background: #e9fbf2;
+  color: #07834e !important;
+}
+
+.call-order-button:hover {
+  border-color: #00b77a;
+  background: #d5f7e7;
+  color: #006f43 !important;
+}
+
+.call-order-overlay {
+  position: fixed;
+  z-index: 1200;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, .48);
+  backdrop-filter: blur(3px);
+}
+
+.call-order-dialog {
+  position: relative;
+  width: min(100%, 440px);
+  padding: 28px;
+  border: 1px solid #e3ebe7;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(15, 23, 42, .24);
+  color: #172033;
+}
+
+.call-order-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  border: 0;
+  background: transparent;
+  color: #738094;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.call-order-icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  margin-bottom: 14px;
+  border-radius: 14px;
+  background: #e6f8ee;
+  color: #07834e;
+  font-size: 20px;
+}
+
+.call-order-dialog h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.call-order-dialog > p {
+  margin: 8px 0 20px;
+  color: #68758b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.call-order-label {
+  display: block;
+  margin-bottom: 6px;
+  color: #344054;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.call-order-select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid #d8e1e8;
+  border-radius: 10px;
+  background: #fff;
+  color: #172033;
+}
+
+.call-order-message {
+  padding: 14px;
+  border-radius: 10px;
+  background: #f5f8f7;
+  color: #59677c;
+  font-size: 13px;
+}
+
+.call-order-error {
+  background: #fff1ef;
+  color: #b42318;
+}
+
+.call-order-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-top: 22px;
+}
+
+.call-order-cancel,
+.call-order-submit {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.call-order-cancel {
+  border: 1px solid #d8e1e8;
+  background: #fff;
+  color: #475467;
+}
+
+.call-order-submit {
+  border: 1px solid #07834e;
+  background: #07834e;
+  color: #fff;
+}
+
+.call-order-submit:disabled {
+  cursor: not-allowed;
+  opacity: .5;
+}
+
 
 /* =========================================================
    ALERT

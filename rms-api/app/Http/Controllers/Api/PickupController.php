@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Services\OrderService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class PickupController extends Controller
@@ -15,7 +18,7 @@ class PickupController extends Controller
     {
     }
 
-    public function board(): JsonResponse
+    public function board(Request $request): JsonResponse
     {
         $orders = Order::query()
             ->where('fulfillment_type', 'takeaway')
@@ -42,7 +45,48 @@ class PickupController extends Controller
         return response()->json([
             'success' => true,
             'data' => $orders,
+            'callout' => Cache::store('file')->get($this->calloutCacheKey($request)),
         ]);
+    }
+
+    public function announce(Request $request, Order $order): JsonResponse
+    {
+        if (
+            $order->fulfillment_type !== 'takeaway'
+            || $order->pickup_status !== 'uncollected'
+            || $order->status !== Order::STATUS_READY
+            || ! $order->pickup_token
+        ) {
+            throw ValidationException::withMessages([
+                'order' => ['Only ready takeaway orders can be announced.'],
+            ]);
+        }
+
+        $callout = [
+            'id' => (string) Str::uuid(),
+            'order_id' => (int) $order->id,
+            'token' => $order->pickup_token,
+            'requested_at' => now()->toISOString(),
+        ];
+
+        Cache::store('file')->put(
+            $this->calloutCacheKey($request),
+            $callout,
+            now()->addMinutes(2),
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pickup order announcement sent.',
+            'data' => $callout,
+        ]);
+    }
+
+    private function calloutCacheKey(Request $request): string
+    {
+        $tenantId = $request->attributes->get('tenant')?->id;
+
+        return 'pickup-display:callout:' . ($tenantId ?? DB::connection()->getDatabaseName());
     }
 
     public function markCollected(Order $order): JsonResponse

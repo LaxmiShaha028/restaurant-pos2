@@ -32,6 +32,15 @@
       Pickup Display
     </button>
     <button
+      v-if="authStore.hasPermission?.('orders.update') || authStore.hasPermission?.('orders.create')"
+      type="button"
+      class="btn call-order-button"
+      @click="openCallOrderDialog"
+    >
+      <i class="bi bi-volume-up-fill"></i>
+      Call Order
+    </button>
+    <button
       type="button"
       class="btn add-order-button"
       @click="goToCreateOrder"
@@ -41,6 +50,33 @@
     </button>
   </div>
 </div>
+
+    <div v-if="showCallOrderDialog" class="call-order-overlay" @click.self="closeCallOrderDialog">
+      <section class="call-order-dialog" role="dialog" aria-modal="true" aria-labelledby="call-order-title">
+        <button type="button" class="call-order-close" aria-label="Close" @click="closeCallOrderDialog">&times;</button>
+        <span class="call-order-icon"><i class="bi bi-megaphone-fill"></i></span>
+        <h2 id="call-order-title">Call a ready order</h2>
+        <p>Select an order to repeat its pickup chime and spoken token on the Pickup Display.</p>
+        <div v-if="callOrdersLoading" class="call-order-message">Loading ready orders…</div>
+        <div v-else-if="callOrdersError" class="call-order-message call-order-error">{{ callOrdersError }}</div>
+        <div v-else-if="!callReadyOrders.length" class="call-order-message">There are no orders ready for pickup.</div>
+        <template v-else>
+          <label class="call-order-label" for="call-order-select">Ready order</label>
+          <select id="call-order-select" v-model="selectedCallOrderId" class="call-order-select">
+            <option v-for="order in callReadyOrders" :key="order.id" :value="String(order.id)">
+              {{ order.token }}{{ order.customer_name ? ` · ${order.customer_name}` : '' }}
+            </option>
+          </select>
+        </template>
+        <div class="call-order-actions">
+          <button type="button" class="btn call-order-cancel" @click="closeCallOrderDialog">Cancel</button>
+          <button type="button" class="btn call-order-submit" :disabled="!selectedCallOrderId || callOrdersLoading || callAnnouncementSending || Boolean(callOrdersError)" @click="repeatOrderCall">
+            <i :class="callAnnouncementSending ? 'bi bi-arrow-repeat' : 'bi bi-volume-up-fill'"></i>
+            {{ callAnnouncementSending ? 'Sending…' : 'Announce again' }}
+          </button>
+        </div>
+      </section>
+    </div>
 
     <!-- Success Alert -->
     <div
@@ -248,6 +284,62 @@ const canViewKitchen = () => {
 const orders = ref([]);
 const loading = ref(false);
 const updatingOrderId = ref(null);
+const showCallOrderDialog = ref(false);
+const callReadyOrders = ref([]);
+const selectedCallOrderId = ref("");
+const callOrdersLoading = ref(false);
+const callOrdersError = ref("");
+const callAnnouncementSending = ref(false);
+
+async function openCallOrderDialog() {
+  showCallOrderDialog.value = true;
+  callOrdersLoading.value = true;
+  callOrdersError.value = "";
+  selectedCallOrderId.value = "";
+
+  try {
+    const response = await orderService.getPickupBoard();
+    callReadyOrders.value = (Array.isArray(response?.data) ? response.data : [])
+      .filter((order) => order.status === "ready");
+    selectedCallOrderId.value = callReadyOrders.value[0]
+      ? String(callReadyOrders.value[0].id)
+      : "";
+  } catch (error) {
+    callReadyOrders.value = [];
+    callOrdersError.value = orderService.getOrderErrorMessage(
+      error,
+      "Could not load ready orders. Please try again.",
+    );
+  } finally {
+    callOrdersLoading.value = false;
+  }
+}
+
+function closeCallOrderDialog() {
+  showCallOrderDialog.value = false;
+}
+
+async function repeatOrderCall() {
+  const order = callReadyOrders.value.find(
+    (item) => String(item.id) === selectedCallOrderId.value,
+  );
+  if (!order) return;
+
+  callAnnouncementSending.value = true;
+  callOrdersError.value = "";
+  try {
+    await orderService.announcePickupOrder(order.id);
+    successMessage.value = `Order ${order.token} announcement sent to the Pickup Display.`;
+    closeCallOrderDialog();
+  } catch (error) {
+    callOrdersError.value = orderService.getOrderErrorMessage(
+      error,
+      "Could not send the announcement. Check your connection and try again.",
+    );
+  } finally {
+    callAnnouncementSending.value = false;
+  }
+}
 
 /*
 |--------------------------------------------------------------------------

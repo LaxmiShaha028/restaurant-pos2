@@ -1282,6 +1282,10 @@ Route::prefix('reservations')
                     ->middleware('permission:orders.view')
                     ->name('pickup-board');
 
+                Route::post('/orders/{order}/pickup-announce', [PickupController::class, 'announce'])
+                    ->middleware('permission:orders.update,orders.create')
+                    ->name('orders.pickup-announce');
+
                 Route::post('/orders/{order}/pickup-collected', [PickupController::class, 'markCollected'])
                     ->middleware('permission:orders.update,orders.create')
                     ->name('orders.pickup-collected');

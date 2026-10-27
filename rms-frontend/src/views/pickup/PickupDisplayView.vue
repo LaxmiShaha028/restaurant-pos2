@@ -3,6 +3,9 @@
     <div class="pickup-utility-controls">
       <button type="button" class="pickup-utility-button pickup-back-button" aria-label="Back to orders" title="Back to orders" @click="goBack">&lt;</button>
     </div>
+    <button v-if="audioNeedsEnable" type="button" class="pickup-enable-audio" @click="enableDisplayAudio">
+      <i class="bi bi-volume-up-fill"></i> Enable announcement audio
+    </button>
 
     <div v-if="newlyReadyTokens.length" class="pickup-ready-alert" role="status" aria-live="assertive">
       <i class="bi bi-bell-fill"></i>
@@ -46,10 +49,15 @@
           <div><h2>READY FOR PICKUP</h2><p>Please proceed to the counter when your number is called</p></div>
           <strong>{{ readyOrders.length }}</strong>
         </header>
+        <article v-if="pinnedOrder" class="pickup-order-card ready-order-card pickup-pinned-card is-just-ready" aria-live="assertive">
+          <strong class="pickup-token">{{ pinnedOrder.token }}</strong>
+          <span class="pickup-ready-label"><i class="bi bi-bell-fill"></i> NOW CALLING</span>
+          <p class="order-details">{{ itemSummary(pinnedOrder) }}</p>
+        </article>
         <div v-if="!readyOrders.length" class="pickup-empty">No orders ready yet</div>
         <div v-else ref="readyOrderList" class="pickup-order-grid" :style="gridStyle(readyOrders.length)">
           <article
-            v-for="order in readyOrders"
+            v-for="order in readyOrders.filter((item) => String(item.id) !== pinnedOrderId)"
             :key="order.id"
             class="pickup-order-card ready-order-card"
             :class="{ 'is-just-ready': String(order.id) === justReadyOrderId }"
@@ -75,19 +83,32 @@ const orders = ref([])
 const errorMessage = ref('')
 const newlyReadyTokens = ref([])
 const soundEnabled = ref(localStorage.getItem('pickup_display_sound') === 'true')
+const audioNeedsEnable = ref(false)
 const audioContext = ref(null)
 const preparingOrderList = ref(null)
 const readyOrderList = ref(null)
 const justReadyOrderId = ref(null)
+const pinnedOrderId = ref(null)
 let pollTimer = null
 let alertTimer = null
+let highlightTimer = null
+let pinnedOrderTimer = null
 let autoScrollTimer = null
 let hasInitialBoard = false
 let previousReadyIds = new Set()
+let lastProcessedCalloutId = null
+let pendingAudioOrders = []
 const autoScrollStates = new WeakMap()
 
 const preparingOrders = computed(() => orders.value.filter((order) => order.status === 'preparing'))
 const readyOrders = computed(() => orders.value.filter((order) => order.status === 'ready'))
+const pinnedOrder = computed(() => readyOrders.value.find((order) => String(order.id) === pinnedOrderId.value) || null)
+
+function pinOrder(id) {
+  pinnedOrderId.value = String(id)
+  clearTimeout(pinnedOrderTimer)
+  pinnedOrderTimer = setTimeout(() => { pinnedOrderId.value = null }, 6000)
+}
 
 function ageInMinutes(order) {
   const createdAt = Date.parse(order.created_at || '')
@@ -126,16 +147,46 @@ async function loadBoard() {
   try {
     const response = await orderService.getPickupBoard()
     const nextOrders = Array.isArray(response?.data) ? response.data : []
+    const callout = response?.callout
+    let calledOrderId = null
+    if (callout?.id && callout.id !== lastProcessedCalloutId) {
+      lastProcessedCalloutId = callout.id
+      const token = String(callout.token ?? '').trim()
+      if (token) {
+        if (callout.order_id != null) {
+          calledOrderId = String(callout.order_id)
+          pinOrder(callout.order_id)
+          justReadyOrderId.value = String(callout.order_id)
+          clearTimeout(highlightTimer)
+          highlightTimer = setTimeout(() => { justReadyOrderId.value = null }, 60000)
+        }
+        pendingAudioOrders = [{ token }]
+        void playChime(true).then((played) => {
+          if (!played) {
+            audioNeedsEnable.value = true
+            return
+          }
+          pendingAudioOrders = []
+          audioNeedsEnable.value = false
+          announceReadyOrders([{ token }], true)
+        })
+      }
+    }
     const nextReady = nextOrders.filter((order) => order.status === 'ready')
     const nextReadyIds = new Set(nextReady.map((order) => String(order.id)))
     if (hasInitialBoard) {
-      const newReady = nextReady.filter((order) => !previousReadyIds.has(String(order.id)))
+      const newReady = nextReady.filter((order) =>
+        !previousReadyIds.has(String(order.id)) && String(order.id) !== calledOrderId,
+      )
       if (newReady.length) {
-        justReadyOrderId.value = String(newReady[newReady.length - 1].id)
+        const newestOrderId = String(newReady[newReady.length - 1].id)
+        pinOrder(newestOrderId)
+        justReadyOrderId.value = newestOrderId
+        clearTimeout(highlightTimer)
+        highlightTimer = setTimeout(() => { justReadyOrderId.value = null }, 60000)
         newlyReadyTokens.value = newReady.map((order) => order.token)
         clearTimeout(alertTimer)
         alertTimer = setTimeout(() => { newlyReadyTokens.value = [] }, 12000)
-        playChime()
       }
     }
     previousReadyIds = nextReadyIds
@@ -147,8 +198,8 @@ async function loadBoard() {
   }
 }
 
-async function resumeAudioContext() {
-  if (!soundEnabled.value) return
+async function resumeAudioContext(force = false) {
+  if (!soundEnabled.value && !force) return
   try {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext
     if (!AudioContextClass) return
@@ -163,7 +214,17 @@ function handleDisplayInteraction() {
   void resumeAudioContext()
 }
 
-function syncSoundPreference(event) {
+async function enableDisplayAudio() {
+  const queuedOrders = pendingAudioOrders
+  pendingAudioOrders = []
+  if (queuedOrders.length) announceReadyOrders(queuedOrders, true)
+  await resumeAudioContext(true)
+  const audioReady = audioContext.value?.state === 'running'
+  audioNeedsEnable.value = !audioReady
+  if (audioReady && queuedOrders.length) void playChime(true)
+}
+
+function handleDisplayStorage(event) {
   if (event.key !== 'pickup_display_sound' && event.key !== null) return
   soundEnabled.value = event.newValue === 'true'
   if (soundEnabled.value) void resumeAudioContext()
@@ -198,11 +259,11 @@ function autoScrollList(list) {
   }
 }
 
-async function playChime() {
-  if (!soundEnabled.value) return
-  await resumeAudioContext()
+async function playChime(force = false) {
+  if (!soundEnabled.value && !force) return false
+  await resumeAudioContext(force)
   const context = audioContext.value
-  if (!context || context.state !== 'running') return
+  if (!context || context.state !== 'running') return false
   const oscillator = context.createOscillator()
   const gain = context.createGain()
   oscillator.type = 'sine'
@@ -215,6 +276,24 @@ async function playChime() {
   gain.connect(context.destination)
   oscillator.start()
   oscillator.stop(context.currentTime + 0.56)
+  return true
+}
+
+function announceReadyOrders(readyOrders, force = false) {
+  const speech = window.speechSynthesis
+  const Utterance = window.SpeechSynthesisUtterance
+  if ((!soundEnabled.value && !force) || !speech || typeof Utterance !== 'function') return
+
+  readyOrders.forEach((order) => {
+    const token = String(order.token ?? '').trim()
+    if (!token) return
+
+    const announcement = new Utterance(`Order ${token} is ready for pickup.`)
+    announcement.lang = 'en-US'
+    announcement.rate = 0.9
+    announcement.volume = 0.9
+    speech.speak(announcement)
+  })
 }
 
 onMounted(() => {
@@ -227,16 +306,19 @@ onMounted(() => {
   }, 40)
   document.addEventListener('pointerdown', handleDisplayInteraction)
   document.addEventListener('keydown', handleDisplayInteraction)
-  window.addEventListener('storage', syncSoundPreference)
+  window.addEventListener('storage', handleDisplayStorage)
 })
 
 onBeforeUnmount(() => {
   clearInterval(pollTimer)
   clearInterval(autoScrollTimer)
   clearTimeout(alertTimer)
+  clearTimeout(highlightTimer)
+  clearTimeout(pinnedOrderTimer)
   document.removeEventListener('pointerdown', handleDisplayInteraction)
   document.removeEventListener('keydown', handleDisplayInteraction)
-  window.removeEventListener('storage', syncSoundPreference)
+  window.removeEventListener('storage', handleDisplayStorage)
+  window.speechSynthesis?.cancel?.()
   audioContext.value?.close?.()
 })
 </script>
@@ -247,14 +329,16 @@ onBeforeUnmount(() => {
 .pickup-utility-controls:hover,.pickup-utility-controls:focus-within{opacity:.9}
 .pickup-utility-button{display:grid;width:27px;height:27px;place-items:center;padding:0;border:0;border-radius:50%;background:#fff;color:#49536a;font-size:15px;cursor:pointer}
 .pickup-utility-button:hover,.pickup-utility-button:focus-visible{background:#fff0df;color:#ed6500;outline:2px solid #ed6500;outline-offset:2px}
+.pickup-enable-audio{position:fixed;z-index:6;top:12px;right:12px;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid #008653;border-radius:999px;background:#07834e;color:#fff;font-size:14px;font-weight:800;box-shadow:0 5px 18px #07834e40;cursor:pointer}.pickup-enable-audio:hover{background:#006f43}
 .pickup-back-button{font-family:Arial,sans-serif;font-size:19px;font-weight:400;line-height:1}
 .pickup-ready-alert{display:flex;flex:none;align-items:center;gap:12px;padding:clamp(9px,1vw,16px) 20px;border:1px solid #a6e4c4;border-radius:12px;background:#eafaf1;color:#087a49;font-size:clamp(14px,1.5vw,20px)}.pickup-ready-alert>i{font-size:22px}
 .pickup-error{flex:none;padding:10px 14px;border-radius:9px;background:#fff0ee;color:#bd2b20;font-size:14px}
 .pickup-columns{display:grid;min-height:0;flex:1;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,1.4vw,20px)}.pickup-column{display:flex;min-width:0;min-height:0;flex-direction:column;overflow:hidden;padding:clamp(14px,1.7vw,24px);background:#fff;border:1px solid #e9edf4;border-radius:22px;box-shadow:0 12px 30px #1b24300d}.ready-column{background:#f1fbf7;border-color:#d7eee5}
 .pickup-column-heading{display:flex;flex:none;align-items:center;gap:clamp(8px,1vw,13px);padding-bottom:clamp(8px,1.2vh,17px);border-bottom:1px solid #f0e7dc}.pickup-status-icon{display:grid;width:clamp(34px,4vw,48px);height:clamp(34px,4vw,48px);flex:none;place-items:center;border-radius:13px;background:#fff1e2;color:#f36b00;font-size:clamp(17px,2vw,22px)}.ready-column .pickup-status-icon{background:#e6f8ee;color:#07834e}.pickup-column-heading h2{margin:0;font-size:clamp(16px,2vw,23px);font-weight:800}.pickup-column-heading p{margin:3px 0 0;color:#78829c;font-size:clamp(10px,1vw,13px)}.pickup-column-heading>strong{display:grid;width:clamp(30px,3.2vw,38px);height:clamp(30px,3.2vw,38px);flex:none;place-items:center;margin-left:auto;border-radius:50%;background:#fff2e2;color:#e96400;font-size:clamp(14px,1.5vw,18px)}.ready-column .pickup-column-heading>strong{background:#e6f8ee;color:#07834e}
 .pickup-column-heading h2{text-transform:uppercase;letter-spacing:.025em}.pickup-column-heading>strong{display:inline-flex;width:auto;height:auto;min-width:28px;justify-content:center;padding:5px 9px;border-radius:999px;font-size:14px}.ready-column .pickup-column-heading{border-bottom-color:#dcefe7}
-.pickup-empty{display:grid;min-height:0;flex:1;place-items:center;color:#8991a4;font-size:clamp(14px,1.5vw,20px)}.pickup-order-grid{display:flex;min-height:0;flex:1;flex-direction:column;gap:clamp(9px,1vw,14px);overflow-x:hidden;overflow-y:auto;padding:clamp(7px,1vh,14px) 4px 4px 0;overscroll-behavior:contain;scrollbar-width:none;-ms-overflow-style:none}.pickup-order-grid::-webkit-scrollbar{display:none;width:0;height:0}.pickup-order-card{container-type:inline-size;display:flex;min-width:0;min-height:118px;flex:0 0 auto;flex-direction:column;justify-content:center;overflow:hidden;padding:clamp(10px,1vw,16px);border:1px solid #e5eaf3;border-left:5px solid #f47709;border-radius:16px;background:#fff;box-shadow:0 3px 9px #1b24300a}.ready-order-card{border-color:#b7e8ce;border-left-color:#15955b;background:#fff}.pickup-order-card.is-delayed{border-color:#efc078;border-left-color:#dc5b22;background:#fffaf1}.ready-order-card.is-just-ready{z-index:1;transform-origin:center;animation:just-ready-pulse 1.45s ease-in-out infinite}.preparation-progress{height:5px;flex:none;margin-top:10px;overflow:hidden;border-radius:999px;background:#edf1f7}.preparation-progress span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#f6a300,#ffc14a);transition:width .35s ease}.pickup-token{display:block;overflow:hidden;color:#101a32;font-size:clamp(20px,20cqi,64px);font-weight:900;letter-spacing:.04em;line-height:1.05;text-overflow:ellipsis;white-space:nowrap}.pickup-wait{display:inline-flex;align-self:flex-start;align-items:center;gap:5px;margin-top:clamp(3px,.5vh,8px);color:#64748b;font-size:clamp(9px,.9vw,13px);font-weight:700}.pickup-wait.is-delayed-label{color:#b54708}.order-details{display:-webkit-box;overflow:hidden;margin:clamp(4px,.7vh,10px) 0 0;color:#57627c;font-size:clamp(10px,1.1vw,15px);line-height:1.3;-webkit-box-orient:vertical;-webkit-line-clamp:2}.pickup-ready-label{display:inline-flex;align-items:center;gap:5px;margin-top:clamp(4px,.7vh,10px);padding:5px 8px;align-self:flex-start;border-radius:99px;background:#dff6e9;color:#07834e;font-size:clamp(9px,.9vw,12px);font-weight:900;letter-spacing:.04em}.pickup-footer{flex:none;padding:2px;text-align:center;color:#78829c;font-size:clamp(10px,.95vw,13px);font-weight:600}
-@keyframes just-ready-pulse{0%,100%{transform:scale(1);box-shadow:0 3px 9px #1b24300a}50%{transform:scale(1.025);box-shadow:0 12px 26px #00a8782e}}
-@media(prefers-reduced-motion:reduce){.ready-order-card.is-just-ready{animation:none}}
+.pickup-pinned-card{min-height:clamp(116px,18vh,170px);flex:none;margin:clamp(8px,1vh,12px) 0 0;border-width:2px;border-left-width:6px;background:linear-gradient(115deg,#fff 0%,#e8fff4 100%);box-shadow:0 0 0 3px #00c98735,0 10px 26px #00a87830}
+.pickup-empty{display:grid;min-height:0;flex:1;place-items:center;color:#8991a4;font-size:clamp(14px,1.5vw,20px)}.pickup-order-grid{display:flex;min-height:0;flex:1;flex-direction:column;gap:clamp(9px,1vw,14px);overflow-x:hidden;overflow-y:auto;padding:clamp(7px,1vh,14px) 4px 4px 0;overscroll-behavior:contain;scrollbar-width:none;-ms-overflow-style:none}.pickup-order-grid::-webkit-scrollbar{display:none;width:0;height:0}.pickup-order-card{container-type:inline-size;display:flex;min-width:0;min-height:118px;flex:0 0 auto;flex-direction:column;justify-content:center;overflow:hidden;padding:clamp(10px,1vw,16px);border:1px solid #e5eaf3;border-left:5px solid #f47709;border-radius:16px;background:#fff;box-shadow:0 3px 9px #1b24300a}.ready-order-card{border-color:#b7e8ce;border-left-color:#15955b;background:#fff}.pickup-order-card.is-delayed{border-color:#efc078;border-left-color:#dc5b22;background:#fffaf1}.ready-order-card.is-just-ready{z-index:1;transform-origin:center;animation:just-ready-highlight 1.4s ease-in-out infinite}.preparation-progress{height:5px;flex:none;margin-top:10px;overflow:hidden;border-radius:999px;background:#edf1f7}.preparation-progress span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#f6a300,#ffc14a);transition:width .35s ease}.pickup-token{display:block;overflow:hidden;color:#101a32;font-size:clamp(20px,20cqi,64px);font-weight:900;letter-spacing:.04em;line-height:1.05;text-overflow:ellipsis;white-space:nowrap}.pickup-wait{display:inline-flex;align-self:flex-start;align-items:center;gap:5px;margin-top:clamp(3px,.5vh,8px);color:#64748b;font-size:clamp(9px,.9vw,13px);font-weight:700}.pickup-wait.is-delayed-label{color:#b54708}.order-details{display:-webkit-box;overflow:hidden;margin:clamp(4px,.7vh,10px) 0 0;color:#57627c;font-size:clamp(10px,1.1vw,15px);line-height:1.3;-webkit-box-orient:vertical;-webkit-line-clamp:2}.pickup-ready-label{display:inline-flex;align-items:center;gap:5px;margin-top:clamp(4px,.7vh,10px);padding:5px 8px;align-self:flex-start;border-radius:99px;background:#dff6e9;color:#07834e;font-size:clamp(9px,.9vw,12px);font-weight:900;letter-spacing:.04em}.pickup-footer{flex:none;padding:2px;text-align:center;color:#78829c;font-size:clamp(10px,.95vw,13px);font-weight:600}
+@keyframes just-ready-highlight{0%,100%{transform:scale(1);box-shadow:0 3px 9px #1b24300a}18%,55%{transform:scale(1.035);box-shadow:0 0 0 3px #00c98770,0 12px 30px #00a87845}}
+@media(prefers-reduced-motion:reduce){.ready-order-card.is-just-ready{animation:none;box-shadow:0 0 0 3px #00c98770,0 8px 22px #00a87835}}
 @media(max-width:760px){.pickup-display{height:auto;min-height:100dvh;overflow-y:auto;padding:12px 8px;gap:8px}.pickup-columns{flex:none;min-height:0;grid-template-columns:minmax(0,1fr);gap:10px}.pickup-column{height:55dvh;min-height:260px;overflow:hidden;padding:12px;border-radius:18px}.pickup-column-heading{gap:9px;padding-bottom:9px}.pickup-column-heading h2{font-size:16px}.pickup-column-heading p{display:block;font-size:10px}.pickup-order-grid{flex:1;min-height:0;grid-template-columns:none;grid-auto-rows:auto;gap:8px;overflow-x:hidden;overflow-y:auto}.pickup-order-card{min-height:104px;padding:8px;border-left-width:3px;border-radius:12px}.pickup-token{font-size:clamp(18px,20cqi,32px)}.order-details{font-size:10px}}
 </style>

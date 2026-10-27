@@ -101,8 +101,8 @@
           <div class="pickup-sound-copy">
             <span class="pickup-sound-icon"><i class="bi bi-volume-up"></i></span>
             <div>
-              <h2 id="pickup-sound-title">Order Pickup Sound</h2>
-              <p>Play a chime when an order becomes ready. This preference applies to pickup displays in this browser.</p>
+              <h2 id="pickup-sound-title">Order Pickup Audio</h2>
+              <p>Play a chime and announce the order number when it becomes ready. Applies to pickup displays in this browser.</p>
             </div>
           </div>
           <label class="pickup-sound-toggle">
