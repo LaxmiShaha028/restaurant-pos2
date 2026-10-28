@@ -133,8 +133,10 @@ function foodImage(item) {
   const name = String(item.menu_name || '').toLowerCase()
   const storedPath = String(item.image_path || item.image_url || '').trim()
   const savedImage = resolveMediaUrl(storedPath)
+  if (storedPath.startsWith('food-photos/')) return foodPhoto(storedPath.slice('food-photos/'.length))
   const uploadedImage = storedPath && !/^https?:\/\//i.test(storedPath)
   if (uploadedImage && savedImage) return savedImage
+  if (/^https?:\/\/images\.unsplash\.com\//i.test(storedPath) && savedImage) return savedImage
 
   const imageMap = [
     [/beef tehari|beef set meal/, 'beef-tehari.jpg'],

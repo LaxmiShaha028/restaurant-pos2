@@ -45,8 +45,13 @@ class SeedTenantDemoData extends Command
                 ->table('orders')
                 ->where('order_number', 'like', 'DEMO100-ORD-%')
                 ->count();
+            $existingLegacyDemoMenuItems = DB::connection('tenant')
+                ->table('menu_items')
+                ->whereNull('deleted_at')
+                ->where('menu_name', 'like', 'DEMO100-Menu Item %')
+                ->count();
 
-            if ($existingDemoOrders > 0) {
+            if ($existingDemoOrders > 0 || $existingLegacyDemoMenuItems > 0) {
                 $updatedMenuItems = app(TenantDemoDataSeeder::class)->refreshExistingMenuItems();
                 $this->info("DEMO100 demo data is already present for {$restaurant->name} in {$actualDatabase}.");
                 $this->line("- orders preserved: {$existingDemoOrders}");
