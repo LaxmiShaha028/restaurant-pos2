@@ -69,7 +69,7 @@
         </div>
       </article>
     </section>
-    <footer class="pickup-footer">Please show your token at the pickup counter.</footer>
+    <!-- <footer class="pickup-footer">Please show your token at the pickup counter.</footer> -->
   </main>
 </template>
 
