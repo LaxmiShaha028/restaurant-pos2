@@ -105,41 +105,62 @@ class TenantDemoDataSeeder extends Seeder
                 ]);
             }
 
-            $categories = $db->table('menu_categories')->whereNull('deleted_at')->orderBy('id')->pluck('id')->all();
-            if (!$categories) {
-                for ($i = 1; $i <= 10; $i++) {
-                    $categories[] = $db->table('menu_categories')->insertGetId([
-                        'category_name' => self::PREFIX.'Category '.str_pad((string) $i, 2, '0', STR_PAD_LEFT),
-                        'description' => 'Local demo menu category.',
-                        'is_available' => true,
-                        'display_order' => $i,
-                        'created_at' => $now,
-                        'updated_at' => $now,
-                    ]);
+            $menuCategories = [
+                'Burgers' => 'Grilled and crispy chicken and beef burgers.',
+                'Pizza' => 'Freshly baked pizzas with classic toppings.',
+                'Rice and Biryani' => 'Aromatic rice dishes and traditional biryani.',
+                'Fast Food' => 'Crispy snacks and quick bites.',
+                'Combos' => 'Complete meal combos with sides and drinks.',
+                'Set Meals' => 'Freshly prepared complete meals.',
+                'Beverages' => 'Chilled drinks, fresh juice and coffee.',
+                'Desserts' => 'Freshly prepared sweets and frozen desserts.',
+            ];
+            $categoryIdsByName = $db->table('menu_categories')
+                ->whereNull('deleted_at')
+                ->pluck('id', 'category_name')
+                ->all();
+            $categoryOrder = count($categoryIdsByName) + 1;
+            foreach ($menuCategories as $categoryName => $description) {
+                if (isset($categoryIdsByName[$categoryName])) {
+                    continue;
                 }
+
+                $categoryIdsByName[$categoryName] = $db->table('menu_categories')->insertGetId([
+                    'category_name' => $categoryName,
+                    'description' => $description,
+                    'is_available' => true,
+                    'display_order' => $categoryOrder++,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
             }
 
+            $menuCatalog = $this->menuCatalog();
+
+            $priceMultipliers = [0.8, 1, 1.4, 1.8, 1.2];
             $menuItems = [];
-            for ($i = 1; $i <= $count; $i++) {
-                $n = str_pad((string) $i, 3, '0', STR_PAD_LEFT);
-                $price = 180 + ($i % 15) * 25;
-                $menuItems[] = [
-                    'id' => $db->table('menu_items')->insertGetId([
-                        'menu_category_id' => $categories[($i - 1) % count($categories)],
-                        'menu_name' => self::PREFIX."Menu Item {$n}",
-                        'item_type' => 'regular',
-                        'price' => $price,
-                        'ingredients' => 'Demo ingredients',
-                        'description' => 'DEMO DATA: menu item for local module preview.',
-                        'preparation_time' => 8 + ($i % 20),
-                        'is_available' => true,
-                        'is_featured' => $i % 10 === 0,
-                        'created_at' => $now,
-                        'updated_at' => $now,
-                    ]),
-                    'name' => self::PREFIX."Menu Item {$n}",
+            for ($i = 0; $i < $count; $i++) {
+                $productIndex = $i % count($menuCatalog);
+                $variantIndex = intdiv($i, count($menuCatalog));
+                $product = $menuCatalog[$productIndex];
+                $itemName = $product['name'].' - '.$product['variants'][$variantIndex];
+                $price = round(($product['price'] * $priceMultipliers[$variantIndex]) / 10) * 10;
+                $categoryId = $categoryIdsByName[$product['category']] ?? reset($categoryIdsByName);
+                $menuItemId = $db->table('menu_items')->insertGetId([
+                    'menu_category_id' => $categoryId,
+                    'menu_name' => $itemName,
+                    'item_type' => $product['type'],
                     'price' => $price,
-                ];
+                    'ingredients' => $product['ingredients'],
+                    'description' => $product['description'],
+                    'image_path' => $product['image'],
+                    'preparation_time' => $product['minutes'],
+                    'is_available' => true,
+                    'is_featured' => $product['featured'] && $variantIndex === 0,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+                $menuItems[] = ['id' => $menuItemId, 'name' => $itemName, 'price' => $price];
             }
 
             $suppliers = [];
@@ -468,6 +489,110 @@ class TenantDemoDataSeeder extends Seeder
                 'purchase_order_items' => $count,
             ];
         });
+    }
+
+    public function refreshExistingMenuItems(): int
+    {
+        $db = DB::connection('tenant');
+        $existingItems = $db->table('menu_items')
+            ->whereNull('deleted_at')
+            ->where('menu_name', 'like', self::PREFIX.'Menu Item %')
+            ->orderBy('id')
+            ->get(['id']);
+
+        if ($existingItems->isEmpty()) {
+            return 0;
+        }
+
+        $menuCatalog = $this->menuCatalog();
+        $menuCategories = [
+            'Burgers' => 'Grilled and crispy chicken and beef burgers.',
+            'Pizza' => 'Freshly baked pizzas with classic toppings.',
+            'Rice and Biryani' => 'Aromatic rice dishes and traditional biryani.',
+            'Fast Food' => 'Crispy snacks and quick bites.',
+            'Combos' => 'Complete meal combos with sides and drinks.',
+            'Set Meals' => 'Freshly prepared complete meals.',
+            'Beverages' => 'Chilled drinks, fresh juice and coffee.',
+            'Desserts' => 'Freshly prepared sweets and frozen desserts.',
+        ];
+        $categoryIdsByName = $db->table('menu_categories')
+            ->whereNull('deleted_at')
+            ->pluck('id', 'category_name')
+            ->all();
+        $categoryOrder = count($categoryIdsByName) + 1;
+
+        foreach ($menuCategories as $categoryName => $description) {
+            if (isset($categoryIdsByName[$categoryName])) {
+                continue;
+            }
+
+            $categoryIdsByName[$categoryName] = $db->table('menu_categories')->insertGetId([
+                'category_name' => $categoryName,
+                'description' => $description,
+                'is_available' => true,
+                'display_order' => $categoryOrder++,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        $priceMultipliers = [0.8, 1, 1.4, 1.8, 1.2];
+
+        return $db->transaction(function () use ($db, $existingItems, $menuCatalog, $priceMultipliers, $categoryIdsByName): int {
+            foreach ($existingItems as $index => $existingItem) {
+                $productIndex = $index % count($menuCatalog);
+                $variantIndex = intdiv($index, count($menuCatalog)) % 5;
+                $product = $menuCatalog[$productIndex];
+                $itemName = $product['name'].' - '.$product['variants'][$variantIndex];
+                $price = round(($product['price'] * $priceMultipliers[$variantIndex]) / 10) * 10;
+
+                $db->table('menu_items')->where('id', $existingItem->id)->update([
+                    'menu_category_id' => $categoryIdsByName[$product['category']],
+                    'menu_name' => $itemName,
+                    'item_type' => $product['type'],
+                    'price' => $price,
+                    'ingredients' => $product['ingredients'],
+                    'description' => $product['description'],
+                    'image_path' => $product['image'],
+                    'preparation_time' => $product['minutes'],
+                    'is_available' => true,
+                    'is_featured' => $product['featured'] && $variantIndex === 0,
+                    'updated_at' => now(),
+                ]);
+
+                $db->table('order_items')->where('menu_item_id', $existingItem->id)->update([
+                    'item_name' => $itemName,
+                ]);
+            }
+
+            return $existingItems->count();
+        });
+    }
+
+    private function menuCatalog(): array
+    {
+        return [
+            ['category' => 'Burgers', 'name' => 'Classic Chicken Burger', 'type' => 'regular', 'price' => 250, 'ingredients' => 'Chicken patty, lettuce, tomato, onion, mayonnaise and burger bun.', 'description' => 'Juicy grilled chicken with crisp lettuce and house mayonnaise.', 'minutes' => 15, 'featured' => true, 'image' => 'https://images.unsplash.com/photo-1692737348416-0a4fa4cf1523?auto=format&fit=crop&w=480&q=80', 'variants' => ['Single Patty', 'Double Patty', 'Spicy Chicken', 'Cheese Melt', 'BBQ Chicken']],
+            ['category' => 'Burgers', 'name' => 'Beef Cheese Burger', 'type' => 'regular', 'price' => 320, 'ingredients' => 'Beef patty, cheddar cheese, lettuce, onion, pickles and toasted bun.', 'description' => 'Grilled beef patty with melted cheese, pickles and house sauce.', 'minutes' => 18, 'featured' => true, 'image' => 'https://images.unsplash.com/photo-1598182198871-d3f4ab4fd181?auto=format&fit=crop&w=480&q=80', 'variants' => ['Classic', 'Double Beef', 'Mushroom Swiss', 'BBQ Beef', 'Jalapeño Cheese']],
+            ['category' => 'Burgers', 'name' => 'Crispy Chicken Burger', 'type' => 'regular', 'price' => 280, 'ingredients' => 'Crispy chicken fillet, lettuce, mayonnaise, cheese and burger bun.', 'description' => 'Golden crispy chicken fillet with fresh lettuce and creamy sauce.', 'minutes' => 17, 'featured' => false, 'image' => 'https://images.unsplash.com/photo-1692737348416-0a4fa4cf1523?auto=format&fit=crop&w=480&q=80', 'variants' => ['Classic Fillet', 'Spicy Fillet', 'Double Fillet', 'Cheese Fillet', 'Hot Crispy']],
+            ['category' => 'Pizza', 'name' => 'Chicken Cheese Pizza', 'type' => 'regular', 'price' => 450, 'ingredients' => 'Pizza dough, chicken, mozzarella, capsicum, onion and tomato sauce.', 'description' => 'Oven-baked pizza topped with seasoned chicken and mozzarella.', 'minutes' => 25, 'featured' => true, 'image' => 'https://images.unsplash.com/photo-1604917869287-3ae73c77e227?auto=format&fit=crop&w=480&q=80', 'variants' => ['Personal', 'Small', 'Medium', 'Large', 'Extra Cheese']],
+            ['category' => 'Pizza', 'name' => 'Beef Pepperoni Pizza', 'type' => 'regular', 'price' => 520, 'ingredients' => 'Pizza dough, beef pepperoni, mozzarella, olives and pizza sauce.', 'description' => 'Classic beef pepperoni pizza with bubbling mozzarella cheese.', 'minutes' => 27, 'featured' => true, 'image' => 'https://tasty.athinorama.gr/Content/ImagesDatabase/p/696x522/crop/both/6c/6c88bc7af43b4dc4b4713fb0432941fb.jpg', 'variants' => ['Personal', 'Small', 'Medium', 'Large', 'Extra Pepperoni']],
+            ['category' => 'Rice and Biryani', 'name' => 'Chicken Biryani', 'type' => 'regular', 'price' => 280, 'ingredients' => 'Basmati rice, chicken, potato, fried onion and aromatic spices.', 'description' => 'Fragrant basmati rice layered with spiced chicken and fried onions.', 'minutes' => 20, 'featured' => true, 'image' => 'https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy%2Cf_auto%2Cq_auto%2Cw_400/RX_THUMBNAIL/IMAGES/VENDOR/2026/2/20/07926d90-610f-40f9-9944-304274e9fcf5_533361.jpg', 'variants' => ['Half Plate', 'Full Plate', 'Extra Chicken', 'Family Pack', 'Spicy Biryani']],
+            ['category' => 'Rice and Biryani', 'name' => 'Beef Tehari', 'type' => 'regular', 'price' => 320, 'ingredients' => 'Aromatic rice, tender beef, mustard oil, green chilli and spices.', 'description' => 'Dhakai-style beef tehari cooked with mustard oil and fragrant spices.', 'minutes' => 20, 'featured' => true, 'image' => 'https://recipes.milon.im/assets/images/recipes/beef-tehari.jpg', 'variants' => ['Half Plate', 'Full Plate', 'Extra Beef', 'Family Pack', 'Spicy Tehari']],
+            ['category' => 'Rice and Biryani', 'name' => 'Family Rice Set', 'type' => 'set_meal', 'price' => 1250, 'ingredients' => 'Fried rice, chicken curry, mixed vegetables and fresh salad.', 'description' => 'A generous rice and chicken meal made for sharing.', 'minutes' => 35, 'featured' => true, 'image' => 'https://prcdn.freetls.fastly.net/release_image/167099/7/167099-7-e0574fd57dd7af399c8fd6ae6e9f44d42-733x572.jpg?auto=webp&fit=bounds&w=480', 'variants' => ['For Two', 'For Four', 'For Six', 'Party Tray', 'Extra Chicken']],
+            ['category' => 'Fast Food', 'name' => 'French Fries', 'type' => 'regular', 'price' => 150, 'ingredients' => 'Potato, salt and seasoning.', 'description' => 'Golden potato fries with a crisp outside and fluffy centre.', 'minutes' => 10, 'featured' => true, 'image' => 'https://images.unsplash.com/photo-1688978181542-87a886a16fbe?auto=format&fit=crop&w=480&q=80', 'variants' => ['Regular', 'Large', 'Family Size', 'Peri Peri', 'Cheese Fries']],
+            ['category' => 'Fast Food', 'name' => 'Chicken Wings', 'type' => 'regular', 'price' => 300, 'ingredients' => 'Chicken wings, spices and special sauce.', 'description' => 'Crispy chicken wings tossed in a savoury house sauce.', 'minutes' => 18, 'featured' => true, 'image' => 'https://images.unsplash.com/photo-1624153064067-566cae78993d?auto=format&fit=crop&w=480&q=80', 'variants' => ['6 Pieces', '12 Pieces', '18 Pieces', 'BBQ Wings', 'Spicy Wings']],
+            ['category' => 'Combos', 'name' => 'Burger Combo', 'type' => 'combo', 'price' => 420, 'ingredients' => 'Chicken burger, French fries and soft drink.', 'description' => 'A chicken burger served with fries and a chilled drink.', 'minutes' => 20, 'featured' => true, 'image' => 'https://images.unsplash.com/photo-1692737348416-0a4fa4cf1523?auto=format&fit=crop&w=480&q=80', 'variants' => ['Chicken Burger', 'Beef Burger', 'Double Burger', 'Spicy Burger', 'Family Combo']],
+            ['category' => 'Combos', 'name' => 'Pizza Combo', 'type' => 'combo', 'price' => 750, 'ingredients' => 'Chicken pizza, French fries and two soft drinks.', 'description' => 'A freshly baked chicken pizza with fries and drinks.', 'minutes' => 30, 'featured' => true, 'image' => 'https://images.unsplash.com/photo-1604917869287-3ae73c77e227?auto=format&fit=crop&w=480&q=80', 'variants' => ['Personal Combo', 'Small Combo', 'Medium Combo', 'Large Combo', 'Combo for Two']],
+            ['category' => 'Combos', 'name' => 'Student Combo', 'type' => 'combo', 'price' => 299, 'ingredients' => 'Mini chicken burger, French fries and soft drink.', 'description' => 'A mini chicken burger with fries and a refreshing drink.', 'minutes' => 15, 'featured' => false, 'image' => 'https://images.unsplash.com/photo-1692737348416-0a4fa4cf1523?auto=format&fit=crop&w=480&q=80', 'variants' => ['Classic Burger', 'Crispy Burger', 'Beef Burger', 'Extra Fries', 'Double Burger']],
+            ['category' => 'Set Meals', 'name' => 'Chicken Set Meal', 'type' => 'set_meal', 'price' => 350, 'ingredients' => 'Fried rice, fried chicken, vegetables and salad.', 'description' => 'A complete meal with fried rice, chicken and fresh vegetables.', 'minutes' => 22, 'featured' => true, 'image' => 'https://prcdn.freetls.fastly.net/release_image/167099/7/167099-7-e0574fd57dd7af399c8fd6ae6e9f44d42-733x572.jpg?auto=webp&fit=bounds&w=480', 'variants' => ['Regular', 'Large', 'With Soft Drink', 'Extra Chicken', 'Meal for Two']],
+            ['category' => 'Set Meals', 'name' => 'Beef Set Meal', 'type' => 'set_meal', 'price' => 420, 'ingredients' => 'Fried rice, beef curry, mixed vegetables and salad.', 'description' => 'A hearty beef meal served with rice, vegetables and salad.', 'minutes' => 25, 'featured' => true, 'image' => 'https://recipes.milon.im/assets/images/recipes/beef-tehari.jpg', 'variants' => ['Regular', 'Large', 'With Soft Drink', 'Extra Beef', 'Meal for Two']],
+            ['category' => 'Beverages', 'name' => 'Soft Drink', 'type' => 'regular', 'price' => 60, 'ingredients' => 'Chilled carbonated soft drink.', 'description' => 'A chilled fizzy drink served cold.', 'minutes' => 2, 'featured' => false, 'image' => 'https://fluxmusic.cdn.radiosphere.io/images/7da5d489-aa2b-46d6-b91d-f1a60f4ad4e0_1732110432?type=large', 'variants' => ['250 ml', '500 ml', '1 Litre', 'With Ice', 'Party Bottle']],
+            ['category' => 'Beverages', 'name' => 'Fresh Lemon Juice', 'type' => 'regular', 'price' => 120, 'ingredients' => 'Fresh lemon, sugar, water and ice.', 'description' => 'Freshly squeezed lemon juice served over ice.', 'minutes' => 5, 'featured' => true, 'image' => 'https://sprouttherapy.ca/cdn/shop/files/ChatGPT_Image_Mar_27_2026_11_42_45_AM_copy_1024x1024.png?v=1774622873', 'variants' => ['Regular', 'Large', 'Mint Lemonade', 'Sparkling Lemon', 'Less Sugar']],
+            ['category' => 'Beverages', 'name' => 'Cold Coffee', 'type' => 'regular', 'price' => 180, 'ingredients' => 'Coffee, milk, sugar, ice and cream.', 'description' => 'Creamy chilled coffee blended with milk and ice.', 'minutes' => 8, 'featured' => true, 'image' => 'https://images.unsplash.com/photo-1581996323441-538096e854b9?auto=format&fit=crop&w=480&q=80', 'variants' => ['Regular', 'Large', 'Mocha', 'With Ice Cream', 'Extra Cream']],
+            ['category' => 'Desserts', 'name' => 'Chocolate Brownie', 'type' => 'regular', 'price' => 180, 'ingredients' => 'Chocolate, flour, butter, sugar and egg.', 'description' => 'Rich, fudgy chocolate brownie served warm.', 'minutes' => 8, 'featured' => true, 'image' => 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=480&q=80', 'variants' => ['Regular', 'With Ice Cream', 'Double Chocolate', 'Walnut Brownie', 'Box of Four']],
+            ['category' => 'Desserts', 'name' => 'Vanilla Ice Cream', 'type' => 'regular', 'price' => 130, 'ingredients' => 'Milk, cream, sugar and vanilla.', 'description' => 'Smooth vanilla ice cream made with fresh cream.', 'minutes' => 3, 'featured' => true, 'image' => 'https://www.isleofskyeseasalt.co.uk/cdn/shop/articles/20240520111433-ice-cream-sea-salt_93bc0572-ee9b-4fe3-be04-1ea1aaf28cba.jpg?v=1758612887&width=480', 'variants' => ['One Scoop', 'Two Scoops', 'Three Scoops', 'Brownie Sundae', 'Family Cup']],
+        ];
     }
 
     private function requireTables($db, array $tables): void

@@ -566,6 +566,29 @@ class MenuManagementSeeder extends Seeder
             ],
         ];
 
+        $menuImages = [
+            'Classic Chicken Burger' => 'https://images.unsplash.com/photo-1692737348416-0a4fa4cf1523?auto=format&fit=crop&w=480&q=80',
+            'Beef Cheese Burger' => 'https://images.unsplash.com/photo-1598182198871-d3f4ab4fd181?auto=format&fit=crop&w=480&q=80',
+            'Crispy Chicken Burger' => 'https://images.unsplash.com/photo-1692737348416-0a4fa4cf1523?auto=format&fit=crop&w=480&q=80',
+            'Chicken Cheese Pizza' => 'https://images.unsplash.com/photo-1604917869287-3ae73c77e227?auto=format&fit=crop&w=480&q=80',
+            'Beef Pepperoni Pizza' => 'https://tasty.athinorama.gr/Content/ImagesDatabase/p/696x522/crop/both/6c/6c88bc7af43b4dc4b4713fb0432941fb.jpg',
+            'Chicken Biryani' => 'https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy%2Cf_auto%2Cq_auto%2Cw_400/RX_THUMBNAIL/IMAGES/VENDOR/2026/2/20/07926d90-610f-40f9-9944-304274e9fcf5_533361.jpg',
+            'Beef Tehari' => 'https://recipes.milon.im/assets/images/recipes/beef-tehari.jpg',
+            'Family Rice Set' => 'https://prcdn.freetls.fastly.net/release_image/167099/7/167099-7-e0574fd57dd7af399c8fd6ae6e9f44d42-733x572.jpg?auto=webp&fit=bounds&w=480',
+            'French Fries' => 'https://images.unsplash.com/photo-1688978181542-87a886a16fbe?auto=format&fit=crop&w=480&q=80',
+            'Chicken Wings' => 'https://images.unsplash.com/photo-1624153064067-566cae78993d?auto=format&fit=crop&w=480&q=80',
+            'Burger Combo' => 'https://images.unsplash.com/photo-1692737348416-0a4fa4cf1523?auto=format&fit=crop&w=480&q=80',
+            'Pizza Combo' => 'https://images.unsplash.com/photo-1604917869287-3ae73c77e227?auto=format&fit=crop&w=480&q=80',
+            'Student Combo' => 'https://images.unsplash.com/photo-1692737348416-0a4fa4cf1523?auto=format&fit=crop&w=480&q=80',
+            'Chicken Set Meal' => 'https://prcdn.freetls.fastly.net/release_image/167099/7/167099-7-e0574fd57dd7af399c8fd6ae6e9f44d42-733x572.jpg?auto=webp&fit=bounds&w=480',
+            'Beef Set Meal' => 'https://recipes.milon.im/assets/images/recipes/beef-tehari.jpg',
+            'Soft Drink' => 'https://fluxmusic.cdn.radiosphere.io/images/7da5d489-aa2b-46d6-b91d-f1a60f4ad4e0_1732110432?type=large',
+            'Fresh Lemon Juice' => 'https://sprouttherapy.ca/cdn/shop/files/ChatGPT_Image_Mar_27_2026_11_42_45_AM_copy_1024x1024.png?v=1774622873',
+            'Cold Coffee' => 'https://images.unsplash.com/photo-1581996323441-538096e854b9?auto=format&fit=crop&w=480&q=80',
+            'Chocolate Brownie' => 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=480&q=80',
+            'Vanilla Ice Cream' => 'https://www.isleofskyeseasalt.co.uk/cdn/shop/articles/20240520111433-ice-cream-sea-salt_93bc0572-ee9b-4fe3-be04-1ea1aaf28cba.jpg?v=1758612887&width=480',
+        ];
+
         foreach ($menuData as $categoryData) {
             $categoryAttributes = $categoryData['category'];
 
@@ -581,6 +604,7 @@ class MenuManagementSeeder extends Seeder
             }
 
             foreach ($categoryData['items'] as $itemData) {
+                $itemData['image_path'] = $menuImages[$itemData['menu_name']] ?? null;
                 $variants = $itemData['variants'] ?? [];
 
                 unset($itemData['variants']);

@@ -104,12 +104,14 @@ let pollTimer = null
 let alertTimer = null
 let highlightTimer = null
 let pinnedOrderTimer = null
-let autoScrollTimer = null
+let autoScrollFrame = null
+let lastScrollFrameTime = null
 let hasInitialBoard = false
 let previousReadyIds = new Set()
 let lastProcessedCalloutId = null
 let pendingAudioOrders = []
 const autoScrollStates = new WeakMap()
+const AUTO_SCROLL_SPEED = 32 // pixels per second; raise for faster, lower for slower
 
 const preparingOrders = computed(() => orders.value.filter((order) => order.status === 'preparing'))
 const readyOrders = computed(() => orders.value.filter((order) => order.status === 'ready'))
@@ -126,26 +128,34 @@ const menuGroups = computed(() => {
   return [...groups].map(([name, items]) => ({ name, items }))
 })
 
-const foodPhoto = (filename) => `https://images.unsplash.com/${filename}?auto=format&fit=crop&w=420&q=80`
+const foodPhoto = (filename) => `${import.meta.env.BASE_URL}food-photos/${filename}`
 function foodImage(item) {
-  const savedImage = resolveMediaUrl(item.image_url || item.image_path)
-  if (savedImage) return savedImage
-
   const name = String(item.menu_name || '').toLowerCase()
-  if (name.includes('beef tehari') || name.includes('beef set meal')) return 'https://recipes.milon.im/assets/images/recipes/beef-tehari.jpg'
-  if (name.includes('chicken set meal')) return 'https://prcdn.freetls.fastly.net/release_image/167099/7/167099-7-e0574fd57dd7af399c8fd6ae6e9f44d42-733x572.jpg?auto=webp&fit=bounds&w=420'
-  if (name.includes('student combo')) return foodPhoto('photo-1692737348416-0a4fa4cf1523')
-  if (name.includes('burger') && name.includes('beef')) return foodPhoto('photo-1598182198871-d3f4ab4fd181')
-  if (name.includes('burger')) return foodPhoto('photo-1692737348416-0a4fa4cf1523')
-  if (name.includes('pizza')) return foodPhoto('photo-1604917869287-3ae73c77e227')
-  if (name.includes('biryani') || name.includes('tehari') || name.includes('rice')) return 'https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_420/RX_THUMBNAIL/IMAGES/VENDOR/2026/2/20/07926d90-610f-40f9-9944-304274e9fcf5_533361.jpg'
-  if (name.includes('fries')) return foodPhoto('photo-1688978181542-87a886a16fbe')
-  if (name.includes('wings')) return foodPhoto('photo-1624153064067-566cae78993d')
-  if (name.includes('coffee')) return foodPhoto('photo-1581996323441-538096e854b9')
-  if (name.includes('drink') || name.includes('juice')) return foodPhoto('photo-1513558161293-cdaf765edfd47')
-  if (name.includes('brownie')) return foodPhoto('photo-1606313564200-e75d5e30476c')
-  if (name.includes('ice cream')) return foodPhoto('photo-1501446529957-6226bd447c46')
-  return foodPhoto('photo-1547592180-85f173990554')
+  const storedPath = String(item.image_path || item.image_url || '').trim()
+  const savedImage = resolveMediaUrl(storedPath)
+  const uploadedImage = storedPath && !/^https?:\/\//i.test(storedPath)
+  if (uploadedImage && savedImage) return savedImage
+
+  const imageMap = [
+    [/beef tehari|beef set meal/, 'beef-tehari.jpg'],
+    [/chicken set meal|family rice set|chicken biryani|rice/, 'chicken-biryani.jpg'],
+    [/beef.*burger|burger.*beef/, 'beef-burger.jpg'],
+    [/student combo|chicken burger|burger combo/, 'chicken-burger.jpg'],
+    [/burger/, 'chicken-burger.jpg'],
+    [/pepperoni pizza/, 'pepperoni-pizza.jpg'],
+    [/pizza/, 'chicken-pizza.jpg'],
+    [/fries/, 'french-fries.jpg'],
+    [/wings/, 'chicken-wings.jpg'],
+    [/soft drink/, 'soft-drink.jpg'],
+    [/lemon|juice/, 'lemon-juice.jpg'],
+    [/coffee/, 'cold-coffee.jpg'],
+    [/brownie/, 'chocolate-brownie.jpg'],
+    [/ice cream|sundae/, 'vanilla-ice-cream.jpg'],
+  ]
+  const localImage = imageMap.find(([pattern]) => pattern.test(name))?.[1]
+  if (localImage) return foodPhoto(localImage)
+
+  return savedImage || foodPhoto('chicken-burger.jpg')
 }
 
 async function loadMenuItems() {
@@ -286,28 +296,72 @@ function goBack() {
   window.history.back()
 }
 
-function autoScrollList(list) {
+function autoScrollList(list, elapsedMs) {
   if (!list || list.scrollHeight <= list.clientHeight + 1) return
 
-  const state = autoScrollStates.get(list) || { direction: 1, pause: 0 }
+  const state = autoScrollStates.get(list) || { direction: 1, pause: 0, position: list.scrollTop, ramp: 0 }
   autoScrollStates.set(list, state)
 
   const maxScroll = list.scrollHeight - list.clientHeight
   if (state.pause > 0) {
-    state.pause -= 1
+    state.pause = Math.max(0, state.pause - elapsedMs)
     return
   }
 
-  list.scrollTop += state.direction * 0.45
-  if (list.scrollTop >= maxScroll) {
+  // The browser rounds scrollTop to whole pixels, so a tiny per-frame step is lost.
+  // Keep the exact position here and write it to scrollTop each frame.
+  if (Math.abs(list.scrollTop - state.position) > 1.5) state.position = list.scrollTop
+  // Ease in after each pause and ease out near the end so the turnaround is smooth.
+  state.ramp = Math.min(1, state.ramp + elapsedMs / 800)
+  const easeIn = state.ramp * state.ramp * (3 - 2 * state.ramp)
+  const remaining = state.direction > 0 ? maxScroll - state.position : state.position
+  const easeOut = Math.min(1, Math.max(0.25, remaining / 90))
+  state.position += state.direction * AUTO_SCROLL_SPEED * easeIn * easeOut * (elapsedMs / 1000)
+  list.scrollTop = state.position
+  if (state.position >= maxScroll) {
+    state.position = maxScroll
     list.scrollTop = maxScroll
     state.direction = -1
-    state.pause = 35
-  } else if (list.scrollTop <= 0) {
+    state.ramp = 0
+    state.pause = 1400
+  } else if (state.position <= 0) {
+    state.position = 0
     list.scrollTop = 0
     state.direction = 1
-    state.pause = 35
+    state.ramp = 0
+    state.pause = 1400
   }
+}
+
+function applyEdgeFade(list, selector) {
+  if (!list) return
+  const items = list.querySelectorAll(selector)
+  if (list.scrollHeight <= list.clientHeight + 1) {
+    items.forEach((el) => { if (el.style.opacity) el.style.opacity = '' })
+    return
+  }
+  const box = list.getBoundingClientRect()
+  const middle = box.top + box.height / 2
+  const half = box.height / 2
+  const rects = [...items].map((el) => el.getBoundingClientRect())
+  items.forEach((el, index) => {
+    const rect = rects[index]
+    const distance = Math.abs((rect.top + rect.height / 2 - middle) / half)
+    const fade = Math.min(1, Math.max(0, (distance - 0.55) / 0.45))
+    el.style.opacity = (1 - fade * 0.95).toFixed(3)
+  })
+}
+
+function animateAutoScroll(timestamp) {
+  const elapsedMs = lastScrollFrameTime === null ? 0 : Math.min(timestamp - lastScrollFrameTime, 50)
+  lastScrollFrameTime = timestamp
+  autoScrollList(preparingOrderList.value, elapsedMs)
+  autoScrollList(readyOrderList.value, elapsedMs)
+  autoScrollList(menuList.value, elapsedMs)
+  applyEdgeFade(preparingOrderList.value, '.pickup-order-card')
+  applyEdgeFade(readyOrderList.value, '.pickup-order-card')
+  applyEdgeFade(menuList.value, '.menu-category h3, .menu-card')
+  autoScrollFrame = requestAnimationFrame(animateAutoScroll)
 }
 
 async function playChime(force = false) {
@@ -372,11 +426,7 @@ onMounted(() => {
   void settingsStore.fetchSettings()
   loadBoard()
   pollTimer = setInterval(loadBoard, 5000)
-  autoScrollTimer = setInterval(() => {
-    autoScrollList(preparingOrderList.value)
-    autoScrollList(readyOrderList.value)
-    autoScrollList(menuList.value)
-  }, 40)
+  autoScrollFrame = requestAnimationFrame(animateAutoScroll)
   document.addEventListener('pointerdown', handleDisplayInteraction)
   document.addEventListener('keydown', handleDisplayInteraction)
   window.addEventListener('storage', handleDisplayStorage)
@@ -384,7 +434,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   clearInterval(pollTimer)
-  clearInterval(autoScrollTimer)
+  cancelAnimationFrame(autoScrollFrame)
   clearTimeout(alertTimer)
   clearTimeout(highlightTimer)
   clearTimeout(pinnedOrderTimer)
@@ -416,4 +466,6 @@ onBeforeUnmount(() => {
 .menu-heading button:hover,.menu-heading button:focus-visible{opacity:.1;outline:none}
 .menu-photo{display:block;width:clamp(62px,6vw,100px);aspect-ratio:1;flex:none;border:1px solid var(--line);object-fit:cover;background:#0b0c0e}
 .menu-empty{display:grid;min-height:100%;place-items:center;color:#aaa7a2;font-size:clamp(14px,1vw,18px)}
+.menu-card>strong{color:#fff}
+.pickup-order-grid,.menu-list{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22px,#000 calc(100% - 22px),transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 22px,#000 calc(100% - 22px),transparent 100%)}
 </style>

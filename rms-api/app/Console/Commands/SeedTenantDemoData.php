@@ -47,9 +47,10 @@ class SeedTenantDemoData extends Command
                 ->count();
 
             if ($existingDemoOrders > 0) {
+                $updatedMenuItems = app(TenantDemoDataSeeder::class)->refreshExistingMenuItems();
                 $this->info("DEMO100 demo data is already present for {$restaurant->name} in {$actualDatabase}.");
-                $this->line("- orders: {$existingDemoOrders}");
-                $this->line('No rows were added or changed.');
+                $this->line("- orders preserved: {$existingDemoOrders}");
+                $this->line("- demo menu items refreshed: {$updatedMenuItems}");
 
                 return self::SUCCESS;
             }

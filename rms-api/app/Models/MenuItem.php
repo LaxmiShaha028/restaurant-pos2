@@ -142,6 +142,10 @@ class MenuItem extends Model
             return null;
         }
 
+        if (preg_match('/^https?:\/\//i', $this->image_path)) {
+            return $this->image_path;
+        }
+
         return url(
             Storage::disk('public')->url(
                 $this->image_path
