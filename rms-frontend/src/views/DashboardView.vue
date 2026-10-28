@@ -3681,7 +3681,7 @@ onBeforeUnmount(() => {
 
 .payment-icon.bkash,
 .payment-progress .bkash {
-  background-color: #e2136e;
+  background-color: #9a2c00;
 }
 
 .payment-icon.nagad,
