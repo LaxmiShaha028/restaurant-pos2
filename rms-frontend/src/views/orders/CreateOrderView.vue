@@ -1825,6 +1825,31 @@
 
                 </div>
 
+                <small
+                  v-if="offerPreview?.offer_id"
+                  class="order-offer-discount-note"
+                >
+                  <i class="bi bi-tag-fill"></i>
+                  {{ offerPreview.offer_name }}
+                  <template v-if="offerPreview.discount_type === 'percentage'">
+                    · {{ Number(offerPreview.discount_value) }}% off
+                  </template>
+                  · saved {{ formatCurrency(offerPreview.offer_discount_amount) }}
+                </small>
+
+                <small
+                  v-else-if="offerPreview?.eligibility_message"
+                  class="order-offer-eligibility-note"
+                >
+                  <i class="bi bi-info-circle"></i>
+                  {{ offerPreview.eligibility_message }}
+                </small>
+
+                <small
+                  v-else-if="offerPreviewLoading && subtotal > 0"
+                  class="order-offer-checking-note"
+                >Checking active offers…</small>
+
                 <div class="discount-input-wrapper">
 
                   <span>

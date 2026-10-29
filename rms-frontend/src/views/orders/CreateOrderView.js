@@ -32,6 +32,10 @@ export default {
       isLoading: true,
       isSubmitting: false,
       isSearchingCustomers: false,
+      offerPreview: null,
+      offerPreviewLoading: false,
+      offerPreviewTimer: null,
+      offerPreviewRequestId: 0,
 
       isEditMode: false,
       editingOrderId: null,
@@ -730,17 +734,14 @@ selectedReservationTables() {
       const discount = Number(
         this.form.discount_amount
       );
-
-      if (
-        !Number.isFinite(discount) ||
-        discount <= 0
-      ) {
-        return 0;
-      }
+      const manualDiscount = Number.isFinite(discount) && discount > 0
+        ? Math.min(discount, this.subtotal)
+        : 0;
+      const offerDiscount = Number(this.offerPreview?.discount_amount || 0);
 
       return Math.min(
-        discount,
-        this.subtotal
+        Math.max(manualDiscount, offerDiscount),
+        this.subtotal,
       );
     },
 /*
@@ -1072,6 +1073,15 @@ watch: {
 
   "form.discount_amount"() {
     this.syncCalculatedCharges();
+    this.scheduleDiscountPreview();
+  },
+
+  "form.customer_id"() {
+    this.scheduleDiscountPreview();
+  },
+
+  subtotal() {
+    this.scheduleDiscountPreview();
   },
 
   "form.restaurant_table_id"() {
@@ -1090,6 +1100,7 @@ watch: {
 
     handler() {
       this.syncCalculatedCharges();
+      this.scheduleDiscountPreview();
     },
   },
 },
@@ -3240,6 +3251,45 @@ getTableDisplayName(table) {
         "discount_amount"
       );
       this.syncCalculatedCharges();
+    },
+
+    scheduleDiscountPreview() {
+      if (this.offerPreviewTimer) {
+        clearTimeout(this.offerPreviewTimer);
+      }
+
+      if (this.subtotal <= 0) {
+        this.offerPreviewRequestId += 1;
+        this.offerPreview = null;
+        this.offerPreviewLoading = false;
+        this.syncCalculatedCharges();
+        return;
+      }
+
+      const requestId = ++this.offerPreviewRequestId;
+      this.offerPreviewLoading = true;
+      this.offerPreviewTimer = setTimeout(async () => {
+        try {
+          const preview = await orderService.previewDiscount({
+            subtotal: this.subtotal,
+            manual_discount: Number(this.form.discount_amount || 0),
+            customer_id: this.form.customer_id || null,
+            exclude_order_id: this.editingOrderId || null,
+          });
+
+          if (requestId === this.offerPreviewRequestId) {
+            this.offerPreview = preview || null;
+            this.offerPreviewLoading = false;
+            this.syncCalculatedCharges();
+          }
+        } catch {
+          if (requestId === this.offerPreviewRequestId) {
+            this.offerPreview = null;
+            this.offerPreviewLoading = false;
+            this.syncCalculatedCharges();
+          }
+        }
+      }, 250);
     },
 
     /*

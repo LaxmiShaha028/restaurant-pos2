@@ -955,6 +955,16 @@
         </strong>
       </div>
 
+      <div
+        v-if="order.offer_id && Number(order.offer_discount_amount) > 0"
+        class="summary-financial-row summary-offer-row"
+      >
+        <span>Promotion applied</span>
+        <strong>
+          {{ formatCurrency(order.offer_discount_amount) }} saved
+        </strong>
+      </div>
+
       <div class="summary-financial-row">
         <span>Tax</span>
 

@@ -1021,6 +1021,14 @@
   white-space: nowrap;
 }
 
+.order-discount {
+  display: block;
+  margin-top: 2px;
+  color: #087443;
+  font-size: 11px;
+  font-weight: 700;
+}
+
 
 /* =========================================================
    PAYMENT BADGE

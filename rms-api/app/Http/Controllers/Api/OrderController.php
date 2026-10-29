@@ -10,8 +10,11 @@ use App\Http\Requests\Api\UpdateOrderStatusRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Services\OrderService;
+use App\Services\OfferService;
+use App\Models\Customer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 use App\Traits\HasAuditLog;
@@ -707,6 +710,60 @@ public function editOptions(
                     : 'Unable to create the order.',
             ], 500);
         }
+    }
+
+    public function discountPreview(Request $request, OfferService $offerService): JsonResponse
+    {
+        $data = $request->validate([
+            'subtotal' => ['required', 'numeric', 'min:0'],
+            'manual_discount' => ['nullable', 'numeric', 'min:0'],
+            'customer_id' => ['nullable', 'integer', 'exists:customers,id'],
+            'exclude_order_id' => ['nullable', 'integer', 'exists:orders,id'],
+        ]);
+
+        $subtotal = round((float) $data['subtotal'], 2);
+        $manualDiscount = min($subtotal, round((float) ($data['manual_discount'] ?? 0), 2));
+        $customer = isset($data['customer_id'])
+            ? Customer::query()->find((int) $data['customer_id'])
+            : null;
+        $promotion = $offerService->bestForOrder(
+            $subtotal,
+            $customer,
+            isset($data['exclude_order_id']) ? (int) $data['exclude_order_id'] : null,
+        );
+
+        if ($promotion && $promotion['discount_amount'] >= $manualDiscount && $promotion['discount_amount'] > 0) {
+            $offer = $promotion['offer'];
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'offer_id' => (int) $offer->id,
+                    'offer_name' => $offer->name,
+                    'discount_type' => $offer->discount_type,
+                    'discount_value' => (float) $offer->discount_value,
+                    'offer_discount_amount' => (float) $promotion['discount_amount'],
+                    'discount_amount' => (float) $promotion['discount_amount'],
+                    'manual_discount_amount' => $manualDiscount,
+                ],
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'offer_id' => null,
+                'offer_name' => null,
+                'discount_type' => null,
+                'discount_value' => null,
+                'offer_discount_amount' => 0,
+                'discount_amount' => $manualDiscount,
+                'manual_discount_amount' => $manualDiscount,
+                'eligibility_message' => $customer
+                    ? null
+                    : $offerService->customerEligibilityHint($subtotal),
+            ],
+        ]);
     }
 
     public function update(

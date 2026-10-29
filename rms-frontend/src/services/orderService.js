@@ -213,6 +213,14 @@ function getDownloadFileName(
 */
 
 const orderService = {
+  async previewDiscount(data) {
+    const response = await api.post(
+      `${ORDER_URL}/discount-preview`,
+      data,
+    );
+    return getResponseBody(response)?.data ?? getResponseBody(response);
+  },
+
 
   async getPickupBoard() {
     const response = await api.get(`${ORDER_BASE_URL}/pickup-board`);

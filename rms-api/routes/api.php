@@ -1431,6 +1431,20 @@ Route::prefix('reservations')
                         'create-options'
                     );
 
+                Route::post(
+                    '/orders/discount-preview',
+                    [
+                        OrderController::class,
+                        'discountPreview',
+                    ]
+                )
+                    ->middleware(
+                        'permission:orders.create'
+                    )
+                    ->name(
+                        'orders.discount-preview'
+                    );
+
 
                 /*
                 |--------------------------------------------------------------------------

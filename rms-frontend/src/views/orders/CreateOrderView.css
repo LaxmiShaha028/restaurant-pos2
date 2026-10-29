@@ -1923,6 +1923,28 @@ select.summary-item-option-control {
   margin-bottom: 5px;
 }
 
+.order-offer-discount-note,
+.order-offer-checking-note,
+.order-offer-eligibility-note {
+  display: block;
+  margin: 2px 0 5px;
+  color: #087443;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.order-offer-discount-note i {
+  margin-right: 3px;
+}
+
+.order-offer-checking-note {
+  color: var(--order-muted);
+}
+
+.order-offer-eligibility-note {
+  color: #a15c00;
+}
+
 .discount-input-wrapper {
   min-height: 27px;
   display: grid;

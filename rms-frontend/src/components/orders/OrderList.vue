@@ -216,6 +216,14 @@
                 </strong>
 
                 <small
+                    v-if="Number(order.discount_amount) > 0"
+                    class="order-discount"
+                >
+                    {{ order.offer_id ? 'Offer discount:' : 'Discount:' }}
+                    {{ order.discount_amount_formatted || formatMoney(order.discount_amount) }}
+                </small>
+
+                <small
                     v-if="
                     Number(order.due_amount) > 0
                     "

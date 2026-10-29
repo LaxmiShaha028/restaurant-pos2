@@ -9,15 +9,66 @@ use Carbon\CarbonImmutable;
 
 class OfferService
 {
+    public function customerEligibilityHint(float $subtotal): ?string
+    {
+        $localNow = CarbonImmutable::now('Asia/Dhaka');
+        $today = $localNow->toDateString();
+        $time = $localNow->format('H:i:s');
+        $weekday = strtolower($localNow->format('D'));
+
+        $offers = Offer::query()
+            ->where('is_active', true)
+            ->where(fn ($query) => $query->whereNull('valid_from')->orWhereDate('valid_from', '<=', $today))
+            ->where(fn ($query) => $query->whereNull('valid_until')->orWhereDate('valid_until', '>=', $today))
+            ->orderByDesc('discount_value')
+            ->get();
+
+        foreach ($offers as $offer) {
+            if ((float) $offer->minimum_order_amount > $subtotal) {
+                continue;
+            }
+            if ($offer->days_of_week && ! in_array($weekday, $offer->days_of_week, true)) {
+                continue;
+            }
+            if ($offer->start_time && $offer->end_time) {
+                $start = (string) $offer->start_time;
+                $end = (string) $offer->end_time;
+                $withinTime = $end < $start
+                    ? ($time >= $start || $time <= $end)
+                    : ($time >= $start && $time <= $end);
+                if (! $withinTime) {
+                    continue;
+                }
+            }
+
+            $usageQuery = Order::query()
+                ->where('offer_id', $offer->id)
+                ->where('status', '!=', Order::STATUS_CANCELED);
+            if ($offer->usage_limit !== null && $usageQuery->count() >= (int) $offer->usage_limit) {
+                continue;
+            }
+
+            if ($offer->type === 'birthday') {
+                return "Select a customer with a saved birthday to use {$offer->name}.";
+            }
+            if ($offer->type === 'loyalty') {
+                return "Select a loyalty customer to check eligibility for {$offer->name}.";
+            }
+        }
+
+        return null;
+    }
+
     /** @return array{offer: Offer, discount_amount: float}|null */
     public function bestForOrder(
         float $subtotal,
         ?Customer $customer,
         ?int $excludeOrderId = null
     ): ?array {
-        $today = now()->toDateString();
-        $time = now()->format('H:i:s');
-        $weekday = strtolower(now()->format('D'));
+        $localNow = CarbonImmutable::now('Asia/Dhaka');
+        $today = $localNow->toDateString();
+        $time = $localNow->format('H:i:s');
+        $weekday = strtolower($localNow->format('D'));
 
         $offers = Offer::query()
             ->where('is_active', true)
@@ -80,11 +131,7 @@ class OfferService
                 return false;
             }
 
-            if ($offer->per_customer_limit !== null && ! $customer) {
-                return false;
-            }
-
-            if ($offer->per_customer_limit !== null) {
+            if ($offer->per_customer_limit !== null && $customer) {
                 $customerUses = (clone $usageQuery)
                     ->where('customer_id', $customer->id)
                     ->count();
@@ -117,7 +164,7 @@ class OfferService
             return false;
         }
 
-        $today = CarbonImmutable::today();
+        $today = CarbonImmutable::today('Asia/Dhaka');
         $birth = CarbonImmutable::parse($customer->date_of_birth);
         $birthdayMonthEnd = CarbonImmutable::create($today->year, $birth->month, 1)->endOfMonth()->day;
         $birthdayThisYear = $today->setDate($today->year, $birth->month, min($birth->day, $birthdayMonthEnd));

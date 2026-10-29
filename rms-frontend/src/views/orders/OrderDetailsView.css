@@ -1856,6 +1856,11 @@
   color: var(--order-danger) !important;
 }
 
+.summary-offer-row,
+.summary-offer-row strong {
+  color: #087443 !important;
+}
+
 
 /* ==========================================================================
    GRAND TOTAL
