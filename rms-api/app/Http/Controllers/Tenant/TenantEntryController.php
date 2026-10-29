@@ -86,8 +86,7 @@ class TenantEntryController extends Controller
                         'name' => $restaurant->name,
                         'tenant_key' => $restaurant->tenant_key,
                     ],
-                    'landing_page_settings' =>
-                        $settings?->landing_page_settings ?? [],
+                    'landing_page_settings' => $this->landingPageSettings($settings?->landing_page_settings ?? []),
                     'promotions' => $promotions,
                 ],
                 'errors' => null,
@@ -104,6 +103,15 @@ class TenantEntryController extends Controller
         } finally {
             $connectionManager->disconnect();
         }
+    }
+
+    private function landingPageSettings(array $settings): array
+    {
+        $image = $settings['heroImage'] ?? null;
+        if ($image && !str_starts_with($image, 'http://') && !str_starts_with($image, 'https://')) {
+            $settings['heroImage'] = asset('storage/' . ltrim($image, '/'));
+        }
+        return $settings;
     }
 
     /*

@@ -84,7 +84,14 @@ class SystemSettingService
             'restaurant_logo',
             'owner_nid',
             'owner_trade_license',
+            'landing_page_image',
         ]);
+
+        if ($request->hasFile('landing_page_image')) {
+            $landingPageSettings = $data['landing_page_settings'] ?? $settings->landing_page_settings ?? [];
+            $landingPageSettings['heroImage'] = $request->file('landing_page_image')->store('landing-page', 'public');
+            $data['landing_page_settings'] = $landingPageSettings;
+        }
 
         /*
         |--------------------------------------------------------------------------

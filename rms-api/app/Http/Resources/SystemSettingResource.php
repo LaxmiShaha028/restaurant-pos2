@@ -30,7 +30,7 @@ class SystemSettingResource extends JsonResource
                 ),
 
             'landing_page_settings' =>
-                $this->landing_page_settings ?? [],
+                $this->landingPageSettings(),
 
             /*
             |--------------------------------------------------------------------------
@@ -164,5 +164,17 @@ class SystemSettingResource extends JsonResource
                 '/'
             )
         );
+    }
+
+    protected function landingPageSettings(): array
+    {
+        $settings = $this->landing_page_settings ?? [];
+        $image = $settings['heroImage'] ?? null;
+
+        if ($image && !str_starts_with($image, 'http://') && !str_starts_with($image, 'https://')) {
+            $settings['heroImage'] = $this->fileUrl($image);
+        }
+
+        return $settings;
     }
 }

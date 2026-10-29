@@ -47,6 +47,14 @@
             <input v-else v-model="form[field.key]" maxlength="160" />
           </label>
         </div>
+        <div class="settings-group">
+          <h3>Hero image</h3>
+          <label>Image shown beside the home page heading
+            <input type="file" accept="image/jpeg,image/png,image/webp" @change="onHeroImageSelected" />
+          </label>
+          <img v-if="heroImagePreview || form.heroImage" class="hero-image-preview" :src="heroImagePreview || form.heroImage" alt="Hero image preview" />
+          <button v-if="form.heroImage || heroImageFile" class="clear-image" type="button" @click="clearHeroImage">Remove image</button>
+        </div>
         <!-- <div v-if="publicPageUrl" class="public-url-box"><strong>Public landing page</strong><a :href="publicPageUrl" target="_blank" rel="noopener noreferrer">{{ publicPageUrl }}</a></div> -->
       </section>
 
@@ -56,7 +64,7 @@
           <nav><strong>{{ form.name || 'SOPNO' }}</strong><div><a href="#" class="active" @click.prevent="showOfferPage = false">{{ form.navHome }}</a><a href="#menu">{{ form.navMenu }}</a><a href="#happy-hours" @click.prevent="showOfferPage = true">{{ form.navHappy }}</a><a href="#rewards">{{ form.navRewards }}</a><a href="#reserve">{{ form.navReserve }}</a><a href="#contact">{{ form.navContact }}</a></div></nav>
           <section class="home-hero">
             <div class="home-copy"><span class="home-kicker">{{ t(form.homeKicker) }}</span><h2>{{ t(form.homeTitle1) }}<br><em>{{ t(form.homeTitle2) }}</em></h2><p>{{ t(form.homeIntro) }}</p><a class="primary-cta" href="#reserve">{{ form.primaryButton }}</a><a class="secondary-cta" href="#menu">{{ form.secondaryButton }}</a></div>
-            <div class="food-art"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1000&q=85" alt="A platter of grilled food served at the restaurant" /></div>
+            <div class="food-art"><img :src="heroImagePreview || form.heroImage || defaultHeroImage" alt="Restaurant featured food" /></div>
           </section>
           <section id="happy-hours" class="home-happy"><div><h3>{{ t(form.happyBandTitle) }}</h3><div v-if="promotionsLoaded" class="happy-pills"><template v-if="activePromotions.length"><span v-for="offer in activePromotions.slice(0, 2)" :key="offer.id">{{ offerDiscount(offer) }}<small>{{ offer.name }}</small></span><span>{{ promotionSchedule }}<small>Offer schedule</small></span></template><span v-else>No active offers<small>Check back soon</small></span></div><div v-else class="happy-pills"><span>{{ form.pill1Title }}<small>{{ form.pill1Sub }}</small></span><span>{{ form.pill2Title }}<small>{{ form.pill2Sub }}</small></span><span>{{ form.hours }}<small>{{ form.pill3Sub }}</small></span></div></div><button type="button" @click="showOfferPage = true">{{ form.seeOfferButton }}</button></section>
           <section id="menu" class="kitchen"><h3>{{ t(form.kitchenTitle) }}</h3><div class="kitchen-grid"><div><b>01</b><strong>{{ form.kitchen1Title }}</strong><p>{{ form.kitchen1Text }}</p></div><div><b>02</b><strong>{{ form.kitchen2Title }}</strong><p>{{ form.kitchen2Text }}</p></div><div><b>03</b><strong>{{ form.kitchen3Title }}</strong><p>{{ form.kitchen3Text }}</p></div><div><b>04</b><strong>{{ form.kitchen4Title }}</strong><p>{{ form.kitchen4Text }}</p></div></div></section>
@@ -98,6 +106,8 @@ import api from '@/services/api'
 import systemSettingService from '@/services/systemSettingService'
 import offerService from '@/services/offerService'
 
+const defaultHeroImage = 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1000&q=85'
+
 const defaults = {
   // Restaurant name is filled in automatically from the restaurant.
   name: 'SOPNO',
@@ -130,6 +140,7 @@ const defaults = {
   homeIntro: 'Welcome to {name}. Big plates to share, cold drinks, and a warm table waiting for you.',
   primaryButton: 'Reserve a table',
   secondaryButton: 'View menu',
+  heroImage: '',
 
   // Home: happy hours band
   happyBandTitle: 'HAPPY HOURS, EVERYDAY',
@@ -265,6 +276,8 @@ const saved = ref(false)
 const showOfferPage = ref(false)
 const isSaving = ref(false)
 const isLoadingPublic = ref(false)
+const heroImageFile = ref(null)
+const heroImagePreview = ref('')
 const errorMessage = ref('')
 const route = useRoute()
 const authStore = useAuthStore()
@@ -410,9 +423,18 @@ async function save() {
   errorMessage.value = ''
   try {
     const settings = { ...form }
-    await systemSettingService.updateSettings({
-      landing_page_settings: settings,
-    })
+    if (heroImageFile.value) {
+      const payload = new FormData()
+      Object.entries(settings).forEach(([key, value]) => payload.append(`landing_page_settings[${key}]`, String(value ?? '')))
+      payload.append('landing_page_image', heroImageFile.value)
+      const response = await systemSettingService.updateSettings(payload)
+      heroImageFile.value = null
+      form.heroImage = response?.data?.landing_page_settings?.heroImage || form.heroImage
+      if (heroImagePreview.value) URL.revokeObjectURL(heroImagePreview.value)
+      heroImagePreview.value = ''
+    } else {
+      await systemSettingService.updateSettings({ landing_page_settings: settings })
+    }
     saved.value = true
     window.setTimeout(() => { saved.value = false }, 2500)
   } catch (error) {
@@ -423,6 +445,21 @@ async function save() {
   } finally {
     isSaving.value = false
   }
+}
+
+function onHeroImageSelected(event) {
+  const file = event.target.files?.[0]
+  if (!file) return
+  if (heroImagePreview.value) URL.revokeObjectURL(heroImagePreview.value)
+  heroImageFile.value = file
+  heroImagePreview.value = URL.createObjectURL(file)
+}
+
+function clearHeroImage() {
+  heroImageFile.value = null
+  if (heroImagePreview.value) URL.revokeObjectURL(heroImagePreview.value)
+  heroImagePreview.value = ''
+  form.heroImage = ''
 }
 </script>
 
@@ -440,7 +477,7 @@ async function save() {
 
 /* settings groups */
 .settings-group{margin:0 0 14px;padding-bottom:6px;border-bottom:1px solid #eef1f5}
-.settings-group:last-child{border-bottom:0}
+.settings-group:last-child{border-bottom:0}.hero-image-preview{display:block;width:100%;max-height:130px;object-fit:cover;border-radius:7px;margin:6px 0 8px}.clear-image{border:0;border-radius:5px;padding:5px 8px;background:#fee2e2;color:#b91c1c;font-size:10px;font-weight:700;cursor:pointer}
 .settings-group>h3{margin:0 0 8px;color:#f97316;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 
 /* ============================================================

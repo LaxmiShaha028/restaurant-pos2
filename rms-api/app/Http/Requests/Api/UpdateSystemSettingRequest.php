@@ -33,6 +33,10 @@ class UpdateSystemSettingRequest
                 'nullable', 'array',
             ],
 
+            'landing_page_image' => [
+                'nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120',
+            ],
+
             'landing_page_settings.name' => [
                 'nullable', 'string', 'max:60',
             ],

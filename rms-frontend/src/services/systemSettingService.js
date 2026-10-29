@@ -149,6 +149,7 @@ const systemSettingService = {
             payload instanceof FormData;
 
         if (isFormData) {
+            payload.append("_method", "PUT");
 
             const response =
                 await api.post(
