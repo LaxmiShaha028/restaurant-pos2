@@ -9,6 +9,7 @@ use App\Http\Resources\MenuCategoryResource;
 use App\Http\Resources\MenuItemResource;
 use App\Http\Resources\MenuItemVariantResource;
 use App\Models\MenuItem;
+use App\Models\Order;
 use App\Traits\ApiResponse;
 use App\Traits\HasAuditLog;
 use Illuminate\Http\JsonResponse;
@@ -277,6 +278,23 @@ class MenuItemController extends Controller
         |--------------------------------------------------------------------------
         */
 
+        $salesByMenuItem = DB::table('order_items')
+            ->join('orders', 'orders.id', '=', 'order_items.order_id')
+            ->join('menu_items', 'menu_items.id', '=', 'order_items.menu_item_id')
+            ->whereBetween('orders.created_at', [now()->startOfMonth(), now()->endOfMonth()])
+            ->where('orders.status', '!=', Order::STATUS_CANCELED)
+            ->select('menu_items.menu_name')
+            ->selectRaw('SUM(order_items.quantity) AS quantity_sold')
+            ->groupBy('menu_items.menu_name')
+            ->get();
+
+        $popularMenuItemNames = $salesByMenuItem
+            ->groupBy(static fn ($item): string => explode(' - ', $item->menu_name, 2)[0])
+            ->map(static fn ($items): int => (int) $items->sum('quantity_sold'))
+            ->sortDesc()
+            ->take(3)
+            ->keys()
+            ->all();
         $menuItems =
             $query
 
@@ -289,6 +307,13 @@ class MenuItemController extends Controller
                 )
 
                 ->withQueryString();
+        $menuItems->getCollection()->each(function (MenuItem $menuItem) use ($popularMenuItemNames): void {
+            $baseName = explode(' - ', $menuItem->menu_name, 2)[0];
+            $menuItem->setAttribute(
+                'is_popular',
+                in_array($baseName, $popularMenuItemNames, true)
+            );
+        });
 
 
         /*

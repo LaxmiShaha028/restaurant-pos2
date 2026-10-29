@@ -159,6 +159,8 @@ class MenuItemResource extends JsonResource
 
             'is_featured' =>
                 (bool) $this->is_featured,
+            'is_popular' =>
+                (bool) ($this->is_popular ?? false),
 
 
             /*

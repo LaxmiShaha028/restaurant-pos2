@@ -34,7 +34,7 @@
     <button
       v-if="authStore.hasPermission?.('orders.update') || authStore.hasPermission?.('orders.create')"
       type="button"
-      class="btn call-order-button"
+      class="btn add-order-button"
       @click="openCallOrderDialog"
     >
       <i class="bi bi-volume-up-fill"></i>
@@ -61,12 +61,13 @@
         <div v-else-if="callOrdersError" class="call-order-message call-order-error">{{ callOrdersError }}</div>
         <div v-else-if="!callReadyOrders.length" class="call-order-message">There are no orders ready for pickup.</div>
         <template v-else>
-          <label class="call-order-label" for="call-order-select">Ready order</label>
-          <select id="call-order-select" v-model="selectedCallOrderId" class="call-order-select">
-            <option v-for="order in callReadyOrders" :key="order.id" :value="String(order.id)">
-              {{ order.token }}{{ order.customer_name ? ` · ${order.customer_name}` : '' }}
-            </option>
-          </select>
+          <label class="call-order-label">Ready order</label>
+          <OrderFilterSelect
+            v-model="selectedCallOrderId"
+            :options="callReadyOrderOptions"
+            placeholder="Select ready order"
+            label="Ready order"
+          />
         </template>
         <div class="call-order-actions">
           <button type="button" class="btn call-order-cancel" @click="closeCallOrderDialog">Cancel</button>
@@ -207,6 +208,7 @@
 */
 
 import {
+  computed,
   onBeforeUnmount,
   onMounted,
   reactive,
@@ -231,6 +233,7 @@ import { useAuthStore } from "@/stores/auth";
 
 import OrderSummaryCards from "@/components/orders/OrderSummaryCards.vue";
 import OrderToolbar from "@/components/orders/OrderToolbar.vue";
+import OrderFilterSelect from "@/components/orders/OrderFilterSelect.vue";
 import OrderList from "@/components/orders/OrderList.vue";
 import CancelOrderModal from "@/components/orders/CancelOrderModal.vue";
 import CompleteOrderModal from "@/components/orders/CompleteOrderModal.vue";
@@ -286,6 +289,10 @@ const loading = ref(false);
 const updatingOrderId = ref(null);
 const showCallOrderDialog = ref(false);
 const callReadyOrders = ref([]);
+const callReadyOrderOptions = computed(() => callReadyOrders.value.map((order) => ({
+  value: String(order.id),
+  label: order.customer_name ? `${order.token} · ${order.customer_name}` : order.token,
+})));
 const selectedCallOrderId = ref("");
 const callOrdersLoading = ref(false);
 const callOrdersError = ref("");

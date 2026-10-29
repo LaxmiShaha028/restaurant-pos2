@@ -33,7 +33,7 @@
               aria-valuemin="0"
               aria-valuemax="100"
             ><span :style="{ width: `${preparationProgress(order)}%` }"></span></div>
-            <div class="progress-meta"><span>{{ preparationProgress(order) }}%</span><span>{{ estimatedWait(order) }} min left</span></div>
+            <div class="progress-meta"><span>{{ preparationProgress(order) }}%</span><span class="preparing-status">Preparing</span></div>
           </article>
         </div>
       </article>
@@ -61,18 +61,27 @@
         </div>
       </article>
       <article class="menu-column">
-        <header class="menu-heading"><h2>Menu</h2><button type="button" aria-label="Back" title="Back" @click="goBack">‹</button></header>
-        <div ref="menuList" class="menu-list">
-          <section v-for="group in menuGroups" :key="group.name" class="menu-category">
-            <h3>{{ group.name }}</h3>
-            <article v-for="item in group.items" :key="item.id" class="menu-card">
-              <img class="menu-photo" :src="foodImage(item)" :alt="item.menu_name" loading="lazy">
-              <div class="menu-info"><h4>{{ item.menu_name }} <span v-if="item.is_featured">Popular</span></h4><p>{{ item.description || item.ingredients || group.name }}</p></div>
-              <strong>৳{{ Number(item.price || 0).toLocaleString('en-BD') }}</strong>
-            </article>
-          </section>
-          <div v-if="!menuGroups.length" class="menu-empty">Menu items will appear here</div>
+        <header class="menu-heading"><h2>Popular Menu</h2><button type="button" aria-label="Back" title="Back" @click="goBack">‹</button></header>
+        <div v-if="popularItems.length" class="popular-stage" :style="{ '--popular-ms': `${POPULAR_SLIDE_MS}ms` }">
+          <article
+            v-for="(item, index) in popularItems"
+            :key="item.id"
+            class="popular-slide"
+            :class="{ active: index === currentPopularIndex }"
+            :aria-hidden="index !== currentPopularIndex"
+          >
+            <img class="popular-photo" :src="foodImage(item)" :alt="item.menu_name">
+            <div class="popular-shade"></div>
+            <span class="popular-tag">{{ item.category?.category_name || 'Menu' }}</span>
+            <div class="popular-info">
+              <span class="popular-kicker">Most Loved</span>
+              <h4>{{ item.menu_name }}</h4>
+              <strong class="popular-price">৳{{ Number(item.price || 0).toLocaleString('en-BD') }}</strong>
+            </div>
+          </article>
+          <div class="popular-progress"><i></i></div>
         </div>
+        <div v-else class="menu-empty">Popular items will appear here</div>
       </article>
     </section>
     <!-- <footer class="pickup-footer">Please show your token at the pickup counter.</footer> -->
@@ -112,10 +121,15 @@ let lastProcessedCalloutId = null
 let pendingAudioOrders = []
 const autoScrollStates = new WeakMap()
 const AUTO_SCROLL_SPEED = 32 // pixels per second; raise for faster, lower for slower
+const POPULAR_SLIDE_MS = 5000 // time each popular item stays on screen
+const activePopularIndex = ref(0)
+let popularTimer = null
 
 const preparingOrders = computed(() => orders.value.filter((order) => order.status === 'preparing'))
 const readyOrders = computed(() => orders.value.filter((order) => order.status === 'ready'))
 const pinnedOrder = computed(() => readyOrders.value.find((order) => String(order.id) === pinnedOrderId.value) || null)
+const popularItems = computed(() => pickupMenuItems.value.filter((item) => item.is_available !== false && item.is_popular))
+const currentPopularIndex = computed(() => activePopularIndex.value % Math.max(1, popularItems.value.length))
 const restaurantName = computed(() => settingsStore.restaurantName || 'Restaurant')
 const restaurantMonogram = computed(() => restaurantName.value.trim().split(/\s+/).slice(0, 2).map((word) => word[0]).join('').toUpperCase())
 const menuGroups = computed(() => {
@@ -177,10 +191,6 @@ function pinOrder(id) {
 function ageInMinutes(order) {
   const createdAt = Date.parse(order.created_at || '')
   return Number.isFinite(createdAt) ? Math.max(0, Math.floor((Date.now() - createdAt) / 60000)) : 0
-}
-
-function estimatedWait(order) {
-  return Math.max(1, 15 - ageInMinutes(order))
 }
 
 function preparationProgress(order) {
@@ -292,6 +302,13 @@ function handleDisplayStorage(event) {
   if (event.key !== 'pickup_display_sound' && event.key !== null) return
   soundEnabled.value = event.newValue === 'true'
   if (soundEnabled.value) void resumeAudioContext()
+}
+
+function startPopularCarousel() {
+  clearInterval(popularTimer)
+  popularTimer = setInterval(() => {
+    if (popularItems.value.length > 1) activePopularIndex.value = (currentPopularIndex.value + 1) % popularItems.value.length
+  }, POPULAR_SLIDE_MS)
 }
 
 function goBack() {
@@ -429,6 +446,7 @@ onMounted(() => {
   loadBoard()
   pollTimer = setInterval(loadBoard, 5000)
   autoScrollFrame = requestAnimationFrame(animateAutoScroll)
+  startPopularCarousel()
   document.addEventListener('pointerdown', handleDisplayInteraction)
   document.addEventListener('keydown', handleDisplayInteraction)
   window.addEventListener('storage', handleDisplayStorage)
@@ -436,6 +454,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   clearInterval(pollTimer)
+  clearInterval(popularTimer)
   cancelAnimationFrame(autoScrollFrame)
   clearTimeout(alertTimer)
   clearTimeout(highlightTimer)
@@ -458,7 +477,7 @@ onBeforeUnmount(() => {
 .pickup-column-heading,.menu-heading{display:flex;flex:none;min-height:clamp(54px,7vh,74px);align-items:center;gap:12px;padding:0 clamp(16px,1.3vw,24px);background:var(--amber);color:#17130a}.ready-column .pickup-column-heading{background:var(--green);color:#fff}.pickup-column-heading h2,.menu-heading h2{margin:0;font:600 clamp(20px,1.4vw,28px)/1.1 'Playfair Display',Georgia,serif}.pickup-column-heading>strong{display:inline-flex;min-width:44px;justify-content:center;margin-left:auto;border:1px solid currentColor;padding:5px 10px;font:600 clamp(15px,1vw,20px) 'Playfair Display',Georgia,serif}
 .pickup-empty{display:grid;min-height:0;flex:1;place-items:center;color:#9a938b;font-size:clamp(14px,1.1vw,20px)}.pickup-order-grid{display:flex;min-height:0;flex:1;flex-direction:column;gap:clamp(9px,.9vw,15px);overflow-x:hidden;overflow-y:auto;padding:clamp(10px,.8vw,16px);overscroll-behavior:contain;scrollbar-width:none;-ms-overflow-style:none}.pickup-order-grid::-webkit-scrollbar{display:none;width:0;height:0}.pickup-order-card{container-type:inline-size;display:flex;min-width:0;min-height:clamp(104px,13vh,150px);flex:0 0 auto;flex-direction:column;justify-content:center;overflow:hidden;padding:clamp(12px,1vw,20px);border:1px solid var(--line);border-left:5px solid var(--amber);background:var(--card)}.ready-order-card{border-left-color:var(--green)}.pickup-order-card.is-delayed{border-left-color:#e3a700}.ready-order-card.is-just-ready{animation:none}.pickup-pinned-card{border-left-width:5px}
 .pickup-token{display:block;overflow:hidden;color:var(--cream);font:600 clamp(29px,3vw,54px)/1 'Playfair Display',Georgia,serif;letter-spacing:.01em;text-overflow:ellipsis;white-space:nowrap}.order-meta,.progress-meta{display:flex;justify-content:space-between;gap:8px;color:#aaa7a2;font-size:clamp(11px,.85vw,15px)}.order-meta{margin-top:clamp(8px,1vh,14px)}.preparation-progress{height:6px;flex:none;margin-top:clamp(9px,1vh,14px);overflow:hidden;background:#303237}.preparation-progress span{display:block;height:100%;background:var(--amber);transition:width .35s ease}.progress-meta{margin-top:5px}.pickup-ready-label{display:inline-flex;align-items:center;align-self:flex-start;margin-top:clamp(10px,1.2vh,16px);padding:7px 12px;background:var(--green);color:#fff;font-size:clamp(10px,.8vw,14px);font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-.menu-heading{justify-content:space-between;background:var(--red);color:var(--cream);border-bottom:1px solid var(--line)}.menu-heading button{border:0;background:transparent;color:var(--cream);opacity:.1;font:400 36px/1 Inter,Arial,sans-serif;cursor:pointer}.menu-heading button:hover,.menu-heading button:focus-visible{opacity:.45}.menu-list{min-height:0;flex:1;overflow-y:auto;padding:clamp(10px,1vw,18px);scrollbar-width:none;-ms-overflow-style:none}.menu-list::-webkit-scrollbar{display:none}.menu-category{margin-bottom:clamp(16px,2vh,26px)}.menu-category h3{margin:0 0 10px;padding-bottom:9px;border-bottom:1px solid var(--line);color:var(--gold);font:700 clamp(12px,.9vw,16px) Inter,Arial,sans-serif;letter-spacing:.22em;text-transform:uppercase}.menu-card{display:flex;min-height:clamp(84px,12vh,132px);align-items:center;gap:clamp(12px,1.2vw,22px);margin-bottom:10px;padding:clamp(10px,.9vw,16px);border:1px solid var(--line);background:var(--card)}.menu-icon{display:grid;width:clamp(62px,6vw,100px);aspect-ratio:1;flex:none;place-items:center;border:1px solid var(--line);background:#0b0c0e;color:var(--gold);font-size:clamp(25px,2.2vw,40px)}.menu-info{min-width:0;flex:1}.menu-info h4{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;color:var(--cream);font:600 clamp(17px,1.35vw,25px)/1.2 'Playfair Display',Georgia,serif}.menu-info h4 span{padding:3px 7px;border:1px solid var(--gold);color:var(--gold);font:700 clamp(9px,.65vw,12px) Inter,Arial,sans-serif;letter-spacing:.15em;text-transform:uppercase}.menu-info p{overflow:hidden;margin:5px 0 0;color:#9b9da2;font-size:clamp(12px,.95vw,17px);text-overflow:ellipsis;white-space:nowrap}.menu-card>strong{flex:none;color:var(--gold);font:600 clamp(17px,1.4vw,26px) 'Playfair Display',Georgia,serif;white-space:nowrap}
+.menu-heading{justify-content:space-between;background:var(--red);color:var(--cream);border-bottom:1px solid var(--line)}.menu-heading button{border:0;background:transparent;color:var(--cream);opacity:.1;font:400 36px/1 Inter,Arial,sans-serif;cursor:pointer}.menu-heading button:hover,.menu-heading button:focus-visible{opacity:.45}.menu-list{min-height:0;flex:1;overflow-y:auto;padding:clamp(10px,1vw,18px);scrollbar-width:none;-ms-overflow-style:none}.menu-list::-webkit-scrollbar{display:none}.menu-category{margin-bottom:clamp(16px,2vh,26px)}.menu-category h3{margin:0 0 10px;padding-bottom:9px;border-bottom:1px solid var(--line);color:var(--gold);font:700 clamp(12px,.9vw,16px) Inter,Arial,sans-serif;letter-spacing:.22em;text-transform:uppercase}.menu-card{display:flex;min-height:clamp(84px,12vh,132px);align-items:center;gap:clamp(12px,1.2vw,22px);margin-bottom:10px;padding:clamp(10px,.9vw,16px);border:1px solid var(--line);background:var(--card)}.menu-icon{display:grid;width:clamp(62px,6vw,100px);aspect-ratio:1;flex:none;place-items:center;border:1px solid var(--line);background:#0b0c0e;color:var(--gold);font-size:clamp(25px,2.2vw,40px)}.menu-info{min-width:0;flex:1}.menu-info h4{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;color:var(--cream);font:600 clamp(17px,1.35vw,25px)/1.2 'Playfair Display',Georgia,serif}.popular-badge{display:inline-block;margin-top:4px;padding:3px 7px;border:1px solid var(--gold);color:var(--gold);font:700 clamp(9px,.65vw,12px) Inter,Arial,sans-serif;letter-spacing:.15em;text-transform:uppercase}.menu-info p{overflow:hidden;margin:5px 0 0;color:#9b9da2;font-size:clamp(12px,.95vw,17px);text-overflow:ellipsis;white-space:nowrap}.menu-card>strong{flex:none;color:var(--gold);font:600 clamp(17px,1.4vw,26px) 'Playfair Display',Georgia,serif;white-space:nowrap}
 @media(min-width:1600px){.pickup-display{font-size:1.12em}.pickup-token{font-size:clamp(38px,3.2vw,72px)}.menu-icon{font-size:clamp(34px,2.5vw,50px)}.menu-info h4{font-size:clamp(23px,1.5vw,32px)}.menu-info p,.order-meta,.progress-meta{font-size:clamp(16px,1vw,21px)}.menu-card>strong{font-size:clamp(24px,1.6vw,34px)}}
 @media(max-width:900px){.pickup-display{padding:16px;gap:12px}.pickup-columns{grid-template-columns:1fr 1fr;grid-template-rows:minmax(0,1fr) minmax(0,1fr)}.menu-column{grid-column:1/-1}.menu-list{display:grid;grid-template-columns:1fr 1fr;gap:12px}.menu-category{margin:0}.menu-card{min-height:80px}}
 @media(prefers-reduced-motion:reduce){.preparation-progress span{transition:none}}
@@ -470,4 +489,22 @@ onBeforeUnmount(() => {
 .menu-empty{display:grid;min-height:100%;place-items:center;color:#aaa7a2;font-size:clamp(14px,1vw,18px)}
 .menu-card>strong{color:#fff}
 .pickup-order-grid,.menu-list{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22px,#000 calc(100% - 22px),transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 22px,#000 calc(100% - 22px),transparent 100%)}
+.popular-stage{position:relative;min-height:0;flex:1;overflow:hidden;background:var(--card)}
+.popular-slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease}
+.popular-slide.active{opacity:1}
+.popular-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.popular-slide.active .popular-photo{animation:popular-zoom 9s ease-out forwards}
+@keyframes popular-zoom{from{transform:scale(1)}to{transform:scale(1.08)}}
+.popular-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(11,12,14,.96) 0,rgba(11,12,14,.6) 34%,rgba(11,12,14,0) 62%),linear-gradient(to bottom,rgba(11,12,14,.5),rgba(11,12,14,0) 22%)}
+.popular-tag{position:absolute;top:clamp(14px,1.4vw,24px);left:clamp(14px,1.4vw,24px);padding:6px 12px;background:var(--red);color:var(--cream);font:700 clamp(10px,.8vw,14px) Inter,Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.popular-info{position:absolute;right:clamp(18px,1.8vw,32px);bottom:clamp(22px,3vh,40px);left:clamp(18px,1.8vw,32px)}
+.popular-kicker{display:flex;align-items:center;gap:10px;margin-bottom:clamp(8px,1vh,12px);color:var(--gold);font:700 clamp(10px,.8vw,14px) Inter,Arial,sans-serif;letter-spacing:.25em;text-transform:uppercase}
+.popular-kicker::after{content:"";width:36px;height:1px;background:var(--gold)}
+.popular-info h4{margin:0;color:#fff;font:600 clamp(26px,2.4vw,46px)/1.15 'Playfair Display',Georgia,serif;text-shadow:0 2px 14px rgba(0,0,0,.7)}
+.popular-price{display:inline-block;margin-top:clamp(12px,1.6vh,20px);padding:clamp(7px,.8vh,10px) clamp(16px,1.3vw,24px);background:var(--gold);color:#17130a;font:700 clamp(20px,1.8vw,34px)/1 'Playfair Display',Georgia,serif;white-space:nowrap}
+.popular-progress{position:absolute;right:0;bottom:0;left:0;height:4px;background:rgba(255,255,255,.14)}
+.popular-progress i{display:block;width:0;height:100%;background:var(--gold);animation:popular-fill var(--popular-ms) linear infinite}
+@keyframes popular-fill{from{width:0}to{width:100%}}
+@media(max-width:900px){.popular-stage{min-height:360px}}
+@media(prefers-reduced-motion:reduce){.popular-slide{transition:none}.popular-slide.active .popular-photo{animation:none}}
 </style>

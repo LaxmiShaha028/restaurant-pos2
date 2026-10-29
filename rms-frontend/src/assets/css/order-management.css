@@ -118,16 +118,16 @@
 .call-order-button {
   min-height: 40px;
   padding: 0 14px;
-  border: 1px solid #b7e8ce;
+  border: 1px solid #e7d8cb;
   border-radius: 12px;
-  background: #e9fbf2;
-  color: #07834e !important;
+  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%);
+  color: #f97316 !important;
 }
 
 .call-order-button:hover {
-  border-color: #00b77a;
-  background: #d5f7e7;
-  color: #006f43 !important;
+  border-color: #3b3b3b;
+  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%);
+  color: #fb923c !important;
 }
 
 .call-order-overlay {
@@ -137,19 +137,19 @@
   display: grid;
   place-items: center;
   padding: 20px;
-  background: rgba(15, 23, 42, .48);
-  backdrop-filter: blur(3px);
+  background: rgba(17, 24, 39, .58);
+  backdrop-filter: blur(4px);
 }
 
 .call-order-dialog {
   position: relative;
   width: min(100%, 440px);
   padding: 28px;
-  border: 1px solid #e3ebe7;
+  border: 1px solid var(--order-border, #eee3da);
   border-radius: 20px;
   background: #fff;
-  box-shadow: 0 24px 80px rgba(15, 23, 42, .24);
-  color: #172033;
+  box-shadow: 0 24px 80px rgba(17, 24, 39, .24);
+  color: #111827;
 }
 
 .call-order-close {
@@ -158,10 +158,12 @@
   right: 14px;
   border: 0;
   background: transparent;
-  color: #738094;
+  color: #6b7280;
   font-size: 26px;
   line-height: 1;
 }
+
+.call-order-close:hover { color: #f97316; }
 
 .call-order-icon {
   display: grid;
@@ -170,20 +172,16 @@
   place-items: center;
   margin-bottom: 14px;
   border-radius: 14px;
-  background: #e6f8ee;
-  color: #07834e;
+  background: #fff1e6;
+  color: #ea580c;
   font-size: 20px;
 }
 
-.call-order-dialog h2 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 800;
-}
+.call-order-dialog h2 { margin: 0; font-size: 20px; font-weight: 800; }
 
 .call-order-dialog > p {
   margin: 8px 0 20px;
-  color: #68758b;
+  color: #667085;
   font-size: 13px;
   line-height: 1.5;
 }
@@ -191,40 +189,22 @@
 .call-order-label {
   display: block;
   margin-bottom: 6px;
-  color: #344054;
+  color: #374151;
   font-size: 12px;
   font-weight: 700;
-}
-
-.call-order-select {
-  width: 100%;
-  min-height: 44px;
-  padding: 0 12px;
-  border: 1px solid #d8e1e8;
-  border-radius: 10px;
-  background: #fff;
-  color: #172033;
 }
 
 .call-order-message {
   padding: 14px;
   border-radius: 10px;
-  background: #f5f8f7;
+  background: #f8f1e9;
   color: #59677c;
   font-size: 13px;
 }
 
-.call-order-error {
-  background: #fff1ef;
-  color: #b42318;
-}
+.call-order-error { background: #fff1ef; color: #b42318; }
 
-.call-order-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 9px;
-  margin-top: 22px;
-}
+.call-order-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 22px; }
 
 .call-order-cancel,
 .call-order-submit {
@@ -235,23 +215,21 @@
   font-weight: 700;
 }
 
-.call-order-cancel {
-  border: 1px solid #d8e1e8;
-  background: #fff;
-  color: #475467;
-}
+.call-order-cancel { border: 1px solid #e7d8cb; background: #fff; color: #374151; }
+.call-order-cancel:hover { border-color: #fdba74; background: #fff8f1; }
 
 .call-order-submit {
-  border: 1px solid #07834e;
-  background: #07834e;
+  border: 1px solid #c2410c;
+  background: linear-gradient(135deg, #c2410c, #f97316);
   color: #fff;
 }
 
-.call-order-submit:disabled {
-  cursor: not-allowed;
-  opacity: .5;
+.call-order-submit:hover:not(:disabled) {
+  border-color: #9a3412;
+  background: linear-gradient(135deg, #9a3412, #ea580c);
 }
 
+.call-order-submit:disabled { cursor: not-allowed; opacity: .5; }
 
 /* =========================================================
    ALERT
@@ -1928,3 +1906,13 @@
     border-radius: 18px;
   }
 }
+/* Keep dialog text above the page-wide text color reset. */
+.order-management-page .call-order-dialog { color: #111827; }
+.order-management-page .call-order-icon { color: #ea580c; }
+.order-management-page .call-order-close { color: #6b7280; }
+.order-management-page .call-order-dialog > p { color: #667085; }
+.order-management-page .call-order-label { color: #374151; }
+.order-management-page .call-order-message { color: #59677c; }
+.order-management-page .call-order-error { color: #b42318; }
+.order-management-page .call-order-cancel { color: #374151; }
+.order-management-page .call-order-submit { color: #fff; }
