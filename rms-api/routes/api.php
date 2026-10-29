@@ -85,6 +85,14 @@ Route::get(
     ]
 );
 
+Route::get(
+    '/public/landing-page/{tenantKey}',
+    [
+        TenantEntryController::class,
+        'publicLandingPage',
+    ]
+);
+
 /*
 |--------------------------------------------------------------------------
 | API Health

@@ -21,6 +21,7 @@ class SystemSetting extends Model
 
         'restaurant_name',
         'restaurant_logo',
+        'landing_page_settings',
 
         /*
         |----------------------------------------------------------------------
@@ -91,6 +92,8 @@ class SystemSetting extends Model
     protected function casts(): array
     {
         return [
+            'landing_page_settings' => 'array',
+
             'vat_rate' =>
                 'decimal:2',
 

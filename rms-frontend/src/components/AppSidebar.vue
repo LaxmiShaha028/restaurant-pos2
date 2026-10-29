@@ -1049,6 +1049,22 @@ const sidebarSections = [
           'settings.manage',
       },
 
+      {
+        key: 'landing-page',
+
+        label: 'Landing Page',
+
+        route: {
+          name: 'landing-page',
+        },
+
+        icon:
+          'bi bi-window',
+
+        permission:
+          'settings.manage',
+      },
+
 
       {
         key: 'users',

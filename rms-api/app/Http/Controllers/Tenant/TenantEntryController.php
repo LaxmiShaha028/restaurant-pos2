@@ -5,11 +5,69 @@ namespace App\Http\Controllers\Tenant;
 use App\Http\Controllers\Controller;
 use App\Models\Central\Restaurant;
 use App\Models\Central\Subscription;
+use App\Models\SystemSetting;
+use App\Services\Tenant\TenantConnectionManager;
 use App\Services\SubscriptionLifecycleService;
 use Illuminate\Http\JsonResponse;
 
 class TenantEntryController extends Controller
 {
+    public function publicLandingPage(
+        string $tenantKey,
+        TenantConnectionManager $connectionManager
+    ): JsonResponse {
+        $tenantKey = strtolower(trim($tenantKey));
+
+        $restaurant = Restaurant::on('central')
+            ->with('tenantDatabase')
+            ->where('tenant_key', $tenantKey)
+            ->first();
+
+        if (
+            ! $restaurant
+            || $restaurant->status !== 'active'
+            || ! $restaurant->tenantDatabase
+            || $restaurant->tenantDatabase->status !== 'active'
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Restaurant landing page was not found.',
+                'data' => null,
+                'errors' => null,
+            ], 404);
+        }
+
+        try {
+            $connectionManager->connect($restaurant);
+            $settings = SystemSetting::query()->first();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Restaurant landing page loaded successfully.',
+                'data' => [
+                    'restaurant' => [
+                        'name' => $restaurant->name,
+                        'tenant_key' => $restaurant->tenant_key,
+                    ],
+                    'landing_page_settings' =>
+                        $settings?->landing_page_settings ?? [],
+                ],
+                'errors' => null,
+            ]);
+        } catch (\Throwable $exception) {
+            report($exception);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Restaurant landing page is temporarily unavailable.',
+                'data' => null,
+                'errors' => null,
+            ], 503);
+        } finally {
+            $connectionManager->disconnect();
+        }
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Resolve Tenant

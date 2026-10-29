@@ -833,6 +833,34 @@ const router = createRouter({
     */
 
     {
+
+      path:
+        '/site/:tenantKey',
+
+      name:
+        'public-restaurant-landing-page',
+
+      component: () =>
+        import(
+          '@/views/LandingPageView.vue'
+        ),
+
+      props:
+        true,
+
+      meta: {
+
+        publicLanding:
+          true,
+
+        title:
+          'Restaurant',
+
+      },
+
+    },
+
+    {
       path:
         '/tenant/:tenantKey',
 
@@ -2166,6 +2194,37 @@ const router = createRouter({
 
             icon:
               'bi bi-gear',
+
+          },
+
+        },
+
+        {
+
+          path:
+            'landing-page',
+
+          name:
+            'landing-page',
+
+          component: () =>
+            import(
+              '@/views/LandingPageView.vue'
+            ),
+
+          meta: {
+
+            permission:
+              'settings.manage',
+
+            title:
+              'Landing Page',
+
+            description:
+              'Manage your restaurant landing page',
+
+            icon:
+              'bi bi-window',
 
           },
 

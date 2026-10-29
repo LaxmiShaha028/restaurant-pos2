@@ -29,6 +29,44 @@ class UpdateSystemSettingRequest
                 'max:190',
             ],
 
+            'landing_page_settings' => [
+                'nullable', 'array',
+            ],
+
+            'landing_page_settings.name' => [
+                'nullable', 'string', 'max:60',
+            ],
+            'landing_page_settings.headline' => [
+                'nullable', 'string', 'max:100',
+            ],
+            'landing_page_settings.description' => [
+                'nullable', 'string', 'max:240',
+            ],
+            'landing_page_settings.address' => [
+                'nullable', 'string', 'max:140',
+            ],
+            'landing_page_settings.phone' => [
+                'nullable', 'string', 'max:40',
+            ],
+            'landing_page_settings.hours' => [
+                'nullable', 'string', 'max:80',
+            ],
+            'landing_page_settings.starterOffer' => [
+                'nullable', 'string', 'max:30',
+            ],
+            'landing_page_settings.drinkOffer' => [
+                'nullable', 'string', 'max:30',
+            ],
+            'landing_page_settings.color' => [
+                'nullable', 'regex:/^#[0-9A-Fa-f]{6}$/',
+            ],
+            'landing_page_settings.backgroundColor' => [
+                'nullable', 'regex:/^#[0-9A-Fa-f]{6}$/',
+            ],
+            'landing_page_settings.surfaceColor' => [
+                'nullable', 'regex:/^#[0-9A-Fa-f]{6}$/',
+            ],
+
             /*
             |--------------------------------------------------------------------------
             | Restaurant Logo

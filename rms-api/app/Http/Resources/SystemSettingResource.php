@@ -29,6 +29,9 @@ class SystemSettingResource extends JsonResource
                     $this->restaurant_logo
                 ),
 
+            'landing_page_settings' =>
+                $this->landing_page_settings ?? [],
+
             /*
             |--------------------------------------------------------------------------
             | Location
