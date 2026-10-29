@@ -1,5 +1,5 @@
 <template>
-  <main class="landing-admin" :class="{ 'public-landing': isPublicPage }">
+  <main class="landing-admin" :class="{ 'public-landing': isPublicPage }" :style="themeStyle">
     <header v-if="!isPublicPage" class="page-head">
       <div>
         <p class="eyebrow">WEBSITE</p>
@@ -37,54 +37,53 @@
           <span class="icon"><i class="bi bi-sliders"></i></span>
           <div><h2>Page Settings</h2><p>Changes appear in the preview as you type.</p></div>
         </div>
-        <label>Restaurant name<input v-model="form.name" maxlength="60" /></label>
-        <label>Happy hours headline<input v-model="form.headline" maxlength="100" /></label>
-        <label>Happy hours details<textarea v-model="form.description" rows="2" maxlength="240"></textarea></label>
-        <label>Address<input v-model="form.address" maxlength="140" /></label>
-        <label>Phone number<input v-model="form.phone" maxlength="40" /></label>
-        <label>Opening hours<input v-model="form.hours" maxlength="80" /></label>
-        <label>Half price starters and sides<input v-model="form.starterOffer" maxlength="30" /></label>
-        <label>All drinks offer<input v-model="form.drinkOffer" maxlength="30" /></label>
-        <label>Accent color<input v-model="form.color" type="color" class="color-input" /></label>
-        <label>Background color<input v-model="form.backgroundColor" type="color" class="color-input" /></label>
-        <label>Section / card color<input v-model="form.surfaceColor" type="color" class="color-input" /></label>
+
+        <div v-for="group in fieldGroups" :key="group.title" class="settings-group">
+          <h3>{{ group.title }}</h3>
+          <label v-for="field in group.fields" :key="field.key">
+            {{ field.label }}
+            <input v-if="field.type === 'color'" v-model="form[field.key]" type="color" class="color-input" />
+            <textarea v-else-if="field.type === 'area'" v-model="form[field.key]" rows="3" maxlength="400"></textarea>
+            <input v-else v-model="form[field.key]" maxlength="160" />
+          </label>
+        </div>
         <!-- <div v-if="publicPageUrl" class="public-url-box"><strong>Public landing page</strong><a :href="publicPageUrl" target="_blank" rel="noopener noreferrer">{{ publicPageUrl }}</a></div> -->
       </section>
 
       <section class="preview-wrap">
         <div v-if="!isPublicPage" class="preview-label"><i class="bi bi-eye"></i> LIVE PREVIEW</div>
-        <article v-if="!showOfferPage" class="site-preview home-preview" :style="{ '--accent': form.color, '--page-bg': form.backgroundColor, '--surface-bg': form.surfaceColor }">
-          <nav><strong>{{ form.name || 'SOPNO' }}</strong><div><a href="#" class="active" @click.prevent="showOfferPage = false">Home</a><a href="#menu">Menu</a><a href="#happy-hours" @click.prevent="showOfferPage = true">Happy hours</a><a href="#rewards">Rewards</a><a href="#reserve">Reserve</a><a href="#contact">Contact</a></div></nav>
+        <article v-if="!showOfferPage" class="site-preview home-preview" :style="themeStyle">
+          <nav><strong>{{ form.name || 'SOPNO' }}</strong><div><a href="#" class="active" @click.prevent="showOfferPage = false">{{ form.navHome }}</a><a href="#menu">{{ form.navMenu }}</a><a href="#happy-hours" @click.prevent="showOfferPage = true">{{ form.navHappy }}</a><a href="#rewards">{{ form.navRewards }}</a><a href="#reserve">{{ form.navReserve }}</a><a href="#contact">{{ form.navContact }}</a></div></nav>
           <section class="home-hero">
-            <div class="home-copy"><span class="home-kicker">BURGERS · STARTERS · SIDES · DRINKS</span><h2>Good food.<br><em>Good nights.</em></h2><p>Welcome to {{ form.name || 'SOPNO' }}. Big plates to share, cold drinks, and a warm table waiting for you.</p><a class="primary-cta" href="#reserve">Reserve a table</a><a class="secondary-cta" href="#menu">View menu</a></div>
+            <div class="home-copy"><span class="home-kicker">{{ t(form.homeKicker) }}</span><h2>{{ t(form.homeTitle1) }}<br><em>{{ t(form.homeTitle2) }}</em></h2><p>{{ t(form.homeIntro) }}</p><a class="primary-cta" href="#reserve">{{ form.primaryButton }}</a><a class="secondary-cta" href="#menu">{{ form.secondaryButton }}</a></div>
             <div class="food-art"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1000&q=85" alt="A platter of grilled food served at the restaurant" /></div>
           </section>
-          <section id="happy-hours" class="home-happy"><div><h3>HAPPY HOURS, EVERYDAY</h3><div class="happy-pills"><span>HALF PRICE<small>Starters and sides</small></span><span>30% OFF<small>All drinks</small></span><span>{{ form.hours }}<small>Every day</small></span></div></div><button type="button" @click="showOfferPage = true">SEE THE OFFER</button></section>
-          <section id="menu" class="kitchen"><h3>From our kitchen</h3><div class="kitchen-grid"><div><b>01</b><strong>Burgers</strong><p>Brioche buns, melted cheese, and sauces made in house.</p></div><div><b>02</b><strong>Starters</strong><p>Crispy bites made for sharing, with dips on the side.</p></div><div><b>03</b><strong>Sides</strong><p>Seasoned wedges and crunchy extras to round out the table.</p></div><div><b>04</b><strong>Drinks</strong><p>Classic cocktails and cold drinks, poured all evening.</p></div></div></section>
-          <section id="contact" class="home-about"><div><h3>About {{ form.name || 'SOPNO' }}</h3><p>[YOUR STORY: two or three lines about your restaurant, your cooking, and what guests can expect.]</p></div><div class="about-links"><a href="#contact"><b>OPEN</b><small>{{ form.hours || '[OPENING HOURS]' }}</small></a><a href="#contact"><b>FIND US</b><small>{{ form.address || 'YOUR ADDRESS' }}</small></a></div></section>
-          <section id="reserve" class="reservation"><div><h3>Reserve your table</h3><p>Tell us when you are coming. We will confirm by SMS.</p></div><form @submit.prevent><label>NAME<input placeholder="Your name" /></label><label>MOBILE NUMBER<input placeholder="Mobile number" /></label><div class="form-row"><label>DATE<input type="text" placeholder="Select date" /></label><label>GUESTS<input type="text" placeholder="2 guests" /></label></div><button type="button">CONFIRM RESERVATION</button></form></section>
-          <footer><strong>{{ form.name || 'SOPNO' }}</strong><span>HOTLINE: {{ form.phone || '+00 000 000 000' }}<br>ADDRESS: {{ form.address || 'YOUR ADDRESS' }}</span><span>OPEN: {{ form.hours || '[OPENING HOURS]' }}<br>Terms apply.</span></footer>
+          <section id="happy-hours" class="home-happy"><div><h3>{{ t(form.happyBandTitle) }}</h3><div class="happy-pills"><span>{{ form.pill1Title }}<small>{{ form.pill1Sub }}</small></span><span>{{ form.pill2Title }}<small>{{ form.pill2Sub }}</small></span><span>{{ form.hours }}<small>{{ form.pill3Sub }}</small></span></div></div><button type="button" @click="showOfferPage = true">{{ form.seeOfferButton }}</button></section>
+          <section id="menu" class="kitchen"><h3>{{ t(form.kitchenTitle) }}</h3><div class="kitchen-grid"><div><b>01</b><strong>{{ form.kitchen1Title }}</strong><p>{{ form.kitchen1Text }}</p></div><div><b>02</b><strong>{{ form.kitchen2Title }}</strong><p>{{ form.kitchen2Text }}</p></div><div><b>03</b><strong>{{ form.kitchen3Title }}</strong><p>{{ form.kitchen3Text }}</p></div><div><b>04</b><strong>{{ form.kitchen4Title }}</strong><p>{{ form.kitchen4Text }}</p></div></div></section>
+          <section id="contact" class="home-about"><div><h3>{{ t(form.aboutTitle) }}</h3><p>{{ t(form.aboutText) }}</p></div><div class="about-links"><a href="#contact"><b>{{ form.aboutOpenLabel }}</b><small>{{ form.hours || '[OPENING HOURS]' }}</small></a><a href="#contact"><b>{{ form.aboutFindLabel }}</b><small>{{ form.address || 'YOUR ADDRESS' }}</small></a></div></section>
+          <section id="reserve" class="reservation"><div><h3>{{ form.reserveTitle }}</h3><p>{{ form.reserveText }}</p></div><form @submit.prevent><label>NAME<input placeholder="Your name" /></label><label>MOBILE NUMBER<input placeholder="Mobile number" /></label><div class="form-row"><label>DATE<input type="text" placeholder="Select date" /></label><label>GUESTS<input type="text" placeholder="2 guests" /></label></div><button type="button">{{ form.reserveButton }}</button></form></section>
+          <footer><strong>{{ form.name || 'SOPNO' }}</strong><span>HOTLINE: {{ form.phone || '+00 000 000 000' }}<br>ADDRESS: {{ form.address || 'YOUR ADDRESS' }}</span><span>OPEN: {{ form.hours || '[OPENING HOURS]' }}<br>{{ form.terms }}</span></footer>
         </article>
 
-        <article v-else class="site-preview home-preview offer-preview" :style="{ '--accent': form.color, '--page-bg': form.backgroundColor, '--surface-bg': form.surfaceColor }">
-          <div class="promo-bar">35% OFF ALL DRINKS · {{ form.starterOffer }} · {{ form.hours }}</div>
-          <nav><strong><a href="#" @click.prevent="showOfferPage = false">{{ form.name || 'SOPNO' }}</a></strong><div><a href="#" @click.prevent="showOfferPage = false">Home</a><a href="#" class="active" @click.prevent="showOfferPage = true">Happy hours</a><a href="#rewards">Rewards</a><a href="#reserve">Reserve</a><a href="#contact">Contact</a></div></nav>
+        <article v-else class="site-preview home-preview offer-preview" :style="themeStyle">
+          <div class="promo-bar">{{ form.promoText || `${form.drinkOffer} · ${form.starterOffer} · ${form.hours}` }}</div>
+          <nav><strong><a href="#" @click.prevent="showOfferPage = false">{{ form.name || 'SOPNO' }}</a></strong><div><a href="#" @click.prevent="showOfferPage = false">{{ form.navHome }}</a><a href="#" class="active" @click.prevent="showOfferPage = true">{{ form.navHappy }}</a><a href="#rewards">{{ form.navRewards }}</a><a href="#reserve">{{ form.navReserve }}</a><a href="#contact">{{ form.navContact }}</a></div></nav>
           <section class="hero">
             <div class="hero-copy">
               <h2>{{ form.headline || 'happy hours' }}</h2>
-              <b class="hero-hours">EVERYDAY, {{ form.hours || '16:00 TO 19:00' }}</b>
+              <b class="hero-hours">{{ form.heroDays }}, {{ form.hours || '16:00 TO 19:00' }}</b>
               <span class="offer-pill">{{ form.starterOffer || '50% OFF STARTERS & SIDES' }}</span>
               <span class="offer-pill">{{ form.drinkOffer || '30% OFF ALL DRINKS' }}</span>
               <p>{{ form.description || 'Half price starters and sides, and 30% off all drinks. The discount is applied automatically at the bill.' }}</p>
-              <a href="#reserve">Reserve a table</a>
+              <a href="#reserve">{{ form.offerButton }}</a>
             </div>
             <div class="food-art"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1000&q=85" alt="A platter of grilled food served at the restaurant" /></div>
           </section>
-          <section class="deals"><h3>Today's <em>big deals</em></h3><div class="deal-grid"><div class="deal-card featured"><small>BEST DEAL</small><strong>50%<i>OFF</i></strong><b>STARTERS & SIDES</b><p>Half price on every starter and side. Applied automatically at the bill.</p></div><div class="deal-card"><small>ALL DRINKS</small><strong>30%<i>OFF</i></strong><b>COCKTAILS & COLD DRINKS</b><p>30% off every drink on the menu during happy hours.</p></div></div><div class="deal-chips"><span>Every day, {{ form.hours || '16:00 to 19:00' }}</span><span>No code needed</span></div></section>
-          <section class="offer"><div><strong>HALF PRICE</strong><span>Starters and sides</span></div><div><strong>30% OFF</strong><span>All drinks</span></div><div><strong>{{ form.hours || '16:00–19:00' }}</strong><span>Every day of the week</span></div></section>
-          <section id="rewards" class="rewards"><h3>Rewards for regulars</h3><div class="reward-grid"><div><b>Birthday treat</b><p>Share your birthday and get a special offer during your birthday week.</p></div><div><b>Loyalty reward</b><p>Visit often and unlock a reward on every fifth visit.</p></div><div><b>First to know</b><p>Get new offers by SMS and email before everyone else.</p></div></div></section>
-          <section id="reserve" class="reservation"><div><h3>Reserve your table</h3><p>Tell us when you are coming. We will confirm by SMS.</p></div><form @submit.prevent><label>NAME<input placeholder="Your name" /></label><label>MOBILE NUMBER<input placeholder="Mobile number" /></label><div class="form-row"><label>DATE<input type="text" placeholder="Select date" /></label><label>GUESTS<input type="text" placeholder="2 guests" /></label></div><label>BIRTHDAY (OPTIONAL)<input placeholder="DD / MM" /></label><button type="button">CONFIRM RESERVATION</button></form></section>
-          <footer><strong>{{ form.name || 'SOPNO' }}</strong><span>{{ form.address || 'ADDRESS YOUR ADDRESS' }}<br>{{ form.phone || 'PHONE: 000 000 0000' }}</span><span>OPEN {{ form.hours || 'EVERY DAY' }}<br>Terms apply</span></footer>
+          <section class="deals"><h3>{{ form.dealsTitle1 }} <em>{{ form.dealsTitle2 }}</em></h3><div class="deal-grid"><div class="deal-card featured"><small>{{ form.deal1Badge }}</small><strong>{{ form.deal1Big }}<i>{{ form.deal1Off }}</i></strong><b>{{ form.deal1Name }}</b><p>{{ form.deal1Text }}</p></div><div class="deal-card"><small>{{ form.deal2Badge }}</small><strong>{{ form.deal2Big }}<i>{{ form.deal2Off }}</i></strong><b>{{ form.deal2Name }}</b><p>{{ form.deal2Text }}</p></div></div><div class="deal-chips"><span>{{ t(form.chip1) }}</span><span>{{ form.chip2 }}</span></div></section>
+          <section class="offer"><div><strong>{{ form.offer1Title }}</strong><span>{{ form.offer1Sub }}</span></div><div><strong>{{ form.offer2Title }}</strong><span>{{ form.offer2Sub }}</span></div><div><strong>{{ form.hours || '16:00–19:00' }}</strong><span>{{ form.offer3Sub }}</span></div></section>
+          <section id="rewards" class="rewards"><h3>{{ form.rewardsTitle }}</h3><div class="reward-grid"><div><b>{{ form.reward1Title }}</b><p>{{ form.reward1Text }}</p></div><div><b>{{ form.reward2Title }}</b><p>{{ form.reward2Text }}</p></div><div><b>{{ form.reward3Title }}</b><p>{{ form.reward3Text }}</p></div></div></section>
+          <section id="reserve" class="reservation"><div><h3>{{ form.reserveTitle }}</h3><p>{{ form.reserveText }}</p></div><form @submit.prevent><label>NAME<input placeholder="Your name" /></label><label>MOBILE NUMBER<input placeholder="Mobile number" /></label><div class="form-row"><label>DATE<input type="text" placeholder="Select date" /></label><label>GUESTS<input type="text" placeholder="2 guests" /></label></div><label>{{ form.birthdayLabel }}<input placeholder="DD / MM" /></label><button type="button">{{ form.reserveButton }}</button></form></section>
+          <footer><strong>{{ form.name || 'SOPNO' }}</strong><span>{{ form.address || 'ADDRESS YOUR ADDRESS' }}<br>{{ form.phone || 'PHONE: 000 000 0000' }}</span><span>OPEN {{ form.hours || 'EVERY DAY' }}<br>{{ form.terms }}</span></footer>
         </article>
       </section>
     </div>
@@ -99,18 +98,164 @@ import api from '@/services/api'
 import systemSettingService from '@/services/systemSettingService'
 
 const defaults = {
+  // Restaurant name is filled in automatically from the restaurant.
   name: 'SOPNO',
-  headline: 'happy hours',
-  description: 'Half price starters and sides, and 30% off all drinks. The discount is applied automatically at the bill.',
+
+  // Colors
+  color: '#ffc400',
+  textColor: '#ffffff',
+  darkTextColor: '#111111',
+  backgroundColor: '#0b0b0b',
+  surfaceColor: '#191919',
+
+  // Contact & hours
   address: '',
   phone: '',
   hours: '16:00–19:00',
+  terms: 'Terms apply.',
+
+  // Menu bar
+  navHome: 'Home',
+  navMenu: 'Menu',
+  navHappy: 'Happy hours',
+  navRewards: 'Rewards',
+  navReserve: 'Reserve',
+  navContact: 'Contact',
+
+  // Home: hero
+  homeKicker: 'BURGERS · STARTERS · SIDES · DRINKS',
+  homeTitle1: 'Good food.',
+  homeTitle2: 'Good nights.',
+  homeIntro: 'Welcome to {name}. Big plates to share, cold drinks, and a warm table waiting for you.',
+  primaryButton: 'Reserve a table',
+  secondaryButton: 'View menu',
+
+  // Home: happy hours band
+  happyBandTitle: 'HAPPY HOURS, EVERYDAY',
+  pill1Title: 'HALF PRICE',
+  pill1Sub: 'Starters and sides',
+  pill2Title: '30% OFF',
+  pill2Sub: 'All drinks',
+  pill3Sub: 'Every day',
+  seeOfferButton: 'SEE THE OFFER',
+
+  // Home: kitchen
+  kitchenTitle: 'From our kitchen',
+  kitchen1Title: 'Burgers',
+  kitchen1Text: 'Brioche buns, melted cheese, and sauces made in house.',
+  kitchen2Title: 'Starters',
+  kitchen2Text: 'Crispy bites made for sharing, with dips on the side.',
+  kitchen3Title: 'Sides',
+  kitchen3Text: 'Seasoned wedges and crunchy extras to round out the table.',
+  kitchen4Title: 'Drinks',
+  kitchen4Text: 'Classic cocktails and cold drinks, poured all evening.',
+
+  // Home: about
+  aboutTitle: 'About {name}',
+  aboutText: '[YOUR STORY: two or three lines about your restaurant, your cooking, and what guests can expect.]',
+  aboutOpenLabel: 'OPEN',
+  aboutFindLabel: 'FIND US',
+
+  // Reservation (both pages)
+  reserveTitle: 'Reserve your table',
+  reserveText: 'Tell us when you are coming. We will confirm by SMS.',
+  reserveButton: 'CONFIRM RESERVATION',
+  birthdayLabel: 'BIRTHDAY (OPTIONAL)',
+
+  // Happy hours page: top
+  promoText: '',
+  headline: 'happy hours',
+  heroDays: 'EVERYDAY',
+  description: 'Half price starters and sides, and 30% off all drinks. The discount is applied automatically at the bill.',
   starterOffer: '50% OFF STARTERS & SIDES',
   drinkOffer: '30% OFF ALL DRINKS',
-  color: '#ffc400',
-  backgroundColor: '#0b0b0b',
-  surfaceColor: '#191919',
+  offerButton: 'Reserve a table',
+
+  // Happy hours page: deals
+  dealsTitle1: "Today's",
+  dealsTitle2: 'big deals',
+  deal1Badge: 'BEST DEAL',
+  deal1Big: '50%',
+  deal1Off: 'OFF',
+  deal1Name: 'STARTERS & SIDES',
+  deal1Text: 'Half price on every starter and side. Applied automatically at the bill.',
+  deal2Badge: 'ALL DRINKS',
+  deal2Big: '30%',
+  deal2Off: 'OFF',
+  deal2Name: 'COCKTAILS & COLD DRINKS',
+  deal2Text: '30% off every drink on the menu during happy hours.',
+  chip1: 'Every day, {hours}',
+  chip2: 'No code needed',
+
+  // Happy hours page: yellow band
+  offer1Title: 'HALF PRICE',
+  offer1Sub: 'Starters and sides',
+  offer2Title: '30% OFF',
+  offer2Sub: 'All drinks',
+  offer3Sub: 'Every day of the week',
+
+  // Happy hours page: rewards
+  rewardsTitle: 'Rewards for regulars',
+  reward1Title: 'Birthday treat',
+  reward1Text: 'Share your birthday and get a special offer during your birthday week.',
+  reward2Title: 'Loyalty reward',
+  reward2Text: 'Visit often and unlock a reward on every fifth visit.',
+  reward3Title: 'First to know',
+  reward3Text: 'Get new offers by SMS and email before everyone else.',
 }
+
+// Settings panel: only the important text and the colors are editable.
+const fieldGroups = [
+  {
+    title: 'Colors',
+    fields: [
+      { key: 'color', label: 'Accent color (yellow)', type: 'color' },
+      { key: 'textColor', label: 'Text color (white)', type: 'color' },
+      { key: 'darkTextColor', label: 'Text on accent (black)', type: 'color' },
+      { key: 'backgroundColor', label: 'Page background color', type: 'color' },
+      { key: 'surfaceColor', label: 'Box / card color', type: 'color' },
+    ],
+  },
+  {
+    title: 'Contact',
+    fields: [
+      { key: 'address', label: 'Address' },
+      { key: 'phone', label: 'Phone number' },
+      { key: 'hours', label: 'Opening hours' },
+    ],
+  },
+  {
+    title: 'Home page',
+    fields: [
+      { key: 'homeTitle1', label: 'Main heading (line 1)' },
+      { key: 'homeTitle2', label: 'Main heading (line 2)' },
+      { key: 'homeIntro', label: 'Intro text', type: 'area' },
+      { key: 'kitchenTitle', label: 'Menu section title' },
+      { key: 'kitchen1Title', label: 'Food name 1' },
+      { key: 'kitchen2Title', label: 'Food name 2' },
+      { key: 'kitchen3Title', label: 'Food name 3' },
+      { key: 'kitchen4Title', label: 'Food name 4' },
+      { key: 'aboutTitle', label: 'About title' },
+      { key: 'aboutText', label: 'About text', type: 'area' },
+      { key: 'reserveTitle', label: 'Reservation title' },
+    ],
+  },
+  {
+    title: 'Happy hours page',
+    fields: [
+      { key: 'headline', label: 'Main heading' },
+      { key: 'starterOffer', label: 'Starters offer' },
+      { key: 'drinkOffer', label: 'Drinks offer' },
+      { key: 'description', label: 'Details text', type: 'area' },
+      { key: 'deal1Name', label: 'Deal 1 title' },
+      { key: 'deal2Name', label: 'Deal 2 title' },
+      { key: 'rewardsTitle', label: 'Rewards title' },
+      { key: 'reward1Title', label: 'Reward 1 title' },
+      { key: 'reward2Title', label: 'Reward 2 title' },
+      { key: 'reward3Title', label: 'Reward 3 title' },
+    ],
+  },
+]
 
 const form = reactive({ ...defaults })
 const saved = ref(false)
@@ -128,6 +273,21 @@ const publicPageUrl = computed(() => {
     : ''
 })
 
+const themeStyle = computed(() => ({
+  '--accent': form.color,
+  '--page-bg': form.backgroundColor,
+  '--surface-bg': form.surfaceColor,
+  '--text': form.textColor,
+  '--ink': form.darkTextColor,
+}))
+
+// Replaces {name} and {hours} placeholders inside editable text.
+function t(value) {
+  return String(value ?? '')
+    .split('{name}').join(form.name || 'SOPNO')
+    .split('{hours}').join(form.hours || '16:00–19:00')
+}
+
 onMounted(async () => {
   try {
     if (isPublicPage.value) {
@@ -137,7 +297,7 @@ onMounted(async () => {
       const data = response?.data?.data || {}
       const pageSettings = data.landing_page_settings || {}
       Object.assign(form, defaults, pageSettings)
-      if (!pageSettings.name && data.restaurant?.name) {
+      if (data.restaurant?.name) {
         form.name = data.restaurant.name
       }
       return
@@ -147,6 +307,20 @@ onMounted(async () => {
     const serverSettings = response?.data?.landing_page_settings
     if (serverSettings && Object.keys(serverSettings).length) {
       Object.assign(form, defaults, serverSettings)
+    }
+
+    // The restaurant name comes from the restaurant itself, not from the landing page settings.
+    const autoName = String(
+      response?.data?.restaurant?.name ||
+      response?.data?.restaurant_name ||
+      authStore.restaurant?.name ||
+      authStore.restaurantName ||
+      authStore.tenantName ||
+      authStore.user?.restaurant?.name ||
+      '',
+    ).trim()
+    if (autoName) {
+      form.name = autoName
     }
   } catch (error) {
     errorMessage.value = isPublicPage.value
@@ -192,15 +366,20 @@ async function save() {
 .hero{padding:clamp(10px,1.2vw,18px) 5% clamp(12px,1.3vw,20px)}.deals,.rewards{padding:clamp(8px,1vw,12px) 5% clamp(10px,1.1vw,14px)}.rewards{padding-top:clamp(12px,1.4vw,16px)}.reservation{gap:12px;margin-bottom:clamp(10px,1.2vw,14px);padding:clamp(10px,1vw,12px)}
 .editor-layout{display:block}.settings-card{max-width:520px;margin:0 0 14px}.page-head{flex-wrap:wrap}.settings-toggle{margin-left:auto;border:1px solid #d7dee8;border-radius:8px;background:#fff;color:#1f2937;padding:10px 14px;font-size:13px;font-weight:700}.settings-toggle i{margin-right:5px;color:#f97316}
 .site-preview nav div{display:flex;align-items:center;gap:14px}.site-preview nav a{color:#ddd;text-decoration:none}.site-preview nav a:hover{color:var(--accent)}.site-preview nav strong a{color:var(--accent);letter-spacing:inherit}
-.site-preview{background:var(--page-bg,#0b0b0b)}.editor-layout.with-settings{display:grid;grid-template-columns:minmax(230px,290px) minmax(0,1fr);gap:12px;align-items:start}.editor-layout.with-settings .settings-card{position:sticky;top:12px;max-width:none;max-height:none;overflow:visible;margin:0;padding:11px}.editor-layout.with-settings .settings-card .card-heading{gap:8px;margin-bottom:9px}.editor-layout.with-settings .settings-card .icon{width:30px;height:30px}.editor-layout.with-settings .settings-card label{margin:0 0 6px;font-size:10px;line-height:1.15}.editor-layout.with-settings .settings-card input,.editor-layout.with-settings .settings-card textarea{margin-top:3px;padding:5px 7px;font-size:11px;line-height:1.2}.editor-layout.with-settings .settings-card input:not([type=color]){height:29px}.editor-layout.with-settings .settings-card textarea{height:42px;min-height:42px;resize:none}.editor-layout.with-settings .settings-card .color-input{width:100%;height:29px;padding:2px}.editor-layout.with-settings .preview-wrap{min-width:0;padding:9px}.editor-layout.with-settings .site-preview{width:100%;max-width:none}.site-preview .kitchen-grid>div,.site-preview .reward-grid>div,.site-preview .reservation,.site-preview .deal-card:not(.featured){background:var(--surface-bg,#191919)}@media(max-width:850px){.editor-layout.with-settings{grid-template-columns:1fr}.editor-layout.with-settings .settings-card{position:static}}
+.site-preview{background:var(--page-bg,#0b0b0b)}.editor-layout.with-settings{display:grid;grid-template-columns:minmax(230px,290px) minmax(0,1fr);gap:12px;align-items:stretch}.editor-layout.with-settings .settings-card{position:static;max-width:none;max-height:none;overflow:visible;margin:0;padding:11px}.editor-layout.with-settings .settings-card .card-heading{gap:8px;margin-bottom:9px}.editor-layout.with-settings .settings-card .icon{width:30px;height:30px;flex:none}.editor-layout.with-settings .settings-card label{margin:0 0 6px;font-size:10px;line-height:1.15}.editor-layout.with-settings .settings-card input,.editor-layout.with-settings .settings-card textarea{margin-top:3px;padding:5px 7px;font-size:11px;line-height:1.2}.editor-layout.with-settings .settings-card input:not([type=color]){height:29px}.editor-layout.with-settings .settings-card textarea{height:56px;min-height:56px;resize:vertical}.editor-layout.with-settings .settings-card .color-input{width:100%;height:29px;padding:2px}.editor-layout.with-settings .preview-wrap{min-width:0;padding:9px}.editor-layout.with-settings .site-preview{width:100%;max-width:none}.site-preview .kitchen-grid>div,.site-preview .reward-grid>div,.site-preview .reservation,.site-preview .deal-card:not(.featured){background:var(--surface-bg,#191919)}@media(max-width:850px){.editor-layout.with-settings{grid-template-columns:1fr}.editor-layout.with-settings .settings-card{position:static;max-height:none;overflow:visible}}
+
+/* settings groups */
+.settings-group{margin:0 0 14px;padding-bottom:6px;border-bottom:1px solid #eef1f5}
+.settings-group:last-child{border-bottom:0}
+.settings-group>h3{margin:0 0 8px;color:#f97316;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 
 /* ============================================================
-   HOME PAGE — restyled to match the reference screenshot.
-   Everything scales with the preview width (container units),
-   so the admin preview and the public page look the same.
+   HOME PAGE — colors come from the settings:
+   --accent (yellow), --text (white), --ink (black on accent),
+   --page-bg (background), --surface-bg (boxes / cards).
    --px = "one pixel of the design". Smaller value = smaller page.
    ============================================================ */
-.site-preview.home-preview{container-type:inline-size;background:var(--page-bg,#0a0a0a);color:#fff;font-family:'DM Sans',Arial,sans-serif}
+.site-preview.home-preview{container-type:inline-size;background:var(--page-bg,#0a0a0a);color:var(--text,#fff);font-family:'DM Sans',Arial,sans-serif}
 .site-preview.home-preview>*{--px:min(.067cqw,.98px);--pad:5.5cqw}
 @container (max-width:700px){.site-preview.home-preview>*{--px:min(.15cqw,.9px)}}
 
@@ -208,31 +387,31 @@ async function save() {
 .site-preview.home-preview nav{height:calc(var(--px)*85);padding:0 var(--pad);border:0;background:transparent}
 .site-preview.home-preview nav strong{font-family:Anton,Impact,sans-serif;font-weight:400;font-size:calc(var(--px)*25);letter-spacing:.32em;color:var(--accent)}
 .site-preview.home-preview nav div{gap:calc(var(--px)*26);font-size:calc(var(--px)*15)}
-.site-preview.home-preview nav div a{padding:calc(var(--px)*5) 0;border-bottom:calc(var(--px)*2) solid transparent;color:#fff;font-size:calc(var(--px)*15);font-weight:500}
+.site-preview.home-preview nav div a{padding:calc(var(--px)*5) 0;border-bottom:calc(var(--px)*2) solid transparent;color:var(--text);font-size:calc(var(--px)*15);font-weight:500}
 .site-preview.home-preview nav div a:hover{color:var(--accent)}
 .site-preview.home-preview nav div a.active{color:var(--accent);border-bottom-color:var(--accent)}
 
 /* hero */
 .site-preview.home-preview .home-hero{display:grid;grid-template-columns:1.08fr 1fr;gap:calc(var(--px)*40);align-items:center;padding:calc(var(--px)*40) var(--pad) calc(var(--px)*100)}
 .site-preview.home-preview .home-kicker{display:block;font-family:Anton,Impact,sans-serif;font-weight:400;font-size:calc(var(--px)*22);letter-spacing:.14em;color:var(--accent)}
-.site-preview.home-preview .home-copy h2{max-width:calc(var(--px)*520);margin:calc(var(--px)*6) 0 calc(var(--px)*30);font:400 calc(var(--px)*104)/1 Anton,Impact,sans-serif;letter-spacing:0;color:#f6efe3}
+.site-preview.home-preview .home-copy h2{max-width:calc(var(--px)*520);margin:calc(var(--px)*6) 0 calc(var(--px)*30);font:400 calc(var(--px)*104)/1 Anton,Impact,sans-serif;letter-spacing:0;color:var(--text)}
 .site-preview.home-preview .home-copy h2 em{color:var(--accent);font-style:normal}
-.site-preview.home-preview .home-copy p{max-width:calc(var(--px)*470);margin:0 0 calc(var(--px)*34);font-size:calc(var(--px)*20);line-height:1.5;color:#f1ece2}
-.site-preview.home-preview .home-copy .primary-cta,.site-preview.home-preview .home-copy .secondary-cta{display:inline-flex;align-items:center;height:calc(var(--px)*56);margin:0 calc(var(--px)*14) calc(var(--px)*6) 0;padding:0 calc(var(--px)*32);border:calc(var(--px)*2) solid var(--accent);border-radius:calc(var(--px)*5);background:var(--accent);color:#111;font-size:calc(var(--px)*16);font-weight:700;letter-spacing:.05em;text-transform:uppercase;text-decoration:none}
-.site-preview.home-preview .home-copy .secondary-cta{background:transparent;border-color:#fff;color:#fff}
-.site-preview.home-preview .home-hero .food-art{height:auto;min-height:0;aspect-ratio:1.435;border:1px solid rgba(255,255,255,.55);border-radius:calc(var(--px)*8);background:#1a120b;box-shadow:none}
+.site-preview.home-preview .home-copy p{max-width:calc(var(--px)*470);margin:0 0 calc(var(--px)*34);font-size:calc(var(--px)*20);line-height:1.5;color:var(--text)}
+.site-preview.home-preview .home-copy .primary-cta,.site-preview.home-preview .home-copy .secondary-cta{display:inline-flex;align-items:center;height:calc(var(--px)*56);margin:0 calc(var(--px)*14) calc(var(--px)*6) 0;padding:0 calc(var(--px)*32);border:calc(var(--px)*2) solid var(--accent);border-radius:calc(var(--px)*5);background:var(--accent);color:var(--ink);font-size:calc(var(--px)*16);font-weight:700;letter-spacing:.05em;text-transform:uppercase;text-decoration:none}
+.site-preview.home-preview .home-copy .secondary-cta{background:transparent;border-color:var(--text);color:var(--text)}
+.site-preview.home-preview .home-hero .food-art{height:auto;min-height:0;aspect-ratio:1.435;border:1px solid color-mix(in srgb,var(--text) 55%,transparent);border-radius:calc(var(--px)*8);background:#1a120b;box-shadow:none}
 .site-preview.home-preview .home-hero .food-art img{object-position:center}
 
 /* public page: hero fills the first screen, content centered, yellow band starts below the fold */
 .public-landing .site-preview.home-preview .home-hero{min-height:calc(100vh - var(--px)*85);box-sizing:border-box;padding-top:calc(var(--px)*30);padding-bottom:calc(var(--px)*50)}
 
 /* happy hours band */
-.site-preview.home-preview .home-happy{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:calc(var(--px)*24);padding:calc(var(--px)*48) var(--pad) calc(var(--px)*52);background:var(--accent);color:#111}
-.site-preview.home-preview .home-happy h3{margin:0 0 calc(var(--px)*18);font:400 calc(var(--px)*66)/1 Anton,Impact,sans-serif;letter-spacing:0;color:#111}
+.site-preview.home-preview .home-happy{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:calc(var(--px)*24);padding:calc(var(--px)*48) var(--pad) calc(var(--px)*52);background:var(--accent);color:var(--ink)}
+.site-preview.home-preview .home-happy h3{margin:0 0 calc(var(--px)*18);font:400 calc(var(--px)*66)/1 Anton,Impact,sans-serif;letter-spacing:0;color:var(--ink)}
 .site-preview.home-preview .happy-pills{display:flex;flex-wrap:wrap;gap:calc(var(--px)*12)}
-.site-preview.home-preview .happy-pills span{display:flex;flex-direction:column;padding:calc(var(--px)*10) calc(var(--px)*20);border-radius:calc(var(--px)*9);background:#111;color:var(--accent);font:400 calc(var(--px)*40)/1.1 Anton,Impact,sans-serif}
-.site-preview.home-preview .happy-pills small{margin-top:calc(var(--px)*2);font:700 calc(var(--px)*15)/1.3 'DM Sans',Arial,sans-serif;color:#fff}
-.site-preview.home-preview .home-happy button{height:calc(var(--px)*56);padding:0 calc(var(--px)*30);border:0;border-radius:calc(var(--px)*6);background:#111;color:var(--accent);font:700 calc(var(--px)*16) 'DM Sans',Arial,sans-serif;letter-spacing:.05em;cursor:pointer}
+.site-preview.home-preview .happy-pills span{display:flex;flex-direction:column;padding:calc(var(--px)*10) calc(var(--px)*20);border-radius:calc(var(--px)*9);background:var(--ink);color:var(--accent);font:400 calc(var(--px)*40)/1.1 Anton,Impact,sans-serif}
+.site-preview.home-preview .happy-pills small{margin-top:calc(var(--px)*2);font:700 calc(var(--px)*15)/1.3 'DM Sans',Arial,sans-serif;color:var(--text)}
+.site-preview.home-preview .home-happy button{height:calc(var(--px)*56);padding:0 calc(var(--px)*30);border:0;border-radius:calc(var(--px)*6);background:var(--ink);color:var(--accent);font:700 calc(var(--px)*16) 'DM Sans',Arial,sans-serif;letter-spacing:.05em;cursor:pointer}
 
 /* from our kitchen */
 .site-preview.home-preview .kitchen{padding:calc(var(--px)*110) var(--pad) calc(var(--px)*70)}
@@ -241,33 +420,33 @@ async function save() {
 .site-preview.home-preview .kitchen-grid>div{min-height:calc(var(--px)*207);padding:calc(var(--px)*28) calc(var(--px)*30);border-radius:calc(var(--px)*14);background:var(--surface-bg,#1a1a1a)}
 .site-preview.home-preview .kitchen-grid>div:last-child{grid-column:1/-1;min-height:calc(var(--px)*182)}
 .site-preview.home-preview .kitchen-grid b{display:block;margin-bottom:calc(var(--px)*16);font:400 calc(var(--px)*48)/1 Anton,Impact,sans-serif;color:var(--accent)}
-.site-preview.home-preview .kitchen-grid strong{display:block;margin:0 0 calc(var(--px)*8);font:600 calc(var(--px)*24)/1.2 'DM Sans',Arial,sans-serif;color:#fff}
-.site-preview.home-preview .kitchen-grid p{margin:0;font-size:calc(var(--px)*16);line-height:1.6;color:#e9e4da}
+.site-preview.home-preview .kitchen-grid strong{display:block;margin:0 0 calc(var(--px)*8);font:600 calc(var(--px)*24)/1.2 'DM Sans',Arial,sans-serif;color:var(--text)}
+.site-preview.home-preview .kitchen-grid p{margin:0;font-size:calc(var(--px)*16);line-height:1.6;color:var(--text);opacity:.85}
 
 /* about */
 .site-preview.home-preview .home-about{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--px)*40);align-items:center;padding:calc(var(--px)*70) var(--pad) calc(var(--px)*90)}
 .site-preview.home-preview .home-about h3{margin:0 0 calc(var(--px)*20);font:400 calc(var(--px)*62)/1.1 Anton,Impact,sans-serif;letter-spacing:0;color:var(--accent)}
-.site-preview.home-preview .home-about p{max-width:calc(var(--px)*520);margin:0;font-size:calc(var(--px)*18);line-height:1.7;color:#f1ece2}
+.site-preview.home-preview .home-about p{max-width:calc(var(--px)*520);margin:0;font-size:calc(var(--px)*18);line-height:1.7;color:var(--text)}
 .site-preview.home-preview .about-links{display:flex;gap:calc(var(--px)*21)}
 .site-preview.home-preview .about-links a{display:flex;flex:1;flex-direction:column;align-items:flex-start;gap:calc(var(--px)*12);min-width:0;min-height:calc(var(--px)*160);padding:calc(var(--px)*24) calc(var(--px)*26);border:calc(var(--px)*2) solid var(--accent);border-radius:calc(var(--px)*12);background:transparent;color:var(--accent);text-decoration:none}
 .site-preview.home-preview .about-links b{font:400 calc(var(--px)*38)/1 Anton,Impact,sans-serif;color:var(--accent)}
-.site-preview.home-preview .about-links small{font-size:calc(var(--px)*15);line-height:1.4;color:#fff}
+.site-preview.home-preview .about-links small{font-size:calc(var(--px)*15);line-height:1.4;color:var(--text)}
 
 /* reservation */
 .site-preview.home-preview .reservation{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:calc(var(--px)*40) var(--pad) calc(var(--px)*100);padding:calc(var(--px)*48);border-radius:calc(var(--px)*14);background:var(--surface-bg,#1a1a1a)}
 .site-preview.home-preview .reservation h3{margin:calc(var(--px)*8) 0 calc(var(--px)*14);font:400 calc(var(--px)*58)/1.1 Anton,Impact,sans-serif;letter-spacing:0;color:var(--accent)}
-.site-preview.home-preview .reservation p{max-width:calc(var(--px)*430);font-size:calc(var(--px)*17);line-height:1.5;color:#e5e0d6}
+.site-preview.home-preview .reservation p{max-width:calc(var(--px)*430);font-size:calc(var(--px)*17);line-height:1.5;color:var(--text);opacity:.85}
 .site-preview.home-preview .reservation form{gap:calc(var(--px)*14)}
-.site-preview.home-preview .reservation label{font:700 calc(var(--px)*14)/1 'DM Sans',Arial,sans-serif;letter-spacing:.06em;color:#fff}
-.site-preview.home-preview .reservation input{height:calc(var(--px)*50);margin-top:calc(var(--px)*10);padding:0 calc(var(--px)*14);border-radius:calc(var(--px)*4);background:#3a3a3a;color:#fff;font:400 calc(var(--px)*16) 'DM Sans',Arial,sans-serif}
+.site-preview.home-preview .reservation label{font:700 calc(var(--px)*14)/1 'DM Sans',Arial,sans-serif;letter-spacing:.06em;color:var(--text)}
+.site-preview.home-preview .reservation input{height:calc(var(--px)*50);margin-top:calc(var(--px)*10);padding:0 calc(var(--px)*14);border-radius:calc(var(--px)*4);background:color-mix(in srgb,var(--text) 16%,var(--surface-bg,#1a1a1a));color:var(--text);font:400 calc(var(--px)*16) 'DM Sans',Arial,sans-serif}
 .site-preview.home-preview .reservation input::placeholder{color:transparent}
 .site-preview.home-preview .reservation .form-row{gap:calc(var(--px)*14)}
-.site-preview.home-preview .reservation button{height:calc(var(--px)*52);margin-top:calc(var(--px)*2);border-radius:calc(var(--px)*4);background:var(--accent);color:#111;font:700 calc(var(--px)*17) 'DM Sans',Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.site-preview.home-preview .reservation button{height:calc(var(--px)*52);margin-top:calc(var(--px)*2);border-radius:calc(var(--px)*4);background:var(--accent);color:var(--ink);font:700 calc(var(--px)*17) 'DM Sans',Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase}
 
 /* footer */
-.site-preview.home-preview footer{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--px)*24);margin:0 3.6cqw;padding:calc(var(--px)*56) 1.9cqw calc(var(--px)*64);border-top:1px solid #2a2a2a}
+.site-preview.home-preview footer{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--px)*24);margin:0 3.6cqw;padding:calc(var(--px)*56) 1.9cqw calc(var(--px)*64);border-top:1px solid color-mix(in srgb,var(--text) 18%,transparent)}
 .site-preview.home-preview footer strong{font:400 calc(var(--px)*25)/1 Anton,Impact,sans-serif;letter-spacing:.32em;color:var(--accent)}
-.site-preview.home-preview footer span,.site-preview.home-preview footer span:last-child{font-size:calc(var(--px)*15);line-height:1.9;text-align:left;color:#e8e3d9}
+.site-preview.home-preview footer span,.site-preview.home-preview footer span:last-child{font-size:calc(var(--px)*15);line-height:1.9;text-align:left;color:var(--text);opacity:.85}
 
 /* narrow preview / phones: stack columns */
 @container (max-width:700px){
@@ -280,56 +459,56 @@ async function save() {
 }
 
 /* ============================================================
-   HAPPY HOURS (OFFER) PAGE — matches the reference design.
-   Reuses the home page nav / reservation / footer styles and
-   the same --px scale.
+   HAPPY HOURS (OFFER) PAGE
+   Reuses the home page nav / reservation / footer styles,
+   the same --px scale and the same color variables.
    ============================================================ */
-.site-preview.offer-preview .promo-bar{padding:calc(var(--px)*13) var(--pad);background:var(--accent);color:#111;text-align:center;font:400 calc(var(--px)*19)/1.2 Anton,Impact,sans-serif;letter-spacing:.14em}
+.site-preview.offer-preview .promo-bar{padding:calc(var(--px)*13) var(--pad);background:var(--accent);color:var(--ink);text-align:center;font:400 calc(var(--px)*19)/1.2 Anton,Impact,sans-serif;letter-spacing:.14em}
 .site-preview.offer-preview nav{height:calc(var(--px)*90)}
 
 /* hero */
 .site-preview.offer-preview .hero{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--px)*50);align-items:center;padding:calc(var(--px)*30) var(--pad) calc(var(--px)*70)}
 .site-preview.offer-preview .hero-copy{display:flex;flex-direction:column;align-items:flex-start}
 .site-preview.offer-preview .hero h2{max-width:none;margin:0 0 calc(var(--px)*24);font:400 calc(var(--px)*112)/.95 Anton,Impact,sans-serif;letter-spacing:0;color:var(--accent)}
-.site-preview.offer-preview .hero-hours{display:block;margin:0 0 calc(var(--px)*22);font:400 calc(var(--px)*30)/1.1 Anton,Impact,sans-serif;letter-spacing:.02em;color:#fff}
-.site-preview.offer-preview .offer-pill{display:inline-flex;align-items:center;margin:0 0 calc(var(--px)*12);padding:calc(var(--px)*10) calc(var(--px)*18);border:calc(var(--px)*2) solid var(--accent);border-radius:calc(var(--px)*8);background:var(--accent);color:#111;font:400 calc(var(--px)*22)/1.1 Anton,Impact,sans-serif;letter-spacing:.04em}
+.site-preview.offer-preview .hero-hours{display:block;margin:0 0 calc(var(--px)*22);font:400 calc(var(--px)*30)/1.1 Anton,Impact,sans-serif;letter-spacing:.02em;color:var(--text)}
+.site-preview.offer-preview .offer-pill{display:inline-flex;align-items:center;margin:0 0 calc(var(--px)*12);padding:calc(var(--px)*10) calc(var(--px)*18);border:calc(var(--px)*2) solid var(--accent);border-radius:calc(var(--px)*8);background:var(--accent);color:var(--ink);font:400 calc(var(--px)*22)/1.1 Anton,Impact,sans-serif;letter-spacing:.04em}
 .site-preview.offer-preview .offer-pill+.offer-pill{background:transparent;color:var(--accent)}
-.site-preview.offer-preview .hero p{max-width:calc(var(--px)*500);margin:calc(var(--px)*8) 0 calc(var(--px)*26);font-size:calc(var(--px)*18);line-height:1.5;color:#e5e0d6}
-.site-preview.offer-preview .hero-copy>a{display:inline-flex;align-items:center;height:calc(var(--px)*54);margin:0;padding:0 calc(var(--px)*30);border-radius:calc(var(--px)*5);background:var(--accent);color:#111;font:700 calc(var(--px)*16) 'DM Sans',Arial,sans-serif;letter-spacing:.05em;text-transform:uppercase;text-decoration:none}
-.site-preview.offer-preview .hero .food-art{height:auto;min-height:0;aspect-ratio:1.435;border:1px solid rgba(255,255,255,.55);border-radius:calc(var(--px)*8);background:#1a120b;box-shadow:none}
+.site-preview.offer-preview .hero p{max-width:calc(var(--px)*500);margin:calc(var(--px)*8) 0 calc(var(--px)*26);font-size:calc(var(--px)*18);line-height:1.5;color:var(--text);opacity:.88}
+.site-preview.offer-preview .hero-copy>a{display:inline-flex;align-items:center;height:calc(var(--px)*54);margin:0;padding:0 calc(var(--px)*30);border-radius:calc(var(--px)*5);background:var(--accent);color:var(--ink);font:700 calc(var(--px)*16) 'DM Sans',Arial,sans-serif;letter-spacing:.05em;text-transform:uppercase;text-decoration:none}
+.site-preview.offer-preview .hero .food-art{height:auto;min-height:0;aspect-ratio:1.435;border:1px solid color-mix(in srgb,var(--text) 55%,transparent);border-radius:calc(var(--px)*8);background:#1a120b;box-shadow:none}
 .site-preview.offer-preview .hero .food-art img{object-position:center}
 
 /* today's big deals */
 .site-preview.offer-preview .deals{padding:calc(var(--px)*90) var(--pad) calc(var(--px)*70)}
-.site-preview.offer-preview .deals h3{margin:0 0 calc(var(--px)*30);font:400 calc(var(--px)*50)/1.1 Anton,Impact,sans-serif;letter-spacing:0;color:#f6efe3}
+.site-preview.offer-preview .deals h3{margin:0 0 calc(var(--px)*30);font:400 calc(var(--px)*50)/1.1 Anton,Impact,sans-serif;letter-spacing:0;color:var(--text)}
 .site-preview.offer-preview .deals h3 em{color:var(--accent);font-style:normal}
 .site-preview.offer-preview .deal-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--px)*24)}
-.site-preview.offer-preview .deal-card{min-height:calc(var(--px)*250);padding:calc(var(--px)*28);border:calc(var(--px)*2) solid var(--accent);border-radius:calc(var(--px)*20);color:#fff}
-.site-preview.offer-preview .deal-card.featured{background:var(--accent);color:#111}
-.site-preview.offer-preview .deal-card:not(.featured){background:transparent}
-.site-preview.offer-preview .deal-card small{display:inline-block;padding:calc(var(--px)*6) calc(var(--px)*13);border-radius:999px;background:#111;color:var(--accent);font:700 calc(var(--px)*11)/1 'DM Sans',Arial,sans-serif;letter-spacing:.16em}
-.site-preview.offer-preview .deal-card:not(.featured) small{background:var(--accent);color:#111}
+.site-preview.offer-preview .deal-card{min-height:calc(var(--px)*250);padding:calc(var(--px)*28);border:calc(var(--px)*2) solid var(--accent);border-radius:calc(var(--px)*20);color:var(--text)}
+.site-preview.offer-preview .deal-card.featured{background:var(--accent);color:var(--ink)}
+.site-preview.offer-preview .deal-card:not(.featured){background:var(--surface-bg,#191919)}
+.site-preview.offer-preview .deal-card small{display:inline-block;padding:calc(var(--px)*6) calc(var(--px)*13);border-radius:999px;background:var(--ink);color:var(--accent);font:700 calc(var(--px)*11)/1 'DM Sans',Arial,sans-serif;letter-spacing:.16em}
+.site-preview.offer-preview .deal-card:not(.featured) small{background:var(--accent);color:var(--ink)}
 .site-preview.offer-preview .deal-card strong{display:block;margin:calc(var(--px)*6) 0 calc(var(--px)*4);font:400 calc(var(--px)*100)/1 Anton,Impact,sans-serif;letter-spacing:0;color:inherit}
 .site-preview.offer-preview .deal-card:not(.featured) strong{color:var(--accent)}
 .site-preview.offer-preview .deal-card strong i{margin-left:calc(var(--px)*8);font:400 calc(var(--px)*34)/1 Anton,Impact,sans-serif;letter-spacing:0}
 .site-preview.offer-preview .deal-card b{display:block;font:400 calc(var(--px)*26)/1.1 Anton,Impact,sans-serif;letter-spacing:.02em}
 .site-preview.offer-preview .deal-card p{max-width:calc(var(--px)*420);margin:calc(var(--px)*8) 0 0;font-size:calc(var(--px)*14);line-height:1.45;opacity:1}
 .site-preview.offer-preview .deal-chips{display:flex;flex-wrap:wrap;gap:calc(var(--px)*12);margin-top:calc(var(--px)*28)}
-.site-preview.offer-preview .deal-chips span{padding:calc(var(--px)*11) calc(var(--px)*18);border-radius:999px;background:var(--surface-bg,#1a1a1a);color:#e5e0d6;font-size:calc(var(--px)*15)}
+.site-preview.offer-preview .deal-chips span{padding:calc(var(--px)*11) calc(var(--px)*18);border-radius:999px;background:var(--surface-bg,#1a1a1a);color:var(--text);font-size:calc(var(--px)*15)}
 
 /* yellow offer band */
-.site-preview.offer-preview .offer{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--px)*24);padding:calc(var(--px)*52) var(--pad) calc(var(--px)*56);background:var(--accent);color:#111}
+.site-preview.offer-preview .offer{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--px)*24);padding:calc(var(--px)*52) var(--pad) calc(var(--px)*56);background:var(--accent);color:var(--ink)}
 .site-preview.offer-preview .offer div{display:flex;flex-direction:column;gap:calc(var(--px)*6)}
-.site-preview.offer-preview .offer strong{font:400 calc(var(--px)*70)/1 Anton,Impact,sans-serif;letter-spacing:0;color:#111}
-.site-preview.offer-preview .offer span{font:600 calc(var(--px)*20)/1.3 'DM Sans',Arial,sans-serif;color:#111}
+.site-preview.offer-preview .offer strong{font:400 calc(var(--px)*70)/1 Anton,Impact,sans-serif;letter-spacing:0;color:var(--ink)}
+.site-preview.offer-preview .offer span{font:600 calc(var(--px)*20)/1.3 'DM Sans',Arial,sans-serif;color:var(--ink)}
 
 /* rewards */
 .site-preview.offer-preview .rewards{padding:calc(var(--px)*100) var(--pad) calc(var(--px)*60)}
 .site-preview.offer-preview .rewards h3{margin:0 0 calc(var(--px)*38);font:400 calc(var(--px)*62)/1.1 Anton,Impact,sans-serif;letter-spacing:0;color:var(--accent)}
 .site-preview.offer-preview .reward-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--px)*20)}
-.site-preview.offer-preview .reward-grid>div{min-height:calc(var(--px)*150);padding:calc(var(--px)*28) calc(var(--px)*30);border:calc(var(--px)*2) solid var(--accent);border-radius:calc(var(--px)*14);background:transparent}
-.site-preview.offer-preview .reward-grid b{display:block;font:600 calc(var(--px)*22)/1.2 'DM Sans',Arial,sans-serif;color:#fff}
-.site-preview.offer-preview .reward-grid p{margin:calc(var(--px)*10) 0 0;font-size:calc(var(--px)*16);line-height:1.6;color:#e5e0d6}
+.site-preview.offer-preview .reward-grid>div{min-height:calc(var(--px)*150);padding:calc(var(--px)*28) calc(var(--px)*30);border:calc(var(--px)*2) solid var(--accent);border-radius:calc(var(--px)*14);background:var(--surface-bg,#191919)}
+.site-preview.offer-preview .reward-grid b{display:block;font:600 calc(var(--px)*22)/1.2 'DM Sans',Arial,sans-serif;color:var(--text)}
+.site-preview.offer-preview .reward-grid p{margin:calc(var(--px)*10) 0 0;font-size:calc(var(--px)*16);line-height:1.6;color:var(--text);opacity:.85}
 
 /* narrow preview / phones */
 @container (max-width:700px){
