@@ -33,6 +33,7 @@ class Customer extends Model
         'name',
         'phone',
         'email',
+        'date_of_birth',
         'last_visit_at',
         'total_orders',
         'total_spent',
@@ -51,6 +52,9 @@ class Customer extends Model
         return [
             'last_visit_at' =>
                 'datetime',
+
+            'date_of_birth' =>
+                'date',
 
             'total_orders' =>
                 'integer',

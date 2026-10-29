@@ -75,6 +75,8 @@ class Order extends Model
 
         'subtotal',
         'discount_amount',
+        'offer_id',
+        'offer_discount_amount',
         'tax_amount',
         'service_charge',
         'total_amount',
@@ -110,6 +112,7 @@ class Order extends Model
     {
         return [
             'customer_id' => 'integer',
+            'offer_id' => 'integer',
             'restaurant_table_id' => 'integer',
             'reservation_id' => 'integer',
             'picked_up_at' => 'datetime',
@@ -118,6 +121,7 @@ class Order extends Model
 
             'subtotal' => 'decimal:2',
             'discount_amount' => 'decimal:2',
+            'offer_discount_amount' => 'decimal:2',
             'tax_amount' => 'decimal:2',
             'service_charge' => 'decimal:2',
             'total_amount' => 'decimal:2',
@@ -197,6 +201,11 @@ class Order extends Model
         return $this->belongsTo(
             Customer::class
         );
+    }
+
+    public function offer(): BelongsTo
+    {
+        return $this->belongsTo(Offer::class);
     }
 
 

@@ -35,6 +35,9 @@ class CustomerResource extends JsonResource
             'email' =>
                 $this->email,
 
+            'date_of_birth' =>
+                $this->date_of_birth?->format('Y-m-d'),
+
             'notes' =>
                 $this->notes,
 

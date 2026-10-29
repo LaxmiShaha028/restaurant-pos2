@@ -2411,13 +2411,39 @@ getMenuItemImageUrl(menuItem) {
   let image =
     menuItem.image_url ||
     menuItem.image ||
+    menuItem.image_path ||
     menuItem.photo ||
     "";
 
   image = String(image).trim();
 
+  const foodPhotoMatch = image.match(/(?:^|\/)food-photos\/(.+)$/i);
+  if (foodPhotoMatch) {
+    return `${window.location.origin}/food-photos/${foodPhotoMatch[1]}`;
+  }
+
   if (!image) {
-    return "";
+    const name = String(menuItem.menu_name || menuItem.name || "").toLowerCase();
+    const category = String(
+      menuItem.category_name || menuItem.category?.category_name || "",
+    ).toLowerCase();
+
+    let photo = "chicken-burger.jpg";
+    if (name.includes("pepperoni")) photo = "pepperoni-pizza.jpg";
+    else if (name.includes("pizza") || category.includes("pizza")) photo = "chicken-pizza.jpg";
+    else if (name.includes("fries")) photo = "french-fries.jpg";
+    else if (name.includes("wings")) photo = "chicken-wings.jpg";
+    else if (name.includes("burger") && name.includes("beef")) photo = "beef-burger.jpg";
+    else if (name.includes("burger") || category.includes("burger")) photo = "chicken-burger.jpg";
+    else if (name.includes("beef")) photo = "beef-tehari.jpg";
+    else if (name.includes("biryani") || name.includes("rice") || name.includes("set meal")) photo = "chicken-biryani.jpg";
+    else if (name.includes("lemon") || name.includes("juice")) photo = "lemon-juice.jpg";
+    else if (name.includes("coffee")) photo = "cold-coffee.jpg";
+    else if (name.includes("soft drink")) photo = "soft-drink.jpg";
+    else if (name.includes("brownie")) photo = "chocolate-brownie.jpg";
+    else if (name.includes("ice cream") || name.includes("sundae")) photo = "vanilla-ice-cream.jpg";
+
+    return `${window.location.origin}/food-photos/${photo}`;
   }
 
   /*

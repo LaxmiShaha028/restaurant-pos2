@@ -2230,6 +2230,37 @@ const router = createRouter({
 
         },
 
+        {
+
+          path:
+            'offer',
+
+          name:
+            'offer',
+
+          component: () =>
+            import(
+              '@/views/offers/OfferManagementView.vue'
+            ),
+
+          meta: {
+
+            permission:
+              'settings.manage',
+
+            title:
+              'Offer',
+
+            description:
+              'Create and report on restaurant promotions',
+
+            icon:
+              'bi bi-tag',
+
+          },
+
+        },
+
 
         /*
         |--------------------------------------------------------------------------
@@ -2471,6 +2502,12 @@ router.beforeEach(
 
     document.title =
       `${pageTitle} | ${applicationName}`
+
+    // Public restaurant pages do not need tenant login initialization.
+    // Avoid clearing a valid admin session when the page is opened in another tab.
+    if (to.meta.publicLanding) {
+      return true
+    }
 
 
     /*

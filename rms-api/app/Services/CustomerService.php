@@ -497,6 +497,10 @@ private function formatDateTime(
                                     ?? null
                                 ),
 
+                            'date_of_birth' =>
+                                $data['date_of_birth']
+                                ?? null,
+
                             'is_active' =>
                                 $this->resolveBoolean(
                                     $data['is_active']
@@ -569,6 +573,11 @@ private function formatDateTime(
                                 ? $data['email']
                                 : $customer->email
                         ),
+
+                    'date_of_birth' =>
+                        array_key_exists('date_of_birth', $data)
+                            ? $data['date_of_birth']
+                            : $customer->date_of_birth,
 
                     'is_active' =>
                         array_key_exists(

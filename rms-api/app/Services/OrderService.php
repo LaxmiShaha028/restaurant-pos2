@@ -19,6 +19,7 @@ use Illuminate\Validation\ValidationException;
 use App\Models\Reservation;
 use App\Services\SystemSettingService;
 use App\Services\SalesAccountingService;
+use App\Services\OfferService;
 
 class OrderService
 {
@@ -26,15 +27,21 @@ class OrderService
 
     private SalesAccountingService $salesAccountingService;
 
+    private OfferService $offerService;
+
     public function __construct(
         SystemSettingService $systemSettingService,
-        SalesAccountingService $salesAccountingService
+        SalesAccountingService $salesAccountingService,
+        OfferService $offerService
     ) {
         $this->systemSettingService =
             $systemSettingService;
 
         $this->salesAccountingService =
             $salesAccountingService;
+
+        $this->offerService =
+            $offerService;
     }
 public function getEditOptions(
     Order $order,
@@ -1109,32 +1116,14 @@ if (
             */
 
 
-            $discountAmount = round(
-                max(
-                    0,
-                    (float)
-                    (
-                        $data['discount_amount']
-                        ?? 0
-                    )
-                ),
-                2
+            $discount = $this->calculateOrderDiscount(
+                subtotal: $subtotal,
+                manualDiscount: (float) ($data['discount_amount'] ?? 0),
+                customer: $customer
             );
-
-
-
-            if (
-                $discountAmount >
-                $subtotal
-            ) {
-
-                throw ValidationException::withMessages([
-                    'discount_amount' => [
-                        'The discount cannot be greater than the subtotal.',
-                    ],
-                ]);
-
-            }
+            $discountAmount = $discount['discount_amount'];
+            $offerId = $discount['offer_id'];
+            $offerDiscountAmount = $discount['offer_discount_amount'];
 
 
             /*
@@ -1386,6 +1375,12 @@ $totalAmount = round(
 
                         'discount_amount' =>
                             $discountAmount,
+
+                        'offer_id' =>
+                            $offerId,
+
+                        'offer_discount_amount' =>
+                            $offerDiscountAmount,
 
 
 
@@ -2210,23 +2205,15 @@ foreach (
             |--------------------------------------------------------------------------
             */
 
-            $discountAmount = round(
-                max(
-                    0,
-                    (float) (
-                        $data['discount_amount'] ?? 0
-                    )
-                ),
-                2
+            $discount = $this->calculateOrderDiscount(
+                subtotal: $subtotal,
+                manualDiscount: (float) ($data['discount_amount'] ?? 0),
+                customer: $customer,
+                excludeOrderId: (int) $lockedOrder->id
             );
-
-            if ($discountAmount > $subtotal) {
-                throw ValidationException::withMessages([
-                    'discount_amount' => [
-                        'The discount cannot be greater than the subtotal.',
-                    ],
-                ]);
-            }
+            $discountAmount = $discount['discount_amount'];
+            $offerId = $discount['offer_id'];
+            $offerDiscountAmount = $discount['offer_discount_amount'];
 
             /*
             |--------------------------------------------------------------------------
@@ -2492,6 +2479,12 @@ $totalAmount = round(
 
                 'discount_amount' =>
                     $discountAmount,
+
+                'offer_id' =>
+                    $offerId,
+
+                'offer_discount_amount' =>
+                    $offerDiscountAmount,
 
                 'tax_amount' =>
                     $taxAmount,
@@ -3854,6 +3847,52 @@ public function completeOrder(
 }
 
     /**
+     * Resolve the best eligible promotion without stacking it with a manual discount.
+     *
+     * @return array{discount_amount: float, offer_id: ?int, offer_discount_amount: float}
+     */
+    private function calculateOrderDiscount(
+        float $subtotal,
+        float $manualDiscount,
+        ?Customer $customer,
+        ?int $excludeOrderId = null
+    ): array {
+        $manualDiscount = round(max(0, $manualDiscount), 2);
+
+        if ($manualDiscount > $subtotal) {
+            throw ValidationException::withMessages([
+                'discount_amount' => [
+                    'The discount cannot be greater than the subtotal.',
+                ],
+            ]);
+        }
+
+        $promotion = $this->offerService->bestForOrder(
+            subtotal: $subtotal,
+            customer: $customer,
+            excludeOrderId: $excludeOrderId
+        );
+
+        if (
+            $promotion &&
+            $promotion['discount_amount'] >= $manualDiscount &&
+            $promotion['discount_amount'] > 0
+        ) {
+            return [
+                'discount_amount' => $promotion['discount_amount'],
+                'offer_id' => (int) $promotion['offer']->id,
+                'offer_discount_amount' => $promotion['discount_amount'],
+            ];
+        }
+
+        return [
+            'discount_amount' => $manualDiscount,
+            'offer_id' => null,
+            'offer_discount_amount' => 0.0,
+        ];
+    }
+
+    /**
      * Find an existing customer or create a new one.
      */
     private function resolveCustomer(
@@ -4755,28 +4794,19 @@ private function ensureOrderCanBeEdited(
             2
         );
 
-        $discountAmount = round(
-            max(
-                0,
-                (float) (
-                    $data['discount_amount']
-                    ?? $order->discount_amount
-                    ?? 0
-                )
+        $discount = $this->calculateOrderDiscount(
+            subtotal: $subtotal,
+            manualDiscount: (float) (
+                $data['discount_amount']
+                ?? $order->discount_amount
+                ?? 0
             ),
-            2
+            customer: $order->customer,
+            excludeOrderId: (int) $order->id
         );
-
-        if (
-            $discountAmount >
-            $subtotal
-        ) {
-            throw ValidationException::withMessages([
-                'discount_amount' => [
-                    'The discount cannot be greater than the subtotal.',
-                ],
-            ]);
-        }
+        $discountAmount = $discount['discount_amount'];
+        $offerId = $discount['offer_id'];
+        $offerDiscountAmount = $discount['offer_discount_amount'];
 
         /*
 |--------------------------------------------------------------------------
@@ -5059,6 +5089,12 @@ $totalAmount = round(
                 $subtotal,
             'discount_amount' =>
                 $discountAmount,
+
+            'offer_id' =>
+                $offerId,
+
+            'offer_discount_amount' =>
+                $offerDiscountAmount,
             'tax_amount' =>
                 $taxAmount,
             'service_charge' =>

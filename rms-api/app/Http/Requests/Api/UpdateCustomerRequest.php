@@ -134,6 +134,10 @@ class UpdateCustomerRequest extends FormRequest
                 ),
             ],
 
+            'date_of_birth' => [
+                'nullable', 'date', 'before_or_equal:today',
+            ],
+
             /*
             |--------------------------------------------------------------------------
             | Status
@@ -220,6 +224,10 @@ class UpdateCustomerRequest extends FormRequest
 
             'email' =>
                 $validated['email']
+                ?? null,
+
+            'date_of_birth' =>
+                $validated['date_of_birth']
                 ?? null,
 
             'is_active' =>

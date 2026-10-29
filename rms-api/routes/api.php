@@ -68,6 +68,7 @@ use App\Http\Controllers\Central\PaymentMethodController;
 use App\Http\Controllers\Tenant\TenantEntryController;
 use App\Http\Controllers\Api\BusinessOverviewController;
 use App\Http\Controllers\Api\PickupController;
+use App\Http\Controllers\Api\OfferController;
 
 
 
@@ -689,6 +690,18 @@ Route::middleware([
     AuthenticateTenantApiToken::class,
 ])
     ->group(function (): void {
+
+        Route::prefix('offers')
+            ->middleware('permission:settings.manage')
+            ->controller(OfferController::class)
+            ->group(function (): void {
+                Route::get('/', 'index');
+                Route::get('/report', 'report');
+                Route::post('/', 'store');
+                Route::put('/{offer}', 'update');
+                Route::delete('/{offer}', 'destroy');
+            });
+
         
         Route::prefix('test/attendance')
     ->controller(TestAttendanceController::class)

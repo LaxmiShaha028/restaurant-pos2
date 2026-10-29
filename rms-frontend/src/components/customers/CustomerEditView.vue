@@ -304,6 +304,14 @@
           </small>
         </label>
 
+        <label class="customer-edit-field">
+          <span class="customer-edit-label">Date of Birth <small>Optional, for birthday offers</small></span>
+          <span class="customer-edit-input-wrapper">
+            <i class="bi bi-cake2" aria-hidden="true"></i>
+            <input v-model="form.date_of_birth" type="date" :max="todayDate" :disabled="submitting" />
+          </span>
+        </label>
+
         <!-- Customer Status -->
 
         <fieldset
@@ -467,6 +475,9 @@ const form = reactive({
   email:
     '',
 
+  date_of_birth:
+    '',
+
   is_active:
     true,
 })
@@ -511,6 +522,8 @@ const customerId =
       ? id
       : null
   })
+
+const todayDate = new Date().toISOString().slice(0, 10)
 
 /*
 |--------------------------------------------------------------------------
@@ -603,6 +616,9 @@ function fillForm(
       customer?.email || '',
     ).trim()
 
+  form.date_of_birth =
+    String(customer?.date_of_birth || '').slice(0, 10)
+
   form.is_active =
     resolveBoolean(
       customer?.is_active,
@@ -661,6 +677,9 @@ async function submitForm() {
           email:
             form.email.trim() ||
             null,
+
+          date_of_birth:
+            form.date_of_birth || null,
 
           is_active:
             Boolean(

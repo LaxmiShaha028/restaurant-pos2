@@ -457,6 +457,14 @@ class OrderResource extends JsonResource
                 (float)
                     $this->discount_amount,
 
+            'offer_id' =>
+                $this->offer_id
+                    ? (int) $this->offer_id
+                    : null,
+
+            'offer_discount_amount' =>
+                (float) $this->offer_discount_amount,
+
 
             'tax_amount' =>
                 (float) $this->tax_amount,

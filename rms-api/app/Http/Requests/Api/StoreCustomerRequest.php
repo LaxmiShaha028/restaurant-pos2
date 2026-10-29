@@ -98,6 +98,10 @@ class StoreCustomerRequest extends FormRequest
                 Rule::unique('customers', 'email'),
             ],
 
+            'date_of_birth' => [
+                'nullable', 'date', 'before_or_equal:today',
+            ],
+
             /*
             |--------------------------------------------------------------------------
             | Status
@@ -182,6 +186,10 @@ class StoreCustomerRequest extends FormRequest
 
             'email' =>
                 $validated['email']
+                    ?? null,
+
+            'date_of_birth' =>
+                $validated['date_of_birth']
                     ?? null,
 
             'is_active' =>

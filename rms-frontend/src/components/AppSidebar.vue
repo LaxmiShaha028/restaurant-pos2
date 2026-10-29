@@ -754,6 +754,22 @@ const sidebarSections = [
           'billing.view',
       },
 
+      {
+        key: 'offer',
+
+        label: 'Offer',
+
+        route: {
+          name: 'offer',
+        },
+
+        icon:
+          'bi bi-tag',
+
+        permission:
+          'settings.manage',
+      },
+
     ],
   },
 
