@@ -74,21 +74,20 @@
         </article>
 
         <article v-else class="site-preview home-preview offer-preview" :style="themeStyle">
-          <div class="promo-bar">{{ promotionsLoaded ? promotionBarText : (form.promoText || `${form.drinkOffer} · ${form.starterOffer} · ${form.hours}`) }}</div>
+          <div class="promo-bar">{{ promotionBarText }}</div>
           <nav><strong><a href="#" @click.prevent="showOfferPage = false">{{ form.name || 'SOPNO' }}</a></strong><div><a href="#" @click.prevent="showOfferPage = false">{{ form.navHome }}</a><a href="#" class="active" @click.prevent="showOfferPage = true">{{ form.navHappy }}</a><a href="#rewards">{{ form.navRewards }}</a><a href="#reserve">{{ form.navReserve }}</a><a href="#contact">{{ form.navContact }}</a></div></nav>
           <section class="hero">
             <div class="hero-copy">
               <h2>{{ form.headline || 'happy hours' }}</h2>
-              <b class="hero-hours">{{ promotionsLoaded ? promotionSchedule : `${form.heroDays}, ${form.hours || '16:00 TO 19:00'}` }}</b>
-              <template v-if="promotionsLoaded"><span v-for="offer in activePromotions.slice(0, 2)" :key="offer.id" class="offer-pill">{{ offerDiscount(offer) }} · {{ offer.name }}</span><span v-if="!activePromotions.length" class="offer-pill">No active offers</span></template>
-              <template v-else><span class="offer-pill">{{ form.starterOffer || '50% OFF STARTERS & SIDES' }}</span><span class="offer-pill">{{ form.drinkOffer || '30% OFF ALL DRINKS' }}</span></template>
-              <p>{{ promotionsLoaded ? promotionDescription : (form.description || 'Half price starters and sides, and 30% off all drinks. The discount is applied automatically at the bill.') }}</p>
-              <a href="#reserve">{{ form.offerButton }}</a>
+              <b class="hero-hours">{{ promotionSchedule }}</b>
+              <template v-for="offer in activePromotions.slice(0, 2)" :key="offer.id"><span class="offer-pill">{{ offerDiscount(offer) }} · {{ offer.name }}</span></template>
+              <p>{{ promotionDescription }}</p>
+              <a href="#reserve">{{ form.reserveButton }}</a>
             </div>
             <div class="food-art"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1000&q=85" alt="A platter of grilled food served at the restaurant" /></div>
           </section>
-          <section class="deals"><h3>{{ form.dealsTitle1 }} <em>{{ form.dealsTitle2 }}</em></h3><div v-if="promotionsLoaded" class="deal-grid"><div v-for="(offer, index) in activePromotions" :key="offer.id" class="deal-card" :class="{ featured: index === 0 }"><small>{{ offer.type === 'weekday_weekend' ? 'SCHEDULED DEAL' : 'ACTIVE OFFER' }}</small><strong>{{ offer.discount_type === 'percentage' ? `${Number(offer.discount_value)}%` : money(offer.discount_value) }}<i>OFF</i></strong><b>{{ offer.name }}</b><p>{{ promotionCardDescription(offer) }}</p></div><p v-if="!activePromotions.length" class="no-public-offers">No active promotions at this time.</p></div><div v-else class="deal-grid"><div class="deal-card featured"><small>{{ form.deal1Badge }}</small><strong>{{ form.deal1Big }}<i>{{ form.deal1Off }}</i></strong><b>{{ form.deal1Name }}</b><p>{{ form.deal1Text }}</p></div><div class="deal-card"><small>{{ form.deal2Badge }}</small><strong>{{ form.deal2Big }}<i>{{ form.deal2Off }}</i></strong><b>{{ form.deal2Name }}</b><p>{{ form.deal2Text }}</p></div></div><div class="deal-chips"><template v-if="promotionsLoaded"><span v-for="offer in activePromotions.slice(0, 2)" :key="offer.id">{{ offerSchedule(offer) }}</span><span>No code needed</span></template><template v-else><span>{{ t(form.chip1) }}</span><span>{{ form.chip2 }}</span></template></div></section>
-          <section class="offer"><template v-if="promotionsLoaded"><div v-for="offer in activePromotions.slice(0, 2)" :key="offer.id"><strong>{{ offerDiscount(offer) }}</strong><span>{{ offer.name }}<template v-if="Number(offer.minimum_order_amount) > 0"> · Min. {{ money(offer.minimum_order_amount) }}</template></span></div><div><strong>{{ promotionSchedule }}</strong><span>Offer schedule</span></div></template><template v-else><div><strong>{{ form.offer1Title }}</strong><span>{{ form.offer1Sub }}</span></div><div><strong>{{ form.offer2Title }}</strong><span>{{ form.offer2Sub }}</span></div><div><strong>{{ form.hours || '16:00–19:00' }}</strong><span>{{ form.offer3Sub }}</span></div></template></section>
+          <section class="deals"><h3>{{ form.dealsTitle1 }} <em>{{ form.dealsTitle2 }}</em></h3><div class="deal-grid"><div v-for="(offer, index) in activePromotions" :key="offer.id" class="deal-card" :class="{ featured: index === 0 }"><small>{{ offer.type === 'weekday_weekend' ? 'SCHEDULED DEAL' : 'ACTIVE OFFER' }}</small><strong>{{ offer.discount_type === 'percentage' ? `${Number(offer.discount_value)}%` : money(offer.discount_value) }}<i>OFF</i></strong><b>{{ offer.name }}</b><p>{{ promotionCardDescription(offer) }}</p></div><p v-if="!activePromotions.length" class="no-public-offers">No active promotions at this time.</p></div><div class="deal-chips"><span v-for="offer in activePromotions.slice(0, 2)" :key="offer.id">{{ offerSchedule(offer) }}</span><span v-if="activePromotions.length">No code needed</span></div></section>
+          <section v-if="activePromotions.length" class="offer"><div v-for="offer in activePromotions.slice(0, 3)" :key="offer.id"><strong>{{ offerDiscount(offer) }}</strong><span>{{ offer.name }}<template v-if="Number(offer.minimum_order_amount) > 0"> · Min. {{ money(offer.minimum_order_amount) }}</template></span></div></section>
           <section id="rewards" class="rewards"><h3>{{ form.rewardsTitle }}</h3><div class="reward-grid"><div><b>{{ form.reward1Title }}</b><p>{{ form.reward1Text }}</p></div><div><b>{{ form.reward2Title }}</b><p>{{ form.reward2Text }}</p></div><div><b>{{ form.reward3Title }}</b><p>{{ form.reward3Text }}</p></div></div></section>
           <section id="reserve" class="reservation"><div><h3>{{ form.reserveTitle }}</h3><p>{{ form.reserveText }}</p></div><form @submit.prevent><label>NAME<input placeholder="Your name" /></label><label>MOBILE NUMBER<input placeholder="Mobile number" /></label><div class="form-row"><label>DATE<input type="text" placeholder="Select date" /></label><label>GUESTS<input type="text" placeholder="2 guests" /></label></div><label>{{ form.birthdayLabel }}<input placeholder="DD / MM" /></label><button type="button">{{ form.reserveButton }}</button></form></section>
           <footer><strong>{{ form.name || 'SOPNO' }}</strong><span>{{ form.address || 'ADDRESS YOUR ADDRESS' }}<br>{{ form.phone || 'PHONE: 000 000 0000' }}</span><span>OPEN {{ form.hours || 'EVERY DAY' }}<br>{{ form.terms }}</span></footer>
@@ -252,21 +251,6 @@ const fieldGroups = [
       { key: 'reserveTitle', label: 'Reservation title' },
     ],
   },
-  {
-    title: 'Happy hours page',
-    fields: [
-      { key: 'headline', label: 'Main heading' },
-      { key: 'starterOffer', label: 'Starters offer' },
-      { key: 'drinkOffer', label: 'Drinks offer' },
-      { key: 'description', label: 'Details text', type: 'area' },
-      { key: 'deal1Name', label: 'Deal 1 title' },
-      { key: 'deal2Name', label: 'Deal 2 title' },
-      { key: 'rewardsTitle', label: 'Rewards title' },
-      { key: 'reward1Title', label: 'Reward 1 title' },
-      { key: 'reward2Title', label: 'Reward 2 title' },
-      { key: 'reward3Title', label: 'Reward 3 title' },
-    ],
-  },
 ]
 
 const form = reactive({ ...defaults })
@@ -298,20 +282,18 @@ const themeStyle = computed(() => ({
 }))
 
 const promotionSchedule = computed(() => {
-  if (!promotionsLoaded.value) {
-    return `${form.heroDays}, ${form.hours || '16:00–19:00'}`
-  }
+  if (!activePromotions.value.length) return 'No active offers'
   const schedules = [...new Set(activePromotions.value.map(offerSchedule))]
   return schedules.length ? schedules.join(' · ') : 'No active offer schedule'
 })
 
 const promotionBarText = computed(() => activePromotions.value.length
   ? activePromotions.value.slice(0, 2).map((offer) => `${offerDiscount(offer)} ${offer.name} · ${offerSchedule(offer)}`).join(' · ')
-  : 'No active promotions currently')
+  : 'No active offers currently')
 
 const promotionDescription = computed(() => activePromotions.value.length
   ? activePromotions.value.slice(0, 2).map(promotionCardDescription).join(' ')
-  : 'There are no active promotions at this time. Please check back soon.')
+  : 'There are no active offers at this time. Please check back soon.')
 
 function money(value) {
   return `৳ ${Number(value || 0).toLocaleString('en-BD', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
@@ -358,7 +340,7 @@ async function loadAdminPromotions() {
     const response = await offerService.list()
     setPromotions(response?.data || [])
   } catch {
-    promotionsLoaded.value = false
+    setPromotions([])
   }
 }
 
@@ -473,7 +455,7 @@ function clearHeroImage() {
 .hero{padding:clamp(10px,1.2vw,18px) 5% clamp(12px,1.3vw,20px)}.deals,.rewards{padding:clamp(8px,1vw,12px) 5% clamp(10px,1.1vw,14px)}.rewards{padding-top:clamp(12px,1.4vw,16px)}.reservation{gap:12px;margin-bottom:clamp(10px,1.2vw,14px);padding:clamp(10px,1vw,12px)}
 .editor-layout{display:block}.settings-card{max-width:520px;margin:0 0 14px}.page-head{flex-wrap:wrap}.settings-toggle{margin-left:auto;border:1px solid #d7dee8;border-radius:8px;background:#fff;color:#1f2937;padding:10px 14px;font-size:13px;font-weight:700}.settings-toggle i{margin-right:5px;color:#f97316}
 .site-preview nav div{display:flex;align-items:center;gap:14px}.site-preview nav a{color:#ddd;text-decoration:none}.site-preview nav a:hover{color:var(--accent)}.site-preview nav strong a{color:var(--accent);letter-spacing:inherit}
-.site-preview{background:var(--page-bg,#0b0b0b)}.editor-layout.with-settings{display:grid;grid-template-columns:minmax(230px,290px) minmax(0,1fr);gap:12px;align-items:stretch}.editor-layout.with-settings .settings-card{position:static;max-width:none;max-height:none;overflow:visible;margin:0;padding:11px}.editor-layout.with-settings .settings-card .card-heading{gap:8px;margin-bottom:9px}.editor-layout.with-settings .settings-card .icon{width:30px;height:30px;flex:none}.editor-layout.with-settings .settings-card label{margin:0 0 6px;font-size:10px;line-height:1.15}.editor-layout.with-settings .settings-card input,.editor-layout.with-settings .settings-card textarea{margin-top:3px;padding:5px 7px;font-size:11px;line-height:1.2}.editor-layout.with-settings .settings-card input:not([type=color]){height:29px}.editor-layout.with-settings .settings-card textarea{height:56px;min-height:56px;resize:vertical}.editor-layout.with-settings .settings-card .color-input{width:100%;height:29px;padding:2px}.editor-layout.with-settings .preview-wrap{min-width:0;padding:9px}.editor-layout.with-settings .site-preview{width:100%;max-width:none}.site-preview .kitchen-grid>div,.site-preview .reward-grid>div,.site-preview .reservation,.site-preview .deal-card:not(.featured){background:var(--surface-bg,#191919)}@media(max-width:850px){.editor-layout.with-settings{grid-template-columns:1fr}.editor-layout.with-settings .settings-card{position:static;max-height:none;overflow:visible}}
+.site-preview{background:var(--page-bg,#0b0b0b)}.editor-layout.with-settings{display:grid;grid-template-columns:minmax(230px,290px) minmax(0,1fr);gap:12px;align-items:start}.editor-layout.with-settings .settings-card{position:static;align-self:start;max-width:none;height:max-content;max-height:none;overflow:visible;margin:0;padding:11px}.editor-layout.with-settings .settings-card .card-heading{gap:8px;margin-bottom:9px}.editor-layout.with-settings .settings-card .icon{width:30px;height:30px;flex:none}.editor-layout.with-settings .settings-card label{margin:0 0 6px;font-size:10px;line-height:1.15}.editor-layout.with-settings .settings-card input,.editor-layout.with-settings .settings-card textarea{margin-top:3px;padding:5px 7px;font-size:11px;line-height:1.2}.editor-layout.with-settings .settings-card input:not([type=color]){height:29px}.editor-layout.with-settings .settings-card textarea{height:56px;min-height:56px;resize:vertical}.editor-layout.with-settings .settings-card .color-input{width:100%;height:29px;padding:2px}.editor-layout.with-settings .preview-wrap{min-width:0;padding:9px}.editor-layout.with-settings .site-preview{width:100%;max-width:none}.site-preview .kitchen-grid>div,.site-preview .reward-grid>div,.site-preview .reservation,.site-preview .deal-card:not(.featured){background:var(--surface-bg,#191919)}@media(max-width:850px){.editor-layout.with-settings{grid-template-columns:1fr}.editor-layout.with-settings .settings-card{position:static;max-height:none;overflow:visible}}
 
 /* settings groups */
 .settings-group{margin:0 0 14px;padding-bottom:6px;border-bottom:1px solid #eef1f5}
