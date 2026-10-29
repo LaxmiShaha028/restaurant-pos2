@@ -393,6 +393,23 @@
 
           </div>
 
+          <div v-if="!isTakeawayOrder" class="order-form-group">
+            <label for="customer_date_of_birth" class="order-form-label">
+              Birthday <small>(Optional)</small>
+            </label>
+            <div class="input-with-icon-wrapper">
+              <span class="input-icon"><i class="bi bi-gift"></i></span>
+              <input
+                id="customer_date_of_birth"
+                v-model="form.date_of_birth"
+                type="date"
+                class="order-form-control with-left-icon"
+                :max="todayDate"
+                :disabled="isSubmitting || isServedEditMode"
+              />
+            </div>
+          </div>
+
           <template v-if="$route.name === 'pos-order-create' && selectedReservation">
             <div class="order-form-group">
               <label class="order-form-label">Reservation Number</label>

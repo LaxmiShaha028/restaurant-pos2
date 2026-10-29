@@ -216,6 +216,7 @@ export default {
         customer_name: "",
         customer_phone: "",
         customer_email: "",
+        date_of_birth: "",
 
         /*
         |--------------------------------------------------------------------------
@@ -259,6 +260,10 @@ export default {
   */
 
   computed: {
+    todayDate() {
+      return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Dhaka" }).format(new Date());
+    },
+
     isTakeawayOrder() {
       return this.form.fulfillment_type === "takeaway";
     },
@@ -1077,6 +1082,10 @@ watch: {
   },
 
   "form.customer_id"() {
+    this.scheduleDiscountPreview();
+  },
+
+  "form.date_of_birth"() {
     this.scheduleDiscountPreview();
   },
 
@@ -2159,6 +2168,9 @@ this.selectedReservationId =
       this.form.customer_email =
         customer?.email ?? "";
 
+      this.form.date_of_birth =
+        String(customer?.date_of_birth || "").slice(0, 10);
+
       this.selectedCustomer =
         customer?.id
           ? {
@@ -2166,6 +2178,7 @@ this.selectedReservationId =
               name: customer.name ?? "",
               phone: customer.phone ?? "",
               email: customer.email ?? "",
+              date_of_birth: String(customer.date_of_birth || "").slice(0, 10),
             }
           : null;
 
@@ -3274,6 +3287,7 @@ getTableDisplayName(table) {
             subtotal: this.subtotal,
             manual_discount: Number(this.form.discount_amount || 0),
             customer_id: this.form.customer_id || null,
+            date_of_birth: this.form.date_of_birth || null,
             exclude_order_id: this.editingOrderId || null,
           });
 
@@ -3601,6 +3615,9 @@ handleReservationChange() {
                 email:
                     reservation.customer.email ??
                     "",
+
+                date_of_birth:
+                    String(reservation.customer.date_of_birth || "").slice(0, 10),
               }
             : null;
 
@@ -3622,6 +3639,9 @@ handleReservationChange() {
     this.form.customer_email =
         reservation.customer?.email ??
         "";
+
+    this.form.date_of_birth =
+        String(reservation.customer?.date_of_birth || "").slice(0, 10);
 
     /*
     |--------------------------------------------------------------------------
@@ -3747,6 +3767,9 @@ clearReservationSelection() {
       this.form.customer_email =
         customer.email ?? "";
 
+      this.form.date_of_birth =
+        String(customer.date_of_birth || "").slice(0, 10);
+
       this.customerResults = [];
       this.showCustomerResults = false;
 
@@ -3778,6 +3801,7 @@ clearReservationSelection() {
       this.form.customer_name = "";
       this.form.customer_phone = "";
       this.form.customer_email = "";
+      this.form.date_of_birth = "";
 
       this.customerResults = [];
       this.showCustomerResults = false;
@@ -4043,6 +4067,9 @@ clearReservationSelection() {
 
         customer_email:
           this.form.customer_email || null,
+
+        date_of_birth:
+          this.form.date_of_birth || null,
 
         /*
         |--------------------------------------------------------------------------
@@ -4771,6 +4798,7 @@ if (
         customer_phone: "",
 
         customer_email: "",
+        date_of_birth: "",
 
         status: "pending",
 

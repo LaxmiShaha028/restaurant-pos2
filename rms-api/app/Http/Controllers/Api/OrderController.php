@@ -718,6 +718,7 @@ public function editOptions(
             'subtotal' => ['required', 'numeric', 'min:0'],
             'manual_discount' => ['nullable', 'numeric', 'min:0'],
             'customer_id' => ['nullable', 'integer', 'exists:customers,id'],
+            'date_of_birth' => ['nullable', 'date', 'before_or_equal:today'],
             'exclude_order_id' => ['nullable', 'integer', 'exists:orders,id'],
         ]);
 
@@ -725,7 +726,12 @@ public function editOptions(
         $manualDiscount = min($subtotal, round((float) ($data['manual_discount'] ?? 0), 2));
         $customer = isset($data['customer_id'])
             ? Customer::query()->find((int) $data['customer_id'])
-            : null;
+            : (!empty($data['date_of_birth'])
+                ? new Customer(['date_of_birth' => $data['date_of_birth']])
+                : null);
+        if ($customer && !empty($data['date_of_birth'])) {
+            $customer->date_of_birth = $data['date_of_birth'];
+        }
         $promotion = $offerService->bestForOrder(
             $subtotal,
             $customer,
@@ -759,9 +765,7 @@ public function editOptions(
                 'offer_discount_amount' => 0,
                 'discount_amount' => $manualDiscount,
                 'manual_discount_amount' => $manualDiscount,
-                'eligibility_message' => $customer
-                    ? null
-                    : $offerService->customerEligibilityHint($subtotal),
+                'eligibility_message' => $offerService->customerEligibilityHint($subtotal, $customer),
             ],
         ]);
     }

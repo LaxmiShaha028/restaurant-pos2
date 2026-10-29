@@ -25,6 +25,10 @@
             <span>Email</span>
             <input v-model.trim="form.email" type="email" placeholder="customer@example.com" />
           </label>
+          <label class="full">
+            <span>Birthday <small>(Optional, for birthday offers)</small></span>
+            <input v-model="form.date_of_birth" type="date" :max="todayDate" />
+          </label>
 
           <p v-if="errorMessage" class="pos-field-error full">{{ errorMessage }}</p>
 
@@ -44,18 +48,20 @@
 </template>
 
 <script setup>
-import { reactive, ref, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 
 const props = defineProps({ show: { type: Boolean, default: false } })
 const emit = defineEmits(['close', 'create'])
 
-const form = reactive({ name: '', phone: '', email: '' })
+const form = reactive({ name: '', phone: '', email: '', date_of_birth: '' })
 const errorMessage = ref('')
+const todayDate = computed(() => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Dhaka' }).format(new Date()))
 
 function reset() {
   form.name = ''
   form.phone = ''
   form.email = ''
+  form.date_of_birth = ''
   errorMessage.value = ''
 }
 
@@ -75,6 +81,7 @@ function submit() {
     name: form.name.trim(),
     phone: form.phone.trim(),
     email: form.email.trim(),
+    date_of_birth: form.date_of_birth || null,
   })
 }
 

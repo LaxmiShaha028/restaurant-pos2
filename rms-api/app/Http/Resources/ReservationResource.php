@@ -178,6 +178,12 @@ class ReservationResource extends JsonResource
                 'email' =>
                     $this->customer?->email,
 
+                'date_of_birth' =>
+                    $this->customer?->date_of_birth?->format('Y-m-d'),
+
+                'date_of_birth' =>
+                    $this->customer?->date_of_birth?->format('Y-m-d'),
+
             ],
 
 

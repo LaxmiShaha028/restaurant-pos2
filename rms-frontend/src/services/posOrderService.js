@@ -167,6 +167,7 @@ function normalizeCustomerSearch(response) {
       name: String(customer?.name ?? '').trim(),
       phone: String(customer?.phone ?? '').trim(),
       email: String(customer?.email ?? '').trim(),
+      date_of_birth: String(customer?.date_of_birth ?? '').slice(0, 10),
     }))
     .filter((customer) => customer.id)
 }
@@ -226,6 +227,10 @@ const posOrderService = {
 
   async createOrder(payload) {
     return orderService.createOrder(payload)
+  },
+
+  async previewDiscount(payload) {
+    return orderService.previewDiscount(payload)
   },
 
   getErrorMessage(error, fallback = 'Unable to complete the POS request.') {

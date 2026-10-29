@@ -285,6 +285,9 @@ class OrderResource extends JsonResource
                 'email' =>
                     $this->customer_email,
 
+                'date_of_birth' =>
+                    $this->whenLoaded('customer', fn () => $this->customer?->date_of_birth?->format('Y-m-d')),
+
 
                 'total_orders' =>
                     $this->whenLoaded(

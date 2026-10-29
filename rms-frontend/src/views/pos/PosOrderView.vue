@@ -119,6 +119,7 @@
           :discount-type="discountType"
           :discount-value="discountValue"
           :discount-amount="discountAmount"
+          :offer-preview="offerPreview"
           :vat-amount="vatAmount"
           :service-amount="serviceAmount"
           :total="grandTotal"
@@ -144,6 +145,7 @@
           @search-customer="searchCustomer"
           @select-customer="selectCustomer"
           @clear-customer="clearCustomer"
+          @update:customer-birthday="updateCustomerBirthday"
           @new-customer="showCustomerModal = true"
           @send-order="sendOrder"
           @pay="openPayment"
@@ -159,7 +161,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import PosMenuCard from '@/components/pos/PosMenuCard.vue'
 import PosFoodDetailsModal from '@/components/pos/PosFoodDetailsModal.vue'
@@ -205,6 +207,8 @@ const customerSearchError = ref('')
 const orderNote = ref('')
 const discountType = ref('amount')
 const discountValue = ref(0)
+const offerPreview = ref(null)
+let offerPreviewRequestId = 0
 
 const selectedTables = computed(() =>
   selectedTableIds.value
@@ -292,12 +296,18 @@ const cartDisplayLines = computed(() => cart.value.map((line) => {
 
 const totalQuantity = computed(() => cart.value.reduce((sum, line) => sum + Number(line.quantity || 0), 0))
 const subtotal = computed(() => Number(cart.value.reduce((sum, line) => sum + lineTotal(line), 0).toFixed(2)))
-const discountAmount = computed(() => {
+const manualDiscountAmount = computed(() => {
   const raw = Math.max(Number(discountValue.value) || 0, 0)
   if (discountType.value === 'percent') {
     return Number((subtotal.value * (Math.min(raw, 100) / 100)).toFixed(2))
   }
   return Math.min(Number(raw.toFixed(2)), subtotal.value)
+})
+const discountAmount = computed(() => {
+  const offerDiscount = Number(offerPreview.value?.offer_discount_amount || 0)
+  return offerPreview.value?.offer_id && offerDiscount >= manualDiscountAmount.value
+    ? offerDiscount
+    : manualDiscountAmount.value
 })
 const taxableAmount = computed(() => Math.max(Number((subtotal.value - discountAmount.value).toFixed(2)), 0))
 const vatAmount = computed(() => {
@@ -422,6 +432,14 @@ function clearCustomer() {
   customerResults.value = []
 }
 
+function updateCustomerBirthday(value) {
+  if (selectedCustomer.value) {
+    selectedCustomer.value = { ...selectedCustomer.value, date_of_birth: value || null }
+  } else if (draftCustomer.value) {
+    draftCustomer.value = { ...draftCustomer.value, date_of_birth: value || null }
+  }
+}
+
 function composeOrderNote() {
   const pieces = [`POS Guest Count: ${Math.max(1, Number(guestCount.value || 1))}`]
   const note = String(orderNote.value || '').trim()
@@ -446,8 +464,9 @@ merged_table_ids: selectedTableIds.value
     customer_name: draft?.name || customer?.name || null,
     customer_phone: draft?.phone || customer?.phone || null,
     customer_email: draft?.email || customer?.email || null,
+    date_of_birth: customer?.date_of_birth || draft?.date_of_birth || null,
     status: 'pending',
-    discount_amount: discountAmount.value,
+    discount_amount: manualDiscountAmount.value,
     tax_amount: 0,
     service_charge: 0,
     order_note: composeOrderNote(),
@@ -483,7 +502,11 @@ async function submitOrder(payment = null) {
 }
 
 function sendOrder() { void submitOrder(null) }
-function openPayment() { if (canSubmit.value) showPaymentModal.value = true }
+async function openPayment() {
+  if (!canSubmit.value) return
+  await refreshOfferPreview()
+  showPaymentModal.value = true
+}
 function confirmPaymentOrder(payment) { void submitOrder(payment) }
 async function backToTables() { await router.push({ name: 'pos-order-tables' }) }
 async function startNewPosOrder() { showSuccessModal.value = false; await router.push({ name: 'pos-order-tables' }) }
@@ -523,4 +546,27 @@ async function loadPage() {
 }
 
 onMounted(loadPage)
+
+watch([subtotal, manualDiscountAmount, () => selectedCustomer.value?.id, () => selectedCustomer.value?.date_of_birth, () => draftCustomer.value?.date_of_birth], () => {
+  void refreshOfferPreview()
+})
+
+async function refreshOfferPreview() {
+  const requestId = ++offerPreviewRequestId
+  if (subtotal.value <= 0) {
+    offerPreview.value = null
+    return
+  }
+  try {
+    const result = await posOrderService.previewDiscount({
+      subtotal: subtotal.value,
+      manual_discount: manualDiscountAmount.value,
+      customer_id: selectedCustomer.value?.id || null,
+      date_of_birth: selectedCustomer.value?.date_of_birth || draftCustomer.value?.date_of_birth || null,
+    })
+    if (requestId === offerPreviewRequestId) offerPreview.value = result || null
+  } catch {
+    if (requestId === offerPreviewRequestId) offerPreview.value = null
+  }
+}
 </script>

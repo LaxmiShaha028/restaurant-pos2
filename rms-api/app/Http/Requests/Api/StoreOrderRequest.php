@@ -285,6 +285,12 @@ class StoreOrderRequest extends FormRequest
                 'max:190',
             ],
 
+            'date_of_birth' => [
+                'nullable',
+                'date',
+                'before_or_equal:today',
+            ],
+
             /*
             |--------------------------------------------------------------------------
             | Order information
@@ -944,6 +950,9 @@ if (
 
             'customer_email' =>
                 'customer email',
+
+            'date_of_birth' =>
+                'customer birthday',
 
             'discount_amount' =>
                 'discount',

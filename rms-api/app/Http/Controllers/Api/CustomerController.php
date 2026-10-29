@@ -327,6 +327,7 @@ public function show(
                     'name',
                     'phone',
                     'email',
+                    'date_of_birth',
                     'last_visit_at',
                     'total_orders',
                     'total_spent',
@@ -405,6 +406,9 @@ public function show(
 
             'email' =>
                 $customer->email,
+
+            'date_of_birth' =>
+                $customer->date_of_birth?->format('Y-m-d'),
 
             'initial' =>
                 $customer->initial,

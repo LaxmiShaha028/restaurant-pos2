@@ -50,10 +50,20 @@
         <span class="icon"><i class="bi bi-person-check-fill"></i></span>
         <div>
           <strong>{{ selectedCustomer.name }}</strong>
-          <small>{{ selectedCustomer.phone || selectedCustomer.email || 'Existing customer' }}</small>
+          <small>{{ selectedCustomer.phone || selectedCustomer.email || 'Existing customer' }}<template v-if="selectedCustomer.date_of_birth"> · Birthday {{ selectedCustomer.date_of_birth }}</template></small>
         </div>
         <button type="button" @click="emit('clear-customer')"><i class="bi bi-x-lg"></i></button>
       </div>
+
+      <label v-if="selectedCustomer || draftCustomer" class="pos-guest-field pos-customer-birthday">
+        <span>Birthday <small>Optional, for birthday offers</small></span>
+        <input
+          type="date"
+          :value="selectedCustomer?.date_of_birth || draftCustomer?.date_of_birth || ''"
+          :max="todayDate"
+          @input="emit('update:customer-birthday', $event.target.value)"
+        />
+      </label>
 
       <div v-else-if="draftCustomer" class="pos-selected-customer new">
         <span class="icon"><i class="bi bi-person-plus-fill"></i></span>
@@ -83,7 +93,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onBeforeUnmount } from 'vue'
+import { computed, ref, watch, onBeforeUnmount } from 'vue'
 
 const props = defineProps({
   guestCount: { type: Number, default: 1 },
@@ -97,8 +107,10 @@ const props = defineProps({
 
 const emit = defineEmits([
   'update:guest-count', 'update:order-note', 'search', 'select-customer',
-  'clear-customer', 'new-customer',
+  'clear-customer', 'new-customer', 'update:customer-birthday',
 ])
+
+const todayDate = computed(() => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Dhaka' }).format(new Date()))
 
 const query = ref('')
 let timer = null

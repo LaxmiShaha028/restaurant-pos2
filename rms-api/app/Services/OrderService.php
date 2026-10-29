@@ -3903,12 +3903,19 @@ public function completeOrder(
             ?? null;
 
         if ($customerId) {
-            return Customer::query()
+            $customer = Customer::query()
                 ->active()
                 ->lockForUpdate()
                 ->findOrFail(
                     (int) $customerId
                 );
+
+            if (!empty($data['date_of_birth'])) {
+                $customer->date_of_birth = $data['date_of_birth'];
+                $customer->save();
+            }
+
+            return $customer;
         }
 
         $name =
@@ -3994,6 +4001,10 @@ public function completeOrder(
                     $email
                         ?? $existingCustomer
                             ->email,
+
+                'date_of_birth' =>
+                    $data['date_of_birth']
+                        ?? $existingCustomer->date_of_birth,
             ]);
 
             return $existingCustomer;
@@ -4010,6 +4021,9 @@ public function completeOrder(
 
                 'email' =>
                     $email,
+
+                'date_of_birth' =>
+                    $data['date_of_birth'] ?? null,
 
                 'last_visit_at' =>
                     null,

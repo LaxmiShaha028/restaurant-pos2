@@ -2736,3 +2736,7 @@
     flex: 1;
   }
 }
+
+.pos-offer-preview { display:block; margin: -2px 0 7px; color:#15803d; font-size:10px; line-height:1.35; }
+.pos-offer-preview i { margin-right:4px; color:#f97316; }
+.pos-offer-preview.muted { color:#64748b; }

@@ -85,6 +85,8 @@
 
         <div class="pos-bill-row"><span>Subtotal</span><strong>{{ money(subtotal) }}</strong></div>
         <div class="pos-bill-row"><span>Discount</span><strong>− {{ money(discountAmount) }}</strong></div>
+        <small v-if="offerPreview?.offer_id" class="pos-offer-preview"><i class="bi bi-gift"></i> {{ offerPreview.offer_name }} applied</small>
+        <small v-else-if="offerPreview?.eligibility_message" class="pos-offer-preview muted"><i class="bi bi-info-circle"></i> {{ offerPreview.eligibility_message }}</small>
         <div class="pos-bill-row"><span>{{ vatLabel }}</span><strong>{{ money(vatAmount) }}</strong></div>
         <div class="pos-bill-row"><span>{{ serviceLabel }}</span><strong>{{ money(serviceAmount) }}</strong></div>
 
@@ -110,6 +112,7 @@
         @select-customer="emit('select-customer', $event)"
         @clear-customer="emit('clear-customer')"
         @new-customer="emit('new-customer')"
+        @update:customer-birthday="emit('update:customer-birthday', $event)"
       />
     </div>
 
@@ -155,6 +158,7 @@ defineProps({
   discountType: { type: String, default: 'amount' },
   discountValue: { type: Number, default: 0 },
   discountAmount: { type: Number, default: 0 },
+  offerPreview: { type: Object, default: null },
   vatAmount: { type: Number, default: 0 },
   serviceAmount: { type: Number, default: 0 },
   total: { type: Number, default: 0 },
@@ -175,7 +179,7 @@ const emit = defineEmits([
   'increase', 'decrease', 'remove', 'clear-cart',
   'update:discount-type', 'update:discount-value',
   'update:guest-count', 'update:order-note',
-  'search-customer', 'select-customer', 'clear-customer',
+  'search-customer', 'select-customer', 'clear-customer', 'update:customer-birthday',
   'new-customer', 'send-order', 'pay',
 ])
 

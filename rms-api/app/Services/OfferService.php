@@ -9,7 +9,7 @@ use Carbon\CarbonImmutable;
 
 class OfferService
 {
-    public function customerEligibilityHint(float $subtotal): ?string
+    public function customerEligibilityHint(float $subtotal, ?Customer $customer = null): ?string
     {
         $localNow = CarbonImmutable::now('Asia/Dhaka');
         $today = $localNow->toDateString();
@@ -49,10 +49,31 @@ class OfferService
             }
 
             if ($offer->type === 'birthday') {
-                return "Select a customer with a saved birthday to use {$offer->name}.";
+                if (! $customer) {
+                    return "Select a customer with a saved birthday to use {$offer->name}.";
+                }
+                if (! $customer->date_of_birth) {
+                    return "Add {$customer->name}'s birthday to their customer profile to check {$offer->name} eligibility. Birthday is optional.";
+                }
+                if (! $this->isBirthdayWindow($customer, (int) $offer->birthday_window_days)) {
+                    return "{$customer->name} is not within the birthday window for {$offer->name}.";
+                }
+
+                $perCustomerLimit = $offer->per_customer_limit ?? 1;
+                $customerUses = $customer->exists
+                    ? (clone $usageQuery)->where('customer_id', $customer->id)->count()
+                    : 0;
+                if ($customerUses >= (int) $perCustomerLimit) {
+                    return "{$customer->name} has already used {$offer->name} the allowed number of times.";
+                }
             }
             if ($offer->type === 'loyalty') {
-                return "Select a loyalty customer to check eligibility for {$offer->name}.";
+                if (! $customer) {
+                    return "Select a loyalty customer to check eligibility for {$offer->name}.";
+                }
+                if ($customer->visitCount() < (int) $offer->minimum_customer_orders) {
+                    return "{$customer->name} does not yet meet the visit requirement for {$offer->name}.";
+                }
             }
         }
 
@@ -114,7 +135,7 @@ class OfferService
             }
 
             if ($offer->type === 'loyalty') {
-                if (! $customer || $customer->visitCount() < (int) $offer->minimum_customer_orders) {
+                if (! $customer || ! $customer->exists || $customer->visitCount() < (int) $offer->minimum_customer_orders) {
                     return false;
                 }
             }
@@ -131,11 +152,14 @@ class OfferService
                 return false;
             }
 
-            if ($offer->per_customer_limit !== null && $customer) {
+            $perCustomerLimit = $offer->type === 'birthday'
+                ? ($offer->per_customer_limit ?? 1)
+                : $offer->per_customer_limit;
+            if ($perCustomerLimit !== null && $customer?->exists) {
                 $customerUses = (clone $usageQuery)
                     ->where('customer_id', $customer->id)
                     ->count();
-                if ($customerUses >= (int) $offer->per_customer_limit) {
+                if ($customerUses >= (int) $perCustomerLimit) {
                     return false;
                 }
             }
