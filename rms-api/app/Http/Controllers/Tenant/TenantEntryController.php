@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Central\Restaurant;
 use App\Models\Central\Subscription;
 use App\Models\SystemSetting;
+use App\Models\Offer;
 use App\Services\Tenant\TenantConnectionManager;
 use App\Services\SubscriptionLifecycleService;
 use Illuminate\Http\JsonResponse;
@@ -40,6 +41,42 @@ class TenantEntryController extends Controller
         try {
             $connectionManager->connect($restaurant);
             $settings = SystemSetting::query()->first();
+            $today = now('Asia/Dhaka')->toDateString();
+            $promotions = Offer::query()
+                ->where('is_active', true)
+                ->whereIn('type', ['automatic', 'weekday_weekend'])
+                ->where(function ($query) use ($today): void {
+                    $query->whereNull('valid_from')->orWhereDate('valid_from', '<=', $today);
+                })
+                ->where(function ($query) use ($today): void {
+                    $query->whereNull('valid_until')->orWhereDate('valid_until', '>=', $today);
+                })
+                ->orderByDesc('discount_value')
+                ->get([
+                    'id',
+                    'name',
+                    'description',
+                    'type',
+                    'discount_type',
+                    'discount_value',
+                    'days_of_week',
+                    'start_time',
+                    'end_time',
+                    'minimum_order_amount',
+                ])
+                ->map(fn (Offer $offer): array => [
+                    'id' => (int) $offer->id,
+                    'name' => $offer->name,
+                    'description' => $offer->description,
+                    'type' => $offer->type,
+                    'discount_type' => $offer->discount_type,
+                    'discount_value' => (float) $offer->discount_value,
+                    'days_of_week' => $offer->days_of_week ?? [],
+                    'start_time' => $offer->start_time ? substr((string) $offer->start_time, 0, 5) : null,
+                    'end_time' => $offer->end_time ? substr((string) $offer->end_time, 0, 5) : null,
+                    'minimum_order_amount' => (float) $offer->minimum_order_amount,
+                ])
+                ->values();
 
             return response()->json([
                 'success' => true,
@@ -51,6 +88,7 @@ class TenantEntryController extends Controller
                     ],
                     'landing_page_settings' =>
                         $settings?->landing_page_settings ?? [],
+                    'promotions' => $promotions,
                 ],
                 'errors' => null,
             ]);

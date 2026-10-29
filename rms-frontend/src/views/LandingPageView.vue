@@ -58,7 +58,7 @@
             <div class="home-copy"><span class="home-kicker">{{ t(form.homeKicker) }}</span><h2>{{ t(form.homeTitle1) }}<br><em>{{ t(form.homeTitle2) }}</em></h2><p>{{ t(form.homeIntro) }}</p><a class="primary-cta" href="#reserve">{{ form.primaryButton }}</a><a class="secondary-cta" href="#menu">{{ form.secondaryButton }}</a></div>
             <div class="food-art"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1000&q=85" alt="A platter of grilled food served at the restaurant" /></div>
           </section>
-          <section id="happy-hours" class="home-happy"><div><h3>{{ t(form.happyBandTitle) }}</h3><div class="happy-pills"><span>{{ form.pill1Title }}<small>{{ form.pill1Sub }}</small></span><span>{{ form.pill2Title }}<small>{{ form.pill2Sub }}</small></span><span>{{ form.hours }}<small>{{ form.pill3Sub }}</small></span></div></div><button type="button" @click="showOfferPage = true">{{ form.seeOfferButton }}</button></section>
+          <section id="happy-hours" class="home-happy"><div><h3>{{ t(form.happyBandTitle) }}</h3><div v-if="promotionsLoaded" class="happy-pills"><template v-if="activePromotions.length"><span v-for="offer in activePromotions.slice(0, 2)" :key="offer.id">{{ offerDiscount(offer) }}<small>{{ offer.name }}</small></span><span>{{ promotionSchedule }}<small>Offer schedule</small></span></template><span v-else>No active offers<small>Check back soon</small></span></div><div v-else class="happy-pills"><span>{{ form.pill1Title }}<small>{{ form.pill1Sub }}</small></span><span>{{ form.pill2Title }}<small>{{ form.pill2Sub }}</small></span><span>{{ form.hours }}<small>{{ form.pill3Sub }}</small></span></div></div><button type="button" @click="showOfferPage = true">{{ form.seeOfferButton }}</button></section>
           <section id="menu" class="kitchen"><h3>{{ t(form.kitchenTitle) }}</h3><div class="kitchen-grid"><div><b>01</b><strong>{{ form.kitchen1Title }}</strong><p>{{ form.kitchen1Text }}</p></div><div><b>02</b><strong>{{ form.kitchen2Title }}</strong><p>{{ form.kitchen2Text }}</p></div><div><b>03</b><strong>{{ form.kitchen3Title }}</strong><p>{{ form.kitchen3Text }}</p></div><div><b>04</b><strong>{{ form.kitchen4Title }}</strong><p>{{ form.kitchen4Text }}</p></div></div></section>
           <section id="contact" class="home-about"><div><h3>{{ t(form.aboutTitle) }}</h3><p>{{ t(form.aboutText) }}</p></div><div class="about-links"><a href="#contact"><b>{{ form.aboutOpenLabel }}</b><small>{{ form.hours || '[OPENING HOURS]' }}</small></a><a href="#contact"><b>{{ form.aboutFindLabel }}</b><small>{{ form.address || 'YOUR ADDRESS' }}</small></a></div></section>
           <section id="reserve" class="reservation"><div><h3>{{ form.reserveTitle }}</h3><p>{{ form.reserveText }}</p></div><form @submit.prevent><label>NAME<input placeholder="Your name" /></label><label>MOBILE NUMBER<input placeholder="Mobile number" /></label><div class="form-row"><label>DATE<input type="text" placeholder="Select date" /></label><label>GUESTS<input type="text" placeholder="2 guests" /></label></div><button type="button">{{ form.reserveButton }}</button></form></section>
@@ -66,21 +66,21 @@
         </article>
 
         <article v-else class="site-preview home-preview offer-preview" :style="themeStyle">
-          <div class="promo-bar">{{ form.promoText || `${form.drinkOffer} · ${form.starterOffer} · ${form.hours}` }}</div>
+          <div class="promo-bar">{{ promotionsLoaded ? promotionBarText : (form.promoText || `${form.drinkOffer} · ${form.starterOffer} · ${form.hours}`) }}</div>
           <nav><strong><a href="#" @click.prevent="showOfferPage = false">{{ form.name || 'SOPNO' }}</a></strong><div><a href="#" @click.prevent="showOfferPage = false">{{ form.navHome }}</a><a href="#" class="active" @click.prevent="showOfferPage = true">{{ form.navHappy }}</a><a href="#rewards">{{ form.navRewards }}</a><a href="#reserve">{{ form.navReserve }}</a><a href="#contact">{{ form.navContact }}</a></div></nav>
           <section class="hero">
             <div class="hero-copy">
               <h2>{{ form.headline || 'happy hours' }}</h2>
-              <b class="hero-hours">{{ form.heroDays }}, {{ form.hours || '16:00 TO 19:00' }}</b>
-              <span class="offer-pill">{{ form.starterOffer || '50% OFF STARTERS & SIDES' }}</span>
-              <span class="offer-pill">{{ form.drinkOffer || '30% OFF ALL DRINKS' }}</span>
-              <p>{{ form.description || 'Half price starters and sides, and 30% off all drinks. The discount is applied automatically at the bill.' }}</p>
+              <b class="hero-hours">{{ promotionsLoaded ? promotionSchedule : `${form.heroDays}, ${form.hours || '16:00 TO 19:00'}` }}</b>
+              <template v-if="promotionsLoaded"><span v-for="offer in activePromotions.slice(0, 2)" :key="offer.id" class="offer-pill">{{ offerDiscount(offer) }} · {{ offer.name }}</span><span v-if="!activePromotions.length" class="offer-pill">No active offers</span></template>
+              <template v-else><span class="offer-pill">{{ form.starterOffer || '50% OFF STARTERS & SIDES' }}</span><span class="offer-pill">{{ form.drinkOffer || '30% OFF ALL DRINKS' }}</span></template>
+              <p>{{ promotionsLoaded ? promotionDescription : (form.description || 'Half price starters and sides, and 30% off all drinks. The discount is applied automatically at the bill.') }}</p>
               <a href="#reserve">{{ form.offerButton }}</a>
             </div>
             <div class="food-art"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1000&q=85" alt="A platter of grilled food served at the restaurant" /></div>
           </section>
-          <section class="deals"><h3>{{ form.dealsTitle1 }} <em>{{ form.dealsTitle2 }}</em></h3><div class="deal-grid"><div class="deal-card featured"><small>{{ form.deal1Badge }}</small><strong>{{ form.deal1Big }}<i>{{ form.deal1Off }}</i></strong><b>{{ form.deal1Name }}</b><p>{{ form.deal1Text }}</p></div><div class="deal-card"><small>{{ form.deal2Badge }}</small><strong>{{ form.deal2Big }}<i>{{ form.deal2Off }}</i></strong><b>{{ form.deal2Name }}</b><p>{{ form.deal2Text }}</p></div></div><div class="deal-chips"><span>{{ t(form.chip1) }}</span><span>{{ form.chip2 }}</span></div></section>
-          <section class="offer"><div><strong>{{ form.offer1Title }}</strong><span>{{ form.offer1Sub }}</span></div><div><strong>{{ form.offer2Title }}</strong><span>{{ form.offer2Sub }}</span></div><div><strong>{{ form.hours || '16:00–19:00' }}</strong><span>{{ form.offer3Sub }}</span></div></section>
+          <section class="deals"><h3>{{ form.dealsTitle1 }} <em>{{ form.dealsTitle2 }}</em></h3><div v-if="promotionsLoaded" class="deal-grid"><div v-for="(offer, index) in activePromotions" :key="offer.id" class="deal-card" :class="{ featured: index === 0 }"><small>{{ offer.type === 'weekday_weekend' ? 'SCHEDULED DEAL' : 'ACTIVE OFFER' }}</small><strong>{{ offer.discount_type === 'percentage' ? `${Number(offer.discount_value)}%` : money(offer.discount_value) }}<i>OFF</i></strong><b>{{ offer.name }}</b><p>{{ promotionCardDescription(offer) }}</p></div><p v-if="!activePromotions.length" class="no-public-offers">No active promotions at this time.</p></div><div v-else class="deal-grid"><div class="deal-card featured"><small>{{ form.deal1Badge }}</small><strong>{{ form.deal1Big }}<i>{{ form.deal1Off }}</i></strong><b>{{ form.deal1Name }}</b><p>{{ form.deal1Text }}</p></div><div class="deal-card"><small>{{ form.deal2Badge }}</small><strong>{{ form.deal2Big }}<i>{{ form.deal2Off }}</i></strong><b>{{ form.deal2Name }}</b><p>{{ form.deal2Text }}</p></div></div><div class="deal-chips"><template v-if="promotionsLoaded"><span v-for="offer in activePromotions.slice(0, 2)" :key="offer.id">{{ offerSchedule(offer) }}</span><span>No code needed</span></template><template v-else><span>{{ t(form.chip1) }}</span><span>{{ form.chip2 }}</span></template></div></section>
+          <section class="offer"><template v-if="promotionsLoaded"><div v-for="offer in activePromotions.slice(0, 2)" :key="offer.id"><strong>{{ offerDiscount(offer) }}</strong><span>{{ offer.name }}<template v-if="Number(offer.minimum_order_amount) > 0"> · Min. {{ money(offer.minimum_order_amount) }}</template></span></div><div><strong>{{ promotionSchedule }}</strong><span>Offer schedule</span></div></template><template v-else><div><strong>{{ form.offer1Title }}</strong><span>{{ form.offer1Sub }}</span></div><div><strong>{{ form.offer2Title }}</strong><span>{{ form.offer2Sub }}</span></div><div><strong>{{ form.hours || '16:00–19:00' }}</strong><span>{{ form.offer3Sub }}</span></div></template></section>
           <section id="rewards" class="rewards"><h3>{{ form.rewardsTitle }}</h3><div class="reward-grid"><div><b>{{ form.reward1Title }}</b><p>{{ form.reward1Text }}</p></div><div><b>{{ form.reward2Title }}</b><p>{{ form.reward2Text }}</p></div><div><b>{{ form.reward3Title }}</b><p>{{ form.reward3Text }}</p></div></div></section>
           <section id="reserve" class="reservation"><div><h3>{{ form.reserveTitle }}</h3><p>{{ form.reserveText }}</p></div><form @submit.prevent><label>NAME<input placeholder="Your name" /></label><label>MOBILE NUMBER<input placeholder="Mobile number" /></label><div class="form-row"><label>DATE<input type="text" placeholder="Select date" /></label><label>GUESTS<input type="text" placeholder="2 guests" /></label></div><label>{{ form.birthdayLabel }}<input placeholder="DD / MM" /></label><button type="button">{{ form.reserveButton }}</button></form></section>
           <footer><strong>{{ form.name || 'SOPNO' }}</strong><span>{{ form.address || 'ADDRESS YOUR ADDRESS' }}<br>{{ form.phone || 'PHONE: 000 000 0000' }}</span><span>OPEN {{ form.hours || 'EVERY DAY' }}<br>{{ form.terms }}</span></footer>
@@ -96,6 +96,7 @@ import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import api from '@/services/api'
 import systemSettingService from '@/services/systemSettingService'
+import offerService from '@/services/offerService'
 
 const defaults = {
   // Restaurant name is filled in automatically from the restaurant.
@@ -258,6 +259,8 @@ const fieldGroups = [
 ]
 
 const form = reactive({ ...defaults })
+const activePromotions = ref([])
+const promotionsLoaded = ref(false)
 const saved = ref(false)
 const showOfferPage = ref(false)
 const isSaving = ref(false)
@@ -281,6 +284,71 @@ const themeStyle = computed(() => ({
   '--ink': form.darkTextColor,
 }))
 
+const promotionSchedule = computed(() => {
+  if (!promotionsLoaded.value) {
+    return `${form.heroDays}, ${form.hours || '16:00–19:00'}`
+  }
+  const schedules = [...new Set(activePromotions.value.map(offerSchedule))]
+  return schedules.length ? schedules.join(' · ') : 'No active offer schedule'
+})
+
+const promotionBarText = computed(() => activePromotions.value.length
+  ? activePromotions.value.slice(0, 2).map((offer) => `${offerDiscount(offer)} ${offer.name} · ${offerSchedule(offer)}`).join(' · ')
+  : 'No active promotions currently')
+
+const promotionDescription = computed(() => activePromotions.value.length
+  ? activePromotions.value.slice(0, 2).map(promotionCardDescription).join(' ')
+  : 'There are no active promotions at this time. Please check back soon.')
+
+function money(value) {
+  return `৳ ${Number(value || 0).toLocaleString('en-BD', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+}
+
+function offerDiscount(offer) {
+  return offer.discount_type === 'percentage'
+    ? `${Number(offer.discount_value)}% OFF`
+    : `${money(offer.discount_value)} OFF`
+}
+
+function offerSchedule(offer) {
+  const days = Array.isArray(offer.days_of_week) ? offer.days_of_week : []
+  const labels = { mon: 'Mon', tue: 'Tue', wed: 'Wed', thu: 'Thu', fri: 'Fri', sat: 'Sat', sun: 'Sun' }
+  const dayText = !days.length || days.length === 7
+    ? 'Every day'
+    : days.map((day) => labels[day] || day).join(', ')
+  const start = offer.start_time ? String(offer.start_time).slice(0, 5) : ''
+  const end = offer.end_time ? String(offer.end_time).slice(0, 5) : ''
+  return `${dayText}${start && end ? `, ${start}–${end}` : ', All day'}`
+}
+
+function promotionCardDescription(offer) {
+  const minimum = Number(offer.minimum_order_amount) > 0
+    ? ` Minimum order ${money(offer.minimum_order_amount)}.`
+    : ''
+  return `${offerDiscount(offer)} ${offer.name}. Automatically applied at checkout.${minimum} ${offerSchedule(offer)}.`
+}
+
+function setPromotions(rows) {
+  const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Dhaka' }).format(new Date())
+  activePromotions.value = (Array.isArray(rows) ? rows : []).filter((offer) => {
+    if (!offer?.is_active && offer?.is_active !== undefined) return false
+    if (!['automatic', 'weekday_weekend'].includes(offer.type)) return false
+    const from = offer.valid_from ? String(offer.valid_from).slice(0, 10) : ''
+    const until = offer.valid_until ? String(offer.valid_until).slice(0, 10) : ''
+    return (!from || from <= today) && (!until || until >= today)
+  })
+  promotionsLoaded.value = true
+}
+
+async function loadAdminPromotions() {
+  try {
+    const response = await offerService.list()
+    setPromotions(response?.data || [])
+  } catch {
+    promotionsLoaded.value = false
+  }
+}
+
 // Replaces {name} and {hours} placeholders inside editable text.
 function t(value) {
   return String(value ?? '')
@@ -300,6 +368,7 @@ onMounted(async () => {
       if (data.restaurant?.name) {
         form.name = data.restaurant.name
       }
+      setPromotions(data.promotions || [])
       return
     }
 
@@ -322,6 +391,7 @@ onMounted(async () => {
     if (autoName) {
       form.name = autoName
     }
+    await loadAdminPromotions()
   } catch (error) {
     errorMessage.value = isPublicPage.value
       ? error?.response?.data?.message || 'This restaurant page is unavailable.'
@@ -483,6 +553,7 @@ async function save() {
 .site-preview.offer-preview .deals h3{margin:0 0 calc(var(--px)*30);font:400 calc(var(--px)*50)/1.1 Anton,Impact,sans-serif;letter-spacing:0;color:var(--text)}
 .site-preview.offer-preview .deals h3 em{color:var(--accent);font-style:normal}
 .site-preview.offer-preview .deal-grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--px)*24)}
+.site-preview.offer-preview .no-public-offers{grid-column:1/-1;color:var(--text);opacity:.8}
 .site-preview.offer-preview .deal-card{min-height:calc(var(--px)*250);padding:calc(var(--px)*28);border:calc(var(--px)*2) solid var(--accent);border-radius:calc(var(--px)*20);color:var(--text)}
 .site-preview.offer-preview .deal-card.featured{background:var(--accent);color:var(--ink)}
 .site-preview.offer-preview .deal-card:not(.featured){background:var(--surface-bg,#191919)}
