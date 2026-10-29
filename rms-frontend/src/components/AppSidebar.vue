@@ -1052,7 +1052,7 @@ const sidebarSections = [
       {
         key: 'landing-page',
 
-        label: 'Landing Page',
+        label: 'Landing Page Settings',
 
         route: {
           name: 'landing-page',
