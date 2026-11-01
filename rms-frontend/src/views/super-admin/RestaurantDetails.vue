@@ -70,6 +70,13 @@
       {{ error }}
     </div>
 
+    <div v-if="stripeReturnMessage" class="alert alert-success page-alert" role="status">
+      <i class="bi bi-check-circle-fill me-2"></i>{{ stripeReturnMessage }}
+    </div>
+    <div v-if="stripeReturnError" class="alert alert-warning page-alert" role="status">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ stripeReturnError }}
+    </div>
+
     <template v-if="!loading && restaurant">
       <!-- Restaurant Overview -->
       <section class="content-card overview-card">
@@ -1233,7 +1240,7 @@
                 </div>
               </div>
 
-              <div class="mb-3">
+              <div v-if="paymentForm.payment_method !== 'stripe'" class="mb-3">
                 <label for="transaction-id" class="form-label">
                   Transaction ID
                   <span
@@ -1257,7 +1264,7 @@
                 </div>
               </div>
 
-              <div class="mb-3">
+              <div v-if="paymentForm.payment_method !== 'stripe'" class="mb-3">
                 <label for="payment-reference" class="form-label">
                   Payment Reference
                 </label>
@@ -1277,7 +1284,7 @@
                 </div>
               </div>
 
-              <div class="mb-4">
+              <div v-if="paymentForm.payment_method !== 'stripe'" class="mb-4">
                 <label for="payment-notes" class="form-label">Notes</label>
                 <textarea
                   id="payment-notes"
@@ -1527,7 +1534,7 @@
             </template>
           </div>
 
-          <div class="mb-3">
+          <div v-if="renewalForm.payment_method !== 'stripe'" class="mb-3">
             <label for="renewal-transaction-id" class="form-label">
               Transaction ID
               <span
@@ -1545,7 +1552,7 @@
             />
           </div>
 
-          <div class="mb-3">
+          <div v-if="renewalForm.payment_method !== 'stripe'" class="mb-3">
             <label for="renewal-reference" class="form-label">Payment Reference</label>
             <input
               id="renewal-reference"
@@ -1557,7 +1564,7 @@
             />
           </div>
 
-          <div>
+          <div v-if="renewalForm.payment_method !== 'stripe'">
             <label for="renewal-notes" class="form-label">Notes</label>
             <textarea
               id="renewal-notes"
@@ -1814,7 +1821,7 @@
             </template>
           </div>
 
-          <div class="mb-3">
+          <div v-if="upgradeForm.payment_method !== 'stripe'" class="mb-3">
             <label
               for="upgrade-transaction-id"
               class="form-label"
@@ -1843,7 +1850,7 @@
             />
           </div>
 
-          <div class="mb-3">
+          <div v-if="upgradeForm.payment_method !== 'stripe'" class="mb-3">
             <label
               for="upgrade-reference"
               class="form-label"
@@ -1861,7 +1868,7 @@
             />
           </div>
 
-          <div>
+          <div v-if="upgradeForm.payment_method !== 'stripe'">
             <label
               for="upgrade-notes"
               class="form-label"
@@ -2138,7 +2145,7 @@
             </template>
           </div>
 
-          <div class="mb-3">
+          <div v-if="planUpdateForm.payment_method !== 'stripe'" class="mb-3">
             <label
               for="plan-update-transaction-id"
               class="form-label"
@@ -2160,7 +2167,7 @@
             />
           </div>
 
-          <div class="mb-3">
+          <div v-if="planUpdateForm.payment_method !== 'stripe'" class="mb-3">
             <label
               for="plan-update-reference"
               class="form-label"
@@ -2178,7 +2185,7 @@
             />
           </div>
 
-          <div>
+          <div v-if="planUpdateForm.payment_method !== 'stripe'">
             <label
               for="plan-update-notes"
               class="form-label"
@@ -2262,6 +2269,8 @@ import {
   getPaymentHistory,
   getPaymentMethods,
   completeRestaurantPayment,
+  createStripeCheckout,
+  confirmStripePayment,
   resetTenantAdminCredentials,
   updateSubscriptionStatus,
   completeSubscriptionRenewal,
@@ -2634,6 +2643,8 @@ const paymentMessage = ref('')
 const paymentError = ref('')
 
 const paymentValidationErrors = ref({})
+const stripeReturnMessage = ref('')
+const stripeReturnError = ref('')
 
 const paymentForm = ref({
   payment_method: '',
@@ -2958,6 +2969,16 @@ async function handlePayment() {
   paymentSubmitting.value = true
 
   try {
+    if (paymentMethod === 'stripe') {
+      const checkout = await createStripeCheckout({
+        payment_type: 'initial',
+        restaurant_id: Number(restaurant.value.id),
+        subscription_id: Number(subscription.value.id),
+      })
+      window.location.assign(checkout.data.checkout_url)
+      return
+    }
+
     const payload = {
       subscription_id:
         Number(subscription.value.id),
@@ -3379,6 +3400,17 @@ async function handleUpgradePayment() {
   upgradeSubmitting.value = true
 
   try {
+    if (upgradeForm.value.payment_method === 'stripe') {
+      const checkout = await createStripeCheckout({
+        payment_type: 'upgrade',
+        restaurant_id: Number(restaurant.value.id),
+        subscription_id: Number(subscription.value.id),
+        subscription_plan_id: Number(upgradeForm.value.subscription_plan_id),
+      })
+      window.location.assign(checkout.data.checkout_url)
+      return
+    }
+
     const response =
       await upgradeTrialToPaid(
         restaurant.value.id,
@@ -3632,6 +3664,17 @@ async function handlePlanUpdatePayment() {
   planUpdateSubmitting.value = true
 
   try {
+    if (paymentMethod === 'stripe') {
+      const checkout = await createStripeCheckout({
+        payment_type: 'plan_update',
+        restaurant_id: Number(restaurant.value.id),
+        subscription_id: Number(subscription.value.id),
+        subscription_plan_id: Number(selectedPlan.id),
+      })
+      window.location.assign(checkout.data.checkout_url)
+      return
+    }
+
     const response =
       await updatePaidSubscriptionPlan(
         restaurant.value.id,
@@ -3786,6 +3829,16 @@ async function handleRenewalPayment() {
   renewalSubmitting.value = true
 
   try {
+    if (paymentMethod === 'stripe') {
+      const checkout = await createStripeCheckout({
+        payment_type: 'renewal',
+        restaurant_id: Number(restaurant.value.id),
+        subscription_id: Number(subscription.value.id),
+      })
+      window.location.assign(checkout.data.checkout_url)
+      return
+    }
+
     const payload = {
       subscription_id:
         Number(subscription.value.id),
@@ -4592,6 +4645,25 @@ function stopLifecycleWatchers() {
 
 onMounted(async () => {
   await loadAll()
+
+  if (route.query.stripe_payment === 'success' && route.query.session_id) {
+    try {
+      const result = await confirmStripePayment(String(route.query.session_id))
+      const admin = result?.data?.admin
+      if (admin) adminCredentials.value = admin
+      stripeReturnMessage.value = admin
+        ? 'Stripe payment confirmed. Restaurant activated; the generated tenant admin credentials are available below.'
+        : 'Stripe payment confirmed and subscription updated.'
+      await loadAll()
+    } catch (stripeError) {
+      stripeReturnError.value = stripeError?.message || 'Payment confirmation is still pending. Refresh this page shortly.'
+    } finally {
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+  } else if (route.query.stripe_payment === 'cancelled') {
+    stripeReturnError.value = 'Stripe Checkout was cancelled. The payment remains unpaid.'
+    window.history.replaceState({}, '', window.location.pathname)
+  }
 
   currentTime.value = Date.now()
 

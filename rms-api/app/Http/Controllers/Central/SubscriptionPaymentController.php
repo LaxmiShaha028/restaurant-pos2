@@ -87,6 +87,8 @@ class SubscriptionPaymentController extends Controller
                 ],
             ]);
 
+        abort_if(strtolower($validated['payment_method']) === 'stripe', 422, 'Stripe payments must use Stripe Checkout.');
+
 
         /*
         |--------------------------------------------------------------------------
@@ -1063,6 +1065,8 @@ class SubscriptionPaymentController extends Controller
                 ],
             ]);
 
+        abort_if(strtolower($validated['payment_method']) === 'stripe', 422, 'Stripe payments must use Stripe Checkout.');
+
         if (
             in_array(
                 strtolower(
@@ -1449,6 +1453,8 @@ class SubscriptionPaymentController extends Controller
                 'max:1000',
             ],
         ]);
+
+        abort_if(strtolower($validated['payment_method']) === 'stripe', 422, 'Stripe payments must use Stripe Checkout.');
 
         /*
         |--------------------------------------------------------------------------
@@ -1918,6 +1924,7 @@ class SubscriptionPaymentController extends Controller
             'data' => $subscription,
             'errors' => null,
         ]);
+
     }
 
 
@@ -2091,6 +2098,8 @@ class SubscriptionPaymentController extends Controller
                 'max:1000',
             ],
         ]);
+
+        abort_if(strtolower($validated['payment_method']) === 'stripe', 422, 'Stripe payments must use Stripe Checkout.');
 
         /*
         |--------------------------------------------------------------------------

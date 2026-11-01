@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             // MenuManagementSeeder::class,
             ExpenseCategorySeeder::class,
             \Database\Seeders\Central\SubscriptionPlanSeeder::class,
+            \Database\Seeders\Central\StripePaymentMethodSeeder::class,
         ]);
     }
 }

@@ -765,6 +765,24 @@ export async function completeRestaurantPayment(
   }
 }
 
+export async function createStripeCheckout(payload) {
+  try {
+    const response = await api.post(`${CENTRAL_BASE_URL}/stripe/checkout`, payload)
+    return response.data
+  } catch (error) {
+    throw new Error(normalizeError(error))
+  }
+}
+
+export async function confirmStripePayment(sessionId) {
+  try {
+    const response = await api.post(`${CENTRAL_BASE_URL}/stripe/confirm`, { session_id: sessionId })
+    return response.data
+  } catch (error) {
+    throw new Error(normalizeError(error))
+  }
+}
+
 
 /*
 |--------------------------------------------------------------------------

@@ -2,6 +2,7 @@
 use App\Http\Controllers\Central\TenantProvisioningController;
 use App\Http\Controllers\Central\RestaurantController;
 use App\Http\Controllers\Central\SubscriptionPaymentController;
+use App\Http\Controllers\Central\StripePaymentController;
 use App\Http\Controllers\Api\AddOnController;
 use App\Http\Controllers\Api\SupplierCreditController;
 use App\Http\Controllers\Api\PurchaseReturnAccountingController;
@@ -93,6 +94,8 @@ Route::get(
         'publicLandingPage',
     ]
 );
+
+Route::post('/stripe/webhook', [StripePaymentController::class, 'webhook']);
 
 /*
 |--------------------------------------------------------------------------
@@ -270,6 +273,9 @@ Route::prefix('central')
         AuthenticateSuperAdmin::class
     )
     ->group(function (): void {
+
+    Route::post('/stripe/checkout', [StripePaymentController::class, 'checkout']);
+    Route::post('/stripe/confirm', [StripePaymentController::class, 'confirm']);
 
 
     Route::get(

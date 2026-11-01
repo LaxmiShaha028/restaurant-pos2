@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\central;
+namespace Database\Seeders\Central;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -48,6 +48,15 @@ class PaymentMethodSeeder extends Seeder
                         'code' => 'cash',
                         'account_number' => null,
                         'instructions' => 'Collect payment manually in cash.',
+                        'status' => true,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ],
+                    [
+                        'name' => 'Stripe (Test Mode)',
+                        'code' => 'stripe',
+                        'account_number' => null,
+                        'instructions' => 'Pay securely using Stripe Checkout test mode.',
                         'status' => true,
                         'created_at' => now(),
                         'updated_at' => now(),
