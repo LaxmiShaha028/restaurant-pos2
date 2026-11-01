@@ -522,6 +522,10 @@ Route::get(
         'history',
     ]
 );
+Route::get(
+    '/stripe/payments/{payment}/documents',
+    [StripePaymentController::class, 'documents']
+);
 Route::patch(
     '/restaurants/{restaurant}/status',
     [

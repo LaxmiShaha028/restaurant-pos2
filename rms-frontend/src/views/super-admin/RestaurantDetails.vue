@@ -1329,6 +1329,7 @@
                   <th>Transaction</th>
                   <th>Method</th>
                   <th>Amount</th>
+                  <th>Document</th>
                   <th>Status</th>
                   <th>Paid At</th>
                 </tr>
@@ -1363,6 +1364,27 @@
                     <span class="amount-cell">
                       {{ payment.currency || 'BDT' }} {{ payment.amount || '0.00' }}
                     </span>
+                  </td>
+
+                  <td>
+                    <a
+                      v-if="payment.invoice_url || payment.receipt_url"
+                      :href="payment.invoice_url || payment.receipt_url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {{ payment.invoice_url ? 'Invoice' : 'Receipt' }}
+                    </a>
+                    <button
+                      v-else-if="payment.gateway === 'stripe' && payment.status === 'paid'"
+                      type="button"
+                      class="btn btn-link btn-sm p-0"
+                      :disabled="payment.documentLoading"
+                      @click="loadStripePaymentDocument(payment)"
+                    >
+                      {{ payment.documentLoading ? 'Loading…' : 'Find document' }}
+                    </button>
+                    <span v-else>—</span>
                   </td>
 
                   <td>
@@ -2247,6 +2269,7 @@ import {
   completeRestaurantPayment,
   createStripeCheckout,
   confirmStripePayment,
+  getStripePaymentDocuments,
   resetTenantAdminCredentials,
   updateSubscriptionStatus,
   completeSubscriptionRenewal,
@@ -2842,6 +2865,19 @@ async function loadPayments() {
 
   payments.value = []
   paymentsPage.value = 1
+}
+
+async function loadStripePaymentDocument(payment) {
+  if (!payment?.id || payment.documentLoading) return
+  payment.documentLoading = true
+  try {
+    const response = await getStripePaymentDocuments(payment.id)
+    Object.assign(payment, response?.data || {})
+  } catch (documentError) {
+    stripeReturnError.value = documentError?.message || 'Unable to retrieve the Stripe invoice or receipt.'
+  } finally {
+    payment.documentLoading = false
+  }
 }
 
 

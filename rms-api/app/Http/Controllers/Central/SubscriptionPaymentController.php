@@ -2843,7 +2843,14 @@ class SubscriptionPaymentController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Payment history retrieved successfully.',
-            'data' => $payments,
+            'data' => $payments->map(function (Payment $payment): array {
+                $meta = $payment->gateway_response ?? [];
+
+                return array_merge($payment->toArray(), [
+                    'invoice_url' => $meta['stripe_invoice_url'] ?? $meta['stripe_invoice_pdf'] ?? null,
+                    'receipt_url' => $meta['stripe_receipt_url'] ?? null,
+                ]);
+            }),
             'errors' => null,
         ]);
     }

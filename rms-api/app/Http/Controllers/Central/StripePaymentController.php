@@ -101,6 +101,7 @@ class StripePaymentController extends Controller
             $session = (new StripeClient(config('services.stripe.secret')))->checkout->sessions->create([
                 'mode' => 'payment',
                 'customer_email' => $restaurantModel->owner_email,
+                'invoice_creation' => ['enabled' => true],
                 'line_items' => [[
                     'quantity' => 1,
                     'price_data' => [
@@ -183,10 +184,12 @@ class StripePaymentController extends Controller
                 'gateway_response' => array_merge($payment->gateway_response ?? [], [
                     'stripe_payment_intent' => $session->payment_intent,
                     'checkout_session_id' => $session->id,
+                    'stripe_invoice_id' => $session->invoice ?? null,
                 ]),
             ])->save();
 
             $this->fulfill($payment, $provisioning);
+            $this->syncStripeDocuments($payment, $session);
             DB::connection('central')->table('payment_webhooks')->where('gateway', 'stripe')->where('event_id', $event->id)->update([
                 'status' => 'processed', 'processed_at' => now(), 'updated_at' => now(),
             ]);
@@ -204,7 +207,10 @@ class StripePaymentController extends Controller
     public function confirm(Request $request, TenantProvisioningService $provisioning): JsonResponse
     {
         $data = $request->validate(['session_id' => ['required', 'string', 'max:255']]);
-        $session = (new StripeClient(config('services.stripe.secret')))->checkout->sessions->retrieve($data['session_id']);
+        $session = (new StripeClient(config('services.stripe.secret')))->checkout->sessions->retrieve(
+            $data['session_id'],
+            ['expand' => ['invoice']]
+        );
         abort_unless(($session->payment_status ?? null) === 'paid', 422, 'Stripe has not confirmed this payment yet.');
         $payment = Payment::on('central')->where('gateway', 'stripe')->where('transaction_id', $session->id)->findOrFail((int) ($session->metadata->payment_id ?? 0));
         if ($payment->status !== 'paid') {
@@ -213,6 +219,8 @@ class StripePaymentController extends Controller
             $payment->forceFill(['status' => 'paid', 'paid_at' => now(), 'reference' => $session->payment_intent ?? $session->id])->save();
             $this->fulfill($payment, $provisioning);
         }
+
+        $this->syncStripeDocuments($payment, $session);
 
         $meta = $payment->gateway_response ?? [];
         $admin = null;
@@ -226,6 +234,27 @@ class StripePaymentController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => 'Stripe payment confirmed.', 'data' => ['payment' => $payment->fresh(), 'admin' => $admin]]);
+    }
+
+    public function documents(int $paymentId): JsonResponse
+    {
+        $payment = Payment::on('central')->where('gateway', 'stripe')->findOrFail($paymentId);
+        abort_unless($payment->status === 'paid', 422, 'Documents are available after payment succeeds.');
+
+        $client = new StripeClient(config('services.stripe.secret'));
+        $meta = $payment->gateway_response ?? [];
+        $sessionId = $meta['checkout_session_id'] ?? $payment->transaction_id;
+        $session = $client->checkout->sessions->retrieve($sessionId, ['expand' => ['invoice']]);
+        $this->syncStripeDocuments($payment, $session);
+
+        $meta = $payment->fresh()->gateway_response ?? [];
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'invoice_url' => $meta['stripe_invoice_url'] ?? $meta['stripe_invoice_pdf'] ?? null,
+                'receipt_url' => $meta['stripe_receipt_url'] ?? null,
+            ],
+        ]);
     }
 
     private function fulfill(Payment $payment, TenantProvisioningService $provisioning): void
@@ -252,5 +281,44 @@ class StripePaymentController extends Controller
         }
 
         $payment->forceFill(['gateway_response' => $meta])->save();
+    }
+
+    private function syncStripeDocuments(Payment $payment, object $session): void
+    {
+        $meta = $payment->gateway_response ?? [];
+        $sessionInvoice = $session->invoice ?? null;
+        $invoiceId = is_object($sessionInvoice)
+            ? ($sessionInvoice->id ?? null)
+            : ($sessionInvoice ?: ($meta['stripe_invoice_id'] ?? null));
+        $documents = [];
+
+        if ($invoiceId) {
+            $documents['stripe_invoice_id'] = $invoiceId;
+            try {
+                $invoice = (new StripeClient(config('services.stripe.secret')))->invoices->retrieve($invoiceId);
+                $documents['stripe_invoice_url'] = $invoice->hosted_invoice_url;
+                $documents['stripe_invoice_pdf'] = $invoice->invoice_pdf;
+                $documents['stripe_receipt_url'] = $invoice->hosted_invoice_url;
+            } catch (Throwable $exception) {
+                report($exception);
+            }
+        } elseif (! empty($session->payment_intent)) {
+            try {
+                $intent = (new StripeClient(config('services.stripe.secret')))->paymentIntents->retrieve(
+                    $session->payment_intent,
+                    ['expand' => ['latest_charge']]
+                );
+                $charge = $intent->latest_charge ?? null;
+                if (is_object($charge)) {
+                    $documents['stripe_receipt_url'] = $charge->receipt_url ?? null;
+                }
+            } catch (Throwable $exception) {
+                report($exception);
+            }
+        }
+
+        if ($documents) {
+            $payment->forceFill(['gateway_response' => array_merge($meta, $documents)])->save();
+        }
     }
 }

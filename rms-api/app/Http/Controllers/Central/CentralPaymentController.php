@@ -140,6 +140,15 @@ class CentralPaymentController extends Controller
                             'reference' =>
                                 $payment->reference,
 
+                            'invoice_url' =>
+                                $meta['stripe_invoice_url']
+                                ?? $meta['stripe_invoice_pdf']
+                                ?? null,
+
+                            'receipt_url' =>
+                                $meta['stripe_receipt_url']
+                                ?? null,
+
                             'amount' =>
                                 $payment->amount,
 

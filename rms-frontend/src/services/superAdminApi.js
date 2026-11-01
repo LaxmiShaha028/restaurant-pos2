@@ -783,6 +783,15 @@ export async function confirmStripePayment(sessionId) {
   }
 }
 
+export async function getStripePaymentDocuments(paymentId) {
+  try {
+    const response = await api.get(`${CENTRAL_BASE_URL}/stripe/payments/${paymentId}/documents`)
+    return response.data
+  } catch (error) {
+    throw new Error(normalizeError(error))
+  }
+}
+
 
 /*
 |--------------------------------------------------------------------------
