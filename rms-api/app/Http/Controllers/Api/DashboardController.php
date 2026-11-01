@@ -148,37 +148,6 @@ class DashboardController extends Controller
                 )
                 ->sum('total_amount');
 
-        /*
-        |--------------------------------------------------------------------------
-        | Sales Growth
-        |--------------------------------------------------------------------------
-        */
-
-        $salesChangePercent = 0;
-
-        if ((float) $previousMonthSales > 0) {
-            $salesChangePercent =
-                round(
-                    (
-                        (
-                            (float) $currentMonthSales
-                            -
-                            (float) $previousMonthSales
-                        )
-                        /
-                        (float) $previousMonthSales
-                    )
-                    * 100,
-                    2
-                );
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Orders
-        |--------------------------------------------------------------------------
-        */
-
         $currentOrderStats =
             (clone $currentMonthOrdersQuery)
                 ->selectRaw('COUNT(*) as total_orders')
@@ -210,6 +179,37 @@ class DashboardController extends Controller
 
         $currentMonthSales =
             (float) $currentOrderStats->current_month_sales;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Sales Growth
+        |--------------------------------------------------------------------------
+        */
+
+        $salesChangePercent = 0;
+
+        if ((float) $previousMonthSales > 0) {
+            $salesChangePercent =
+                round(
+                    (
+                        (
+                            (float) $currentMonthSales
+                            -
+                            (float) $previousMonthSales
+                        )
+                        /
+                        (float) $previousMonthSales
+                    )
+                    * 100,
+                    2
+                );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Orders
+        |--------------------------------------------------------------------------
+        */
 
         $totalOrders =
             (int) $currentOrderStats->total_orders;
