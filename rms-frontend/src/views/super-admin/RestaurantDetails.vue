@@ -1225,7 +1225,7 @@
                 >
                   <option value="">Select payment method</option>
                   <option
-                    v-for="method in paymentMethods"
+                    v-for="method in initialPaymentMethods"
                     :key="method.id"
                     :value="method.code"
                   >
@@ -1237,30 +1237,6 @@
                   class="field-error"
                 >
                   {{ fieldPaymentError('payment_method') }}
-                </div>
-              </div>
-
-              <div v-if="paymentForm.payment_method !== 'stripe'" class="mb-3">
-                <label for="transaction-id" class="form-label">
-                  Transaction ID
-                  <span
-                    v-if="paymentForm.payment_method === 'bkash' || paymentForm.payment_method === 'nagad'"
-                    class="text-danger"
-                  >*</span>
-                </label>
-                <input
-                  id="transaction-id"
-                  v-model="paymentForm.transaction_id"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter transaction ID"
-                  :disabled="paymentSubmitting"
-                />
-                <div
-                  v-if="fieldPaymentError('transaction_id')"
-                  class="field-error"
-                >
-                  {{ fieldPaymentError('transaction_id') }}
                 </div>
               </div>
 
@@ -2635,6 +2611,13 @@ const subscriptionCancelReason = ref('')
 */
 
 const paymentMethods = ref([])
+const initialPaymentMethods = computed(() =>
+  paymentMethods.value.filter((method) =>
+    ['bkash', 'stripe'].includes(
+      String(method.code || '').toLowerCase(),
+    ),
+  ),
+)
 
 const paymentSubmitting = ref(false)
 
@@ -2959,10 +2942,10 @@ async function handlePayment() {
     paymentMethodRequiresTransaction(
       paymentMethod,
     ) &&
-    !paymentForm.value.transaction_id.trim()
+    !paymentForm.value.reference.trim()
   ) {
     paymentError.value =
-      'Transaction ID is required for bKash or Nagad payments.'
+      'Payment reference is required for bKash.'
     return
   }
 
@@ -2987,7 +2970,7 @@ async function handlePayment() {
         paymentMethod,
 
       transaction_id:
-        paymentForm.value.transaction_id.trim() ||
+        paymentForm.value.reference.trim() ||
         null,
 
       reference:
@@ -3372,7 +3355,7 @@ async function handleUpgradePayment() {
     !upgradeForm.value.transaction_id.trim()
   ) {
     upgradeError.value =
-      'Transaction ID is required for bKash or Nagad payments.'
+      'Payment reference is required for bKash.'
     return
   }
 
@@ -3647,7 +3630,7 @@ async function handlePlanUpdatePayment() {
     !planUpdateForm.value.transaction_id.trim()
   ) {
     planUpdateError.value =
-      'Transaction ID is required for bKash or Nagad payments.'
+      'Payment reference is required for bKash.'
     return
   }
 
@@ -3811,7 +3794,7 @@ async function handleRenewalPayment() {
     !renewalForm.value.transaction_id.trim()
   ) {
     renewalError.value =
-      'Transaction ID is required for bKash or Nagad payments.'
+      'Payment reference is required for bKash.'
     return
   }
 
