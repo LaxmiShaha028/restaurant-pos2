@@ -1183,34 +1183,22 @@
 
 @media (max-width: 1199.98px) {
   .table-list-view {
-    overflow-x: hidden;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .table-list-view__head,
   .table-list-row {
-    min-width: 0;
-
+    min-width: 760px;
     grid-template-columns:
-      minmax(115px, 1.25fr)
-      minmax(48px, 0.45fr)
-      minmax(58px, 0.55fr)
-      minmax(72px, 0.68fr)
-      minmax(100px, 1fr)
-      minmax(125px, 1.2fr);
-
-    gap: 4px;
-  }
-
-  .table-list-row {
-    padding:
-      5px
-      6px;
-  }
-
-  .table-list-view__head {
-    padding:
-      4px
-      6px;
+      minmax(190px, 1.4fr)
+      minmax(80px, .55fr)
+      minmax(100px, .7fr)
+      minmax(115px, .8fr)
+      minmax(150px, 1fr)
+      minmax(150px, 1fr);
+    gap: 8px;
   }
 
   .table-list-row__button span {
@@ -1298,122 +1286,32 @@
   }
 
 
-  /* -----------------------------------------
-     Disable desktop list shell
-  ----------------------------------------- */
-
   .table-list-view {
-    overflow: visible;
-
-    border: 0;
-    border-radius: 0;
-
-    background: transparent;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .table-list-view__head {
-    display: none;
+    display: grid;
+    min-width: 760px;
   }
-
-
-  /* -----------------------------------------
-     Mobile card row
-  ----------------------------------------- */
 
   .table-list-row {
-    display: flex;
-
-    min-width: 0;
-    min-height: 0;
-
-    align-items: stretch;
-
-    flex-direction: column;
-
-    gap: 5px;
-
-    margin-bottom: 6px;
-
-    padding: 7px;
-
-    border: 1px solid #e5e7eb;
-    border-radius: 5px;
-
-    background: #ffffff;
-  }
-
-  .table-list-row:last-child {
-    border-bottom:
-      1px solid #e5e7eb;
-  }
-
-  .table-list-row::before {
-    width: 2px;
-  }
-
-
-  /* -----------------------------------------
-     Mobile cells
-  ----------------------------------------- */
-
-  .table-list-row
-  > div:not(.table-list-row__table) {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 7px;
-
-    padding-top: 4px;
-
-    border-top: 1px solid #f0f2f5;
-  }
-
-  .table-list-row
-  > div::before {
-    flex-shrink: 0;
-
-    color: #9ca3af;
-
-    font-size: 12px;
-    font-weight: 600;
-
-    content: attr(data-label);
-  }
-
-  .table-list-row__table::before {
-    display: none;
-  }
-
-  .table-list-row__merge {
-    text-align: right;
-  }
-
-
-  /* -----------------------------------------
-     Mobile actions
-  ----------------------------------------- */
-
-  .table-list-row__actions {
-    display: grid !important;
-
+    display: grid;
+    min-width: 760px;
     grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-
-    width: 100%;
-  }
-
-  .table-list-row__button {
-    width: 100%;
-
-    min-height: 26px;
-
-    font-size: 12px;
+      minmax(190px, 1.4fr)
+      minmax(80px, .55fr)
+      minmax(100px, .7fr)
+      minmax(115px, .8fr)
+      minmax(150px, 1fr)
+      minmax(150px, 1fr);
+    gap: 8px;
   }
 
   .table-list-row__button span {
-    display: inline;
+    display: none;
   }
 }
 
