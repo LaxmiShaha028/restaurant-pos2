@@ -831,6 +831,9 @@ class OrderResource extends JsonResource
             Order::METHOD_BANK_TRANSFER =>
                 'Bank Transfer',
 
+            Order::METHOD_STRIPE =>
+                'Stripe',
+
             Order::METHOD_MIXED =>
                 'Mixed Payment',
 

@@ -54,6 +54,7 @@ class Order extends Model
     public const METHOD_BKASH = 'bkash';
     public const METHOD_NAGAD = 'nagad';
     public const METHOD_BANK_TRANSFER = 'bank_transfer';
+    public const METHOD_STRIPE = 'stripe';
     public const METHOD_MIXED = 'mixed';
 
 
@@ -174,6 +175,7 @@ class Order extends Model
             self::METHOD_BKASH,
             self::METHOD_NAGAD,
             self::METHOD_BANK_TRANSFER,
+            self::METHOD_STRIPE,
             self::METHOD_MIXED,
         ];
     }

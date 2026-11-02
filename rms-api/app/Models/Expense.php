@@ -44,6 +44,9 @@ class Expense extends Model
     public const METHOD_BANK_TRANSFER =
         'bank_transfer';
 
+    public const METHOD_STRIPE =
+        'stripe';
+
     public const METHOD_MIXED =
         'mixed';
 
@@ -441,6 +444,7 @@ class Expense extends Model
             self::METHOD_BKASH,
             self::METHOD_NAGAD,
             self::METHOD_BANK_TRANSFER,
+            self::METHOD_STRIPE,
             self::METHOD_MIXED,
             self::METHOD_OTHER,
         ];
@@ -490,6 +494,11 @@ class Expense extends Model
             ],
 
             [
+                'value' => self::METHOD_STRIPE,
+                'label' => 'Stripe',
+            ],
+
+            [
                 'value' =>
                     self::METHOD_MIXED,
 
@@ -526,6 +535,9 @@ class Expense extends Model
 
             self::METHOD_BANK_TRANSFER =>
                 'Bank Transfer',
+
+            self::METHOD_STRIPE =>
+                'Stripe',
 
             self::METHOD_MIXED =>
                 'Mixed Payment',

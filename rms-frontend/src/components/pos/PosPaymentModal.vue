@@ -68,6 +68,7 @@ const props = defineProps({
   show: { type: Boolean, default: false },
   total: { type: Number, default: 0 },
   submitting: { type: Boolean, default: false },
+  methods: { type: Array, default: () => [] },
 })
 
 const emit = defineEmits(['close', 'confirm'])
@@ -76,13 +77,14 @@ const amount = ref(0)
 const reference = ref('')
 const errorMessage = ref('')
 
-const methods = [
+const defaultMethods = [
   { value: 'cash', label: 'Cash', icon: 'bi bi-cash-stack' },
   { value: 'card', label: 'Card', icon: 'bi bi-credit-card' },
   { value: 'bkash', label: 'bKash', icon: 'bi bi-phone' },
   { value: 'nagad', label: 'Nagad', icon: 'bi bi-phone-vibrate' },
   { value: 'bank_transfer', label: 'Bank Transfer', icon: 'bi bi-bank' },
 ]
+const methods = computed(() => props.methods.length ? props.methods : defaultMethods)
 
 const validAmount = computed(() => {
   const value = Number(amount.value)

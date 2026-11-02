@@ -411,6 +411,14 @@ async getReservationsForOrder() {
     );
   },
 
+  async startStripeCheckout(payload) {
+    return getResponseBody(await api.post(`${ORDER_BASE_URL}/stripe/checkout`, payload));
+  },
+
+  async confirmStripeCheckout(sessionId) {
+    return getResponseBody(await api.post(`${ORDER_BASE_URL}/stripe/confirm`, { session_id: sessionId }));
+  },
+
 
   /*
   |--------------------------------------------------------------------------

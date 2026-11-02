@@ -9,6 +9,7 @@ use App\Http\Requests\Api\StoreOrderRequest;
 use App\Http\Requests\Api\UpdateOrderStatusRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Models\Central\PaymentMethod as CentralPaymentMethod;
 use App\Services\OrderService;
 use App\Services\OfferService;
 use App\Models\Customer;
@@ -479,7 +480,7 @@ class OrderController extends Controller
                     ],
                 ],
 
-                'payment_methods' => [
+                'payment_methods' => array_merge([
                     [
                         'value' => Order::METHOD_CASH,
                         'label' => 'Cash',
@@ -506,7 +507,12 @@ class OrderController extends Controller
                         'value' => Order::METHOD_MIXED,
                         'label' => 'Mixed Payment',
                     ],
-                ],
+                ], CentralPaymentMethod::on('central')->where('code', 'stripe')->where('status', true)->exists()
+                    ? [[
+                        'value' => Order::METHOD_STRIPE,
+                        'label' => 'Stripe',
+                    ]]
+                    : []),
             ],
         ]);
     }
@@ -671,6 +677,11 @@ public function editOptions(
     public function store(
         StoreOrderRequest $request
     ): JsonResponse {
+        if (strtolower((string) $request->validated('payment_method')) === 'stripe') {
+            throw ValidationException::withMessages([
+                'payment_method' => ['Stripe payments must be confirmed through Stripe Checkout.'],
+            ]);
+        }
         try {
             $order = $this->orderService->createOrder(
                 data: $request->validated(),

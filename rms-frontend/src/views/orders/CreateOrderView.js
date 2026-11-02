@@ -132,6 +132,10 @@ export default {
           label: "Card",
         },
         {
+          value: "stripe",
+          label: "Stripe",
+        },
+        {
           value: "bkash",
           label: "bKash",
         },
@@ -1158,6 +1162,24 @@ watch: {
 
     await this.loadCreateOptions();
 
+    const stripeSessionId = String(this.$route.query?.stripe_order_session ?? "");
+    if (stripeSessionId) {
+      try {
+        const confirmed = await orderService.confirmStripeCheckout(stripeSessionId);
+        const order = confirmed?.data?.data ?? confirmed?.data ?? confirmed;
+        await this.$router.replace({ name: "order-management", query: { success: "Stripe payment confirmed and order created.", order_id: order?.id ?? "" } });
+        return;
+      } catch (error) {
+        this.generalError = orderService.getOrderErrorMessage(error, "Stripe payment could not be confirmed.");
+      }
+    } else if (this.$route.query?.stripe_order_cancelled) {
+      this.generalError = "Stripe Checkout was cancelled. The order remains unpaid and can be paid from Order Management.";
+      const cancelQuery = this.$route.query?.tables
+        ? { tables: this.$route.query.tables }
+        : {};
+      await this.$router.replace({ name: this.$route.name || "order-create", query: cancelQuery });
+    }
+
 
     await this.loadSystemSettings();
 
@@ -1700,6 +1722,12 @@ async loadReservations() {
           this.normalizeStatuses(
             responseData.statuses
           );
+
+        if (Array.isArray(responseData.payment_methods)) {
+          this.paymentMethods = responseData.payment_methods.filter((method) =>
+            method.value !== "mixed" && !(this.isEditMode && method.value === "stripe"),
+          );
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -4540,10 +4568,23 @@ if (
               payload
             );
         } else {
-          response =
-            await orderService.createOrder(
-              payload
-            );
+          if (payload.payment_method === "stripe" && Number(payload.paid_amount) > 0) {
+            const checkoutPayload = this.$route.name === "pos-order-create"
+              ? {
+                  ...payload,
+                  checkout_context: "pos",
+                  checkout_tables: [this.form.restaurant_table_id, ...(this.form.merged_table_ids || [])]
+                    .filter(Boolean)
+                    .map(Number),
+                }
+              : payload;
+            const checkout = await orderService.startStripeCheckout(checkoutPayload);
+            const checkoutUrl = checkout?.data?.checkout_url ?? checkout?.checkout_url;
+            if (!checkoutUrl) throw new Error("Stripe Checkout URL was not returned.");
+            window.location.assign(checkoutUrl);
+            return;
+          }
+          response = await orderService.createOrder(payload);
         }
 
         /*

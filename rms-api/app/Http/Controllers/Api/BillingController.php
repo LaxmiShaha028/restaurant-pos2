@@ -846,6 +846,11 @@ class BillingController extends Controller
             ],
 
             [
+                'value' => 'stripe',
+                'label' => 'Stripe',
+            ],
+
+            [
                 'value' => 'bkash',
                 'label' => 'bKash',
             ],

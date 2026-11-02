@@ -99,6 +99,7 @@ function normalizeBootstrap(response) {
     tables: asArray(data?.pos_tables ?? data?.tables),
     categories: asArray(data?.categories),
     menuItems: asArray(data?.menu_items),
+    paymentMethods: asArray(data?.payment_methods),
     addons: asArray(data?.addons),
     waiter: data?.waiter ?? data?.user ?? null,
   }
@@ -227,6 +228,14 @@ const posOrderService = {
 
   async createOrder(payload) {
     return orderService.createOrder(payload)
+  },
+
+  async startStripeCheckout(payload) {
+    return orderService.startStripeCheckout(payload)
+  },
+
+  async confirmStripeCheckout(sessionId) {
+    return orderService.confirmStripeCheckout(sessionId)
   },
 
   async previewDiscount(payload) {

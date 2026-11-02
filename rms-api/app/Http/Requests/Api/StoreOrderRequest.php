@@ -447,6 +447,16 @@ class StoreOrderRequest extends FormRequest
                 return;
             }
 
+            if (
+                $this->isMethod('put') &&
+                strtolower((string) $this->input('payment_method')) === 'stripe'
+            ) {
+                $validator->errors()->add(
+                    'payment_method',
+                    'Stripe payments must be confirmed through Stripe Checkout.'
+                );
+            }
+
             /*
             |--------------------------------------------------------------------------
             | Existing Payment Validation

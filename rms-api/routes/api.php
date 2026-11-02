@@ -70,6 +70,7 @@ use App\Http\Controllers\Tenant\TenantEntryController;
 use App\Http\Controllers\Api\BusinessOverviewController;
 use App\Http\Controllers\Api\PickupController;
 use App\Http\Controllers\Api\OfferController;
+use App\Http\Controllers\Api\OrderStripeCheckoutController;
 
 
 
@@ -1308,6 +1309,11 @@ Route::prefix('reservations')
         Route::prefix('order-management')
             ->name('order-management.')
             ->group(function (): void {
+
+                Route::post('/stripe/checkout', [OrderStripeCheckoutController::class, 'checkout'])
+                    ->middleware('permission:orders.create');
+                Route::post('/stripe/confirm', [OrderStripeCheckoutController::class, 'confirm'])
+                    ->middleware('permission:orders.create');
 
                 Route::get('/pickup-board', [PickupController::class, 'board'])
                     ->middleware('permission:orders.view')

@@ -155,7 +155,7 @@
 
     <PosFoodDetailsModal :show="showFoodModal" :item="activeMenuItem" @close="closeFoodModal" @add="addConfiguredItem" />
     <PosCustomerCreateModal :show="showCustomerModal" @close="showCustomerModal = false" @create="stageCustomer" />
-    <PosPaymentModal :show="showPaymentModal" :total="grandTotal" :submitting="submitting" @close="showPaymentModal = false" @confirm="confirmPaymentOrder" />
+          <PosPaymentModal :show="showPaymentModal" :total="grandTotal" :submitting="submitting" :methods="paymentMethods" @close="showPaymentModal = false" @confirm="confirmPaymentOrder" />
     <PosOrderSuccessModal :show="showSuccessModal" :order="createdOrder" @new-order="startNewPosOrder" @orders="goToOrders" />
   </section>
 </template>
@@ -187,6 +187,14 @@ const settings = ref({
   restaurant_name: '', vat_type: 'percentage', vat_rate: 0,
   service_charge_type: 'percentage', service_charge_rate: 0,
 })
+const paymentMethods = ref([
+  { value: 'cash', label: 'Cash', icon: 'bi bi-cash-stack' },
+  { value: 'card', label: 'Card', icon: 'bi bi-credit-card' },
+  { value: 'bkash', label: 'bKash', icon: 'bi bi-phone' },
+  { value: 'nagad', label: 'Nagad', icon: 'bi bi-phone-vibrate' },
+  { value: 'bank_transfer', label: 'Bank Transfer', icon: 'bi bi-bank' },
+  { value: 'stripe', label: 'Stripe', icon: 'bi bi-credit-card-2-front' },
+])
 
 const selectedTableIds = ref([])
 const selectedCategory = ref('all')
@@ -488,7 +496,20 @@ async function submitOrder(payment = null) {
   submitting.value = true
   errorMessage.value = ''
   try {
-    const response = await posOrderService.createOrder(buildPayload(payment))
+    let response
+    if (payment?.payment_method === 'stripe') {
+      const checkoutPayload = {
+        ...buildPayload(payment),
+        checkout_context: 'pos',
+        checkout_tables: selectedTableIds.value,
+      }
+      const checkout = await posOrderService.startStripeCheckout(checkoutPayload)
+      const url = checkout?.data?.checkout_url ?? checkout?.checkout_url
+      if (!url) throw new Error('Stripe Checkout URL was not returned.')
+      window.location.assign(url)
+      return
+    }
+    response = await posOrderService.createOrder(buildPayload(payment))
     const body = response?.data ?? response ?? null
     createdOrder.value = body?.data ?? body
     showPaymentModal.value = false
@@ -526,6 +547,21 @@ async function loadPage() {
     menuItems.value = bootstrap.menuItems
     waiter.value = bootstrap.waiter
     settings.value = operationalSettings
+    paymentMethods.value = (bootstrap.paymentMethods || []).map((method) => ({
+      ...method,
+      icon: method.value === 'stripe' ? 'bi bi-credit-card-2-front' : method.value === 'cash' ? 'bi bi-cash-stack' : method.value === 'bank_transfer' ? 'bi bi-bank' : 'bi bi-credit-card',
+    }))
+
+    const stripeSession = String(route.query?.stripe_order_session || '')
+    if (stripeSession) {
+      const confirmed = await posOrderService.confirmStripeCheckout(stripeSession)
+      createdOrder.value = confirmed?.data ?? confirmed
+      showSuccessModal.value = true
+      await router.replace({ name: 'pos-order-create', query: route.query.tables ? { tables: route.query.tables } : {} })
+    } else if (route.query?.stripe_order_cancelled) {
+      errorMessage.value = 'Stripe Checkout was cancelled. The order remains unpaid and can be paid from Order Management.'
+      await router.replace({ name: 'pos-order-create', query: route.query.tables ? { tables: route.query.tables } : {} })
+    }
 
     const requestedIds = parseTableQuery()
     const availableIds = new Set(
