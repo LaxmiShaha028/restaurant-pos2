@@ -1068,7 +1068,10 @@ input:disabled
 }
 
 .purchase-receive-body {
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 1rem 1.25rem;
 }
 
@@ -1175,5 +1178,24 @@ input:disabled
   .purchase-receive-body {
     padding-right: 1rem;
     padding-left: 1rem;
+  }
+}
+
+/* Keep the receive form within the dialog and scroll only its content. */
+.purchase-receive-modal {
+  height: calc(100dvh - 2.5rem);
+}
+
+.purchase-receive-form {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 767.98px) {
+  .purchase-receive-modal {
+    height: 100dvh;
   }
 }

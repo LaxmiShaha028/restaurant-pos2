@@ -99,7 +99,7 @@
             </article>
           </section>
 
-          <form
+          <form class="purchase-receive-form"
             novalidate
             @submit.prevent="submitReceive"
           >
