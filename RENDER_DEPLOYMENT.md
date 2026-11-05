@@ -31,5 +31,7 @@ data that must persist.
 
 Render Free web services sleep after inactivity. The first request after sleep
 may take time while the service starts and initializes its database. Stripe is
-left unconfigured by default; add test keys in the API service environment if
-you want to demo Stripe checkout.
+left unconfigured by default. To demo Stripe checkout, add test-mode
+`STRIPE_KEY` and `STRIPE_SECRET` in the API service environment. Add
+`STRIPE_WEBHOOK_SECRET` when using Stripe webhooks. Keep these secrets in
+Render's environment settings; do not commit them to this repository.

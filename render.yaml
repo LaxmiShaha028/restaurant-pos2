@@ -35,11 +35,11 @@ services:
       - key: CENTRAL_DB_PASSWORD
         generateValue: true
       - key: STRIPE_KEY
-        value: ""
+        sync: false
       - key: STRIPE_SECRET
-        value: ""
+        sync: false
       - key: STRIPE_WEBHOOK_SECRET
-        value: ""
+        sync: false
       - key: SESSION_DRIVER
         value: file
       - key: CACHE_STORE
