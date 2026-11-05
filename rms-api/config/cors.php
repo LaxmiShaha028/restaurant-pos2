@@ -28,15 +28,16 @@ return [
     | Allowed Origins
     |--------------------------------------------------------------------------
     |
-    | Fixed frontend origins.
+    | Fixed and deployment-provided frontend origins.
     |
     */
 
-    'allowed_origins' => [
+    'allowed_origins' => array_values(array_filter([
         'http://localhost:5173',
         'http://127.0.0.1:5173',
         'https://rms-frontend-34qp.onrender.com',
-    ],
+        rtrim((string) env('FRONTEND_URL', ''), '/'),
+    ])),
 
     /*
     |--------------------------------------------------------------------------

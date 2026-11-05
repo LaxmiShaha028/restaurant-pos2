@@ -1,0 +1,69 @@
+﻿services:
+  - type: web
+    name: restaurant-pos-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./rms-api/Dockerfile
+    dockerContext: ./rms-api
+    branch: Development2
+    region: singapore
+    healthCheckPath: /api/health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        sync: false
+      - key: APP_URL
+        fromService:
+          type: web
+          name: restaurant-pos-api
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: DB_CONNECTION
+        value: central
+      - key: CENTRAL_DB_HOST
+        sync: false
+      - key: CENTRAL_DB_PORT
+        value: "4000"
+      - key: CENTRAL_DB_DATABASE
+        sync: false
+      - key: CENTRAL_DB_USERNAME
+        sync: false
+      - key: CENTRAL_DB_PASSWORD
+        sync: false
+      - key: MYSQL_ATTR_SSL_CA
+        value: /etc/ssl/certs/ca-certificates.crt
+      - key: SESSION_DRIVER
+        value: file
+      - key: CACHE_STORE
+        value: file
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: FRONTEND_URL
+        fromService:
+          type: web
+          name: restaurant-pos-frontend
+          envVarKey: RENDER_EXTERNAL_URL
+
+  - type: web
+    name: restaurant-pos-frontend
+    runtime: static
+    branch: Development2
+    buildCommand: cd rms-frontend && npm ci && npm run build
+    staticPublishPath: ./rms-frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_ORIGIN
+        fromService:
+          type: web
+          name: restaurant-pos-api
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: VITE_BACKEND_URL
+        fromService:
+          type: web
+          name: restaurant-pos-api
+          envVarKey: RENDER_EXTERNAL_URL

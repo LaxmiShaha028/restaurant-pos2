@@ -19,7 +19,9 @@ import axios from 'axios'
 */
 
 const defaultBaseURL =
-  `${window.location.protocol}//${window.location.hostname}:8000/api`
+  import.meta.env.VITE_API_ORIGIN
+    ? `${import.meta.env.VITE_API_ORIGIN.replace(/\/+$/, '')}/api`
+    : `${window.location.protocol}//${window.location.hostname}:8000/api`
 
 
 const api = axios.create({
