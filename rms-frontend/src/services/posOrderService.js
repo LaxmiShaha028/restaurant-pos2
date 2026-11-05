@@ -4,7 +4,7 @@ import systemSettingService from '@/services/systemSettingService'
 
 const BACKEND_URL = (
   import.meta.env.VITE_BACKEND_URL ||
-  'http://127.0.0.1:8000'
+  (import.meta.env.PROD ? window.location.origin : 'http://127.0.0.1:8000')
 ).replace(/\/+$/, '')
 
 function unwrap(value) {

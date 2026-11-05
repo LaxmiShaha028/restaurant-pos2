@@ -4,7 +4,7 @@ import PaginationControls from "@/components/shared/PaginationControls.vue";
 import OrderFilterSelect from "@/components/orders/OrderFilterSelect.vue";
 const BACKEND_URL = (
   import.meta.env.VITE_BACKEND_URL ||
-  "http://127.0.0.1:8000"
+  (import.meta.env.PROD ? window.location.origin : "http://127.0.0.1:8000")
 ).replace(/\/+$/, "");
 
 export default {

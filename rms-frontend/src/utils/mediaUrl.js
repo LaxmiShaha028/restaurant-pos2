@@ -2,7 +2,9 @@ const DEFAULT_API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
   (import.meta.env.VITE_API_ORIGIN
     ? `${import.meta.env.VITE_API_ORIGIN.replace(/\/+$/, '')}/api`
-    : "http://127.0.0.1:8000/api");
+    : import.meta.env.PROD
+      ? `${window.location.origin}/api`
+      : "http://127.0.0.1:8000/api");
 
 export const getApiOrigin = () => {
   const apiBase = String(

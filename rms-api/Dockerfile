@@ -1,3 +1,14 @@
+FROM node:24.14.1-alpine AS frontend-build
+
+WORKDIR /frontend
+
+COPY rms-frontend/package.json rms-frontend/package-lock.json ./
+RUN npm ci
+
+COPY rms-frontend/ ./
+ENV VITE_API_BASE_URL=/api
+RUN npm run build
+
 FROM php:8.2-cli
 
 RUN apt-get update && apt-get install -y \
@@ -31,7 +42,8 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-COPY . .
+COPY rms-api/ .
+COPY --from=frontend-build /frontend/dist/ ./public/
 
 RUN composer install \
     --no-dev \

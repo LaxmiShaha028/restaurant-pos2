@@ -1,18 +1,20 @@
 # Render free demo deployment
 
-The Render Blueprint creates a Laravel API service and a Vue static site from
-the `Development2` branch. The API container runs a small local MariaDB server
-and uses `single_database` tenancy mode. All tenant tables use a restaurant
-prefix (for example, `t12_users`) inside the same database; provisioning does
-not create separate tenant databases.
+The Render Blueprint creates one Laravel web service from the `Development2`
+branch. It serves the Vue frontend and the Laravel API from the same URL. The
+API container runs a small local MariaDB server and uses `single_database`
+tenancy mode. All tenant tables use a restaurant prefix (for example,
+`t12_users`) inside the same database; provisioning does not create separate
+tenant databases.
 
 ## Deploy
 
 1. In Render, create a Blueprint from this repository and select the
    `Development2` branch.
-2. Render builds the API and frontend services. The API entrypoint initializes
-   MariaDB, runs central migrations, seeds plans/payment methods, and creates a
-   Super Admin. The frontend receives the API URL from the Blueprint.
+2. Render builds the frontend into the API container. The API entrypoint
+   initializes MariaDB, runs central migrations, seeds plans/payment methods,
+   and creates a Super Admin. Open the API service URL for the website; API
+   requests use the same origin under `/api`.
 3. Find the generated `SUPER_ADMIN_PASSWORD` in the API service's Environment
    page. Sign in with username `admin` and that password.
 

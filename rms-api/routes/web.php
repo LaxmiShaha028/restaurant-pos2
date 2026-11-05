@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return response()->file(public_path('index.html'));
 });
+
 use App\Models\Customer;
 use App\Models\MenuItem;
 use App\Models\Order;
@@ -61,3 +62,7 @@ Route::middleware([
         ]);
     }
 );
+
+Route::get('/{path?}', function () {
+    return response()->file(public_path('index.html'));
+})->where('path', '^(?!api(?:/|$)|up$).*$');
