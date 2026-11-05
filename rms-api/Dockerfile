@@ -59,7 +59,7 @@ RUN mkdir -p \
     bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-COPY docker/render-entrypoint.sh /usr/local/bin/render-entrypoint.sh
+COPY rms-api/docker/render-entrypoint.sh /usr/local/bin/render-entrypoint.sh
 RUN chmod +x /usr/local/bin/render-entrypoint.sh
 
 CMD ["/usr/local/bin/render-entrypoint.sh"]
