@@ -5,6 +5,11 @@ $requestPath = rawurldecode(
     parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/'
 );
 
+if ($requestPath === '/') {
+    header('Location: /super-admin/login', true, 302);
+    exit;
+}
+
 if ($requestPath !== '/' && is_file($publicPath.$requestPath)) {
     return false;
 }
