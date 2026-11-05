@@ -8,6 +8,25 @@ set -eu
 : "${CENTRAL_DB_PASSWORD:?Set CENTRAL_DB_PASSWORD in the Render environment.}"
 : "${APP_KEY:?Set a persistent APP_KEY in the Render environment.}"
 
+# Render-generated values are not necessarily in Laravel's `base64:` format.
+# Derive a stable 256-bit Laravel key from the configured secret when needed.
+APP_KEY=$(php -r '
+$key = getenv("APP_KEY") ?: "";
+if (str_starts_with($key, "base64:")) {
+    $decoded = base64_decode(substr($key, 7), true);
+    if ($decoded !== false && strlen($decoded) === 32) {
+        echo $key;
+        exit;
+    }
+}
+if (strlen($key) === 32) {
+    echo $key;
+    exit;
+}
+echo "base64:" . base64_encode(hash("sha256", $key, true));
+')
+export APP_KEY
+
 DB_DIR=/tmp/mysql-data
 DB_SOCKET=/run/mysqld/mysqld.sock
 
