@@ -2,6 +2,7 @@ FROM php:8.2-cli
 
 RUN apt-get update && apt-get install -y \
     ca-certificates \
+    mariadb-server \
     git \
     unzip \
     libzip-dev \
@@ -46,4 +47,7 @@ RUN mkdir -p \
     bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-CMD ["sh", "-c", "set -e; php artisan config:clear; php artisan storage:link || true; attempt=0; until php artisan migrate --database=central --path=database/migrations/central --force; do attempt=$((attempt + 1)); if [ "$attempt" -ge 30 ]; then exit 1; fi; sleep 2; done; exec php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
+COPY docker/render-entrypoint.sh /usr/local/bin/render-entrypoint.sh
+RUN chmod +x /usr/local/bin/render-entrypoint.sh
+
+CMD ["/usr/local/bin/render-entrypoint.sh"]

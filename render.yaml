@@ -1,4 +1,4 @@
-﻿services:
+services:
   - type: web
     name: restaurant-pos-api
     runtime: docker
@@ -13,8 +13,6 @@
         value: production
       - key: APP_DEBUG
         value: "false"
-      - key: APP_KEY
-        sync: false
       - key: APP_URL
         fromService:
           type: web
@@ -22,24 +20,32 @@
           envVarKey: RENDER_EXTERNAL_URL
       - key: DB_CONNECTION
         value: central
+      - key: CENTRAL_DB_CONNECTION
+        value: mysql
       - key: CENTRAL_DB_HOST
-        sync: false
+        value: 127.0.0.1
       - key: CENTRAL_DB_PORT
-        value: "4000"
+        value: "3306"
       - key: CENTRAL_DB_DATABASE
-        sync: false
+        value: rms_central
       - key: CENTRAL_DB_USERNAME
-        sync: false
+        value: rms_app
       - key: CENTRAL_DB_PASSWORD
         sync: false
-      - key: MYSQL_ATTR_SSL_CA
-        value: /etc/ssl/certs/ca-certificates.crt
       - key: SESSION_DRIVER
         value: file
       - key: CACHE_STORE
         value: file
       - key: QUEUE_CONNECTION
         value: sync
+      - key: SUPER_ADMIN_NAME
+        sync: false
+      - key: SUPER_ADMIN_USERNAME
+        sync: false
+      - key: SUPER_ADMIN_EMAIL
+        sync: false
+      - key: SUPER_ADMIN_PASSWORD
+        sync: false
       - key: FRONTEND_URL
         fromService:
           type: web
