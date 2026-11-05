@@ -187,9 +187,11 @@ return new class extends Migration
         |--------------------------------------------------------------------------
         */
 
+        $tenantPrefix = DB::connection('tenant')->getTablePrefix();
+
         DB::connection('tenant')->statement(
-            'ALTER TABLE `recipe_mappings` ' .
-            'ADD CONSTRAINT `recipe_mapping_target_check` ' .
+            'ALTER TABLE `' . $tenantPrefix . 'recipe_mappings` ' .
+            'ADD CONSTRAINT `' . $tenantPrefix . 'recipe_mapping_target_check` ' .
             'CHECK (' .
             '(`menu_item_id` IS NOT NULL AND `add_on_id` IS NULL)' .
             ' OR ' .
@@ -200,10 +202,12 @@ return new class extends Migration
 
     public function down(): void
     {
+        $tenantPrefix = DB::connection('tenant')->getTablePrefix();
+
         Schema::connection('tenant')
             ->statement(
-                'ALTER TABLE `recipe_mappings` ' .
-                'DROP CHECK `recipe_mapping_target_check`'
+                'ALTER TABLE `' . $tenantPrefix . 'recipe_mappings` ' .
+                'DROP CHECK `' . $tenantPrefix . 'recipe_mapping_target_check`'
             );
 
         Schema::connection('tenant')

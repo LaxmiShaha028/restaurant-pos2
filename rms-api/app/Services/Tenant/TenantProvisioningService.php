@@ -472,27 +472,19 @@ if (
                             self::TENANT_CONNECTION,
 
                         'database_host' =>
-                            config(
-                                'database.connections.mysql.host'
-                            ),
+                            $this->tenantDatabaseSetting('host'),
 
                         'database_port' =>
-                            config(
-                                'database.connections.mysql.port'
-                            ),
+                            $this->tenantDatabaseSetting('port'),
 
                         'database_name' =>
                             $databaseName,
 
                         'database_username' =>
-                            config(
-                                'database.connections.mysql.username'
-                            ),
+                            $this->tenantDatabaseSetting('username'),
 
                         'database_password' =>
-                            config(
-                                'database.connections.mysql.password'
-                            ),
+                            $this->tenantDatabaseSetting('password'),
 
                         'status' =>
                             'provisioning',
@@ -1177,27 +1169,19 @@ if (
                             self::TENANT_CONNECTION,
 
                         'database_host' =>
-                            config(
-                                'database.connections.mysql.host'
-                            ),
+                            $this->tenantDatabaseSetting('host'),
 
                         'database_port' =>
-                            config(
-                                'database.connections.mysql.port'
-                            ),
+                            $this->tenantDatabaseSetting('port'),
 
                         'database_name' =>
                             $databaseName,
 
                         'database_username' =>
-                            config(
-                                'database.connections.mysql.username'
-                            ),
+                            $this->tenantDatabaseSetting('username'),
 
                         'database_password' =>
-                            config(
-                                'database.connections.mysql.password'
-                            ),
+                            $this->tenantDatabaseSetting('password'),
 
                         'status' =>
                             'provisioning',
@@ -1478,9 +1462,29 @@ if (
     |--------------------------------------------------------------------------
     */
 
+    private function tenantDatabaseSetting(string $key): mixed
+    {
+        if (
+            config('tenancy.mode') === 'single_database'
+            && $key === 'password'
+        ) {
+            return null;
+        }
+
+        $connection = config('tenancy.mode') === 'single_database'
+            ? 'central'
+            : self::DATABASE_CONNECTION;
+
+        return config("database.connections.{$connection}.{$key}");
+    }
+
     private function createDatabase(
         string $databaseName
     ): void {
+
+        if (config('tenancy.mode') === 'single_database') {
+            return;
+        }
 
         $connection =
             DB::connection(
@@ -1509,26 +1513,37 @@ if (
         TenantDatabase $tenantDatabase
     ): void {
 
+        $singleDatabaseMode =
+            config('tenancy.mode') === 'single_database';
+
+        $centralConfig =
+            config('database.connections.central', []);
+
         config([
             'database.connections.tenant' => [
 
                 'driver' =>
                     'mysql',
 
-                'host' =>
-                    $tenantDatabase->database_host,
+                'host' => $singleDatabaseMode
+                    ? $centralConfig['host']
+                    : $tenantDatabase->database_host,
 
-                'port' =>
-                    $tenantDatabase->database_port,
+                'port' => $singleDatabaseMode
+                    ? $centralConfig['port']
+                    : $tenantDatabase->database_port,
 
-                'database' =>
-                    $tenantDatabase->database_name,
+                'database' => $singleDatabaseMode
+                    ? $centralConfig['database']
+                    : $tenantDatabase->database_name,
 
-                'username' =>
-                    $tenantDatabase->database_username,
+                'username' => $singleDatabaseMode
+                    ? $centralConfig['username']
+                    : $tenantDatabase->database_username,
 
-                'password' =>
-                    $tenantDatabase->database_password,
+                'password' => $singleDatabaseMode
+                    ? $centralConfig['password']
+                    : $tenantDatabase->database_password,
 
                 'unix_socket' =>
                     env(
@@ -1542,8 +1557,9 @@ if (
                 'collation' =>
                     'utf8mb4_unicode_ci',
 
-                'prefix' =>
-                    '',
+                'prefix' => $singleDatabaseMode
+                    ? 't' . (int) $tenantDatabase->restaurant_id . '_'
+                    : '',
 
                 'prefix_indexes' =>
                     true,
@@ -1709,6 +1725,10 @@ if (
     private function generateDatabaseName(
     string $slug
 ): string {
+    if (config('tenancy.mode') === 'single_database') {
+        return (string) config('database.connections.central.database');
+    }
+
     $base =
         'tenant_'
         .

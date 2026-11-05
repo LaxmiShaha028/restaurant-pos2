@@ -85,13 +85,15 @@ class TenantConnectionManager
         |--------------------------------------------------------------------------
         */
 
-        $databaseName =
-            trim(
-                (string) (
-                    $tenantDatabase->database_name
-                    ?? ''
-                )
-            );
+        $singleDatabaseMode =
+            config('tenancy.mode') === 'single_database';
+
+        $centralConfig =
+            config('database.connections.central', []);
+
+        $databaseName = $singleDatabaseMode
+            ? trim((string) ($centralConfig['database'] ?? ''))
+            : trim((string) ($tenantDatabase->database_name ?? ''));
 
         if ($databaseName === '') {
 
@@ -106,13 +108,9 @@ class TenantConnectionManager
         |--------------------------------------------------------------------------
         */
 
-        $databaseHost =
-            trim(
-                (string) (
-                    $tenantDatabase->database_host
-                    ?? ''
-                )
-            );
+        $databaseHost = $singleDatabaseMode
+            ? trim((string) ($centralConfig['host'] ?? ''))
+            : trim((string) ($tenantDatabase->database_host ?? ''));
 
         if ($databaseHost === '') {
 
@@ -127,13 +125,9 @@ class TenantConnectionManager
         |--------------------------------------------------------------------------
         */
 
-        $databaseUsername =
-            trim(
-                (string) (
-                    $tenantDatabase->database_username
-                    ?? ''
-                )
-            );
+        $databaseUsername = $singleDatabaseMode
+            ? trim((string) ($centralConfig['username'] ?? ''))
+            : trim((string) ($tenantDatabase->database_username ?? ''));
 
         if ($databaseUsername === '') {
 
@@ -177,13 +171,9 @@ class TenantConnectionManager
             'host' =>
                 $databaseHost,
 
-            'port' =>
-                (int) (
-                    $tenantDatabase
-                        ->database_port
-                    ??
-                    3306
-                ),
+            'port' => $singleDatabaseMode
+                ? (int) ($centralConfig['port'] ?? 3306)
+                : (int) ($tenantDatabase->database_port ?? 3306),
 
             'database' =>
                 $databaseName,
@@ -191,13 +181,9 @@ class TenantConnectionManager
             'username' =>
                 $databaseUsername,
 
-            'password' =>
-                (string) (
-                    $tenantDatabase
-                        ->database_password
-                    ??
-                    ''
-                ),
+            'password' => $singleDatabaseMode
+                ? (string) ($centralConfig['password'] ?? '')
+                : (string) ($tenantDatabase->database_password ?? ''),
 
             'unix_socket' =>
                 env(
@@ -211,8 +197,9 @@ class TenantConnectionManager
             'collation' =>
                 'utf8mb4_unicode_ci',
 
-            'prefix' =>
-                '',
+            'prefix' => $singleDatabaseMode
+                ? 't' . (int) $restaurant->id . '_'
+                : '',
 
             'prefix_indexes' =>
                 true,

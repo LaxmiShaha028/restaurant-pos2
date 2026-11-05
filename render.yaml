@@ -13,6 +13,8 @@ services:
         value: production
       - key: APP_DEBUG
         value: "false"
+      - key: APP_KEY
+        generateValue: true
       - key: APP_URL
         fromService:
           type: web
@@ -20,18 +22,24 @@ services:
           envVarKey: RENDER_EXTERNAL_URL
       - key: DB_CONNECTION
         value: central
-      - key: CENTRAL_DB_CONNECTION
-        value: mysql
+      - key: TENANCY_MODE
+        value: single_database
       - key: CENTRAL_DB_HOST
         value: 127.0.0.1
       - key: CENTRAL_DB_PORT
         value: "3306"
       - key: CENTRAL_DB_DATABASE
-        value: rms_central
+        value: rms_demo
       - key: CENTRAL_DB_USERNAME
-        value: rms_app
+        value: rms_demo
       - key: CENTRAL_DB_PASSWORD
-        sync: false
+        generateValue: true
+      - key: STRIPE_KEY
+        value: ""
+      - key: STRIPE_SECRET
+        value: ""
+      - key: STRIPE_WEBHOOK_SECRET
+        value: ""
       - key: SESSION_DRIVER
         value: file
       - key: CACHE_STORE
@@ -39,13 +47,13 @@ services:
       - key: QUEUE_CONNECTION
         value: sync
       - key: SUPER_ADMIN_NAME
-        sync: false
+        value: Super Admin
       - key: SUPER_ADMIN_USERNAME
-        sync: false
+        value: admin
       - key: SUPER_ADMIN_EMAIL
-        sync: false
+        value: admin@rms.local
       - key: SUPER_ADMIN_PASSWORD
-        sync: false
+        generateValue: true
       - key: FRONTEND_URL
         fromService:
           type: web
