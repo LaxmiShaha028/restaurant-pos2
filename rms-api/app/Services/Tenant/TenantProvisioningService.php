@@ -283,6 +283,8 @@ $restaurant->loadMissing([
 $existingTenantDatabase =
     $restaurant->tenantDatabase;
 
+$failedTenantDatabase = null;
+
 /*
 |--------------------------------------------------------------------------
 | Already Active Protection
@@ -310,24 +312,7 @@ if (
     &&
     $existingTenantDatabase->status === 'failed'
 ) {
-
-    /*
-    |--------------------------------------------------------------------------
-    | Remove Failed Tenant Database Record
-    |--------------------------------------------------------------------------
-    */
-
-    $existingTenantDatabase->delete();
-
-    /*
-    |--------------------------------------------------------------------------
-    | Refresh Restaurant Relation
-    |--------------------------------------------------------------------------
-    */
-
-    $restaurant->unsetRelation(
-        'tenantDatabase'
-    );
+    $failedTenantDatabase = $existingTenantDatabase;
 }
 
         /*
@@ -371,6 +356,26 @@ if (
     throw new RuntimeException(
         'This provisioning flow is only available for paid subscriptions.'
     );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Clean Up Incomplete Shared-Database Provisioning
+|--------------------------------------------------------------------------
+|
+| A failed migration can leave some prefixed tenant tables behind without
+| recording the migration. Remove only this inactive restaurant's table
+| prefix before retrying, so migrations can start from a clean schema.
+|
+*/
+
+if ($failedTenantDatabase) {
+    if (config('tenancy.mode') === 'single_database') {
+        $this->dropTenantTables((int) $restaurant->id);
+    }
+
+    $failedTenantDatabase->delete();
+    $restaurant->unsetRelation('tenantDatabase');
 }
 
         /*
@@ -1501,6 +1506,36 @@ if (
         $connection->statement(
             "CREATE DATABASE IF NOT EXISTS `{$safeName}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
         );
+    }
+
+    private function dropTenantTables(int $restaurantId): void
+    {
+        $connection = DB::connection('central');
+        $databaseName = (string) config('database.connections.central.database');
+        $prefix = 't' . $restaurantId . '_';
+
+        $tables = $connection->select(
+            'SELECT TABLE_NAME AS table_name
+             FROM information_schema.TABLES
+             WHERE TABLE_SCHEMA = ?
+               AND LEFT(TABLE_NAME, CHAR_LENGTH(?)) = ?',
+            [$databaseName, $prefix, $prefix]
+        );
+
+        if ($tables === []) {
+            return;
+        }
+
+        $connection->statement('SET FOREIGN_KEY_CHECKS = 0');
+
+        try {
+            foreach ($tables as $table) {
+                $tableName = str_replace('`', '``', (string) $table->table_name);
+                $connection->statement("DROP TABLE IF EXISTS `{$tableName}`");
+            }
+        } finally {
+            $connection->statement('SET FOREIGN_KEY_CHECKS = 1');
+        }
     }
 
     /*
