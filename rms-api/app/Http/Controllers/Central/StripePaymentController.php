@@ -213,12 +213,15 @@ class StripePaymentController extends Controller
         );
         abort_unless(($session->payment_status ?? null) === 'paid', 422, 'Stripe has not confirmed this payment yet.');
         $payment = Payment::on('central')->where('gateway', 'stripe')->where('transaction_id', $session->id)->findOrFail((int) ($session->metadata->payment_id ?? 0));
+
+        $expectedAmount = (int) round((float) $payment->amount * 100);
+        abort_unless((int) $session->amount_total === $expectedAmount && strtolower($payment->currency) === strtolower($session->currency), 422, 'Stripe payment amount did not match.');
         if ($payment->status !== 'paid') {
-            $expectedAmount = (int) round((float) $payment->amount * 100);
-            abort_unless((int) $session->amount_total === $expectedAmount && strtolower($payment->currency) === strtolower($session->currency), 422, 'Stripe payment amount did not match.');
             $payment->forceFill(['status' => 'paid', 'paid_at' => now(), 'reference' => $session->payment_intent ?? $session->id])->save();
-            $this->fulfill($payment, $provisioning);
         }
+
+        // Retry fulfillment if payment was paid but tenant provisioning failed previously.
+        $this->fulfill($payment, $provisioning);
 
         $this->syncStripeDocuments($payment, $session);
 
@@ -265,7 +268,10 @@ class StripePaymentController extends Controller
         $subscription = Subscription::on('central')->with('plan')->findOrFail($payment->subscription_id);
 
         if ($type === 'initial') {
-            if ($restaurant->status === 'pending') {
+            if (
+                $subscription->status === 'pending'
+                && in_array($restaurant->status, ['pending', 'failed', 'provisioning'], true)
+            ) {
                 $result = $provisioning->provisionExistingRestaurant($restaurant);
                 $meta['admin_username'] = $result['admin']['username'];
                 $meta['admin_password_encrypted'] = Crypt::encryptString($result['admin']['password']);
