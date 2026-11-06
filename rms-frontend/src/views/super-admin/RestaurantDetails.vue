@@ -300,7 +300,15 @@
             {{ provisioningRetryMessage }}
           </div>
           <div v-if="provisioningRetryError" class="alert alert-danger soft-alert" role="alert">
-            {{ provisioningRetryError }}
+            <div style="white-space: pre-wrap; overflow-wrap: anywhere; max-height: 260px; overflow-y: auto;">{{ provisioningRetryError }}</div>
+          </div>
+          <div
+            v-if="tenantDatabase?.last_error && !provisioningRetryError"
+            class="alert alert-danger soft-alert"
+            role="alert"
+          >
+            <strong>Last provisioning error:</strong>
+            <div style="white-space: pre-wrap; overflow-wrap: anywhere; max-height: 260px; overflow-y: auto;">{{ tenantDatabase.last_error }}</div>
           </div>
 
           <template v-if="tenantDatabase">

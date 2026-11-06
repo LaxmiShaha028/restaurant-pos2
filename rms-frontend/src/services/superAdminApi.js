@@ -618,7 +618,12 @@ export async function retryRestaurantProvisioning(
 
     return response.data
   } catch (error) {
-    throw new Error(normalizeError(error))
+    const provisioningError =
+      error?.response?.data?.errors?.provisioning?.[0]
+
+    throw new Error(
+      provisioningError || normalizeError(error)
+    )
   }
 }
 
