@@ -74,6 +74,7 @@
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
+import '@/assets/css/table-management.css'
 import offerService from '@/services/offerService'
 
 const weekDays = [
@@ -234,4 +235,3 @@ onMounted(loadOffers)
 .birthday-offer-note{grid-column:1/-1;margin:-2px 0 0;padding:8px 10px;border:1px solid #fed7aa;border-radius:6px;background:#fff7ed;color:#9a3412;font-size:11px;line-height:1.4}.birthday-offer-note i{margin-right:4px;color:#f97316}
 </style>
 
-<style src="@/assets/css/table-management.css"></style>

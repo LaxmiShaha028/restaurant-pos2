@@ -3,6 +3,7 @@ import {
   onMounted,
   ref,
 } from "vue";
+import "@/assets/css/table-management.css";
 
 import TableList from "@/components/tables/TableList.vue";
 import EditTableModal from "@/components/tables/EditTableModal.vue";
@@ -518,6 +519,3 @@ onMounted(() => {
   </div>
 </template>
 
-<style
-  src="@/assets/css/table-management.css"
-></style>
