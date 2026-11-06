@@ -8,7 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::connection('tenant')
+        $schema = Schema::connection('tenant');
+
+        // A previous provisioning attempt can create this table and then fail
+        // before Laravel records the migration. Keep retries idempotent.
+        if ($schema->hasTable('shift_schedule_overrides')) {
+            return;
+        }
+
+        $schema
             ->create(
                 'shift_schedule_overrides',
                 function (Blueprint $table): void {
