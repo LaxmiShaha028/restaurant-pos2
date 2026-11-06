@@ -82,12 +82,12 @@ return new class extends Migration
                     $table->index([
                         'shift_schedule_id',
                         'override_date',
-                    ]);
+                    ], 'shift_sched_override_sched_date_idx');
 
                     $table->index([
                         'override_date',
                         'override_type',
-                    ]);
+                    ], 'shift_sched_override_date_type_idx');
                 }
             );
     }
