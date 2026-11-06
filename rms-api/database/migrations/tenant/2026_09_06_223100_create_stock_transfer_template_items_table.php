@@ -19,7 +19,8 @@ return new class extends Migration
                         'stock_transfer_template_id'
                     )
                         ->constrained(
-                            'stock_transfer_templates'
+                            'stock_transfer_templates',
+                            indexName: 'stti_template_fk'
                         )
                         ->cascadeOnDelete();
 
@@ -27,7 +28,8 @@ return new class extends Migration
                         'raw_material_id'
                     )
                         ->constrained(
-                            'raw_materials'
+                            'raw_materials',
+                            indexName: 'stti_material_fk'
                         )
                         ->restrictOnDelete();
 

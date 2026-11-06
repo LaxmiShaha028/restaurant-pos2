@@ -20,7 +20,8 @@ return new class extends Migration
                         'purchase_order_receipt_id'
                     )
                         ->constrained(
-                            'purchase_order_receipts'
+                            'purchase_order_receipts',
+                            indexName: 'pori_receipt_fk'
                         )
                         ->restrictOnDelete();
 
@@ -28,7 +29,8 @@ return new class extends Migration
                         'purchase_order_item_id'
                     )
                         ->constrained(
-                            'purchase_order_items'
+                            'purchase_order_items',
+                            indexName: 'pori_po_item_fk'
                         )
                         ->restrictOnDelete();
 
@@ -36,7 +38,8 @@ return new class extends Migration
                         'raw_material_id'
                     )
                         ->constrained(
-                            'raw_materials'
+                            'raw_materials',
+                            indexName: 'pori_material_fk'
                         )
                         ->restrictOnDelete();
 
