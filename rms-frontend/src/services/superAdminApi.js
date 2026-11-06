@@ -604,6 +604,27 @@ export async function getPaymentHistory(
 
 /*
 |--------------------------------------------------------------------------
+| Retry Paid Restaurant Provisioning
+|--------------------------------------------------------------------------
+*/
+
+export async function retryRestaurantProvisioning(
+  restaurantId
+) {
+  try {
+    const response = await api.post(
+      `${CENTRAL_BASE_URL}/restaurants/${restaurantId}/subscriptions/retry-provisioning`
+    )
+
+    return response.data
+  } catch (error) {
+    throw new Error(normalizeError(error))
+  }
+}
+
+
+/*
+|--------------------------------------------------------------------------
 | Update Restaurant Status
 |--------------------------------------------------------------------------
 */

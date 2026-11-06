@@ -277,9 +277,32 @@
               <p>Provisioning and database connection information.</p>
             </div>
           </div>
+
+          <button
+            v-if="canRetryProvisioning"
+            type="button"
+            class="btn btn-outline-primary"
+            :disabled="provisioningRetrySubmitting"
+            @click="handleRetryProvisioning"
+          >
+            <span
+              v-if="provisioningRetrySubmitting"
+              class="spinner-border spinner-border-sm me-1"
+              aria-hidden="true"
+            ></span>
+            <i v-else class="bi bi-arrow-repeat me-1"></i>
+            {{ provisioningRetrySubmitting ? 'Retrying...' : 'Retry Provisioning' }}
+          </button>
         </div>
 
         <div class="content-card-body">
+          <div v-if="provisioningRetryMessage" class="alert alert-success soft-alert" role="status">
+            {{ provisioningRetryMessage }}
+          </div>
+          <div v-if="provisioningRetryError" class="alert alert-danger soft-alert" role="alert">
+            {{ provisioningRetryError }}
+          </div>
+
           <template v-if="tenantDatabase">
             <div class="info-grid info-grid-3">
               <div class="info-item info-item-wide">
@@ -2276,6 +2299,7 @@ import {
   getSubscriptionPlans,
   upgradeTrialToPaid,
   updatePaidSubscriptionPlan,
+  retryRestaurantProvisioning,
 } from '@/services/superAdminApi'
 
 
@@ -2332,6 +2356,22 @@ const currentTime = ref(Date.now())
 
 const tenantDatabase = computed(() => {
   return restaurant.value?.tenant_database ?? null
+})
+
+const canRetryProvisioning = computed(() => {
+  if (
+    tenantDatabase.value?.status !== 'failed' ||
+    subscription.value?.status !== 'pending' ||
+    !subscription.value?.id
+  ) {
+    return false
+  }
+
+  return payments.value.some((payment) =>
+    payment.status === 'paid' &&
+    Number(payment.subscription_id) === Number(subscription.value.id) &&
+    payment.gateway_response?.payment_type === 'initial'
+  )
 })
 
 
@@ -2648,6 +2688,10 @@ const paymentMessage = ref('')
 
 const paymentError = ref('')
 
+const provisioningRetrySubmitting = ref(false)
+const provisioningRetryMessage = ref('')
+const provisioningRetryError = ref('')
+
 const paymentValidationErrors = ref({})
 const stripeReturnMessage = ref('')
 const stripeReturnError = ref('')
@@ -2865,6 +2909,32 @@ async function loadPayments() {
 
   payments.value = []
   paymentsPage.value = 1
+}
+
+async function handleRetryProvisioning() {
+  provisioningRetryMessage.value = ''
+  provisioningRetryError.value = ''
+
+  if (!restaurant.value?.id) {
+    provisioningRetryError.value = 'Restaurant could not be identified.'
+    return
+  }
+
+  provisioningRetrySubmitting.value = true
+
+  try {
+    const response = await retryRestaurantProvisioning(restaurant.value.id)
+    if (!response?.success) {
+      throw new Error(response?.message || 'Provisioning retry failed.')
+    }
+
+    provisioningRetryMessage.value = response.message || 'Restaurant provisioning completed.'
+    await loadAll()
+  } catch (retryError) {
+    provisioningRetryError.value = retryError?.message || 'Provisioning retry failed.'
+  } finally {
+    provisioningRetrySubmitting.value = false
+  }
 }
 
 async function loadStripePaymentDocument(payment) {
