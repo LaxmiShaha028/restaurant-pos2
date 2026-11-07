@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    private function tenantConstraintName(string $name): string
+    {
+        return substr((string) config('database.connections.tenant.prefix', '') . $name, 0, 64);
+    }
+
     public function up(): void
     {
         Schema::connection('tenant')->create(
@@ -35,10 +40,10 @@ return new class extends Migration
                 $table->timestamps();
 
                 // Explicit short names avoid MySQL's 64-character identifier limit.
-                $table->foreign('supplier_id', 'pr_supplier_fk')
+                $table->foreign('supplier_id', $this->tenantConstraintName('pr_supplier_fk'))
                     ->references('id')->on('suppliers')->nullOnDelete();
 
-                $table->foreign('created_by', 'pr_creator_fk')
+                $table->foreign('created_by', $this->tenantConstraintName('pr_creator_fk'))
                     ->references('id')->on('users')->nullOnDelete();
 
                 $table->index('returned_at', 'pr_returned_at_idx');

@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    private function tenantConstraintName(string $name): string
+    {
+        return substr((string) config('database.connections.tenant.prefix', '') . $name, 0, 64);
+    }
+
     public function up(): void
     {
         Schema::create('order_stripe_checkouts', function (Blueprint $table): void {
@@ -19,7 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id')->nullable();
             $table->json('order_payload');
             $table->timestamps();
-            $table->foreign('order_id')->references('id')->on('orders')->nullOnDelete();
+            $table->foreign('order_id', $this->tenantConstraintName('order_stripe_checkouts_order_id_fk'))->references('id')->on('orders')->nullOnDelete();
             $table->index(['status', 'created_at']);
         });
     }

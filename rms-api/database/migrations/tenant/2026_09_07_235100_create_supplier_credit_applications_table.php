@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    private function tenantConstraintName(string $name): string
+    {
+        return substr((string) config('database.connections.tenant.prefix', '') . $name, 0, 64);
+    }
+
     public function up(): void
     {
         if (
@@ -88,7 +93,7 @@ return new class extends Migration
 
                     $table->foreign(
                         'source_settlement_id',
-                        'sca_source_fk'
+                        $this->tenantConstraintName('sca_source_fk')
                     )
                         ->references('id')
                         ->on('purchase_return_settlements')
@@ -96,7 +101,7 @@ return new class extends Migration
 
                     $table->foreign(
                         'supplier_id',
-                        'sca_supplier_fk'
+                        $this->tenantConstraintName('sca_supplier_fk')
                     )
                         ->references('id')
                         ->on('suppliers')
@@ -104,7 +109,7 @@ return new class extends Migration
 
                     $table->foreign(
                         'purchase_order_id',
-                        'sca_po_fk'
+                        $this->tenantConstraintName('sca_po_fk')
                     )
                         ->references('id')
                         ->on('purchase_orders')
@@ -112,7 +117,7 @@ return new class extends Migration
 
                     $table->foreign(
                         'created_by',
-                        'sca_user_fk'
+                        $this->tenantConstraintName('sca_user_fk')
                     )
                         ->references('id')
                         ->on('users')

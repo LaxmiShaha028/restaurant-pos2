@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    private function tenantConstraintName(string $name): string
+    {
+        return substr((string) config('database.connections.tenant.prefix', '') . $name, 0, 64);
+    }
+
     public function up(): void
     {
         Schema::connection('tenant')
@@ -108,7 +113,7 @@ return new class extends Migration
 
                     $table->foreign(
                         'variant_id',
-                        'recipe_mapping_variant_fk'
+                        $this->tenantConstraintName('recipe_mapping_variant_fk')
                     )
                         ->references('id')
                         ->on('menu_item_variants')
@@ -117,7 +122,7 @@ return new class extends Migration
 
                     $table->foreign(
                         'add_on_id',
-                        'recipe_mapping_addon_fk'
+                        $this->tenantConstraintName('recipe_mapping_addon_fk')
                     )
                         ->references('id')
                         ->on('add_ons')

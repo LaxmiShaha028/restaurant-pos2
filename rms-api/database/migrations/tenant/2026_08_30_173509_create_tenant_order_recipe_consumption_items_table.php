@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    private function tenantConstraintName(string $name): string
+    {
+        return substr((string) config('database.connections.tenant.prefix', '') . $name, 0, 64);
+    }
+
     public function up(): void
     {
         Schema::connection('tenant')
@@ -27,7 +32,7 @@ return new class extends Migration
 
                     $table->foreign(
                         'order_recipe_consumption_id',
-                        'orci_consumption_fk'
+                        $this->tenantConstraintName('orci_consumption_fk')
                     )
                         ->references('id')
                         ->on('order_recipe_consumptions')
@@ -45,7 +50,7 @@ return new class extends Migration
 
                     $table->foreign(
                         'raw_material_id',
-                        'orci_material_fk'
+                        $this->tenantConstraintName('orci_material_fk')
                     )
                         ->references('id')
                         ->on('raw_materials')

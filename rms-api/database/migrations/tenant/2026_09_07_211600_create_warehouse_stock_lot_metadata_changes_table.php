@@ -20,6 +20,11 @@ return new class extends Migration
     private const LOT_DATE_INDEX =
         'wsl_meta_lot_date_idx';
 
+    private function tenantConstraintName(string $name): string
+    {
+        return substr((string) config('database.connections.tenant.prefix', '') . $name, 0, 64);
+    }
+
 
     public function up(): void
     {
@@ -111,7 +116,7 @@ return new class extends Migration
 
         if (
             !$this->constraintExists(
-                self::LOT_FOREIGN_KEY
+                $this->tenantConstraintName(self::LOT_FOREIGN_KEY)
             )
         ) {
 
@@ -122,7 +127,7 @@ return new class extends Migration
 
                         $table->foreign(
                             'warehouse_stock_lot_id',
-                            self::LOT_FOREIGN_KEY
+                            $this->tenantConstraintName(self::LOT_FOREIGN_KEY)
                         )
                             ->references(
                                 'id'
@@ -144,7 +149,7 @@ return new class extends Migration
 
         if (
             !$this->constraintExists(
-                self::USER_FOREIGN_KEY
+                $this->tenantConstraintName(self::USER_FOREIGN_KEY)
             )
         ) {
 
@@ -155,7 +160,7 @@ return new class extends Migration
 
                         $table->foreign(
                             'created_by',
-                            self::USER_FOREIGN_KEY
+                            $this->tenantConstraintName(self::USER_FOREIGN_KEY)
                         )
                             ->references(
                                 'id'
@@ -218,24 +223,24 @@ return new class extends Migration
 
                     if (
                         $this->constraintExists(
-                            self::LOT_FOREIGN_KEY
+                            $this->tenantConstraintName(self::LOT_FOREIGN_KEY)
                         )
                     ) {
 
                         $table->dropForeign(
-                            self::LOT_FOREIGN_KEY
+                            $this->tenantConstraintName(self::LOT_FOREIGN_KEY)
                         );
                     }
 
 
                     if (
                         $this->constraintExists(
-                            self::USER_FOREIGN_KEY
+                            $this->tenantConstraintName(self::USER_FOREIGN_KEY)
                         )
                     ) {
 
                         $table->dropForeign(
-                            self::USER_FOREIGN_KEY
+                            $this->tenantConstraintName(self::USER_FOREIGN_KEY)
                         );
                     }
                 }

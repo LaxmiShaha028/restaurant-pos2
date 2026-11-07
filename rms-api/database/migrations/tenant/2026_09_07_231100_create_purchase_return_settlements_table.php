@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    private function tenantConstraintName(string $name): string
+    {
+        return substr((string) config('database.connections.tenant.prefix', '') . $name, 0, 64);
+    }
+
     public function up(): void
     {
         Schema::connection('tenant')
@@ -89,7 +94,7 @@ return new class extends Migration
 
                     $table->foreign(
                         'purchase_return_id',
-                        'prs_return_fk'
+                        $this->tenantConstraintName('prs_return_fk')
                     )
                         ->references('id')
                         ->on('purchase_returns')
@@ -97,7 +102,7 @@ return new class extends Migration
 
                     $table->foreign(
                         'supplier_id',
-                        'prs_supplier_fk'
+                        $this->tenantConstraintName('prs_supplier_fk')
                     )
                         ->references('id')
                         ->on('suppliers')
@@ -105,7 +110,7 @@ return new class extends Migration
 
                     $table->foreign(
                         'purchase_order_id',
-                        'prs_po_fk'
+                        $this->tenantConstraintName('prs_po_fk')
                     )
                         ->references('id')
                         ->on('purchase_orders')
@@ -113,7 +118,7 @@ return new class extends Migration
 
                     $table->foreign(
                         'parent_settlement_id',
-                        'prs_parent_fk'
+                        $this->tenantConstraintName('prs_parent_fk')
                     )
                         ->references('id')
                         ->on('purchase_return_settlements')
@@ -121,7 +126,7 @@ return new class extends Migration
 
                     $table->foreign(
                         'created_by',
-                        'prs_user_fk'
+                        $this->tenantConstraintName('prs_user_fk')
                     )
                         ->references('id')
                         ->on('users')

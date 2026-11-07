@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    private function tenantConstraintName(string $name): string
+    {
+        return substr((string) config('database.connections.tenant.prefix', '') . $name, 0, 64);
+    }
+
     public function up(): void
     {
         Schema::connection('tenant')
@@ -20,7 +25,7 @@ return new class extends Migration
                     )
                         ->constrained(
                             'stock_transfer_templates',
-                            indexName: 'stti_template_fk'
+                            indexName: $this->tenantConstraintName('stti_template_fk')
                         )
                         ->cascadeOnDelete();
 
@@ -29,7 +34,7 @@ return new class extends Migration
                     )
                         ->constrained(
                             'raw_materials',
-                            indexName: 'stti_material_fk'
+                            indexName: $this->tenantConstraintName('stti_material_fk')
                         )
                         ->restrictOnDelete();
 

@@ -7,6 +7,15 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
 
+    private function tenantConstraintName(string $name): string
+    {
+        return substr(
+            (string) config('database.connections.tenant.prefix', '') . $name,
+            0,
+            64
+        );
+    }
+
     public function up(): void
     {
         Schema::connection('tenant')
@@ -21,7 +30,7 @@ return new class extends Migration
                     )
                         ->constrained(
                             'purchase_order_receipts',
-                            indexName: 'pori_receipt_fk'
+                            indexName: $this->tenantConstraintName('pori_receipt_fk')
                         )
                         ->restrictOnDelete();
 
@@ -30,7 +39,7 @@ return new class extends Migration
                     )
                         ->constrained(
                             'purchase_order_items',
-                            indexName: 'pori_po_item_fk'
+                            indexName: $this->tenantConstraintName('pori_po_item_fk')
                         )
                         ->restrictOnDelete();
 
@@ -39,7 +48,7 @@ return new class extends Migration
                     )
                         ->constrained(
                             'raw_materials',
-                            indexName: 'pori_material_fk'
+                            indexName: $this->tenantConstraintName('pori_material_fk')
                         )
                         ->restrictOnDelete();
 

@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    private function tenantConstraintName(string $name): string
+    {
+        return substr((string) config('database.connections.tenant.prefix', '') . $name, 0, 64);
+    }
+
     public function up(): void
     {
         Schema::connection('tenant')->create(
@@ -50,19 +55,19 @@ return new class extends Migration
 
                 $table->timestamps();
 
-                $table->foreign('purchase_return_id', 'pri_return_fk')
+                $table->foreign('purchase_return_id', $this->tenantConstraintName('pri_return_fk'))
                     ->references('id')->on('purchase_returns')->cascadeOnDelete();
 
-                $table->foreign('warehouse_stock_lot_id', 'pri_lot_fk')
+                $table->foreign('warehouse_stock_lot_id', $this->tenantConstraintName('pri_lot_fk'))
                     ->references('id')->on('warehouse_stock_lots')->restrictOnDelete();
 
-                $table->foreign('raw_material_id', 'pri_material_fk')
+                $table->foreign('raw_material_id', $this->tenantConstraintName('pri_material_fk'))
                     ->references('id')->on('raw_materials')->restrictOnDelete();
 
-                $table->foreign('purchase_order_id', 'pri_po_fk')
+                $table->foreign('purchase_order_id', $this->tenantConstraintName('pri_po_fk'))
                     ->references('id')->on('purchase_orders')->nullOnDelete();
 
-                $table->foreign('purchase_order_receipt_id', 'pri_grn_fk')
+                $table->foreign('purchase_order_receipt_id', $this->tenantConstraintName('pri_grn_fk'))
                     ->references('id')->on('purchase_order_receipts')->nullOnDelete();
 
                 $table->index(
