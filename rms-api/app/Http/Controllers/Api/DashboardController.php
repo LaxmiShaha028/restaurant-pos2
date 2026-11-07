@@ -14,6 +14,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class DashboardController extends Controller
@@ -47,7 +48,22 @@ class DashboardController extends Controller
         }
 
         if (! is_array($payload)) {
-            $payload = $this->buildOverviewData($request);
+            try {
+                $payload = $this->buildOverviewData($request);
+            } catch (Throwable $exception) {
+                Log::error('Restaurant dashboard request failed.', [
+                    'restaurant_id' => $tenant?->id,
+                    'user_id' => $user?->id,
+                    'exception' => $exception,
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Dashboard data could not be loaded. Check the application logs for the dashboard error.',
+                    'data' => null,
+                    'errors' => null,
+                ], 500);
+            }
 
             try {
                 Cache::store('file')->put(
