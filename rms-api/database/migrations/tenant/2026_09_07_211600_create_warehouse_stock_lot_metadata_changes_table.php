@@ -265,6 +265,13 @@ return new class extends Migration
             )
                 ->getDatabaseName();
 
+        $tableName =
+            DB::connection(
+                'tenant'
+            )
+                ->getTablePrefix()
+            . self::TABLE;
+
 
         $result =
             DB::connection(
@@ -280,7 +287,7 @@ return new class extends Migration
                     ',
                     [
                         $database,
-                        self::TABLE,
+                        $tableName,
                         $constraintName,
                     ]
                 );
@@ -307,6 +314,13 @@ return new class extends Migration
             )
                 ->getDatabaseName();
 
+        $tableName =
+            DB::connection(
+                'tenant'
+            )
+                ->getTablePrefix()
+            . self::TABLE;
+
 
         $result =
             DB::connection(
@@ -322,7 +336,7 @@ return new class extends Migration
                     ',
                     [
                         $database,
-                        self::TABLE,
+                        $tableName,
                         $indexName,
                     ]
                 );
