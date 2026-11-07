@@ -370,40 +370,51 @@ class DashboardController extends Controller
         |--------------------------------------------------------------------------
         */
 
+        $tenantConnection = DB::connection('tenant');
+        $orderItemNameColumn = $tenantConnection->getQueryGrammar()->wrap(
+            'order_items.item_name'
+        );
+        $orderItemQuantityColumn = $tenantConnection->getQueryGrammar()->wrap(
+            'order_items.quantity'
+        );
+        $orderItemLineTotalColumn = $tenantConnection->getQueryGrammar()->wrap(
+            'order_items.line_total'
+        );
+
         $topItems =
-            DB::table('order_items as oi')
+            DB::table('order_items')
                 ->join(
-                    'orders as o',
-                    'o.id',
+                    'orders',
+                    'orders.id',
                     '=',
-                    'oi.order_id'
+                    'order_items.order_id'
                 )
                 ->whereBetween(
-                    'o.created_at',
+                    'orders.created_at',
                     [
                         $currentMonthStart,
                         $currentMonthEnd,
                     ]
                 )
                 ->where(
-                    'o.status',
+                    'orders.status',
                     '!=',
                     Order::STATUS_CANCELED
                 )
                 ->select(
-                    'oi.menu_item_id'
+                    'order_items.menu_item_id'
                 )
                 ->selectRaw(
-                    'MAX(oi.item_name) as item_name'
+                    "MAX({$orderItemNameColumn}) as item_name"
                 )
                 ->selectRaw(
-                    'SUM(oi.quantity) as quantity_sold'
+                    "SUM({$orderItemQuantityColumn}) as quantity_sold"
                 )
                 ->selectRaw(
-                    'SUM(oi.line_total) as sales_amount'
+                    "SUM({$orderItemLineTotalColumn}) as sales_amount"
                 )
                 ->groupBy(
-                    'oi.menu_item_id'
+                    'order_items.menu_item_id'
                 )
                 ->orderByDesc(
                     'quantity_sold'
