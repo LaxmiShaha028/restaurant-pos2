@@ -538,80 +538,84 @@ class InventoryService
         |
         */
 
-        $summary = DB::table(
-            'raw_materials as rm'
-        )
+        $tenantGrammar = DB::connection('tenant')->getQueryGrammar();
+        $rawMaterialId = $tenantGrammar->wrap('raw_materials.id');
+        $warehouseQuantity = $tenantGrammar->wrap('warehouse_stocks.quantity');
+        $warehouseAverageUnitCost = $tenantGrammar->wrap('warehouse_stocks.average_unit_cost');
+        $rawMaterialMinimumQuantity = $tenantGrammar->wrap('raw_materials.warehouse_minimum_quantity');
+
+        $summary = DB::table('raw_materials')
             ->leftJoin(
-                'warehouse_stocks as ws',
+                'warehouse_stocks',
                 function ($join): void {
                     $join
                         ->on(
-                            'ws.raw_material_id',
+                            'warehouse_stocks.raw_material_id',
                             '=',
-                            'rm.id'
+                            'raw_materials.id'
                         )
                         ->whereNull(
-                            'ws.deleted_at'
+                            'warehouse_stocks.deleted_at'
                         );
                 }
             )
             ->whereNull(
-                'rm.deleted_at'
+                'raw_materials.deleted_at'
             )
             ->where(
-                'rm.is_active',
+                'raw_materials.is_active',
                 true
             )
             ->selectRaw(
-                'COUNT(DISTINCT rm.id) AS total_raw_materials'
+                "COUNT(DISTINCT {$rawMaterialId}) AS total_raw_materials"
             )
             ->selectRaw(
-                '
+                "
                 COUNT(
                     DISTINCT CASE
-                        WHEN COALESCE(ws.quantity, 0)
+                        WHEN COALESCE({$warehouseQuantity}, 0)
                             >
-                            COALESCE(rm.warehouse_minimum_quantity, 0)
-                        THEN rm.id
+                            COALESCE({$rawMaterialMinimumQuantity}, 0)
+                        THEN {$rawMaterialId}
                     END
                 ) AS available_count
-                '
+                "
             )
             ->selectRaw(
-                '
+                "
                 COUNT(
                     DISTINCT CASE
-                        WHEN COALESCE(ws.quantity, 0) > 0
-                            AND COALESCE(rm.warehouse_minimum_quantity, 0) > 0
-                            AND COALESCE(ws.quantity, 0)
+                        WHEN COALESCE({$warehouseQuantity}, 0) > 0
+                            AND COALESCE({$rawMaterialMinimumQuantity}, 0) > 0
+                            AND COALESCE({$warehouseQuantity}, 0)
                                 <=
-                                COALESCE(rm.warehouse_minimum_quantity, 0)
-                        THEN rm.id
+                                COALESCE({$rawMaterialMinimumQuantity}, 0)
+                        THEN {$rawMaterialId}
                     END
                 ) AS limited_count
-                '
+                "
             )
             ->selectRaw(
-                '
+                "
                 COUNT(
                     DISTINCT CASE
-                        WHEN COALESCE(ws.quantity, 0) <= 0
-                        THEN rm.id
+                        WHEN COALESCE({$warehouseQuantity}, 0) <= 0
+                        THEN {$rawMaterialId}
                     END
                 ) AS out_of_stock_count
-                '
+                "
             )
             ->selectRaw(
-                '
+                "
                 COALESCE(
                     SUM(
-                        COALESCE(ws.quantity, 0)
+                        COALESCE({$warehouseQuantity}, 0)
                         *
-                        COALESCE(ws.average_unit_cost, 0)
+                        COALESCE({$warehouseAverageUnitCost}, 0)
                     ),
                     0
                 ) AS total_stock_value
-                '
+                "
             )
             ->first();
 
