@@ -371,39 +371,39 @@ class DashboardController extends Controller
         */
 
         $topItems =
-            DB::table('order_items')
+            DB::table('order_items as oi')
                 ->join(
-                    'orders',
-                    'orders.id',
+                    'orders as o',
+                    'o.id',
                     '=',
-                    'order_items.order_id'
+                    'oi.order_id'
                 )
                 ->whereBetween(
-                    'orders.created_at',
+                    'o.created_at',
                     [
                         $currentMonthStart,
                         $currentMonthEnd,
                     ]
                 )
                 ->where(
-                    'orders.status',
+                    'o.status',
                     '!=',
                     Order::STATUS_CANCELED
                 )
                 ->select(
-                    'order_items.menu_item_id'
+                    'oi.menu_item_id'
                 )
                 ->selectRaw(
-                    'MAX(order_items.item_name) as item_name'
+                    'MAX(oi.item_name) as item_name'
                 )
                 ->selectRaw(
-                    'SUM(order_items.quantity) as quantity_sold'
+                    'SUM(oi.quantity) as quantity_sold'
                 )
                 ->selectRaw(
-                    'SUM(order_items.line_total) as sales_amount'
+                    'SUM(oi.line_total) as sales_amount'
                 )
                 ->groupBy(
-                    'order_items.menu_item_id'
+                    'oi.menu_item_id'
                 )
                 ->orderByDesc(
                     'quantity_sold'
