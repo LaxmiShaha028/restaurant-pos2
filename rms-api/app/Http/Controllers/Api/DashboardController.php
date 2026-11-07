@@ -51,7 +51,7 @@ class DashboardController extends Controller
             try {
                 $payload = $this->buildOverviewData($request);
             } catch (Throwable $exception) {
-                Log::error('Restaurant dashboard request failed.', [
+                Log::channel('stderr')->error('Restaurant dashboard request failed.', [
                     'restaurant_id' => $tenant?->id,
                     'user_id' => $user?->id,
                     'exception' => $exception,
