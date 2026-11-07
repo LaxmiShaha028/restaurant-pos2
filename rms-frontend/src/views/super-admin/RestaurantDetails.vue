@@ -2290,6 +2290,7 @@ import PaginationControls from '@/components/shared/PaginationControls.vue'
 
 import {
   useRoute,
+  useRouter,
 } from 'vue-router'
 
 import {
@@ -2318,6 +2319,7 @@ import {
 */
 
 const route = useRoute()
+const router = useRouter()
 
 
 /*
@@ -4620,6 +4622,40 @@ async function loadAll() {
 }
 
 
+async function confirmStripeReturn(sessionId, attempts = 8) {
+  let lastError
+
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    try {
+      return await confirmStripePayment(sessionId)
+    } catch (exception) {
+      lastError = exception
+
+      const paymentPending =
+        exception?.message?.toLowerCase().includes('has not confirmed this payment yet')
+
+      if (!paymentPending || attempt === attempts - 1) {
+        throw exception
+      }
+
+      await new Promise(resolve => window.setTimeout(resolve, 1_000))
+    }
+  }
+
+  throw lastError
+}
+
+
+function clearStripeReturnQuery() {
+  router.replace({
+    name: route.name,
+    params: route.params,
+    query: {},
+    hash: '',
+  })
+}
+
+
 /*
 |--------------------------------------------------------------------------
 | Live Lifecycle Refresh
@@ -4745,21 +4781,20 @@ onMounted(async () => {
 
   if (route.query.stripe_payment === 'success' && route.query.session_id) {
     try {
-      const result = await confirmStripePayment(String(route.query.session_id))
+      const result = await confirmStripeReturn(String(route.query.session_id))
       const admin = result?.data?.admin
       if (admin) adminCredentials.value = admin
       stripeReturnMessage.value = admin
         ? 'Stripe payment confirmed. Restaurant activated; the generated tenant admin credentials are available below.'
         : 'Stripe payment confirmed and subscription updated.'
       await loadAll()
+      clearStripeReturnQuery()
     } catch (stripeError) {
-      stripeReturnError.value = stripeError?.message || 'Payment confirmation is still pending. Refresh this page shortly.'
-    } finally {
-      window.history.replaceState({}, '', window.location.pathname)
+      stripeReturnError.value = stripeError?.message || 'Payment confirmation is still pending. The page will keep the payment session so it can be retried.'
     }
   } else if (route.query.stripe_payment === 'cancelled') {
     stripeReturnError.value = 'Stripe Checkout was cancelled. The payment remains unpaid.'
-    window.history.replaceState({}, '', window.location.pathname)
+    clearStripeReturnQuery()
   }
 
   currentTime.value = Date.now()
