@@ -8,6 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::connection('central')->hasTable('personal_access_tokens')) {
+            return;
+        }
+
         Schema::connection('central')
             ->create(
                 'personal_access_tokens',

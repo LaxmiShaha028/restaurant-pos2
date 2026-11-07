@@ -24,13 +24,15 @@ class SuperAdminSeeder extends Seeder
             throw new RuntimeException('SUPER_ADMIN_EMAIL must be a valid email address.');
         }
 
-        SuperAdmin::query()->firstOrCreate(
+        SuperAdmin::query()->updateOrCreate(
             ['username' => $username],
             [
                 'name' => $name,
                 'email' => $email,
                 'password' => Hash::make($password),
                 'is_active' => true,
+                'failed_login_attempts' => 0,
+                'blocked_at' => null,
             ]
         );
     }
