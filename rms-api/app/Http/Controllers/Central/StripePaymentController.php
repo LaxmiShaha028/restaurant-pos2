@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Central;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\FulfillStripePaymentAfterResponse;
 use App\Models\Central\Payment;
 use App\Models\Central\PaymentMethod;
 use App\Models\Central\Restaurant;
@@ -172,34 +173,25 @@ class StripePaymentController extends Controller
             ]);
         }
 
-        try {
-            $expectedAmount = (int) round((float) $payment->amount * 100);
-            if ((int) $session->amount_total !== $expectedAmount || strtolower($payment->currency) !== strtolower($session->currency)) {
-                throw new \RuntimeException('Stripe amount or currency did not match the payment record.');
-            }
-
-            $payment->forceFill([
-                'status' => 'paid', 'paid_at' => now(),
-                'reference' => $session->payment_intent ?? $session->id,
-                'gateway_response' => array_merge($payment->gateway_response ?? [], [
-                    'stripe_payment_intent' => $session->payment_intent,
-                    'checkout_session_id' => $session->id,
-                    'stripe_invoice_id' => $session->invoice ?? null,
-                ]),
-            ])->save();
-
-            $this->fulfill($payment, $provisioning);
-            $this->syncStripeDocuments($payment, $session);
+        $expectedAmount = (int) round((float) $payment->amount * 100);
+        if ((int) $session->amount_total !== $expectedAmount || strtolower($payment->currency) !== strtolower($session->currency)) {
             DB::connection('central')->table('payment_webhooks')->where('gateway', 'stripe')->where('event_id', $event->id)->update([
-                'status' => 'processed', 'processed_at' => now(), 'updated_at' => now(),
+                'status' => 'failed', 'error_message' => 'Stripe amount or currency did not match the payment record.', 'updated_at' => now(),
             ]);
-        } catch (Throwable $exception) {
-            report($exception);
-            DB::connection('central')->table('payment_webhooks')->where('gateway', 'stripe')->where('event_id', $event->id)->update([
-                'status' => 'failed', 'error_message' => $exception->getMessage(), 'updated_at' => now(),
-            ]);
-            return response()->json(['message' => 'Payment fulfillment failed.'], 500);
+            return response()->json(['message' => 'Stripe payment amount did not match.'], 422);
         }
+
+        $payment->forceFill([
+            'status' => 'paid', 'paid_at' => now(),
+            'reference' => $session->payment_intent ?? $session->id,
+            'gateway_response' => array_merge($payment->gateway_response ?? [], [
+                'stripe_payment_intent' => $session->payment_intent,
+                'checkout_session_id' => $session->id,
+                'stripe_invoice_id' => $session->invoice ?? null,
+            ]),
+        ])->save();
+
+        dispatch(new FulfillStripePaymentAfterResponse($payment->id, $event->id))->afterResponse();
 
         return response()->json(['received' => true]);
     }
@@ -208,8 +200,7 @@ class StripePaymentController extends Controller
     {
         $data = $request->validate(['session_id' => ['required', 'string', 'max:255']]);
         $session = (new StripeClient(config('services.stripe.secret')))->checkout->sessions->retrieve(
-            $data['session_id'],
-            ['expand' => ['invoice']]
+            $data['session_id']
         );
         abort_unless(($session->payment_status ?? null) === 'paid', 422, 'Stripe has not confirmed this payment yet.');
         $payment = Payment::on('central')->where('gateway', 'stripe')->where('transaction_id', $session->id)->findOrFail((int) ($session->metadata->payment_id ?? 0));
@@ -220,10 +211,35 @@ class StripePaymentController extends Controller
             $payment->forceFill(['status' => 'paid', 'paid_at' => now(), 'reference' => $session->payment_intent ?? $session->id])->save();
         }
 
-        // Retry fulfillment if payment was paid but tenant provisioning failed previously.
-        $this->fulfill($payment, $provisioning);
+        $type = $payment->gateway_response['payment_type'] ?? '';
+        $provisioningPending = false;
 
-        $this->syncStripeDocuments($payment, $session);
+        if ($type === 'initial') {
+            $restaurant = Restaurant::on('central')->findOrFail($payment->restaurant_id);
+            $subscription = Subscription::on('central')->findOrFail($payment->subscription_id);
+
+            if ($restaurant->status !== 'active' || $subscription->status !== 'active') {
+                $tenantStatus = $restaurant->tenantDatabase?->status;
+                if ($restaurant->status === 'failed' || $tenantStatus === 'failed') {
+                    if (! $request->boolean('retry')) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => $restaurant->tenantDatabase?->last_error
+                                ?: 'Stripe payment succeeded, but restaurant setup failed. Refresh this page to retry setup.',
+                        ], 409);
+                    }
+
+                    dispatch(new FulfillStripePaymentAfterResponse($payment->id))->afterResponse();
+                } elseif ($restaurant->status === 'pending') {
+                    dispatch(new FulfillStripePaymentAfterResponse($payment->id))->afterResponse();
+                }
+
+                $provisioningPending = true;
+            }
+        } else {
+            // Subscription changes do not create a tenant schema and can finish inline.
+            $this->fulfill($payment, $provisioning);
+        }
 
         $meta = $payment->gateway_response ?? [];
         $admin = null;
@@ -236,7 +252,17 @@ class StripePaymentController extends Controller
             $payment->forceFill(['gateway_response' => $meta])->save();
         }
 
-        return response()->json(['success' => true, 'message' => 'Stripe payment confirmed.', 'data' => ['payment' => $payment->fresh(), 'admin' => $admin]]);
+        return response()->json([
+            'success' => true,
+            'message' => $provisioningPending
+                ? 'Stripe payment confirmed. Restaurant setup is in progress.'
+                : 'Stripe payment confirmed.',
+            'data' => [
+                'payment' => $payment->fresh(),
+                'admin' => $admin,
+                'provisioning' => $provisioningPending,
+            ],
+        ]);
     }
 
     public function documents(int $paymentId): JsonResponse
@@ -260,7 +286,7 @@ class StripePaymentController extends Controller
         ]);
     }
 
-    private function fulfill(Payment $payment, TenantProvisioningService $provisioning): void
+    public function fulfill(Payment $payment, TenantProvisioningService $provisioning): void
     {
         $meta = $payment->gateway_response ?? [];
         $type = $meta['payment_type'] ?? '';

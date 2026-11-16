@@ -4622,12 +4622,19 @@ async function loadAll() {
 }
 
 
-async function confirmStripeReturn(sessionId, attempts = 8) {
+async function confirmStripeReturn(sessionId, attempts = 90) {
   let lastError
 
   for (let attempt = 0; attempt < attempts; attempt += 1) {
     try {
-      return await confirmStripePayment(sessionId)
+      const result = await confirmStripePayment(sessionId, attempt === 0)
+
+      if (!result?.data?.provisioning) {
+        return result
+      }
+
+      stripeReturnMessage.value = 'Stripe payment confirmed. Restaurant setup is running; this page will update when it is ready.'
+      await new Promise(resolve => window.setTimeout(resolve, 2_000))
     } catch (exception) {
       lastError = exception
 
@@ -4784,9 +4791,11 @@ onMounted(async () => {
       const result = await confirmStripeReturn(String(route.query.session_id))
       const admin = result?.data?.admin
       if (admin) adminCredentials.value = admin
-      stripeReturnMessage.value = admin
-        ? 'Stripe payment confirmed. Restaurant activated; the generated tenant admin credentials are available below.'
-        : 'Stripe payment confirmed and subscription updated.'
+      if (!result?.data?.provisioning) {
+        stripeReturnMessage.value = admin
+          ? 'Stripe payment confirmed. Restaurant activated; the generated tenant admin credentials are available below.'
+          : 'Stripe payment confirmed and subscription updated.'
+      }
       await loadAll()
       clearStripeReturnQuery()
     } catch (stripeError) {

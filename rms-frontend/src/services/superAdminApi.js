@@ -800,9 +800,12 @@ export async function createStripeCheckout(payload) {
   }
 }
 
-export async function confirmStripePayment(sessionId) {
+export async function confirmStripePayment(sessionId, retry = false) {
   try {
-    const response = await api.post(`${CENTRAL_BASE_URL}/stripe/confirm`, { session_id: sessionId })
+    const response = await api.post(`${CENTRAL_BASE_URL}/stripe/confirm`, {
+      session_id: sessionId,
+      retry,
+    })
     return response.data
   } catch (error) {
     throw new Error(normalizeError(error))
