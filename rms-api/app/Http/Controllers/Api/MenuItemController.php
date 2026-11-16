@@ -15,6 +15,7 @@ use App\Traits\HasAuditLog;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -278,23 +279,34 @@ class MenuItemController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $salesByMenuItem = DB::table('order_items')
-            ->join('orders', 'orders.id', '=', 'order_items.order_id')
-            ->join('menu_items', 'menu_items.id', '=', 'order_items.menu_item_id')
-            ->whereBetween('orders.created_at', [now()->startOfMonth(), now()->endOfMonth()])
-            ->where('orders.status', '!=', Order::STATUS_CANCELED)
-            ->select('menu_items.menu_name')
-            ->selectRaw('SUM(order_items.quantity) AS quantity_sold')
-            ->groupBy('menu_items.menu_name')
-            ->get();
+        // Popularity is optional display metadata. Older tenant schemas can
+        // lack order tables/columns, so a reporting query must not make the
+        // core menu list unavailable (including the inventory recipe picker).
+        $popularMenuItemNames = [];
 
-        $popularMenuItemNames = $salesByMenuItem
-            ->groupBy(static fn ($item): string => explode(' - ', $item->menu_name, 2)[0])
-            ->map(static fn ($items): int => (int) $items->sum('quantity_sold'))
-            ->sortDesc()
-            ->take(3)
-            ->keys()
-            ->all();
+        try {
+            $salesByMenuItem = DB::table('order_items')
+                ->join('orders', 'orders.id', '=', 'order_items.order_id')
+                ->join('menu_items', 'menu_items.id', '=', 'order_items.menu_item_id')
+                ->whereBetween('orders.created_at', [now()->startOfMonth(), now()->endOfMonth()])
+                ->where('orders.status', '!=', Order::STATUS_CANCELED)
+                ->select('menu_items.menu_name')
+                ->selectRaw('SUM(order_items.quantity) AS quantity_sold')
+                ->groupBy('menu_items.menu_name')
+                ->get();
+
+            $popularMenuItemNames = $salesByMenuItem
+                ->groupBy(static fn ($item): string => explode(' - ', $item->menu_name, 2)[0])
+                ->map(static fn ($items): int => (int) $items->sum('quantity_sold'))
+                ->sortDesc()
+                ->take(3)
+                ->keys()
+                ->all();
+        } catch (Throwable $exception) {
+            Log::warning('Unable to calculate menu item popularity; returning the menu list without popularity flags.', [
+                'exception' => $exception->getMessage(),
+            ]);
+        }
         $menuItems =
             $query
 
