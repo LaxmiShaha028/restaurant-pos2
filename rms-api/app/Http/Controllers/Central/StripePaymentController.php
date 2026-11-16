@@ -129,7 +129,7 @@ class StripePaymentController extends Controller
         }
     }
 
-    public function webhook(Request $request, TenantProvisioningService $provisioning): JsonResponse
+    public function webhook(Request $request): JsonResponse
     {
         try {
             $event = Webhook::constructEvent(
@@ -191,7 +191,7 @@ class StripePaymentController extends Controller
             ]),
         ])->save();
 
-        dispatch(new FulfillStripePaymentAfterResponse($payment->id, $event->id))->afterResponse();
+        dispatch(new FulfillStripePaymentAfterResponse($payment->id, $event->id));
 
         return response()->json(['received' => true]);
     }
@@ -235,8 +235,16 @@ class StripePaymentController extends Controller
 
             if ($restaurant->status !== 'active' || $subscription->status !== 'active') {
                 $tenantStatus = $restaurant->tenantDatabase?->status;
-                if ($restaurant->status === 'failed' || $tenantStatus === 'failed') {
+                if (in_array($restaurant->status, ['failed', 'provisioning'], true) || $tenantStatus === 'failed') {
                     if (! $request->boolean('retry')) {
+                        if ($restaurant->status === 'provisioning') {
+                            return response()->json([
+                                'success' => true,
+                                'message' => 'Restaurant setup is still running.',
+                                'data' => ['provisioning' => true],
+                            ]);
+                        }
+
                         return response()->json([
                             'success' => false,
                             'message' => $restaurant->tenantDatabase?->last_error
@@ -244,9 +252,11 @@ class StripePaymentController extends Controller
                         ], 409);
                     }
 
-                    dispatch(new FulfillStripePaymentAfterResponse($payment->id))->afterResponse();
+                    dispatch(new FulfillStripePaymentAfterResponse($payment->id));
                 } elseif ($restaurant->status === 'pending') {
-                    dispatch(new FulfillStripePaymentAfterResponse($payment->id))->afterResponse();
+                    if ($request->boolean('retry')) {
+                        dispatch(new FulfillStripePaymentAfterResponse($payment->id));
+                    }
                 }
 
                 $provisioningPending = true;

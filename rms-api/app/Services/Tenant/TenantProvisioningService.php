@@ -9,6 +9,7 @@ use App\Models\Central\TenantDatabase;
 use Database\Seeders\Tenant\TenantDatabaseSeeder;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -1646,6 +1647,12 @@ if (
 
     private function runTenantMigrations(): void
     {
+        $startedAt = microtime(true);
+        Log::info('Tenant migration batch started.', [
+            'connection' => self::TENANT_CONNECTION,
+            'database' => DB::connection(self::TENANT_CONNECTION)->getDatabaseName(),
+        ]);
+
         $exitCode =
             Artisan::call(
                 'migrate',
@@ -1673,6 +1680,10 @@ if (
                 Artisan::output()
             );
         }
+
+        Log::info('Tenant migration batch finished.', [
+            'seconds' => round(microtime(true) - $startedAt, 2),
+        ]);
     }
 
     /*
