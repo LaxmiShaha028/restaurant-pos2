@@ -25,15 +25,19 @@ services:
       - key: TENANCY_MODE
         value: single_database
       - key: CENTRAL_DB_HOST
-        value: 127.0.0.1
+        sync: false
       - key: CENTRAL_DB_PORT
-        value: "3306"
+        value: "4000"
       - key: CENTRAL_DB_DATABASE
-        value: rms_demo
+        sync: false
       - key: CENTRAL_DB_USERNAME
-        value: rms_demo
+        sync: false
       - key: CENTRAL_DB_PASSWORD
-        generateValue: true
+        sync: false
+      - key: MYSQL_ATTR_SSL_CA
+        value: /etc/ssl/certs/ca-certificates.crt
+      - key: MYSQL_ATTR_SSL_VERIFY_SERVER_CERT
+        value: "true"
       - key: STRIPE_KEY
         sync: false
       - key: STRIPE_SECRET
