@@ -48,13 +48,13 @@ class MigrateTenants extends Command
         $restaurants = $query->get();
 
         if ($restaurants->isEmpty()) {
-            $this->error(
+            $this->info(
                 $tenantKey !== ''
-                    ? "No restaurant with a tenant database was found for tenant key: {$tenantKey}"
-                    : 'No restaurant tenant databases were found.'
+                    ? "No restaurant tenant database found for key: {$tenantKey}; nothing to migrate."
+                    : 'No restaurant tenant databases found; nothing to migrate.'
             );
 
-            return self::FAILURE;
+            return self::SUCCESS;
         }
 
         $this->newLine();

@@ -34,6 +34,7 @@ export APP_KEY
 php artisan config:clear
 php artisan storage:link || true
 php artisan migrate --database=central --path=database/migrations/central --force
+php artisan tenants:migrate
 php artisan db:seed --database=central --class='Database\Seeders\Central\SubscriptionPlanSeeder' --force
 php artisan db:seed --database=central --class='Database\Seeders\Central\PaymentMethodSeeder' --force
 php artisan db:seed --database=central --class='Database\Seeders\Central\StripePaymentMethodSeeder' --force
