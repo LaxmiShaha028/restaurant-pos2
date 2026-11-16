@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Central;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\FulfillStripePaymentAfterResponse;
 use App\Models\Central\Payment;
 use App\Models\Central\PaymentMethod;
 use App\Models\Central\Restaurant;
@@ -1781,8 +1782,7 @@ class SubscriptionPaymentController extends Controller
     */
 
     public function retryProvisioning(
-        int $restaurant,
-        TenantProvisioningService $provisioningService
+        int $restaurant
     ): JsonResponse {
         $restaurantModel = Restaurant::on('central')
             ->find($restaurant);
@@ -1839,43 +1839,19 @@ class SubscriptionPaymentController extends Controller
             ], 422);
         }
 
-        try {
-            $result = $provisioningService
-                ->provisionExistingRestaurant(
-                    $restaurantModel,
-                    []
-                );
+        dispatch(new FulfillStripePaymentAfterResponse($payment->id));
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Restaurant provisioning completed successfully.',
-                'data' => [
-                    'payment' => $payment->fresh(),
-                    'restaurant' => $result['restaurant'],
-                    'subscription' => $result['subscription'],
-                    'tenant_database' => $result['tenant_database'],
-                    'domain' => $result['domain'],
-                ],
-                'errors' => null,
-            ]);
-        } catch (Throwable $exception) {
-            report($exception);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Restaurant provisioning failed again.',
-                'data' => [
-                    'payment_id' => $payment->id,
-                    'restaurant_id' => $restaurantModel->id,
-                    'subscription_id' => $subscription->id,
-                ],
-                'errors' => [
-                    'provisioning' => [
-                        $exception->getMessage(),
-                    ],
-                ],
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment is already confirmed. Restaurant provisioning has been queued for retry.',
+            'data' => [
+                'payment' => $payment->fresh(),
+                'restaurant_id' => $restaurantModel->id,
+                'subscription_id' => $subscription->id,
+                'provisioning' => true,
+            ],
+            'errors' => null,
+        ], 202);
     }
 
 
