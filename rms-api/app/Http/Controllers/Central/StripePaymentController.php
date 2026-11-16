@@ -199,16 +199,31 @@ class StripePaymentController extends Controller
     public function confirm(Request $request, TenantProvisioningService $provisioning): JsonResponse
     {
         $data = $request->validate(['session_id' => ['required', 'string', 'max:255']]);
-        $session = (new StripeClient(config('services.stripe.secret')))->checkout->sessions->retrieve(
-            $data['session_id']
-        );
-        abort_unless(($session->payment_status ?? null) === 'paid', 422, 'Stripe has not confirmed this payment yet.');
-        $payment = Payment::on('central')->where('gateway', 'stripe')->where('transaction_id', $session->id)->findOrFail((int) ($session->metadata->payment_id ?? 0));
+        $payment = Payment::on('central')
+            ->where('gateway', 'stripe')
+            ->where('transaction_id', $data['session_id'])
+            ->firstOrFail();
 
-        $expectedAmount = (int) round((float) $payment->amount * 100);
-        abort_unless((int) $session->amount_total === $expectedAmount && strtolower($payment->currency) === strtolower($session->currency), 422, 'Stripe payment amount did not match.');
         if ($payment->status !== 'paid') {
-            $payment->forceFill(['status' => 'paid', 'paid_at' => now(), 'reference' => $session->payment_intent ?? $session->id])->save();
+            $session = (new StripeClient(config('services.stripe.secret')))
+                ->checkout->sessions->retrieve($data['session_id']);
+
+            abort_unless(($session->payment_status ?? null) === 'paid', 422, 'Stripe has not confirmed this payment yet.');
+            abort_unless((int) ($session->metadata->payment_id ?? 0) === (int) $payment->id, 404);
+
+            $expectedAmount = (int) round((float) $payment->amount * 100);
+            abort_unless((int) $session->amount_total === $expectedAmount && strtolower($payment->currency) === strtolower($session->currency), 422, 'Stripe payment amount did not match.');
+
+            $payment->forceFill([
+                'status' => 'paid',
+                'paid_at' => now(),
+                'reference' => $session->payment_intent ?? $session->id,
+                'gateway_response' => array_merge($payment->gateway_response ?? [], [
+                    'stripe_payment_intent' => $session->payment_intent,
+                    'checkout_session_id' => $session->id,
+                    'stripe_invoice_id' => $session->invoice ?? null,
+                ]),
+            ])->save();
         }
 
         $type = $payment->gateway_response['payment_type'] ?? '';
