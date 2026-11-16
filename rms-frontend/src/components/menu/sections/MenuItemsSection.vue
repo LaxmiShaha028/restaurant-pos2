@@ -1,6 +1,6 @@
 <script setup>
 import {
-  onMounted,
+  onActivated,
   ref,
 } from "vue";
 
@@ -465,7 +465,7 @@ const isToggling = (
 |--------------------------------------------------------------------------
 */
 
-onMounted(async () => {
+onActivated(async () => {
   await Promise.all([
     loadMenuItems(),
     loadCategories(),
