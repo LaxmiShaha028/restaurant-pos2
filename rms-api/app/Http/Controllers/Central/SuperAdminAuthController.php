@@ -162,23 +162,6 @@ class SuperAdminAuthController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Revoke Existing Central Tokens
-        |--------------------------------------------------------------------------
-        */
-
-        CentralPersonalAccessToken::on('central')
-            ->where(
-                'tokenable_type',
-                SuperAdmin::class
-            )
-            ->where(
-                'tokenable_id',
-                $superAdmin->id
-            )
-            ->delete();
-
-        /*
-        |--------------------------------------------------------------------------
         | Reset Security Fields
         |--------------------------------------------------------------------------
         */
