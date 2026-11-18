@@ -12,7 +12,7 @@
     sans-serif;
 
   color: #212529;
-  background: #f4f6f9;
+  background: #edf8fa;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -46,7 +46,7 @@ body {
 
   margin: 0;
 
-  background: #f4f6f9;
+  background: #edf8fa;
 
   color: #212529;
 
@@ -567,9 +567,9 @@ a {
 
   border-radius: 5px;
 
-  background: #eef4ff;
+  background: #e5f6f9;
 
-  color: #2563eb;
+  color: #45aabd;
 
   font-size: 14px;
 }
@@ -673,10 +673,10 @@ td a:has(i.bi-pencil),
   align-items: center !important;
   justify-content: center !important;
   padding: 0 !important;
-  border: 1px solid #f5ddca !important;
+  border: 1px solid #bfe5eb !important;
   border-radius: 8px !important;
-  background: #fff1e6 !important;
-  color: #d97706 !important;
+  background: #e5f6f9 !important;
+  color: #267f91 !important;
   line-height: 1 !important;
   box-shadow: none !important;
 }
@@ -720,8 +720,8 @@ td a:has(i.bi-pencil):hover,
 [class*="row-action"] a:has(i.bi-pencil):hover,
 [class*="action-buttons"] button:has(i.bi-pencil):hover:not(:disabled),
 [class*="action-buttons"] a:has(i.bi-pencil):hover {
-  background: #ffe8a3 !important;
-  color: #b45309 !important;
+  background: #def3f6 !important;
+  color: #267f91 !important;
 }
 
 td button:has(i.bi-trash):hover:not(:disabled),

@@ -978,7 +978,7 @@ onBeforeUnmount(() => {
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
-  background: #f5f7fb;
+  background: #edf8fa;
 }
 
 .main-wrapper {
@@ -986,7 +986,7 @@ onBeforeUnmount(() => {
   min-width: 0;
   min-height: 100vh;
   margin-left: var(--sidebar-width);
-  background: #f5f7fb;
+  background: #edf8fa;
   transition:
     margin-left .2s ease,
     width .2s ease;
@@ -1073,9 +1073,9 @@ onBeforeUnmount(() => {
 
 .topbar-icon-button:hover,
 .topbar-icon-button.show {
-  border-color: #bfdbfe;
-  background: #eff6ff;
-  color: #2563eb;
+  border-color: #bde3e9;
+  background: #e6f6f8;
+  color: #45aabd;
 }
 
 .pos-order-shortcut {
@@ -1198,9 +1198,9 @@ onBeforeUnmount(() => {
 }
 
 .notification-refresh-button:hover:not(:disabled) {
-  border-color: #bfdbfe;
-  background: #eff6ff;
-  color: #2563eb;
+  border-color: #bde3e9;
+  background: #e6f6f8;
+  color: #45aabd;
 }
 
 .notification-refresh-button:disabled {
@@ -1258,8 +1258,8 @@ onBeforeUnmount(() => {
 }
 
 .notification-order .notification-item-icon {
-  background: #eff6ff;
-  color: #2563eb;
+  background: #e6f6f8;
+  color: #45aabd;
 }
 
 .notification-subscription .notification-item-icon {
@@ -1408,7 +1408,7 @@ onBeforeUnmount(() => {
   border: 0;
   border-radius: 5px;
   background: transparent;
-  color: #2563eb;
+  color: #45aabd;
   font-size: 8.5px;
   font-weight: 700;
   cursor: pointer;
@@ -1442,7 +1442,7 @@ onBeforeUnmount(() => {
 
 .user-dropdown-button:hover,
 .user-dropdown-button.show {
-  border-color: #bfdbfe;
+  border-color: #bde3e9;
   background: #f8fbff;
   box-shadow:
     0 1px 4px rgba(37, 99, 235, .05);
@@ -1469,7 +1469,7 @@ onBeforeUnmount(() => {
   height: 24px;
   flex-shrink: 0;
   font-size: 8px;
-  background: linear-gradient(135deg, #ff922b, #f97316);
+  background: linear-gradient(135deg, #7bcbd7, #58b9ca);
 }
 
 .user-dropdown-details {
