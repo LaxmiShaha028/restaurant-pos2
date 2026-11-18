@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\MenuItem;
 use App\Models\Order;
 use App\Services\OrderService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class PickupController extends Controller
 {
@@ -42,9 +45,68 @@ class PickupController extends Controller
                 ])->values(),
             ])->values();
 
+        $popularItems = [];
+
+        try {
+            $salesByMenuItem = DB::table('order_items')
+                ->join('orders', 'orders.id', '=', 'order_items.order_id')
+                ->whereBetween('orders.created_at', [now()->startOfMonth(), now()->endOfMonth()])
+                ->where('orders.status', '!=', Order::STATUS_CANCELED)
+                ->select('order_items.item_name as menu_name')
+                ->selectRaw('SUM(order_items.quantity) AS quantity_sold')
+                ->groupBy('order_items.item_name')
+                ->get();
+
+            $rankedNames = $salesByMenuItem
+                ->groupBy(static fn ($item): string => explode(' - ', $item->menu_name, 2)[0])
+                ->map(static fn ($items): int => (int) $items->sum('quantity_sold'))
+                ->sortDesc()
+                ->take(3)
+                ->keys()
+                ->values()
+                ->all();
+
+            if ($rankedNames !== []) {
+                $popularItems = MenuItem::query()
+                    ->with('category')
+                    ->where('is_available', true)
+                    ->get()
+                    ->filter(static function (MenuItem $item) use ($rankedNames): bool {
+                        $baseName = explode(' - ', $item->menu_name, 2)[0];
+
+                        return in_array($baseName, $rankedNames, true);
+                    })
+                    ->sortBy(static function (MenuItem $item) use ($rankedNames): int {
+                        $baseName = explode(' - ', $item->menu_name, 2)[0];
+
+                        return array_search($baseName, $rankedNames, true);
+                    })
+                    ->take(3)
+                    ->map(static fn (MenuItem $item): array => [
+                        'id' => (int) $item->id,
+                        'menu_name' => $item->menu_name,
+                        'price' => (float) $item->price,
+                        'image_path' => $item->image_path,
+                        'image_url' => $item->image_url,
+                        'is_available' => (bool) $item->is_available,
+                        'is_popular' => true,
+                        'category' => $item->category ? [
+                            'category_name' => $item->category->category_name,
+                        ] : null,
+                    ])
+                    ->values()
+                    ->all();
+            }
+        } catch (Throwable $exception) {
+            Log::warning('Unable to load popular items for the pickup display.', [
+                'exception' => $exception->getMessage(),
+            ]);
+        }
+
         return response()->json([
             'success' => true,
             'data' => $orders,
+            'popular_items' => $popularItems,
             'callout' => Cache::store('file')->get($this->calloutCacheKey($request)),
         ]);
     }

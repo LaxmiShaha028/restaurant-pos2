@@ -91,11 +91,9 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import orderService from '@/services/orderService'
-import { useMenuManagementStore } from '@/stores/menuManagement'
 import { useSystemSettingStore } from '@/stores/systemSetting'
 import { resolveMediaUrl } from '@/utils/mediaUrl'
 
-const menuStore = useMenuManagementStore()
 const settingsStore = useSystemSettingStore()
 const orders = ref([])
 const pickupMenuItems = ref([])
@@ -174,14 +172,6 @@ function foodImage(item) {
   return savedImage || foodPhoto('chicken-burger.jpg')
 }
 
-async function loadMenuItems() {
-  try {
-    pickupMenuItems.value = await menuStore.fetchAllMenuItems()
-  } catch {
-    pickupMenuItems.value = []
-  }
-}
-
 function pinOrder(id) {
   pinnedOrderId.value = String(id)
   clearTimeout(pinnedOrderTimer)
@@ -221,6 +211,7 @@ async function loadBoard() {
   try {
     const response = await orderService.getPickupBoard()
     const nextOrders = Array.isArray(response?.data) ? response.data : []
+    pickupMenuItems.value = Array.isArray(response?.popular_items) ? response.popular_items : []
     const callout = response?.callout
     let calledOrderId = null
     if (callout?.id && callout.id !== lastProcessedCalloutId) {
@@ -441,7 +432,6 @@ function announceReadyOrders(readyOrders, force = false) {
 
 onMounted(() => {
   void resumeAudioContext()
-  void loadMenuItems()
   void settingsStore.fetchSettings()
   loadBoard()
   pollTimer = setInterval(loadBoard, 5000)
