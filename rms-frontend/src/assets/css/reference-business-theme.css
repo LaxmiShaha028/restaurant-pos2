@@ -3251,3 +3251,44 @@ body .po-quick-add-supplier-button:disabled {
   background: #f8f1e9 !important;
   cursor: not-allowed !important;
 }
+
+/* Keep warning notifications consistently red across the application. */
+#app .alert-warning,
+#app .employee-attendance-notice,
+#app .reservation-alert-warning,
+#app .reservation-toast-warning,
+#app .reservation-action-warning,
+#app .po-toast-warning,
+#app .po-form-lock-warning,
+#app .purchase-receive-item-warning,
+#app .shift-day-off-warning,
+#app .split-table-warning,
+#app .warehouse-lot-alert-warning,
+#app .warehouse-adjustment-negative-warning,
+#app .recipe-mapping-stock-warning,
+#app .raw-material-action-notice-warning,
+#app .daily-transfer-item-warning,
+#app .forecast-message.is-warning {
+  border-color: #fecaca !important;
+  color: #b91c1c !important;
+  background-color: #fef2f2 !important;
+}
+
+#app .alert-warning :is(i, strong, p, span),
+#app .employee-attendance-notice :is(i, strong, p),
+#app .reservation-alert-warning :is(i, strong, p, span),
+#app .reservation-toast-warning :is(i, strong, p, span),
+#app .reservation-action-warning :is(i, strong, p, span),
+#app .po-toast-warning :is(i, strong, p, span),
+#app .po-form-lock-warning :is(i, strong, p, span),
+#app .purchase-receive-item-warning :is(i, strong, p, span),
+#app .shift-day-off-warning :is(i, strong, p, span),
+#app .split-table-warning :is(i, strong, p, span),
+#app .warehouse-lot-alert-warning :is(i, strong, p, span),
+#app .warehouse-adjustment-negative-warning :is(i, strong, p, span),
+#app .recipe-mapping-stock-warning :is(i, strong, p, span),
+#app .raw-material-action-notice-warning :is(i, strong, p, span),
+#app .daily-transfer-item-warning :is(i, strong, p, span),
+#app .forecast-message.is-warning :is(i, strong, p, span) {
+  color: #b91c1c !important;
+}
