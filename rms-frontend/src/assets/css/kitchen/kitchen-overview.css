@@ -721,7 +721,7 @@
 .compact-order-identity h3 {
   margin: 0;
 
-  overflow: hidden;
+  overflow-wrap: anywhere;
 
   color: var(--kitchen-text);
 
@@ -729,9 +729,7 @@
   font-weight: 700;
 
   line-height: 1.2;
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 

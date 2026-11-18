@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-layout" :class="{ 'pickup-kiosk-layout': isPickupKiosk }">
+  <div class="dashboard-layout" :class="{ 'pickup-kiosk-layout': isPickupKiosk, 'dashboard-route': route.name === 'dashboard' }">
     <AppSidebar
       v-if="!isPickupKiosk"
       :mobile-open="mobileSidebarOpen"
@@ -1714,6 +1714,154 @@ onBeforeUnmount(() => {
 
   .user-dropdown-menu {
     width: 200px;
+  }
+}
+
+/* Dashboard-only light aqua shell to match the reference */
+.dashboard-layout.dashboard-route {
+  background: linear-gradient(145deg, #effbfd 0%, #e8f6f9 55%, #f3fbfc 100%);
+}
+
+.dashboard-layout.dashboard-route .main-wrapper {
+  background: transparent;
+}
+
+.dashboard-layout.dashboard-route .app-topbar {
+  border-bottom-color: #e0f0f3;
+  background: rgba(249, 254, 255, .96);
+  box-shadow: 0 1px 8px rgba(56, 132, 148, .04);
+}
+
+.dashboard-layout.dashboard-route .topbar-icon-button {
+  border-color: #e1f0f3;
+  background: rgba(255, 255, 255, .88);
+  color: #5c8490;
+}
+
+.dashboard-layout.dashboard-route .topbar-icon-button:hover,
+.dashboard-layout.dashboard-route .topbar-icon-button.show {
+  border-color: #bde3e9;
+  background: #e6f6f8;
+  color: #3c9cad;
+}
+
+.dashboard-layout.dashboard-route .page-heading-title {
+  color: #28535e;
+}
+
+.dashboard-layout.dashboard-route .page-heading-subtitle {
+  color: #7899a1;
+}
+
+.dashboard-layout.dashboard-route .user-dropdown-button {
+  border-color: #e1f0f3;
+  background: rgba(255, 255, 255, .88);
+}
+
+.dashboard-layout.dashboard-route .user-dropdown-button:hover,
+.dashboard-layout.dashboard-route .user-dropdown-button.show {
+  border-color: #bde3e9;
+  background: #f1fafb;
+}
+
+.dashboard-layout.dashboard-route :deep(.app-sidebar) {
+  border-right: 1px solid #cde9ee;
+  background: linear-gradient(180deg, #d8f0f4 0%, #e5f6f8 54%, #effafb 100%);
+  color: #426d78;
+  box-shadow: 2px 0 12px rgba(44, 119, 135, .06);
+}
+
+.dashboard-layout.dashboard-route :deep(.sidebar-header) {
+  border-bottom-color: rgba(83, 157, 171, .14);
+}
+
+.dashboard-layout.dashboard-route :deep(.sidebar-brand),
+.dashboard-layout.dashboard-route :deep(.brand-title) {
+  color: #28535e;
+}
+
+.dashboard-layout.dashboard-route :deep(.brand-subtitle) {
+  color: #76959d;
+}
+
+.dashboard-layout.dashboard-route :deep(.section-heading) {
+  color: #71959e;
+}
+
+.dashboard-layout.dashboard-route :deep(.section-heading:hover) {
+  color: #3d7d8a;
+}
+
+.dashboard-layout.dashboard-route :deep(.sidebar-menu-link) {
+  color: #527783;
+}
+
+.dashboard-layout.dashboard-route :deep(.sidebar-menu-link:hover) {
+  background: rgba(255, 255, 255, .55);
+  color: #2b6572;
+}
+
+.dashboard-layout.dashboard-route :deep(.sidebar-menu-link.router-link-active),
+.dashboard-layout.dashboard-route :deep(.sidebar-menu-link.router-link-exact-active) {
+  border-color: rgba(104, 190, 204, .24);
+  background: linear-gradient(100deg, #c8ebf0, #d7f1f4);
+  color: #286b79;
+  box-shadow: inset 2px 0 0 #5ebdcb;
+}
+
+.dashboard-layout.dashboard-route :deep(.sidebar-menu-link.router-link-active .menu-icon),
+.dashboard-layout.dashboard-route :deep(.sidebar-menu-link.router-link-exact-active .menu-icon),
+.dashboard-layout.dashboard-route :deep(.sidebar-menu-link.router-link-active .menu-label),
+.dashboard-layout.dashboard-route :deep(.sidebar-menu-link.router-link-exact-active .menu-label) {
+  color: #286b79;
+}
+
+.dashboard-layout.dashboard-route :deep(.sidebar-menu-link.router-link-active .menu-label),
+.dashboard-layout.dashboard-route :deep(.sidebar-menu-link.router-link-exact-active .menu-label) {
+  font-weight: 700;
+}
+
+.dashboard-layout.dashboard-route :deep(.sidebar-menu-link.router-link-active:hover),
+.dashboard-layout.dashboard-route :deep(.sidebar-menu-link.router-link-exact-active:hover) {
+  background: #bee6ec;
+}
+
+.dashboard-layout.dashboard-route :deep(.sidebar-user) {
+  border-top-color: rgba(83, 157, 171, .16);
+  background: rgba(255, 255, 255, .35);
+}
+
+.dashboard-layout.dashboard-route :deep(.user-name) {
+  color: #315e69;
+}
+
+.dashboard-layout.dashboard-route :deep(.user-role),
+.dashboard-layout.dashboard-route :deep(.user-options-button) {
+  color: #7899a1;
+}
+
+.dashboard-layout.dashboard-route :deep(.user-options-button:hover) {
+  background: rgba(255, 255, 255, .6);
+  color: #3d7d8a;
+}
+
+.dashboard-layout.dashboard-route :deep(.sidebar-scroll) {
+  scrollbar-color: rgba(84, 164, 179, .3) transparent;
+}
+
+.dashboard-layout.dashboard-route :deep(.sidebar-scroll::-webkit-scrollbar-thumb) {
+  background: rgba(84, 164, 179, .28);
+}
+
+.dashboard-layout.dashboard-route :deep(.desktop-collapse-button) {
+  border-color: #d8f0f4;
+  background: linear-gradient(135deg, #7bcbd7, #58b9ca);
+  color: #fff;
+}
+
+@media (max-width: 560px) {
+  .dashboard-layout.dashboard-route :deep(.app-sidebar) {
+    background: linear-gradient(180deg, #d8f0f4 0%, #effafb 100%);
   }
 }
 </style>
