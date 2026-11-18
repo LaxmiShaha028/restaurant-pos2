@@ -126,7 +126,7 @@ let popularTimer = null
 const preparingOrders = computed(() => orders.value.filter((order) => order.status === 'preparing'))
 const readyOrders = computed(() => orders.value.filter((order) => order.status === 'ready'))
 const pinnedOrder = computed(() => readyOrders.value.find((order) => String(order.id) === pinnedOrderId.value) || null)
-const popularItems = computed(() => pickupMenuItems.value.filter((item) => item.is_available !== false && item.is_popular))
+const popularItems = computed(() => pickupMenuItems.value.filter((item) => item.is_available !== false))
 const currentPopularIndex = computed(() => activePopularIndex.value % Math.max(1, popularItems.value.length))
 const restaurantName = computed(() => settingsStore.restaurantName || 'Restaurant')
 const restaurantMonogram = computed(() => restaurantName.value.trim().split(/\s+/).slice(0, 2).map((word) => word[0]).join('').toUpperCase())

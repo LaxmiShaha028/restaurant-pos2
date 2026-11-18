@@ -48,6 +48,8 @@ class PickupController extends Controller
         $popularItems = [];
 
         try {
+            $normalizeMenuName = static fn (string $name): string => strtolower(trim(explode(' - ', $name, 2)[0]));
+
             $salesByMenuItem = DB::table('order_items')
                 ->join('orders', 'orders.id', '=', 'order_items.order_id')
                 ->whereBetween('orders.created_at', [now()->startOfMonth(), now()->endOfMonth()])
@@ -58,7 +60,7 @@ class PickupController extends Controller
                 ->get();
 
             $rankedNames = $salesByMenuItem
-                ->groupBy(static fn ($item): string => explode(' - ', $item->menu_name, 2)[0])
+                ->groupBy(static fn ($item): string => $normalizeMenuName((string) $item->menu_name))
                 ->map(static fn ($items): int => (int) $items->sum('quantity_sold'))
                 ->sortDesc()
                 ->take(3)
@@ -72,12 +74,12 @@ class PickupController extends Controller
                     ->where('is_available', true)
                     ->get()
                     ->filter(static function (MenuItem $item) use ($rankedNames): bool {
-                        $baseName = explode(' - ', $item->menu_name, 2)[0];
+                        $baseName = strtolower(trim(explode(' - ', $item->menu_name, 2)[0]));
 
                         return in_array($baseName, $rankedNames, true);
                     })
                     ->sortBy(static function (MenuItem $item) use ($rankedNames): int {
-                        $baseName = explode(' - ', $item->menu_name, 2)[0];
+                        $baseName = strtolower(trim(explode(' - ', $item->menu_name, 2)[0]));
 
                         return array_search($baseName, $rankedNames, true);
                     })
@@ -101,6 +103,37 @@ class PickupController extends Controller
             Log::warning('Unable to load popular items for the pickup display.', [
                 'exception' => $exception->getMessage(),
             ]);
+        }
+
+        // Keep the promotion panel useful when the tenant has no matching
+        // sales rows yet or legacy item names do not match the current menu.
+        if ($popularItems === []) {
+            try {
+                $popularItems = MenuItem::query()
+                    ->with('category')
+                    ->where('is_available', true)
+                    ->orderByDesc('id')
+                    ->limit(3)
+                    ->get()
+                    ->map(static fn (MenuItem $item): array => [
+                        'id' => (int) $item->id,
+                        'menu_name' => $item->menu_name,
+                        'price' => (float) $item->price,
+                        'image_path' => $item->image_path,
+                        'image_url' => $item->image_url,
+                        'is_available' => (bool) $item->is_available,
+                        'is_popular' => false,
+                        'category' => $item->category ? [
+                            'category_name' => $item->category->category_name,
+                        ] : null,
+                    ])
+                    ->values()
+                    ->all();
+            } catch (Throwable $exception) {
+                Log::warning('Unable to load available menu items for the pickup display.', [
+                    'exception' => $exception->getMessage(),
+                ]);
+            }
         }
 
         return response()->json([
