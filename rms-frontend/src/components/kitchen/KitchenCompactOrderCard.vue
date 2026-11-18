@@ -16,7 +16,7 @@
         <div>
           <small>Order ID</small>
 
-          <h3 :title="order.order_number">
+          <h3>
             {{ order.order_number }}
           </h3>
 
