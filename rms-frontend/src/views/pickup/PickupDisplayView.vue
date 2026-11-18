@@ -70,7 +70,12 @@
             :class="{ active: index === currentPopularIndex }"
             :aria-hidden="index !== currentPopularIndex"
           >
-            <img class="popular-photo" :src="foodImage(item)" :alt="item.menu_name">
+            <img
+              class="popular-photo"
+              :src="foodImage(item)"
+              :alt="item.menu_name"
+              @error="handleFoodImageError($event, item)"
+            >
             <div class="popular-shade"></div>
             <span class="popular-tag">{{ item.category?.category_name || 'Menu' }}</span>
             <div class="popular-info">
@@ -141,15 +146,8 @@ const menuGroups = computed(() => {
 })
 
 const foodPhoto = (filename) => `${import.meta.env.BASE_URL}food-photos/${filename}`
-function foodImage(item) {
+function fallbackFoodImage(item) {
   const name = String(item.menu_name || '').toLowerCase()
-  const storedPath = String(item.image_path || item.image_url || '').trim()
-  const savedImage = resolveMediaUrl(storedPath)
-  if (storedPath.startsWith('food-photos/')) return foodPhoto(storedPath.slice('food-photos/'.length))
-  const uploadedImage = storedPath && !/^https?:\/\//i.test(storedPath)
-  if (uploadedImage && savedImage) return savedImage
-  if (/^https?:\/\/images\.unsplash\.com\//i.test(storedPath) && savedImage) return savedImage
-
   const imageMap = [
     [/beef tehari|beef set meal/, 'beef-tehari.jpg'],
     [/chicken set meal|family rice set|chicken biryani|rice/, 'chicken-biryani.jpg'],
@@ -167,9 +165,32 @@ function foodImage(item) {
     [/ice cream|sundae/, 'vanilla-ice-cream.jpg'],
   ]
   const localImage = imageMap.find(([pattern]) => pattern.test(name))?.[1]
-  if (localImage) return foodPhoto(localImage)
+  return foodPhoto(localImage || 'chicken-burger.jpg')
+}
 
-  return savedImage || foodPhoto('chicken-burger.jpg')
+function foodImage(item) {
+  const storedPath = String(item.image_path || item.image_url || '').trim()
+  const savedImage = resolveMediaUrl(storedPath)
+  if (storedPath.startsWith('food-photos/')) return foodPhoto(storedPath.slice('food-photos/'.length))
+  const uploadedImage = storedPath && !/^https?:\/\//i.test(storedPath)
+  if (uploadedImage && savedImage) return savedImage
+  if (/^https?:\/\/images\.unsplash\.com\//i.test(storedPath) && savedImage) return savedImage
+
+  return savedImage || fallbackFoodImage(item)
+}
+
+function handleFoodImageError(event, item) {
+  const image = event.currentTarget
+  const fallback = fallbackFoodImage(item)
+  const fallbackUrl = new URL(fallback, window.location.href).href
+
+  if (image.src !== fallbackUrl && image.dataset.fallbackApplied !== 'true') {
+    image.dataset.fallbackApplied = 'true'
+    image.src = fallback
+    return
+  }
+
+  image.style.visibility = 'hidden'
 }
 
 function pinOrder(id) {
