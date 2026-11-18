@@ -10,10 +10,10 @@
     gap: 11px;
     padding: 13px 15px;
     margin-bottom: 18px;
-    border: 1px solid rgba(37, 99, 235, 0.18);
+    border: 1px solid rgba(220, 38, 38, 0.22);
     border-radius: 12px;
-    color: #1e40af;
-    background: rgba(37, 99, 235, 0.06);
+    color: #b91c1c;
+    background: rgba(220, 38, 38, 0.06);
 }
 
 .employee-attendance-notice > i {

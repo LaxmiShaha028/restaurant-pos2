@@ -287,12 +287,13 @@ class MenuItemController extends Controller
         try {
             $salesByMenuItem = DB::table('order_items')
                 ->join('orders', 'orders.id', '=', 'order_items.order_id')
-                ->join('menu_items', 'menu_items.id', '=', 'order_items.menu_item_id')
                 ->whereBetween('orders.created_at', [now()->startOfMonth(), now()->endOfMonth()])
                 ->where('orders.status', '!=', Order::STATUS_CANCELED)
-                ->select('menu_items.menu_name')
+                // Use the order item name snapshot so popularity still works
+                // when older/imported order rows have no menu_item_id link.
+                ->select('order_items.item_name as menu_name')
                 ->selectRaw('SUM(order_items.quantity) AS quantity_sold')
-                ->groupBy('menu_items.menu_name')
+                ->groupBy('order_items.item_name')
                 ->get();
 
             $popularMenuItemNames = $salesByMenuItem
