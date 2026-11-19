@@ -480,7 +480,7 @@
 
 .restaurant-stock-status-limited {
   border-color: #fde68a;
-  background: #fffbeb;
+  background: #f4fbfc;
   color: #92400e;
 }
 
@@ -1605,10 +1605,10 @@
 .stock-transfer-history-validation {
   margin-top: 11px;
   padding: 9px 11px;
-  border: 1px solid #fed7aa;
+  border: 1px solid #bfe5eb;
   border-radius: 9px;
-  background: #fff7ed;
-  color: #9a3412;
+  background: #edf8fb;
+  color: #327c8a;
   font-size: 0.76rem;
   font-weight: 650;
 }
@@ -2428,10 +2428,10 @@
 .restaurant-movement-history-validation {
   margin-top: 11px;
   padding: 9px 11px;
-  border: 1px solid #fed7aa;
+  border: 1px solid #bfe5eb;
   border-radius: 9px;
-  background: #fff7ed;
-  color: #9a3412;
+  background: #edf8fb;
+  color: #327c8a;
   font-size: 0.76rem;
   font-weight: 650;
   line-height: 1.4;

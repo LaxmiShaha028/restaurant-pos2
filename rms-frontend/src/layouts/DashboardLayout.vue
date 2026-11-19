@@ -1243,13 +1243,13 @@ onBeforeUnmount(() => {
 }
 
 .notification-kitchen .notification-item-icon {
-  background: #fff7ed;
-  color: #ea580c;
+  background: #edf8fb;
+  color: #45aabd;
 }
 
 .notification-reservation .notification-item-icon {
-  background: #fff5eb;
-  color: #f97316;
+  background: #edf8fb;
+  color: #58b9ca;
 }
 
 .notification-payment .notification-item-icon {

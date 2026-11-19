@@ -3544,12 +3544,12 @@ onBeforeUnmount(() => {
 }
 
 .status-dot.preparing {
-  background: #ffad36;
+  background: #72c1d0;
   box-shadow: 0 0 0 3px rgba(255, 173, 54, .12);
 }
 
 .status-dot.ready {
-  background: #ffd34e;
+  background: #aedfe7;
   box-shadow: 0 0 0 3px rgba(255, 211, 78, .14);
 }
 
@@ -3565,7 +3565,7 @@ onBeforeUnmount(() => {
 
 .status-dot.canceled {
   background: #327c8a;
-  box-shadow: 0 0 0 3px rgba(154, 52, 18, .12);
+  box-shadow: 0 0 0 3px rgba(50, 124, 138, .12);
 }
 
 .status-chart-tooltip {

@@ -61,8 +61,8 @@
 }
 
 .delete-table-icon--warning {
-  background: #fef3c7;
-  color: #d97706;
+  background: #e7f6f8;
+  color: #3d94a7;
 }
 
 /*
@@ -213,13 +213,13 @@
 }
 
 .delete-table-status--reserved {
-  background: #fef3c7;
-  color: #b45309;
+  background: #e7f6f8;
+  color: #267f91;
 }
 
 .delete-table-status--cleaning {
-  background: #ffedd5;
-  color: #c2410c;
+  background: #e5f6f9;
+  color: #267f91;
 }
 
 /*

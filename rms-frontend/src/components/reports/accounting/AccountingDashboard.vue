@@ -814,7 +814,7 @@ function money(
 
 .summary-card {
   position: relative;
-  border: 1px solid #eee3da !important;
+  border: 1px solid #dceff3 !important;
   border-radius: 12px;
   overflow: hidden;
   background: #fff !important;
@@ -870,12 +870,12 @@ function money(
   bottom: 0;
 
   width: 5px;
-  background: linear-gradient(180deg, #fb923c, #c2410c) !important;
+  background: linear-gradient(180deg, #85d2de, #267f91) !important;
 }
 
 .summary-card .summary-icon {
-  background: #fff1e6 !important;
-  color: #f97316 !important;
+  background: #e5f6f9 !important;
+  color: #58b9ca !important;
 }
 
 .summary-card .fs-5 {
@@ -884,7 +884,7 @@ function money(
 
 .accounting-dashboard > .row > [class*="col-"] > .card,
 .accounting-dashboard .card:not(.summary-card) {
-  border: 1px solid #eee3da !important;
+  border: 1px solid #dceff3 !important;
   border-radius: 12px;
   background: #fff !important;
   box-shadow: 0 3px 12px rgba(124, 75, 35, .05) !important;
@@ -1036,7 +1036,7 @@ function money(
 
 .bg-primary-subtle {
   background-color:
-    rgba(249, 115, 22, 0.12);
+    rgba(88, 185, 202, 0.12);
 }
 
 
@@ -1085,22 +1085,22 @@ function money(
 
 
 .text-purple {
-  color: #c2410c !important;
+  color: #267f91 !important;
 }
 
 
 .bg-purple {
-  background-color: #c2410c !important;
+  background-color: #267f91 !important;
 }
 
 
 .text-orange {
-  color: #fd7e14 !important;
+  color: #45aabd !important;
 }
 
 
 .bg-orange {
-  background-color: #fd7e14 !important;
+  background-color: #45aabd !important;
 }
 
 

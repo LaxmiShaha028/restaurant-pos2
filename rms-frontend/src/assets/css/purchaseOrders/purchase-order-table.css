@@ -177,8 +177,8 @@
 }
 
 .po-status-select-partially_received {
-  background: #fef3c7;
-  color: #b45309;
+  background: #e7f6f8;
+  color: #267f91;
 }
 
 .po-status-select-received {
@@ -228,8 +228,8 @@
 }
 
 .edit-btn {
-  background: #fef3c7;
-  color: #d97706;
+  background: #e7f6f8;
+  color: #3d94a7;
 }
 
 .edit-btn:hover:not(:disabled) {

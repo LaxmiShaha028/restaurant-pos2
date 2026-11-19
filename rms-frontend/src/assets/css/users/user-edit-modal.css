@@ -125,7 +125,7 @@
     padding:20px 25px;
 
 
-    background:#f97316;
+    background:#58b9ca;
 
 
     color:white;
@@ -219,7 +219,7 @@
 
     background:white;
 
-    color:#f97316;
+    color:#58b9ca;
 
 
 }
@@ -295,7 +295,7 @@
 
     border:
 
-        1px solid #eee3da;
+        1px solid #dceff3;
 
 
     border-radius:14px;
@@ -412,7 +412,7 @@
 
     border:
 
-        1px solid #e7d8cb;
+        1px solid #cde9ee;
 
 
     border-radius:9px;
@@ -440,13 +440,13 @@
 .edit-field select:focus {
 
 
-    border-color:#f97316;
+    border-color:#58b9ca;
 
 
     box-shadow:
 
 
-        0 0 0 3px rgba(249, 115, 22, .12);
+        0 0 0 3px rgba(88, 185, 202, .12);
 
 
 }
@@ -494,7 +494,7 @@
     height:18px;
 
 
-    accent-color:#f97316;
+    accent-color:#58b9ca;
 
 
 }
@@ -516,12 +516,12 @@
     padding:18px 25px;
 
 
-    background:#f8f1e9;
+    background:#f7fafc;
 
 
     border-top:
 
-        1px solid #eee3da;
+        1px solid #dceff3;
 
 
     display:flex;
@@ -571,7 +571,7 @@
 .cancel-edit-btn {
 
 
-    background:#eee3da;
+    background:#dceff3;
 
 
     color:#334155;
@@ -586,7 +586,7 @@
 .cancel-edit-btn:hover {
 
 
-    background:#e7d8cb;
+    background:#cde9ee;
 
 
 }
@@ -601,7 +601,7 @@
 .save-edit-btn {
 
 
-    background:#f97316;
+    background:#58b9ca;
 
 
     color:white;
@@ -616,7 +616,7 @@
 .save-edit-btn:hover {
 
 
-    background:#c2410c;
+    background:#267f91;
 
 
 }

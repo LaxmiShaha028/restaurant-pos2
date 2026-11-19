@@ -12,7 +12,7 @@
     width: 100%;
     min-width: 0;
     padding: 8px;
-    background: #f4f1ed;
+    background: #f1f5f9;
 }
 
 /* --------------------------------------------------------------------------
@@ -34,7 +34,7 @@
     min-width: 32px;
     border-radius: 8px;
     font-size: 15px;
-    box-shadow: 0 4px 10px rgba(249, 115, 22, .10);
+    box-shadow: 0 4px 10px rgba(88, 185, 202, .10);
 }
 
 .header-left h2 {
@@ -56,7 +56,7 @@
     padding: 0 9px;
     border: 0;
     border-radius: 6px;
-    background: #f97316;
+    background: #58b9ca;
     color: #fff;
     font-size: 12px;
     font-weight: 600;
@@ -65,7 +65,7 @@
 
 .add-user-btn:hover,
 .refresh-btn:hover {
-    background: #c2410c;
+    background: #267f91;
 }
 
 /* --------------------------------------------------------------------------
@@ -807,18 +807,18 @@
 }
 
 .users-page {
-  background: #f4f1ed;
+  background: #f1f5f9;
 }
 
 .add-user-btn,
 .refresh-btn {
-  border: 1px solid #e7d8cb;
-  background: linear-gradient(145deg, #191919 0%, #111111 54%, #090909 100%);
-  color: #f97316;
+  border: 1px solid #cde9ee;
+  background: linear-gradient(145deg, #d5f0f4 0%, #c8eaf0 54%, #b9e3ea 100%);
+  color: #58b9ca;
 }
 
 .add-user-btn:hover,
 .refresh-btn:hover {
-  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010 100%);
-  color: #fb923c;
+  background: linear-gradient(145deg, #c9ebf0 0%, #b8e3ea 54%, #aadce5 100%);
+  color: #85d2de;
 }

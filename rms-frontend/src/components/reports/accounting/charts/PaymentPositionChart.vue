@@ -74,10 +74,10 @@ const paymentColors = {
     '#0d6efd',
 
   card:
-    '#c2410c',
+    '#267f91',
 
   card_settlement:
-    '#c2410c',
+    '#267f91',
 
   bkash:
     '#d63384',
@@ -86,10 +86,10 @@ const paymentColors = {
     '#d63384',
 
   nagad:
-    '#fd7e14',
+    '#45aabd',
 
   nagad_wallet:
-    '#fd7e14',
+    '#45aabd',
 
   mixed:
     '#ffc107',
@@ -107,9 +107,9 @@ const fallbackColors = [
 
   '#198754',
   '#0d6efd',
-  '#c2410c',
+  '#267f91',
   '#d63384',
-  '#fd7e14',
+  '#45aabd',
   '#ffc107',
   '#0dcaf0',
   '#20c997',

@@ -140,9 +140,9 @@ const title =
    -------------------------------------------------------------------------- */
 
 .reservation-toast-warning {
-    border-color: #fed7aa;
-    background: #fff7ed;
-    color: #9a3412;
+    border-color: #bfe5eb;
+    background: #edf8fb;
+    color: #327c8a;
 }
 
 

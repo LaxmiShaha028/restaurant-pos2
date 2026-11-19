@@ -39,11 +39,11 @@
 }
 
 .kitchen-order-pending::before {
-  background: #f59e0b;
+  background: #4b9eb0;
 }
 
 .kitchen-order-preparing::before {
-  background: #ea580c;
+  background: #45aabd;
 }
 
 .kitchen-order-ready::before {
@@ -219,11 +219,11 @@
 
   background: var(--kitchen-blue-soft) !important;
 
-  color: #f96f00  !important;
+  color: #58b9ca  !important;
 }
 
 .kitchen-status-preparing {
-  border-color: #fed7aa !important;
+  border-color: #bfe5eb !important;
 
   background: var(--kitchen-primary-soft) !important;
 
@@ -412,7 +412,7 @@
 
   background: #ffffff;
 
-  color: #f96f00;
+  color: #58b9ca;
 
   font-size: 12px;
 }
@@ -533,7 +533,7 @@
 }
 
 .kitchen-priority-note {
-  border-color: #fed7aa;
+  border-color: #bfe5eb;
 
   background: var(--kitchen-primary-soft);
 }
@@ -623,7 +623,7 @@
 
   padding: 2px 5px;
 
-  border: 1px solid #fed7aa;
+  border: 1px solid #bfe5eb;
   border-radius: 9px;
 
   background: var(--kitchen-primary-soft);
@@ -798,7 +798,7 @@
 }
 
 .kitchen-item-status-preparing {
-  border-color: #fed7aa;
+  border-color: #bfe5eb;
 
   background: var(--kitchen-primary-soft);
 
@@ -1279,7 +1279,7 @@
 
   background: var(--kitchen-blue-soft);
 
-  color: #f96f00;
+  color: #58b9ca;
 }
 
 .kitchen-assignment-info small {
@@ -1347,14 +1347,9 @@
 
   border-radius: 9px;
 
-  background: linear-gradient(
-    145deg,
-    #191919 0%,
-    #111111 54%,
-    #090909 100%
-  );
+  background: linear-gradient(145deg, #d5f0f4 0%, #c8eaf0 54%, #b9e3ea 100%);
 
-  color: #f97316;
+  color: #58b9ca;
 
   box-shadow: 0 2px 5px rgba(15, 23, 42, 0.14);
 }
@@ -1362,14 +1357,9 @@
 .accept-button:hover:not(:disabled) {
   border-color: #3b3b3b;
 
-  background: linear-gradient(
-    145deg,
-    #242424 0%,
-    #171717 54%,
-    #101010 100%
-  );
+  background: linear-gradient(145deg, #c9ebf0 0%, #b8e3ea 54%, #aadce5 100%);
 
-  color: #fb923c;
+  color: #85d2de;
 }
 
 .accept-button:disabled {

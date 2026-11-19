@@ -483,21 +483,21 @@
 
 /* Dashboard / order page palette. */
 .table-management-page {
-  --restaurant-accent: #f97316;
-  --restaurant-accent-dark: #c2410c;
-  --restaurant-border: #eee3da;
+  --restaurant-accent: #58b9ca;
+  --restaurant-accent-dark: #267f91;
+  --restaurant-border: #dceff3;
   padding: 18px;
   border-radius: 24px;
   background:
-    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
-    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
-    #f4f1ed;
+    radial-gradient(circle at 0 0, rgba(88, 185, 202, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(133, 210, 222, .045), transparent 25%),
+    #f1f5f9;
   color: #111827;
 }
 
 .table-management-header,
 .table-management-card {
-  border: 1px solid #eee3da !important;
+  border: 1px solid #dceff3 !important;
   border-radius: 14px !important;
   background: #fff !important;
   box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
@@ -514,8 +514,8 @@
   height: 40px;
   flex-basis: 40px;
   border-radius: 12px;
-  background: #fff1e6 !important;
-  color: #f97316 !important;
+  background: #e5f6f9 !important;
+  color: #58b9ca !important;
 }
 
 .table-management-eyebrow,
@@ -528,8 +528,8 @@
 .table-management-add:hover {
   border: 1px solid #292929 !important;
   border-radius: 10px !important;
-  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%) !important;
-  color: #f97316 !important;
+  background: linear-gradient(145deg, #d5f0f4 0%, #c8eaf0 54%, #b9e3ea 100%) !important;
+  color: #58b9ca !important;
 }
 
 .table-management-card {
@@ -1070,23 +1070,23 @@
 /* Keep the warm order-page shell after responsive layout rules. */
 .table-management-page {
   background:
-    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
-    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
-    #f4f1ed;
+    radial-gradient(circle at 0 0, rgba(88, 185, 202, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(133, 210, 222, .045), transparent 25%),
+    #f1f5f9;
   color: #111827;
 }
 
 .table-management-header,
 .table-management-card {
-  border-color: #eee3da !important;
+  border-color: #dceff3 !important;
   border-radius: 14px !important;
   background: #fff !important;
   box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
 }
 
 .table-management-header-icon {
-  background: #fff1e6 !important;
-  color: #f97316 !important;
+  background: #e5f6f9 !important;
+  color: #58b9ca !important;
 }
 
 .table-management-eyebrow,
@@ -1098,11 +1098,11 @@
 .table-management-add,
 .table-management-add:hover {
   border-color: #292929 !important;
-  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%) !important;
-  color: #f97316 !important;
+  background: linear-gradient(145deg, #d5f0f4 0%, #c8eaf0 54%, #b9e3ea 100%) !important;
+  color: #58b9ca !important;
 }
 
 .table-management-page .table-management-add span,
 .table-management-page .table-management-add i {
-  color: #f97316 !important;
+  color: #58b9ca !important;
 }

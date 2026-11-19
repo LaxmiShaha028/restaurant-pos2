@@ -17,22 +17,22 @@
   --billing-success-dark: #15803d;
   --billing-success-soft: #f0fdf4;
 
-  --billing-warning: #d97706;
-  --billing-warning-dark: #b45309;
-  --billing-warning-soft: #fffbeb;
+  --billing-warning: #3d94a7;
+  --billing-warning-dark: #267f91;
+  --billing-warning-soft: #f4fbfc;
 
   --billing-danger: #dc2626;
   --billing-danger-dark: #b91c1c;
   --billing-danger-soft: #fef2f2;
 
-  --billing-purple: #f97316;
-  --billing-purple-soft: #fff5eb;
+  --billing-purple: #58b9ca;
+  --billing-purple-soft: #edf8fb;
 
   --billing-cyan: #0891b2;
   --billing-cyan-soft: #ecfeff;
 
-  --billing-orange: #ea580c;
-  --billing-orange-soft: #fff7ed;
+  --billing-orange: #45aabd;
+  --billing-orange-soft: #edf8fb;
 
   --billing-text: #111827;
   --billing-text-secondary: #374151;
@@ -789,8 +789,8 @@
 }
 
 .billing-user-avatar.chef-avatar {
-  background: #fef3c7;
-  color: #b45309;
+  background: #e7f6f8;
+  color: #267f91;
 }
 
 .billing-user-avatar.receiver-avatar {

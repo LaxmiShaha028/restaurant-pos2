@@ -270,8 +270,8 @@ onBeforeUnmount(() => {
 }
 
 .complete-order-icon.due {
-  color: #ea580c;
-  background: #fff7ed;
+  color: #45aabd;
+  background: #edf8fb;
 }
 
 .complete-order-icon.paid {
@@ -281,7 +281,7 @@ onBeforeUnmount(() => {
 
 .complete-order-eyebrow {
   margin: 0 0 3px;
-  color: #ea580c;
+  color: #45aabd;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: .04em;
@@ -334,11 +334,11 @@ onBeforeUnmount(() => {
 }
 
 .complete-order-message.due {
-  border-color: #fed7aa;
+  border-color: #bfe5eb;
   background: #fffaf5;
 }
 
-.complete-order-message.due i { color: #c2410c; }
+.complete-order-message.due i { color: #267f91; }
 
 .complete-order-message.paid {
   border-color: #a7f3d0;
@@ -433,19 +433,19 @@ onBeforeUnmount(() => {
   justify-content: center;
   gap: 8px;
   border: 1px solid #111111;
-  color: #f97316;
+  color: #58b9ca;
   background: #111111;
 }
 
 .complete-order-primary.due {
   border-color: #111111;
-  color: #f97316;
+  color: #58b9ca;
   background: #111111;
 }
 
 .complete-order-primary:hover:not(:disabled) {
   border-color: #000000;
-  color: #fb923c;
+  color: #85d2de;
   background: #000000;
 }
 

@@ -198,12 +198,12 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', handleOutsideC
 
 .reservation-time-trigger:hover,
 .reservation-time-trigger[aria-expanded="true"] {
-  border-color: #fdba74;
+  border-color: #a6dce4;
 }
 
 .reservation-time-trigger:focus-visible {
-  border-color: #f97316;
-  box-shadow: 0 0 0 3px rgba(249, 115, 22, .13);
+  border-color: #58b9ca;
+  box-shadow: 0 0 0 3px rgba(88, 185, 202, .13);
 }
 
 .reservation-time-trigger.reservation-input-error {
@@ -231,7 +231,7 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', handleOutsideC
   left: 0;
   width: 282px;
   padding: 10px;
-  border: 1px solid #eee3da;
+  border: 1px solid #dceff3;
   border-radius: 12px;
   background: #fff;
   box-shadow: 0 16px 36px rgba(23, 32, 51, .16);
@@ -269,7 +269,7 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', handleOutsideC
   padding: 2px;
   border: 1px solid #f1eee9;
   border-radius: 8px;
-  scrollbar-color: #fdba74 #fff7ed;
+  scrollbar-color: #a6dce4 #edf8fb;
   scrollbar-width: thin;
 }
 
@@ -286,14 +286,14 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', handleOutsideC
 }
 
 .reservation-time-options button:hover {
-  border-color: #fed7aa;
-  background: #fff7ed;
-  color: #c2410c;
+  border-color: #bfe5eb;
+  background: #edf8fb;
+  color: #267f91;
 }
 
 .reservation-time-options button.is-selected {
-  border-color: #f97316;
-  background: #f97316;
+  border-color: #58b9ca;
+  background: #58b9ca;
   color: #fff;
   font-weight: 700;
 }
@@ -310,7 +310,7 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', handleOutsideC
 .reservation-time-menu-footer button {
   min-height: 28px;
   padding: 0 9px;
-  border: 1px solid #eee3da;
+  border: 1px solid #dceff3;
   border-radius: 7px;
   background: #fff;
   color: #475569;
@@ -321,14 +321,14 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', handleOutsideC
 }
 
 .reservation-time-menu-footer .time-done {
-  border-color: #f97316;
-  background: #f97316;
+  border-color: #58b9ca;
+  background: #58b9ca;
   color: #fff;
 }
 
 .reservation-time-menu-footer .time-done:disabled {
-  border-color: #fed7aa;
-  background: #fed7aa;
+  border-color: #bfe5eb;
+  background: #bfe5eb;
   cursor: not-allowed;
 }
 

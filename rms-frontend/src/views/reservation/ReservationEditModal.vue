@@ -2569,7 +2569,7 @@ function formatDate(
 
     padding: 22px 28px;
 
-    background: linear-gradient(135deg, #fb923c 0%, #f97316 58%, #ea580c 100%);
+    background: linear-gradient(135deg, #85d2de 0%, #58b9ca 58%, #45aabd 100%);
 
     color: #ffffff;
 }
@@ -2708,7 +2708,7 @@ function formatDate(
 
     padding: 22px 28px 26px;
 
-    background: #f4f1ed;
+    background: #f1f5f9;
 
     overscroll-behavior: contain;
 
@@ -2749,7 +2749,7 @@ function formatDate(
 
     padding: 20px;
 
-    border: 1px solid #eee3da;
+    border: 1px solid #dceff3;
 
     border-radius: 16px;
 
@@ -2796,9 +2796,9 @@ function formatDate(
 
     border-radius: 9px;
 
-    background: #fff1e6;
+    background: #e5f6f9;
 
-    color: #f97316;
+    color: #58b9ca;
 
     font-size: 14px;
 }
@@ -2887,19 +2887,19 @@ function formatDate(
 .reservation-edit-date-trigger:hover,
 .reservation-customer-trigger[aria-expanded="true"],
 .reservation-edit-date-trigger[aria-expanded="true"] {
-    border-color: #fb923c;
+    border-color: #85d2de;
 }
 
 .reservation-customer-trigger:focus-visible,
 .reservation-edit-date-trigger:focus-visible {
     outline: none;
-    border-color: #f97316;
-    box-shadow: 0 0 0 3px rgba(249, 115, 22, .14);
+    border-color: #58b9ca;
+    box-shadow: 0 0 0 3px rgba(88, 185, 202, .14);
 }
 
 .reservation-customer-trigger > i,
 .reservation-edit-date-trigger > i {
-    color: #ea580c;
+    color: #45aabd;
 }
 
 .reservation-customer-trigger .is-placeholder {
@@ -2921,7 +2921,7 @@ function formatDate(
     left: 0;
     width: 100%;
     padding: 8px;
-    border: 1px solid #eee3da;
+    border: 1px solid #dceff3;
     border-radius: 11px;
     background: #fff;
     box-shadow: 0 14px 32px rgba(23, 32, 51, .16);
@@ -2940,8 +2940,8 @@ function formatDate(
 }
 
 .reservation-customer-search:focus {
-    border-color: #fb923c !important;
-    box-shadow: 0 0 0 3px rgba(249, 115, 22, .1) !important;
+    border-color: #85d2de !important;
+    box-shadow: 0 0 0 3px rgba(88, 185, 202, .1) !important;
 }
 
 .reservation-customer-options {
@@ -2969,8 +2969,8 @@ function formatDate(
 
 .reservation-customer-option:hover,
 .reservation-customer-option.is-selected {
-    background: #fff1e6;
-    color: #c2410c;
+    background: #e5f6f9;
+    color: #267f91;
 }
 
 .reservation-customer-option small {
@@ -2981,7 +2981,7 @@ function formatDate(
 }
 
 .reservation-customer-option i {
-    color: #ea580c;
+    color: #45aabd;
 }
 
 .reservation-customer-empty {
@@ -3028,8 +3028,8 @@ function formatDate(
 }
 
 .reservation-edit-calendar-heading button:hover {
-    background: #fff1e6;
-    color: #c2410c;
+    background: #e5f6f9;
+    color: #267f91;
 }
 
 .reservation-edit-calendar-weekdays,
@@ -3069,9 +3069,9 @@ function formatDate(
 }
 
 .reservation-edit-calendar-days button:hover:not(:disabled) {
-    border-color: #fed7aa;
-    background: #fff7ed;
-    color: #c2410c;
+    border-color: #bfe5eb;
+    background: #edf8fb;
+    color: #267f91;
 }
 
 .reservation-edit-calendar-days button.is-outside {
@@ -3079,13 +3079,13 @@ function formatDate(
 }
 
 .reservation-edit-calendar-days button.is-today:not(.is-selected) {
-    border-color: #fdba74;
-    color: #c2410c;
+    border-color: #a6dce4;
+    color: #267f91;
     font-weight: 700;
 }
 
 .reservation-edit-calendar-days button.is-selected {
-    background: #f97316;
+    background: #58b9ca;
     color: #fff;
     font-weight: 700;
 }
@@ -3106,14 +3106,14 @@ function formatDate(
     border: 0;
     border-radius: 6px;
     background: transparent;
-    color: #c2410c;
+    color: #267f91;
     font-size: 11px;
     font-weight: 650;
     cursor: pointer;
 }
 
 .reservation-edit-calendar-footer button:hover {
-    background: #fff1e6;
+    background: #e5f6f9;
 }
 
 .reservation-customer-menu-enter-active,
@@ -3193,10 +3193,10 @@ function formatDate(
 .reservation-form-group input:focus,
 .reservation-form-group select:focus,
 .reservation-form-group textarea:focus {
-    border-color: #f97316;
+    border-color: #58b9ca;
 
     box-shadow:
-        0 0 0 3px rgba(249, 115, 22, 0.14);
+        0 0 0 3px rgba(88, 185, 202, 0.14);
 
     background: #ffffff;
 }
@@ -3305,13 +3305,13 @@ function formatDate(
 
     padding: 11px 13px;
 
-    border: 1px solid #f5ddca;
+    border: 1px solid #d2ebef;
 
     border-radius: 10px;
 
-    background: #fff8f1;
+    background: #f4fbfc;
 
-    color: #9a3412;
+    color: #327c8a;
 }
 
 .reservation-duration-preview > i {
@@ -3331,7 +3331,7 @@ function formatDate(
 
     font-weight: 750;
 
-    color: #c2410c;
+    color: #267f91;
 }
 
 
@@ -3359,10 +3359,10 @@ function formatDate(
 }
 
 .reservation-money-input:focus-within {
-    border-color: #f97316;
+    border-color: #58b9ca;
 
     box-shadow:
-        0 0 0 3px rgba(249, 115, 22, 0.14);
+        0 0 0 3px rgba(88, 185, 202, 0.14);
 }
 
 .reservation-money-input > span {
@@ -3373,7 +3373,7 @@ function formatDate(
     font-size: 15px;
     font-weight: 700;
 
-    color: #f97316;
+    color: #58b9ca;
 }
 
 .reservation-money-input input {
@@ -3436,23 +3436,23 @@ function formatDate(
 .reservation-edit-table-option:hover {
     transform: translateY(-1px);
 
-    border-color: #fdba74;
+    border-color: #a6dce4;
 
     box-shadow:
         0 5px 12px rgba(15, 23, 42, 0.06);
 }
 
 .reservation-edit-table-option.selected {
-    border-color: #f97316;
+    border-color: #58b9ca;
 
-    background: #fff1e6;
+    background: #e5f6f9;
 
     box-shadow:
-        0 0 0 2px rgba(249, 115, 22, 0.12);
+        0 0 0 2px rgba(88, 185, 202, 0.12);
 }
 
 .reservation-edit-table-option.current {
-    border-color: #fb923c;
+    border-color: #85d2de;
 }
 
 .reservation-edit-table-option.disabled {
@@ -3504,9 +3504,9 @@ function formatDate(
 
 .reservation-edit-table-option.selected
 .reservation-edit-table-check {
-    border-color: #f97316;
+    border-color: #58b9ca;
 
-    background: #f97316;
+    background: #58b9ca;
 }
 
 .reservation-edit-table-check i {
@@ -3602,7 +3602,7 @@ function formatDate(
 
     padding: 12px;
 
-    border: 1px solid #eee3da;
+    border: 1px solid #dceff3;
 
     border-radius: 11px;
 
@@ -3742,7 +3742,7 @@ function formatDate(
 
     padding: 14px 28px;
 
-    border-top: 1px solid #eee3da;
+    border-top: 1px solid #dceff3;
 
     background: #ffffff;
 
@@ -3787,7 +3787,7 @@ function formatDate(
 }
 
 .reservation-modal-footer .btn-light {
-    border: 1px solid #eee3da;
+    border: 1px solid #dceff3;
 
     background: #ffffff;
 
@@ -3795,9 +3795,9 @@ function formatDate(
 }
 
 .reservation-modal-footer .btn-light:hover {
-    border-color: #fdba74;
-    background: #fff1e6;
-    color: #c2410c;
+    border-color: #a6dce4;
+    background: #e5f6f9;
+    color: #267f91;
 }
 
 .reservation-modal-footer .btn-primary {
@@ -3805,7 +3805,7 @@ function formatDate(
 
     background: #111111;
 
-    color: #f97316;
+    color: #58b9ca;
 
     box-shadow: none;
 }
@@ -3813,7 +3813,7 @@ function formatDate(
 .reservation-modal-footer .btn-primary:hover {
     border-color: #3b3b3b;
     background: #242424;
-    color: #fb923c;
+    color: #85d2de;
 }
 
 .reservation-modal-footer .btn:disabled {
@@ -3835,7 +3835,7 @@ function formatDate(
 .reservation-form-group select:focus-visible,
 .reservation-form-group textarea:focus-visible,
 .reservation-edit-table-option:focus-within {
-    outline: 2px solid #f97316;
+    outline: 2px solid #58b9ca;
 
     outline-offset: 2px;
 }

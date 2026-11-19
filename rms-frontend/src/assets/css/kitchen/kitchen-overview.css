@@ -8,9 +8,9 @@
 ========================================================= */
 
 .kitchen-page {
-  --kitchen-primary: #ea580c;
-  --kitchen-primary-dark: #c2410c;
-  --kitchen-primary-soft: #fff7ed;
+  --kitchen-primary: #45aabd;
+  --kitchen-primary-dark: #267f91;
+  --kitchen-primary-soft: #edf8fb;
 
   --kitchen-blue: #2563eb;
   --kitchen-blue-soft: #eff6ff;
@@ -18,8 +18,8 @@
   --kitchen-success: #15803d;
   --kitchen-success-soft: #f0fdf4;
 
-  --kitchen-warning: #b45309;
-  --kitchen-warning-soft: #fffbeb;
+  --kitchen-warning: #267f91;
+  --kitchen-warning-soft: #f4fbfc;
 
   --kitchen-danger: #b91c1c;
   --kitchen-danger-soft: #fef2f2;
@@ -343,7 +343,7 @@
 }
 
 .preparing-card .summary-card-icon {
-  border: 1px solid #fed7aa;
+  border: 1px solid #bfe5eb;
 
   background: var(--kitchen-primary-soft);
 
@@ -795,11 +795,11 @@
 
   background: var(--kitchen-blue-soft) !important;
 
-  color: #f96f00  !important;
+  color: #58b9ca  !important;
 }
 
 .compact-status-preparing {
-  border-color: #fed7aa !important;
+  border-color: #bfe5eb !important;
 
   background: var(--kitchen-primary-soft) !important;
 
@@ -1144,7 +1144,7 @@
 
   overflow: hidden;
 
-  color: #f96f00;
+  color: #58b9ca;
 
   font-size: 12px;
   font-weight: 700;

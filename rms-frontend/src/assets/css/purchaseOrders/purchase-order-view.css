@@ -179,8 +179,8 @@
 }
 
 .po-status-partially_received {
-    background: #fef3c7;
-    color: #b45309 !important;
+    background: #e7f6f8;
+    color: #267f91 !important;
 }
 
 .po-status-received {
@@ -431,7 +431,7 @@
 }
 
 .po-toast-warning {
-    background: #d97706;
+    background: #3d94a7;
 }
 
 .po-toast-enter-active,

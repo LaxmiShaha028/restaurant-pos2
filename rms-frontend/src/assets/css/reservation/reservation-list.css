@@ -181,8 +181,8 @@
 }
 
 .reservation-summary-card:nth-child(2) .reservation-summary-icon {
-  background: #fff7ed;
-  color: #c2410c;
+  background: #edf8fb;
+  color: #267f91;
 }
 
 .reservation-summary-card:nth-child(3) .reservation-summary-icon {
@@ -639,8 +639,8 @@
 }
 
 .status-reserved {
-  background: #fff7ed;
-  color: #c2410c;
+  background: #edf8fb;
+  color: #267f91;
 }
 
 .status-confirmed {
@@ -1036,17 +1036,17 @@
 
 .reservation-filter-status-trigger:hover,
 .reservation-filter-status-trigger[aria-expanded="true"] {
-  border-color: #fb923c;
+  border-color: #85d2de;
 }
 
 .reservation-filter-status-trigger:focus-visible {
   outline: none;
-  border-color: #f97316;
-  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14);
+  border-color: #58b9ca;
+  box-shadow: 0 0 0 .2rem rgba(88, 185, 202, .14);
 }
 
 .reservation-filter-status-trigger > i {
-  color: #ea580c;
+  color: #45aabd;
 }
 
 .reservation-filter-status-menu {
@@ -1084,12 +1084,12 @@
 
 .reservation-filter-status-option:hover,
 .reservation-filter-status-option.is-selected {
-  background: #fff1e6;
-  color: #c2410c;
+  background: #e5f6f9;
+  color: #267f91;
 }
 
 .reservation-filter-status-option > i {
-  color: #f97316;
+  color: #58b9ca;
 }
 
 .reservation-filter-status-menu-enter-active,
@@ -1195,14 +1195,14 @@
 
 /* Order Management theme: warm canvas, white cards and orange accents. */
 .reservation-page {
-  --reservation-accent: #f97316;
-  --reservation-border: #eee3da;
+  --reservation-accent: #58b9ca;
+  --reservation-border: #dceff3;
   padding: 18px;
   border-radius: 24px;
   background:
-    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
-    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
-    #f4f1ed;
+    radial-gradient(circle at 0 0, rgba(88, 185, 202, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(133, 210, 222, .045), transparent 25%),
+    #f1f5f9;
   color: #111827;
 }
 
@@ -1210,7 +1210,7 @@
 .reservation-summary-card,
 .reservation-filter-card,
 .reservation-table-wrapper {
-  border: 1px solid #eee3da !important;
+  border: 1px solid #dceff3 !important;
   border-radius: 14px !important;
   background: #fff !important;
   box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
@@ -1229,8 +1229,8 @@
   flex: 0 0 40px;
   place-items: center;
   border-radius: 12px;
-  background: #fff1e6;
-  color: #f97316;
+  background: #e5f6f9;
+  color: #58b9ca;
   font-size: 17px;
 }
 
@@ -1250,12 +1250,12 @@
   padding: 0 14px;
   border: 1px solid #292929 !important;
   border-radius: 10px !important;
-  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%) !important;
-  color: #f97316 !important;
+  background: linear-gradient(145deg, #d5f0f4 0%, #c8eaf0 54%, #b9e3ea 100%) !important;
+  color: #58b9ca !important;
 }
 
 .reservation-header > .btn.btn-primary i {
-  color: #f97316 !important;
+  color: #58b9ca !important;
 }
 
 .reservation-summary-card {
@@ -1265,8 +1265,8 @@
 
 .reservation-summary-card .reservation-summary-icon {
   border-radius: 10px;
-  background: #fff1e6 !important;
-  color: #f97316 !important;
+  background: #e5f6f9 !important;
+  color: #58b9ca !important;
 }
 
 .reservation-filter-card {
@@ -1276,14 +1276,14 @@
 .reservation-filter-card .form-control:focus,
 .reservation-filter-card .form-select:focus,
 .reservation-filter-card input[type="date"]:focus {
-  border-color: #fb923c !important;
-  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
+  border-color: #85d2de !important;
+  box-shadow: 0 0 0 .2rem rgba(88, 185, 202, .14) !important;
 }
 
 .reservation-filter-actions .btn-primary,
 .reservation-filter-grid .btn-primary {
-  border-color: #c2410c !important;
-  background: linear-gradient(135deg, #c2410c, #f97316) !important;
+  border-color: #267f91 !important;
+  background: linear-gradient(135deg, #267f91, #58b9ca) !important;
   color: #111827 !important;
 }
 
@@ -1297,8 +1297,8 @@
 }
 
 .reservation-table thead th {
-  border-bottom-color: #eee3da !important;
-  background: #f8f1e9 !important;
+  border-bottom-color: #dceff3 !important;
+  background: #f7fafc !important;
 }
 
 .reservation-table tbody tr:hover {
@@ -1306,8 +1306,8 @@
 }
 
 .reservation-table-badge {
-  border-color: #fed7aa !important;
-  background: #fff1e6 !important;
+  border-color: #bfe5eb !important;
+  background: #e5f6f9 !important;
   color: #111827 !important;
 }
 
@@ -1315,9 +1315,9 @@
 .reservation-action-edit,
 .reservation-action-seat,
 .reservation-action-order {
-  border-color: #fed7aa !important;
-  background: #fff1e6 !important;
-  color: #f97316 !important;
+  border-color: #bfe5eb !important;
+  background: #e5f6f9 !important;
+  color: #58b9ca !important;
 }
 
 .reservation-page .reservation-table tbody td.action-column .reservation-action-buttons > .reservation-action-edit {
@@ -1325,37 +1325,37 @@
   min-width: 28px !important;
   height: 28px !important;
   padding: 2px !important;
-  border: 1px solid #fed7aa !important;
+  border: 1px solid #bfe5eb !important;
   border-radius: 8px !important;
-  background: #fff1e6 !important;
-  color: #f97316 !important;
+  background: #e5f6f9 !important;
+  color: #58b9ca !important;
 }
 
 .reservation-page .reservation-table tbody td.action-column .reservation-action-buttons > .reservation-action-edit i {
-  color: #f97316 !important;
+  color: #58b9ca !important;
 }
 
 .reservation-page .reservation-table tbody td.action-column .reservation-action-buttons > .reservation-action-edit:hover:not(:disabled) {
-  border-color: #fdba74 !important;
-  background: #fff8f1 !important;
-  color: #c2410c !important;
+  border-color: #a6dce4 !important;
+  background: #f4fbfc !important;
+  color: #267f91 !important;
 }
 
 .reservation-page .reservation-table tbody td.action-column .reservation-action-buttons > .reservation-action-edit:hover:not(:disabled) i {
-  color: #c2410c !important;
+  color: #267f91 !important;
 }
 
 .reservation-action-view i,
 .reservation-action-edit i,
 .reservation-action-seat i,
 .reservation-action-order i {
-  color: #f97316 !important;
+  color: #58b9ca !important;
 }
 
 .reservation-page .reservation-pagination .active,
 .reservation-page .reservation-page-number.active {
-  border-color: #c2410c !important;
-  background: linear-gradient(135deg, #c2410c, #f97316) !important;
+  border-color: #267f91 !important;
+  background: linear-gradient(135deg, #267f91, #58b9ca) !important;
   color: #111827 !important;
 }
 

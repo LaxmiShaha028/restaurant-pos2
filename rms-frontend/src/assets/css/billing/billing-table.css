@@ -449,14 +449,14 @@
 
 .billing-status-badge.status-pending {
   border-color: #fde68a;
-  background: #fffbeb;
-  color: #b45309;
+  background: #f4fbfc;
+  color: #267f91;
 }
 
 .billing-status-badge.status-preparing {
-  border-color: #fed7aa;
-  background: #fff7ed;
-  color: #c2410c;
+  border-color: #bfe5eb;
+  background: #edf8fb;
+  color: #267f91;
 }
 
 .billing-status-badge.status-ready {
@@ -466,9 +466,9 @@
 }
 
 .billing-status-badge.status-served {
-  border-color: #fed7aa;
-  background: #fff5eb;
-  color: #c2410c;
+  border-color: #bfe5eb;
+  background: #edf8fb;
+  color: #267f91;
 }
 
 .billing-status-badge.status-completed {
@@ -498,8 +498,8 @@
 
 .billing-status-badge.payment-partial {
   border-color: #fde68a;
-  background: #fffbeb;
-  color: #b45309;
+  background: #f4fbfc;
+  color: #267f91;
 }
 
 .billing-status-badge.payment-paid {
@@ -934,9 +934,9 @@
    ========================================================================== */
 
 .billing-user-avatar.chef-avatar {
-  background: #fff7ed;
+  background: #edf8fb;
 
-  color: #c2410c;
+  color: #267f91;
 }
 
 .billing-user-avatar.receiver-avatar {
@@ -969,15 +969,15 @@
 }
 
 .billing-payment-method.payment-method-nagad {
-  border-color: #fed7aa;
-  background: #fff7ed;
-  color: #c2410c;
+  border-color: #bfe5eb;
+  background: #edf8fb;
+  color: #267f91;
 }
 
 .billing-payment-method.payment-method-bank {
-  border-color: #fed7aa;
-  background: #fff5eb;
-  color: #c2410c;
+  border-color: #bfe5eb;
+  background: #edf8fb;
+  color: #267f91;
 }
 
 .billing-payment-method.payment-method-mixed {

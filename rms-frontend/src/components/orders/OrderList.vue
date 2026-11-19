@@ -1012,5 +1012,5 @@ const formatMoney = (amount) => {
   opacity: .6;
 }
 
-.pickup-order-token{display:flex;align-items:center;gap:6px;margin-top:3px;color:#df6100;font-size:12px;font-weight:800}.pickup-order-token span{padding:2px 6px;border-radius:999px;background:#fff1e3;color:#a84e00;font-size:10px;text-transform:uppercase}.pickup-collected-action{border-color:#a8e5c4!important;background:#e7f8ee!important;color:#087c4a!important}
+.pickup-order-token{display:flex;align-items:center;gap:6px;margin-top:3px;color:#45aabd;font-size:12px;font-weight:800}.pickup-order-token span{padding:2px 6px;border-radius:999px;background:#fff1e3;color:#a84e00;font-size:10px;text-transform:uppercase}.pickup-collected-action{border-color:#a8e5c4!important;background:#e7f8ee!important;color:#087c4a!important}
 </style>

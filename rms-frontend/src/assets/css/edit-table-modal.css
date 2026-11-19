@@ -290,8 +290,8 @@
 
   border-radius: 999px;
 
-  background: #fff7ed;
-  color: #c2410c;
+  background: #edf8fb;
+  color: #267f91;
 
   font-size: 0.62rem;
   font-weight: 750;
@@ -373,11 +373,11 @@
 }
 
 .edit-table-list-item--selectable:hover {
-  background: #fff7ed;
+  background: #edf8fb;
 }
 
 .edit-table-list-item--selected {
-  background: #fffbeb;
+  background: #f4fbfc;
 }
 
 .edit-table-list-main {
@@ -433,7 +433,7 @@
 
 .edit-table-list-item--selected
   .edit-table-list-check {
-  background: #f59e0b;
+  background: #4b9eb0;
   color: #ffffff;
 }
 
@@ -565,11 +565,11 @@
 
   border-radius: 0.5rem;
 
-  background: #fef3c7;
+  background: #e7f6f8;
 }
 
 .edit-capacity-final strong {
-  color: #b45309;
+  color: #267f91;
 }
 
 .edit-merge-error {
@@ -712,8 +712,8 @@
 /* Order page theme: warm surfaces, orange accents, dark primary action. */
 .table-modal-header,
 .table-modal-footer {
-  border-color: #eee3da;
-  background: linear-gradient(135deg, #fff8f1, #fff 70%);
+  border-color: #dceff3;
+  background: linear-gradient(135deg, #f4fbfc, #fff 70%);
 }
 
 .table-modal-header h2,
@@ -725,28 +725,28 @@
 }
 
 .table-modal-eyebrow {
-  color: #f97316 !important;
+  color: #58b9ca !important;
 }
 
 .table-modal-close:hover {
-  background: #fff1e6;
-  color: #c2410c;
+  background: #e5f6f9;
+  color: #267f91;
 }
 
 .table-modal-body .form-control:focus,
 .table-modal-body .form-select:focus {
-  border-color: #fb923c;
+  border-color: #85d2de;
   box-shadow: 0 0 0 .2rem rgb(249 115 22 / 14%);
 }
 
 .reservation-fields {
-  border-color: #fed7aa;
-  background: #fff8f1;
+  border-color: #bfe5eb;
+  background: #f4fbfc;
 }
 
 .reservation-heading-icon {
-  background: #fff1e6;
-  color: #f97316;
+  background: #e5f6f9;
+  color: #58b9ca;
 }
 
 .reservation-heading strong,
@@ -756,31 +756,31 @@
 
 .edit-table-list-item--selectable:hover,
 .edit-table-list-item--selected {
-  background: #fff8f1;
+  background: #f4fbfc;
 }
 
 .edit-table-list-icon {
-  background: #fff1e6;
-  color: #f97316;
+  background: #e5f6f9;
+  color: #58b9ca;
 }
 
 .edit-table-list-item--selected .edit-table-list-check {
-  background: #f97316;
+  background: #58b9ca;
   color: #fff;
 }
 
 .edit-table-list-badge {
-  background: #fff1e6;
-  color: #c2410c;
+  background: #e5f6f9;
+  color: #267f91;
 }
 
 .table-modal-footer .btn-primary,
 .table-modal-footer .btn-primary:hover:not(:disabled) {
   border-color: #292929;
-  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%);
-  color: #f97316;
+  background: linear-gradient(145deg, #d5f0f4 0%, #c8eaf0 54%, #b9e3ea 100%);
+  color: #58b9ca;
 }
 
 .table-modal-footer .btn-primary i {
-  color: #f97316;
+  color: #58b9ca;
 }

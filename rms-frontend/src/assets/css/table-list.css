@@ -275,9 +275,9 @@
 
 .status-tab--reserved
 .status-tab__icon {
-  background: #ffedd5;
+  background: #e5f6f9;
 
-  color: #f97316;
+  color: #58b9ca;
 }
 
 .status-tab--cleaning
@@ -640,7 +640,7 @@
 }
 
 .table-list-row--reserved::before {
-  background: #f97316;
+  background: #58b9ca;
 }
 
 .table-list-row--cleaning::before {
@@ -845,9 +845,9 @@
 }
 
 .table-list-row__status--reserved {
-  background: #ffedd5;
+  background: #e5f6f9;
 
-  color: #f97316;
+  color: #58b9ca;
 }
 
 .table-list-row__status--cleaning {
@@ -916,7 +916,7 @@
 
   background: #dbeafe;
 
-  color: #f97316;
+  color: #58b9ca;
 
   font-size: 12px;
   font-weight: 600;
@@ -1000,13 +1000,13 @@
   border-color: #f6dfa0;
   border-radius: 8px;
   background: #fff2c7;
-  color: #d97706;
+  color: #3d94a7;
 }
 
 .table-list-row__button--edit:hover {
   border-color: #f2cf6f;
-  background: #ffe8a3;
-  color: #b45309;
+  background: #def3f6;
+  color: #267f91;
 }
 
 
@@ -1351,62 +1351,62 @@
 
 /* Warm orange accents matching the shared restaurant theme. */
 .table-management-page .status-tab--active {
-  border-color: #fb923c !important;
-  background: #fff8f1 !important;
-  color: #c2410c !important;
+  border-color: #85d2de !important;
+  background: #f4fbfc !important;
+  color: #267f91 !important;
 }
 
 .table-management-page .status-tab:hover {
-  border-color: #fdba74 !important;
+  border-color: #a6dce4 !important;
   background: #fffaf5 !important;
 }
 
 .table-management-page .status-tab--active .status-tab__icon,
 .table-management-page .table-list-row__icon {
-  border-color: #fed7aa !important;
-  background: #fff1e6 !important;
-  color: #f97316 !important;
+  border-color: #bfe5eb !important;
+  background: #e5f6f9 !important;
+  color: #58b9ca !important;
 }
 
 .table-management-page .table-filters__search:focus-within,
 .table-management-page .table-filters__select:focus {
-  border-color: #fb923c !important;
-  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
+  border-color: #85d2de !important;
+  box-shadow: 0 0 0 .2rem rgba(88, 185, 202, .14) !important;
 }
 
 .table-management-page .table-list-view__head {
-  border-color: #eee3da !important;
-  background: #f8f1e9 !important;
+  border-color: #dceff3 !important;
+  background: #f7fafc !important;
 }
 
 .table-management-page .table-list__empty-button {
-  border-color: #c2410c !important;
-  background: linear-gradient(135deg, #c2410c, #f97316) !important;
+  border-color: #267f91 !important;
+  background: linear-gradient(135deg, #267f91, #58b9ca) !important;
   color: #fff !important;
 }
 
 .table-management-page .table-list__empty-icon {
-  background: #fff1e6 !important;
-  color: #f97316 !important;
+  background: #e5f6f9 !important;
+  color: #58b9ca !important;
 }
 
 .table-management-page .table-list-row--reserved::before,
 .table-management-page .table-list-row--cleaning::before {
-  background: #f97316 !important;
+  background: #58b9ca !important;
 }
 
 .table-management-page .table-list-row__status--reserved,
 .table-management-page .table-list-row__status--cleaning {
-  border-color: #fed7aa !important;
-  background: #fff1e6 !important;
-  color: #c2410c !important;
+  border-color: #bfe5eb !important;
+  background: #e5f6f9 !important;
+  color: #267f91 !important;
 }
 
 .table-management-page .status-tabs > .status-tab:nth-child(4) .status-tab__icon,
 .table-management-page .status-tabs > .status-tab:nth-child(5) .status-tab__icon {
-  border-color: #fed7aa !important;
-  background: #fff1e6 !important;
-  color: #f97316 !important;
+  border-color: #bfe5eb !important;
+  background: #e5f6f9 !important;
+  color: #58b9ca !important;
 }
 
 .table-management-page .table-list-row__section {

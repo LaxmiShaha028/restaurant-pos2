@@ -184,8 +184,8 @@ function formatDate(date) {
 }
 
 .audit-table th {
-  background: #f8f1e9;
-  border-bottom: 1px solid #eee3da;
+  background: #f7fafc;
+  border-bottom: 1px solid #dceff3;
   color: #475569;
   font-size: 10px;
   font-weight: 700;
@@ -201,7 +201,7 @@ function formatDate(date) {
 }
 
 .audit-table tbody tr:hover {
-  background: #fff8f1;
+  background: #f4fbfc;
 }
 
 .audit-table th:first-child,
@@ -240,8 +240,8 @@ function formatDate(date) {
   max-width: 100%;
   padding: 2px 6px;
   border-radius: 10px;
-  background: #fff1e6;
-  color: #f97316;
+  background: #e5f6f9;
+  color: #58b9ca;
   font-size: 12px;
   font-weight: 600;
   overflow: hidden;
@@ -276,8 +276,8 @@ function formatDate(date) {
 }
 
 .action-badge.updated {
-  background: #fef3c7 !important;
-  color: #b45309 !important;
+  background: #e7f6f8 !important;
+  color: #267f91 !important;
 }
 
 .action-badge.deleted {
@@ -291,8 +291,8 @@ function formatDate(date) {
 }
 
 .action-badge.unblocked {
-  background: #fff1e6 !important;
-  color: #c2410c !important;
+  background: #e5f6f9 !important;
+  color: #267f91 !important;
 }
 
 /* View button – icon only */
@@ -303,17 +303,17 @@ function formatDate(date) {
   width: 24px;
   height: 24px;
   padding: 0;
-  border: 1px solid #f97316;
+  border: 1px solid #58b9ca;
   border-radius: 4px;
-  background: #f97316;
+  background: #58b9ca;
   color: #ffffff;
   font-size: 12px;
   cursor: pointer;
 }
 
 .view-btn:hover {
-  background: #c2410c;
-  border-color: #c2410c;
+  background: #267f91;
+  border-color: #267f91;
 }
 
 /* States */

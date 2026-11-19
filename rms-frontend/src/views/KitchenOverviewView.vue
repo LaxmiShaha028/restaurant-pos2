@@ -304,8 +304,8 @@ onMounted(async () => {
 ========================================================= */
 
 .stat-new_orders .stat-icon {
-  background: #fff7ed;
-  color: #ea580c;
+  background: #edf8fb;
+  color: #45aabd;
 }
 
 

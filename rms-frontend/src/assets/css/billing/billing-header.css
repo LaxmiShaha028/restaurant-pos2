@@ -136,12 +136,12 @@
 }
 
 .billing-range-field .reservation-filter-date-picker .reservation-filter-date-trigger i {
-  color: #f97316;
+  color: #58b9ca;
 }
 
 .billing-range-field .reservation-filter-date-picker .reservation-filter-date-trigger:focus-visible {
-  border-color: #fb923c;
-  box-shadow: 0 0 0 2px rgba(249, 115, 22, .12);
+  border-color: #85d2de;
+  box-shadow: 0 0 0 2px rgba(88, 185, 202, .12);
 }
 
 .billing-range-field input:focus {

@@ -1665,7 +1665,7 @@ watch(
 
 .po-quantity-pending,
 .po-payment-status-due {
-  color: #c2410c;
+  color: #267f91;
 }
 
 .po-grn-list {

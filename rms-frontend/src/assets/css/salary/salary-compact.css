@@ -296,8 +296,8 @@
 }
 
 .salary-summary-overtime {
-  border-color: #fed7aa;
-  background: #fffbeb;
+  border-color: #bfe5eb;
+  background: #f4fbfc;
 }
 
 .salary-summary-paid {
@@ -595,7 +595,7 @@
 }
 
 .salary-status-badge.unpaid {
-  background: #fef3c7;
+  background: #e7f6f8;
   color: #92400e;
 }
 
@@ -777,7 +777,7 @@
 
 .salary-details-eyebrow {
   display: block;
-  color: #f97316;
+  color: #58b9ca;
   font-size: 7px;
   font-weight: 700;
   text-transform: uppercase;

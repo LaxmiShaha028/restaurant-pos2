@@ -1890,15 +1890,15 @@ onMounted(
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  background: #fff1e6;
-  color: #f97316;
+  background: #e5f6f9;
+  color: #58b9ca;
   font-size: 11px;
 }
 
 .reports-header-eyebrow {
   display: block;
   margin: 0 0 1px;
-  color: #f97316;
+  color: #58b9ca;
   font-size: 7px;
   font-weight: 700;
   line-height: 1.1;
@@ -2035,10 +2035,10 @@ onMounted(
 .filter-icon {
 
     color:
-        #c2410c;
+        #267f91;
 
     background:
-        #fff1e6;
+        #e5f6f9;
 
 }
 
@@ -2185,11 +2185,11 @@ onMounted(
 .reports-input-wrapper .form-control:focus {
 
     border-color:
-        #fb923c;
+        #85d2de;
 
     box-shadow:
         0 0 0 3px
-        rgba(249, 115, 22, 0.08);
+        rgba(88, 185, 202, 0.08);
 
 }
 
@@ -2255,7 +2255,7 @@ onMounted(
         #ffffff;
 
     background:
-        #f97316;
+        #58b9ca;
 
 }
 
@@ -2263,7 +2263,7 @@ onMounted(
 .reports-primary-button:hover {
 
     background:
-        #c2410c;
+        #267f91;
 
     transform:
         translateY(-1px);
@@ -2488,7 +2488,7 @@ onMounted(
 .sales-card::before {
 
     background:
-        #f97316;
+        #58b9ca;
 
 }
 
@@ -2504,7 +2504,7 @@ onMounted(
 .orders-card::before {
 
     background:
-        #f97316;
+        #58b9ca;
 
 }
 
@@ -2618,10 +2618,10 @@ onMounted(
         11px;
 
     background:
-        rgba(249, 115, 22, 0.08);
+        rgba(88, 185, 202, 0.08);
 
     color:
-        #f97316;
+        #58b9ca;
 
 }
 
@@ -2645,7 +2645,7 @@ onMounted(
 .orders-card .reports-summary-icon {
 
     color:
-        #f97316;
+        #58b9ca;
 
     background:
         rgba(
@@ -2855,16 +2855,16 @@ onMounted(
 
     border:
         1px solid
-        rgba(249, 115, 22, 0.15);
+        rgba(88, 185, 202, 0.15);
 
     border-radius:
         10px;
 
     color:
-        #c2410c;
+        #267f91;
 
     background:
-        #fff1e6;
+        #e5f6f9;
 
     font-size:
         10px;
@@ -2976,10 +2976,10 @@ onMounted(
 .report-group-button:hover {
 
     color:
-        #c2410c;
+        #267f91;
 
     background:
-        rgba(249, 115, 22, 0.05);
+        rgba(88, 185, 202, 0.05);
 
 }
 
@@ -2990,11 +2990,11 @@ onMounted(
         #ffffff;
 
     background:
-        #f97316;
+        #58b9ca;
 
     box-shadow:
         0 2px 7px
-        rgba(249, 115, 22, 0.18);
+        rgba(88, 185, 202, 0.18);
 
 }
 
@@ -3102,10 +3102,10 @@ onMounted(
 .reports-tab:hover {
 
     border-color:
-        rgba(249, 115, 22, 0.2);
+        rgba(88, 185, 202, 0.2);
 
     background:
-        rgba(249, 115, 22, 0.025);
+        rgba(88, 185, 202, 0.025);
 
 }
 
@@ -3113,13 +3113,13 @@ onMounted(
 .reports-tab.active {
 
     border-color:
-        rgba(249, 115, 22, 0.22);
+        rgba(88, 185, 202, 0.22);
 
     color:
-        #c2410c;
+        #267f91;
 
     background:
-        #fff1e6;
+        #e5f6f9;
 
 }
 
@@ -3164,10 +3164,10 @@ onMounted(
 .reports-tab.active .reports-tab-icon {
 
     color:
-        #f97316;
+        #58b9ca;
 
     background:
-        rgba(249, 115, 22, 0.1);
+        rgba(88, 185, 202, 0.1);
 
 }
 
@@ -3249,7 +3249,7 @@ onMounted(
 .reports-tab.active .reports-tab-arrow {
 
     color:
-        #f97316;
+        #58b9ca;
 
 }
 

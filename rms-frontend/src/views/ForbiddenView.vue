@@ -40,9 +40,9 @@ import { RouterLink } from 'vue-router'
 
   padding: 20px;
   background:
-    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
-    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
-    #f4f1ed;
+    radial-gradient(circle at 0 0, rgba(88, 185, 202, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(133, 210, 222, .045), transparent 25%),
+    #f1f5f9;
 }
 
 /* ========================================
@@ -55,7 +55,7 @@ import { RouterLink } from 'vue-router'
 
   padding: 28px 24px;
 
-  border: 1px solid #eee3da;
+  border: 1px solid #dceff3;
   border-radius: 14px;
 
   background: #ffffff;
@@ -83,9 +83,9 @@ import { RouterLink } from 'vue-router'
 
   border-radius: 50%;
 
-  background: #fff1e6;
+  background: #e5f6f9;
 
-  color: #f97316;
+  color: #58b9ca;
 
   font-size: 21px;
 }
@@ -132,8 +132,8 @@ import { RouterLink } from 'vue-router'
 
   border: 1px solid #292929;
   border-radius: 10px;
-  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909);
-  color: #f97316;
+  background: linear-gradient(145deg, #d5f0f4 0%, #c8eaf0 54%, #b9e3ea 100%);
+  color: #58b9ca;
 
   font-size: 11.5px;
   font-weight: 600;
@@ -142,8 +142,8 @@ import { RouterLink } from 'vue-router'
 .return-button:hover,
 .return-button:focus {
   border-color: #3b3b3b;
-  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010);
-  color: #fb923c;
+  background: linear-gradient(145deg, #c9ebf0 0%, #b8e3ea 54%, #aadce5 100%);
+  color: #85d2de;
 }
 
 /* ========================================

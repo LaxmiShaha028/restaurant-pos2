@@ -259,7 +259,7 @@
 }
 
 .salary-summary-overtime {
-  border-color: #fed7aa;
+  border-color: #bfe5eb;
   background: #fffaf5;
 }
 
@@ -514,7 +514,7 @@
 }
 
 .salary-overtime-value.active {
-  color: #c2410c;
+  color: #267f91;
 }
 
 .salary-total-cell strong {
@@ -545,7 +545,7 @@
 }
 
 .salary-status-badge.unpaid {
-  background: #fef3c7;
+  background: #e7f6f8;
   color: #92400e;
 }
 

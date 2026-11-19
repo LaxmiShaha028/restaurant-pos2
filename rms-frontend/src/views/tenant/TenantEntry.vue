@@ -517,13 +517,13 @@ onMounted(
 <style scoped>
 .tenant-entry-page {
   background:
-    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
-    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
-    #f4f1ed !important;
+    radial-gradient(circle at 0 0, rgba(88, 185, 202, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(133, 210, 222, .045), transparent 25%),
+    #f1f5f9 !important;
 }
 
 .tenant-entry-card {
-  border: 1px solid #eee3da !important;
+  border: 1px solid #dceff3 !important;
   border-radius: 16px !important;
   background: #fff !important;
   box-shadow: 0 12px 32px rgba(15, 23, 42, .08) !important;
@@ -539,61 +539,61 @@ onMounted(
 }
 
 .tenant-entry-page .tenant-entry-logo {
-  background: #f97316 !important;
+  background: #58b9ca !important;
   color: #fff !important;
-  box-shadow: 0 8px 18px rgba(249, 115, 22, .2);
+  box-shadow: 0 8px 18px rgba(88, 185, 202, .2);
 }
 
 .tenant-entry-page :deep(.spinner-border.text-primary) {
-  color: #f97316 !important;
+  color: #58b9ca !important;
 }
 
 .tenant-entry-page .tenant-entry-login-button,
 .tenant-entry-page .tenant-entry-login-button:hover:not(:disabled) {
   border: 1px solid #292929 !important;
   border-radius: 10px !important;
-  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909) !important;
-  color: #f97316 !important;
+  background: linear-gradient(145deg, #d5f0f4 0%, #c8eaf0 54%, #b9e3ea 100%) !important;
+  color: #58b9ca !important;
   box-shadow: none !important;
 }
 
 .tenant-entry-page .tenant-entry-login-button i,
 .tenant-entry-page .tenant-entry-login-button .spinner-border {
-  color: #f97316 !important;
+  color: #58b9ca !important;
 }
 
 .tenant-entry-page :deep(.border.rounded) {
-  border-color: #eee3da !important;
+  border-color: #dceff3 !important;
   border-radius: 10px !important;
-  background: #fff8f1;
+  background: #f4fbfc;
 }
 
 .tenant-entry-page :deep(.alert-success) {
-  border-color: #fed7aa;
-  background: #fff8f1;
+  border-color: #bfe5eb;
+  background: #f4fbfc;
   color: #111827;
 }
 
 .tenant-entry-page :deep(.alert-success i) {
-  color: #f97316;
+  color: #58b9ca;
 }
 
 .tenant-entry-page :deep(.bg-danger-subtle) {
-  background: #fff1e6 !important;
+  background: #e5f6f9 !important;
 }
 
 .tenant-entry-page :deep(.text-danger) {
-  color: #f97316 !important;
+  color: #58b9ca !important;
 }
 
 .tenant-entry-page :deep(.btn-outline-primary) {
-  border-color: #fed7aa;
-  color: #c2410c;
+  border-color: #bfe5eb;
+  color: #267f91;
 }
 
 .tenant-entry-page :deep(.btn-outline-primary:hover) {
-  border-color: #fdba74;
-  background: #fff1e6;
-  color: #9a3412;
+  border-color: #a6dce4;
+  background: #e5f6f9;
+  color: #327c8a;
 }
 </style>

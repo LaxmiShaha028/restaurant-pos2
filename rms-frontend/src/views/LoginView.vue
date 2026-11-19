@@ -367,9 +367,9 @@ async function handleLogin() {
   justify-content: center;
   padding: 24px 16px;
   background:
-    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
-    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
-    #f4f1ed;
+    radial-gradient(circle at 0 0, rgba(88, 185, 202, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(133, 210, 222, .045), transparent 25%),
+    #f1f5f9;
   color: #111827;
 }
 
@@ -394,10 +394,10 @@ async function handleLogin() {
   justify-content: center;
   margin-bottom: 14px;
   border-radius: 12px;
-  background: #f97316;
+  background: #58b9ca;
   color: #ffffff;
   font-size: 23px;
-  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+  box-shadow: 0 4px 12px rgba(88, 185, 202, 0.2);
 }
 
 .login-title {
@@ -419,7 +419,7 @@ async function handleLogin() {
 ========================= */
 
 .login-card {
-  border: 1px solid #eee3da;
+  border: 1px solid #dceff3;
   border-radius: 14px;
   background: #ffffff;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
@@ -477,16 +477,16 @@ async function handleLogin() {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-color: #eee3da;
-  background: #fff8f1;
-  color: #f97316;
+  border-color: #dceff3;
+  background: #f4fbfc;
+  color: #58b9ca;
   font-size: 15px;
 }
 
 .login-input-group .form-control {
   height: 42px;
   padding: 8px 12px;
-  border-color: #eee3da;
+  border-color: #dceff3;
   font-size: 15px;
   color: #111827;
   box-shadow: none;
@@ -499,8 +499,8 @@ async function handleLogin() {
 .login-input-group .form-control:focus {
   position: relative;
   z-index: 3;
-  border-color: #fb923c;
-  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.14);
+  border-color: #85d2de;
+  box-shadow: 0 0 0 3px rgba(88, 185, 202, 0.14);
 }
 
 .login-input-group .form-control.is-invalid {
@@ -532,17 +532,17 @@ async function handleLogin() {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #eee3da;
+  border: 1px solid #dceff3;
   border-left: 0;
   background: #ffffff;
-  color: #f97316;
+  color: #58b9ca;
   border-radius: 0 6px 6px 0;
   font-size: 15px;
 }
 
 .password-toggle:hover {
-  background: #fff8f1;
-  color: #c2410c;
+  background: #f4fbfc;
+  color: #267f91;
 }
 
 .password-toggle:focus {
@@ -570,8 +570,8 @@ async function handleLogin() {
   margin-top: 45px;
   border: 1px solid #292929;
   border-radius: 10px;
-  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909);
-  color: #f97316;
+  background: linear-gradient(145deg, #d5f0f4 0%, #c8eaf0 54%, #b9e3ea 100%);
+  color: #58b9ca;
   font-size: 14px;
   font-weight: 600;
 }
@@ -579,8 +579,8 @@ async function handleLogin() {
 .login-btn:hover:not(:disabled),
 .login-btn:focus-visible {
   border-color: #3b3b3b;
-  background: linear-gradient(145deg, #242424 0%, #171717 54%, #101010);
-  color: #fb923c;
+  background: linear-gradient(145deg, #c9ebf0 0%, #b8e3ea 54%, #aadce5 100%);
+  color: #85d2de;
 }
 
 .login-btn:disabled {
@@ -595,7 +595,7 @@ async function handleLogin() {
 .dev-accounts {
   margin-top: 22px;
   padding-top: 18px;
-  border-top: 1px solid #eee3da;
+  border-top: 1px solid #dceff3;
 }
 
 .dev-title {
@@ -610,14 +610,14 @@ async function handleLogin() {
 
 .dev-title i {
   font-size: 13px;
-  color: #f97316;
+  color: #58b9ca;
 }
 
 .account-list {
   overflow: hidden;
-  border: 1px solid #eee3da;
+  border: 1px solid #dceff3;
   border-radius: 8px;
-  background: #fff8f1;
+  background: #f4fbfc;
 }
 
 .account-item {
@@ -625,7 +625,7 @@ async function handleLogin() {
   align-items: center;
   gap: 8px;
   padding: 7px 9px;
-  border-bottom: 1px solid #eee3da;
+  border-bottom: 1px solid #dceff3;
   font-size: 11.5px;
 }
 

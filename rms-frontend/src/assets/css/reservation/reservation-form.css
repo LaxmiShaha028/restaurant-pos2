@@ -258,12 +258,12 @@
 
 .reservation-date-trigger:hover,
 .reservation-date-trigger[aria-expanded="true"] {
-  border-color: #fdba74;
+  border-color: #a6dce4;
 }
 
 .reservation-date-trigger:focus-visible {
-  border-color: #f97316;
-  box-shadow: 0 0 0 3px rgba(249, 115, 22, .13);
+  border-color: #58b9ca;
+  box-shadow: 0 0 0 3px rgba(88, 185, 202, .13);
 }
 
 .reservation-date-trigger .is-placeholder {
@@ -271,7 +271,7 @@
 }
 
 .reservation-date-trigger > i {
-  color: #ea580c;
+  color: #45aabd;
 }
 
 .reservation-calendar-popover {
@@ -281,7 +281,7 @@
   left: 0;
   width: 292px;
   padding: 12px;
-  border: 1px solid #eee3da;
+  border: 1px solid #dceff3;
   border-radius: 12px;
   background: #fff;
   box-shadow: 0 16px 36px rgba(23, 32, 51, .16);
@@ -319,9 +319,9 @@
 }
 
 .reservation-calendar-navigation button:hover {
-  border-color: #fed7aa;
-  background: #fff7ed;
-  color: #c2410c;
+  border-color: #bfe5eb;
+  background: #edf8fb;
+  color: #267f91;
 }
 
 .reservation-calendar-weekdays,
@@ -361,9 +361,9 @@
 }
 
 .reservation-calendar-day:hover:not(:disabled) {
-  border-color: #fed7aa;
-  background: #fff7ed;
-  color: #c2410c;
+  border-color: #bfe5eb;
+  background: #edf8fb;
+  color: #267f91;
 }
 
 .reservation-calendar-day.is-outside-month {
@@ -371,16 +371,16 @@
 }
 
 .reservation-calendar-day.is-today:not(.is-selected) {
-  border-color: #fdba74;
-  color: #c2410c;
+  border-color: #a6dce4;
+  color: #267f91;
   font-weight: 700;
 }
 
 .reservation-calendar-day.is-selected {
-  background: #f97316;
+  background: #58b9ca;
   color: #fff;
   font-weight: 700;
-  box-shadow: 0 2px 5px rgba(249, 115, 22, .24);
+  box-shadow: 0 2px 5px rgba(88, 185, 202, .24);
 }
 
 .reservation-calendar-day:disabled {
@@ -399,14 +399,14 @@
   border: 0;
   border-radius: 6px;
   background: transparent;
-  color: #c2410c;
+  color: #267f91;
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
 }
 
 .reservation-calendar-footer button:hover {
-  background: #fff1e6;
+  background: #e5f6f9;
 }
 
 .reservation-calendar-enter-active,
@@ -649,7 +649,7 @@
 .reservation-alert-warning {
   border: 1px solid #fedf89;
   background: #fffaeb;
-  color: #b54708;
+  color: #267f91;
 }
 
 .reservation-alert-success {

@@ -549,5 +549,5 @@ function formatLabel(value) {
   color: #2563eb;
 }
 
-.compact-pickup-token{display:inline-flex;margin-top:3px;padding:2px 6px;border-radius:999px;background:#fff0df;color:#dc5d00;font-size:11px;font-weight:800;}
+.compact-pickup-token{display:inline-flex;margin-top:3px;padding:2px 6px;border-radius:999px;background:#fff0df;color:#45aabd;font-size:11px;font-weight:800;}
 </style>

@@ -57,11 +57,11 @@ const props = defineProps({
 const colors = [
 
   '#0d6efd',
-  '#f97316',
+  '#58b9ca',
   '#198754',
   '#ffc107',
-  '#c2410c',
-  '#fd7e14',
+  '#267f91',
+  '#45aabd',
   '#20c997',
   '#0dcaf0',
   '#d63384',

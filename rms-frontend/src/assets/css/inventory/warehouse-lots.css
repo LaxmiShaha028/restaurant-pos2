@@ -283,7 +283,7 @@
 
 .warehouse-lot-status-critical {
   background: rgba(253, 126, 20, 0.13);
-  color: #bd5d00;
+  color: #45aabd;
 }
 
 .warehouse-lot-status-expired {
@@ -403,7 +403,7 @@
 }
 
 .warehouse-expiry-card-critical {
-  border-left-color: #fd7e14;
+  border-left-color: #45aabd;
 }
 
 .warehouse-expiry-card-expiring_soon {

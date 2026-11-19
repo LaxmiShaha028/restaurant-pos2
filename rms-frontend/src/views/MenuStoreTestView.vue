@@ -429,18 +429,18 @@ onMounted(async () => {
 }
 
 .variants-icon {
-  background: #fff5eb;
-  color: #f97316;
+  background: #edf8fb;
+  color: #58b9ca;
 }
 
 .addon-category-icon {
-  background: #fff7ed;
-  color: #ea580c;
+  background: #edf8fb;
+  color: #45aabd;
 }
 
 .addons-icon {
-  background: #fffbeb;
-  color: #d97706;
+  background: #f4fbfc;
+  color: #3d94a7;
 }
 
 

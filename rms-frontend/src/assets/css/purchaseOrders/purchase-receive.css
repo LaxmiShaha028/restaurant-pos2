@@ -990,7 +990,7 @@ input:disabled
 .purchase-receive-modal {
   width: min(74rem, 100%);
   max-height: calc(100vh - 2.5rem);
-  border: 1px solid #eee3da;
+  border: 1px solid #dceff3;
   border-radius: 14px;
   box-shadow: 0 24px 64px rgba(17, 24, 39, 0.24);
   display: flex;
@@ -1001,13 +1001,13 @@ input:disabled
   flex: 0 0 auto;
   align-items: center;
   padding: 1rem 1.25rem;
-  border-color: #eee3da;
+  border-color: #dceff3;
 }
 
 .purchase-receive-heading-icon {
   border-radius: 10px;
-  color: #ea580c;
-  background: #fff1e6;
+  color: #45aabd;
+  background: #e5f6f9;
 }
 
 .purchase-receive-heading h2 {
@@ -1030,13 +1030,13 @@ input:disabled
   flex: 0 0 auto;
   gap: 0.6rem;
   padding: 0.8rem 1.25rem;
-  border-color: #eee3da;
+  border-color: #dceff3;
   background: #faf8f5;
 }
 
 .purchase-receive-summary article,
 .purchase-receive-quantity-summary > div {
-  border-color: #eee3da;
+  border-color: #dceff3;
   border-radius: 10px;
 }
 
@@ -1051,14 +1051,14 @@ input:disabled
 
 .purchase-status-ordered,
 .purchase-receive-state-pending {
-  color: #c2410c !important;
-  background: #fff1e6;
+  color: #267f91 !important;
+  background: #e5f6f9;
 }
 
 .purchase-status-partial,
 .purchase-receive-state-partial {
   color: #a16207 !important;
-  background: #fef3c7;
+  background: #e7f6f8;
 }
 
 .purchase-status-received,
@@ -1086,30 +1086,30 @@ input:disabled
 
 .purchase-receive-select-all,
 .purchase-receive-submit {
-  border-color: #ea580c;
+  border-color: #45aabd;
   border-radius: 8px;
-  background: #ea580c;
+  background: #45aabd;
 }
 
 .purchase-receive-select-all:hover:not(:disabled),
 .purchase-receive-submit:hover:not(:disabled) {
-  border-color: #c2410c;
-  background: #c2410c;
+  border-color: #267f91;
+  background: #267f91;
 }
 
 .purchase-receive-clear-all,
 .purchase-receive-cancel {
   border-radius: 8px;
-  border-color: #eee3da;
+  border-color: #dceff3;
 }
 
 .purchase-receive-item {
-  border-color: #eee3da;
+  border-color: #dceff3;
   border-radius: 12px;
 }
 
 .purchase-receive-item-selected {
-  border-color: #fdba74;
+  border-color: #a6dce4;
   box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.08);
 }
 
@@ -1122,7 +1122,7 @@ input:disabled
 }
 
 .purchase-receive-progress > span {
-  background: #ea580c;
+  background: #45aabd;
 }
 
 .purchase-receive-already-value {
@@ -1139,26 +1139,26 @@ input:disabled
 }
 
 .purchase-receive-lot-fields {
-  border-color: #fed7aa;
+  border-color: #bfe5eb;
   border-radius: 10px;
   background: #fffaf5;
 }
 
 .purchase-receive-lot-heading > span {
-  color: #c2410c;
-  background: #fff1e6;
+  color: #267f91;
+  background: #e5f6f9;
 }
 
 .purchase-receive-footer {
   flex: 0 0 auto;
-  border-color: #eee3da;
+  border-color: #dceff3;
   background: #faf8f5;
 }
 
 .purchase-receive-payment-card,
 .purchase-receive-payment-summary article,
 .purchase-receive-payment-preview article {
-  border-color: #eee3da;
+  border-color: #dceff3;
   border-radius: 10px;
 }
 

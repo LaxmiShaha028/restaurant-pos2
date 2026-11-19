@@ -162,14 +162,14 @@
 
 .table-status-filter--reserved
   .table-status-filter__icon {
-  background: #fef3c7;
-  color: #b45309;
+  background: #e7f6f8;
+  color: #267f91;
 }
 
 .table-status-filter--reserved
   .table-status-filter__count {
-  background: #fffbeb;
-  color: #b45309;
+  background: #f4fbfc;
+  color: #267f91;
 }
 
 /*
@@ -180,14 +180,14 @@
 
 .table-status-filter--cleaning
   .table-status-filter__icon {
-  background: #ffedd5;
-  color: #c2410c;
+  background: #e5f6f9;
+  color: #267f91;
 }
 
 .table-status-filter--cleaning
   .table-status-filter__count {
-  background: #fff5eb;
-  color: #c2410c;
+  background: #edf8fb;
+  color: #267f91;
 }
 
 /*
@@ -233,13 +233,13 @@
 }
 
 .table-status-filter--reserved.table-status-filter--active {
-  border-color: #fbbf24;
-  background: #fffbeb;
+  border-color: #aedfe7;
+  background: #f4fbfc;
 }
 
 .table-status-filter--cleaning.table-status-filter--active {
   border-color: #a78bfa;
-  background: #fff5eb;
+  background: #edf8fb;
 }
 
 /*

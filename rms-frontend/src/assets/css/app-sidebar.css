@@ -92,7 +92,7 @@
 
   border-radius: 5px;
 
-  background: linear-gradient(135deg, #ff922b, #f97316);
+  background: linear-gradient(135deg, #70c4d2, #58b9ca);
 
   color: #ffffff;
 
@@ -197,7 +197,7 @@
   border: 2px solid #171717;
   border-radius: 50%;
 
-  background: linear-gradient(135deg, #ff922b, #f97316);
+  background: linear-gradient(135deg, #70c4d2, #58b9ca);
 
   color: #ffffff;
 
@@ -210,7 +210,7 @@
 }
 
 .desktop-collapse-button:hover {
-  background: #ea580c;
+  background: #45aabd;
 }
 
 
@@ -483,20 +483,20 @@
 .sidebar-menu-link.router-link-active,
 .sidebar-menu-link.router-link-exact-active {
   border-color:
-    rgba(249, 115, 22, 0.2);
+    rgba(88, 185, 202, 0.2);
 
   background:
-    linear-gradient(100deg, rgba(249, 115, 22, .32), rgba(194, 65, 12, .2));
+    linear-gradient(100deg, rgba(88, 185, 202, .32), rgba(38, 127, 145, .2));
 
   color: #ffffff;
 
   box-shadow:
-    inset 2px 0 0 #fdba74;
+    inset 2px 0 0 #a6dce4;
 }
 
 .sidebar-menu-link.router-link-active .menu-icon,
 .sidebar-menu-link.router-link-exact-active .menu-icon {
-  color: #fed7aa;
+  color: #bfe5eb;
 }
 
 .sidebar-menu-link.router-link-active .menu-label,
@@ -509,7 +509,7 @@
 .sidebar-menu-link.router-link-active:hover,
 .sidebar-menu-link.router-link-exact-active:hover {
   background:
-    rgba(249, 115, 22, 0.38);
+    rgba(88, 185, 202, 0.38);
 }
 
 
@@ -621,10 +621,10 @@
 .app-sidebar.sidebar-collapsed
 .sidebar-menu-link.router-link-exact-active {
   background:
-    rgba(249, 115, 22, 0.38);
+    rgba(88, 185, 202, 0.38);
 
   box-shadow:
-    inset 2px 0 0 #fdba74;
+    inset 2px 0 0 #a6dce4;
 }
 
 
@@ -675,7 +675,7 @@
 
   border-radius: 50%;
 
-  background: linear-gradient(135deg, #ff922b, #f97316);
+  background: linear-gradient(135deg, #70c4d2, #58b9ca);
 
   color: #ffffff;
 

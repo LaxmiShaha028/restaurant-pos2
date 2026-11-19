@@ -334,9 +334,9 @@ onMounted(async () => {
 ========================================================= */
 
 .stat-occupied_tables .stat-icon {
-  background: #fff5eb;
+  background: #edf8fb;
 
-  color: #f97316;
+  color: #58b9ca;
 }
 
 
@@ -345,9 +345,9 @@ onMounted(async () => {
 ========================================================= */
 
 .stat-pending_payments .stat-icon {
-  background: #fffbeb;
+  background: #f4fbfc;
 
-  color: #d97706;
+  color: #3d94a7;
 }
 
 
@@ -356,9 +356,9 @@ onMounted(async () => {
 ========================================================= */
 
 .stat-pending_kitchen_orders .stat-icon {
-  background: #fff7ed;
+  background: #edf8fb;
 
-  color: #ea580c;
+  color: #45aabd;
 }
 
 

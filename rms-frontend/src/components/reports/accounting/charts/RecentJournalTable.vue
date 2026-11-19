@@ -203,8 +203,8 @@ function formatDate(
 
   border-radius: 6px;
 
-  color: #f97316;
+  color: #58b9ca;
 
-  background: rgba(249, 115, 22, 0.08);
+  background: rgba(88, 185, 202, 0.08);
 }
 </style>

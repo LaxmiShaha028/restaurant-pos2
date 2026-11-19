@@ -543,13 +543,13 @@
 /* Edit */
 
 .customer-edit-action {
-    color: #f97316;
+    color: #58b9ca;
 }
 
 .customer-edit-action:hover:not(:disabled) {
-    border-color: #fed7aa;
+    border-color: #bfe5eb;
 
-    background: #fff5eb;
+    background: #edf8fb;
 }
 
 /* Delete */

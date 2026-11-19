@@ -303,8 +303,8 @@ function handleRefresh() {
 
 .inventory-alert-active {
   border-color: #fde68a;
-  color: #b45309;
-  background: #fffbeb;
+  color: #267f91;
+  background: #f4fbfc;
 }
 
 .inventory-alert-clear {

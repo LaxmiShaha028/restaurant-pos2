@@ -1848,8 +1848,8 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  background: #fff7ed;
-  color: #ea580c;
+  background: #edf8fb;
+  color: #45aabd;
   font-size: 14px;
 }
 

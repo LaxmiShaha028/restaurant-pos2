@@ -186,7 +186,7 @@ const forecastTotal = computed(() => forecastRows.value.reduce((total, row) => t
 const comparisonChartData = computed(() => ({
   labels: comparisonDaily.value.map(row => formatDate(row.date)),
   datasets: [
-    { label: 'Forecast', data: comparisonDaily.value.map(row => Number(row.forecast_quantity || 0)), backgroundColor: '#ff9a4d', borderRadius: 4 },
+    { label: 'Forecast', data: comparisonDaily.value.map(row => Number(row.forecast_quantity || 0)), backgroundColor: '#85d2de', borderRadius: 4 },
     { label: 'Actual sales', data: comparisonDaily.value.map(row => Number(row.actual_quantity || 0)), backgroundColor: '#171717', borderRadius: 4 },
   ],
 }))
@@ -196,7 +196,7 @@ const hourlyChartData = computed(() => {
     datasets: [{
       label: 'Items sold',
       data: popularItems.value.map(row => Number(row.quantity_sold || 0)),
-      backgroundColor: '#f97316',
+      backgroundColor: '#58b9ca',
       borderRadius: 4,
     }],
   }
@@ -205,7 +205,7 @@ const popularItemsChartData = computed(() => ({
   labels: popularItems.value.map(row => row.item_name),
   datasets: [{
     data: popularItems.value.map(row => Number(row.quantity_sold || 0)),
-    backgroundColor: ['#f97316', '#171717', '#fbbf24', '#16a34a', '#3b82f6', '#a855f7', '#ec4899', '#14b8a6', '#64748b', '#ef4444'],
+    backgroundColor: ['#58b9ca', '#171717', '#aedfe7', '#16a34a', '#3b82f6', '#a855f7', '#ec4899', '#14b8a6', '#64748b', '#ef4444'],
     borderColor: '#fff',
     borderWidth: 2,
   }],
@@ -285,7 +285,7 @@ onMounted(loadForecast)
 .forecast-header p, .forecast-panel-note, .forecast-footnote { margin: 4px 0 0; color: #667085; font-size: 12px; }
 .forecast-range-switch { display: inline-flex; gap: 4px; padding: 3px; border: 1px solid #f1e3d5; border-radius: 8px; background: #fffaf5; }
 .forecast-range-switch button { padding: 7px 11px; border: 0; border-radius: 6px; background: transparent; color: #475467; font-size: 12px; cursor: pointer; }
-.forecast-range-switch button.active { background: #171717; color: #f97316; }
+.forecast-range-switch button.active { background: #171717; color: #58b9ca; }
 .forecast-range-switch button:disabled { opacity: .55; cursor: wait; }
 .forecast-chart-filter { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .forecast-chart-filter > span { color: #667085; font-size: 11px; font-weight: 650; }
@@ -307,13 +307,13 @@ onMounted(loadForecast)
 .forecast-table-scroll { overflow-x: auto; }
 .forecast-panel table { width: 100%; border-collapse: collapse; font-size: 12px; }
 .forecast-panel th, .forecast-panel td { padding: 8px 9px; border-bottom: 1px solid #f1f2f4; text-align: left; white-space: nowrap; }
-.forecast-panel th { background: #fff7ed; color: #667085; font-size: 10px; font-weight: 700; }
+.forecast-panel th { background: #edf8fb; color: #667085; font-size: 10px; font-weight: 700; }
 .forecast-panel td small { color: #667085; }
 .forecast-empty { padding: 15px !important; color: #8a94a6; text-align: center !important; }
 .forecast-message { padding: 11px 13px; border: 1px solid #e7e5e4; border-radius: 8px; background: #fafaf9; color: #57534e; font-size: 12px; }
 .forecast-message.is-error { border-color: #fecaca; background: #fef2f2; color: #b91c1c; }
-.forecast-message.is-warning { margin-bottom: 10px; border-color: #fed7aa; background: #fff7ed; color: #9a3412; }
-.forecast-warning-text { color: #c2410c; font-weight: 650; }
+.forecast-message.is-warning { margin-bottom: 10px; border-color: #bfe5eb; background: #edf8fb; color: #327c8a; }
+.forecast-warning-text { color: #267f91; font-weight: 650; }
 .forecast-footnote { font-size: 11px; }
 @media (max-width: 760px) { .forecast-summary-grid, .forecast-comparison-summary, .forecast-insights-grid, .forecast-chart-grid { grid-template-columns: 1fr; } }
 </style>

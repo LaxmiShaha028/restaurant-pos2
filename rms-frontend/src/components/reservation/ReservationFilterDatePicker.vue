@@ -173,10 +173,10 @@ onBeforeUnmount(() => document.removeEventListener('click', handleDocumentClick)
   cursor: pointer;
 }
 .reservation-filter-date-trigger:hover,
-.reservation-filter-date-trigger[aria-expanded="true"] { border-color: #fb923c; }
-.reservation-filter-date-trigger:focus-visible { outline: none; border-color: #f97316; box-shadow: 0 0 0 3px rgba(249, 115, 22, .12); }
+.reservation-filter-date-trigger[aria-expanded="true"] { border-color: #85d2de; }
+.reservation-filter-date-trigger:focus-visible { outline: none; border-color: #58b9ca; box-shadow: 0 0 0 3px rgba(88, 185, 202, .12); }
 .reservation-filter-date-trigger .is-placeholder { color: #667085; }
-.reservation-filter-date-trigger i { color: #ea580c; }
+.reservation-filter-date-trigger i { color: #45aabd; }
 .reservation-filter-date-menu {
   position: absolute;
   z-index: 1200;
@@ -201,11 +201,11 @@ onBeforeUnmount(() => document.removeEventListener('click', handleDocumentClick)
   border: 0;
   border-radius: 6px;
   background: transparent;
-  color: #c2410c;
+  color: #267f91;
   font: inherit;
   cursor: pointer;
 }
-.reservation-filter-date-heading button:hover, .reservation-filter-date-footer button:hover { background: #fff1e6; }
+.reservation-filter-date-heading button:hover, .reservation-filter-date-footer button:hover { background: #e5f6f9; }
 .reservation-filter-date-weekdays, .reservation-filter-date-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); text-align: center; }
 .reservation-filter-date-weekdays { margin-bottom: 4px; color: #8491a3; font-size: 10px; font-weight: 700; }
 .reservation-filter-date-days button {
@@ -220,13 +220,13 @@ onBeforeUnmount(() => document.removeEventListener('click', handleDocumentClick)
   font-size: 11px;
   cursor: pointer;
 }
-.reservation-filter-date-days button:hover, .reservation-filter-date-days button.is-today:not(.is-selected) { background: #fff1e6; color: #c2410c; }
+.reservation-filter-date-days button:hover, .reservation-filter-date-days button.is-today:not(.is-selected) { background: #e5f6f9; color: #267f91; }
 .reservation-filter-date-days button.is-outside { color: #a7b0bd; }
-.reservation-filter-date-days button.is-selected { background: #f97316; color: #fff; font-weight: 700; }
+.reservation-filter-date-days button.is-selected { background: #58b9ca; color: #fff; font-weight: 700; }
 .reservation-filter-date-days button:disabled { background: transparent; color: #cbd5e1; cursor: not-allowed; }
 .reservation-filter-date-footer button:disabled { color: #cbd5e1; cursor: not-allowed; }
 .reservation-filter-date-footer { margin-top: 7px; padding-top: 7px; border-top: 1px solid #f1e3d5; }
-.reservation-filter-date-footer button { color: #c2410c; font-size: 11px; }
+.reservation-filter-date-footer button { color: #267f91; font-size: 11px; }
 .reservation-filter-date-menu-enter-active, .reservation-filter-date-menu-leave-active { transition: opacity .12s ease, transform .12s ease; }
 .reservation-filter-date-menu-enter-from, .reservation-filter-date-menu-leave-to { opacity: 0; transform: translateY(-3px); }
 </style>

@@ -1213,14 +1213,14 @@ onBeforeUnmount(() => {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  border: 1px solid #f59e0b;
+  border: 1px solid #4b9eb0;
   background: #fff;
-  color: #b45309;
+  color: #267f91;
   font-weight: 700;
 }
 
 .kitchen-alert-toggle:hover {
-  border-color: #d97706;
+  border-color: #3d94a7;
   color: #92400e;
 }
 
@@ -1248,7 +1248,7 @@ onBeforeUnmount(() => {
   flex: 0 0 auto;
   place-items: center;
   border-radius: 999px;
-  background: #f59e0b;
+  background: #4b9eb0;
   color: #fff;
   font-size: 1.05rem;
 }
@@ -1278,7 +1278,7 @@ onBeforeUnmount(() => {
   border: 0;
   border-radius: 0.55rem;
   padding: 0.55rem 0.75rem;
-  background: #b45309;
+  background: #267f91;
   color: #fff;
   font-size: 0.82rem;
   font-weight: 700;

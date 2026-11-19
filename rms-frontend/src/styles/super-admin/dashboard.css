@@ -339,8 +339,8 @@
 }
 
 .tone-violet .dashboard-stat-icon {
-  background: #fff5eb;
-  color: #f97316;
+  background: #edf8fb;
+  color: #58b9ca;
 }
 
 .tone-slate .dashboard-stat-icon {
@@ -354,8 +354,8 @@
 }
 
 .tone-amber .dashboard-stat-icon {
-  background: #fffbeb;
-  color: #d97706;
+  background: #f4fbfc;
+  color: #3d94a7;
 }
 
 .dashboard-analytics-grid {
@@ -515,11 +515,11 @@
 }
 
 .status-active {
-  background: linear-gradient(90deg, #fb923c 0%, #ea580c 100%);
+  background: linear-gradient(90deg, #85d2de 0%, #45aabd 100%);
 }
 
 .status-pending {
-  background: linear-gradient(90deg, #facc15 0%, #d97706 100%);
+  background: linear-gradient(90deg, #aedfe7 0%, #3d94a7 100%);
 }
 
 .status-suspended {
@@ -527,7 +527,7 @@
 }
 
 .status-inactive {
-  background: linear-gradient(90deg, #fed7aa 0%, #f97316 100%);
+  background: linear-gradient(90deg, #bfe5eb 0%, #58b9ca 100%);
 }
 
 .dashboard-snapshot-grid {
@@ -568,14 +568,14 @@
 
 /* Super-admin dashboard palette matched to the restaurant dashboard. */
 .super-admin-dashboard-page {
-  --admin-accent: #f97316;
-  --admin-accent-dark: #c2410c;
+  --admin-accent: #58b9ca;
+  --admin-accent-dark: #267f91;
   padding: 18px;
   border-radius: 24px;
   background:
-    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
-    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
-    #f4f1ed;
+    radial-gradient(circle at 0 0, rgba(88, 185, 202, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(133, 210, 222, .045), transparent 25%),
+    #f1f5f9;
   color: #111827;
 }
 
@@ -598,21 +598,21 @@
 
 .super-admin-dashboard-page .dashboard-kicker,
 .super-admin-dashboard-page .dashboard-mini-kicker {
-  color: #c2410c;
+  color: #267f91;
 }
 
 .super-admin-dashboard-page .dashboard-spotlight-card,
 .super-admin-dashboard-page .dashboard-stat-card,
 .super-admin-dashboard-page .dashboard-panel-card,
 .super-admin-dashboard-page .dashboard-loading-card {
-  border-color: #eee3da;
+  border-color: #dceff3;
   border-radius: 14px;
   background-color: #fff;
   box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
 }
 
 .super-admin-dashboard-page .dashboard-spotlight-main {
-  border-color: #c2410c;
+  border-color: #267f91;
   border-radius: 22px;
   background: #71280b;
   color: #fff;
@@ -628,17 +628,17 @@
 
 .super-admin-dashboard-page .dashboard-spotlight-metrics div {
   border-color: rgba(255, 237, 213, .3);
-  background: #9a3412;
+  background: #327c8a;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
 }
 
 .super-admin-dashboard-page .dashboard-highlight-list li {
-  border-bottom-color: #eee3da;
+  border-bottom-color: #dceff3;
 }
 
 .super-admin-dashboard-page .dashboard-spotlight-side,
 .super-admin-dashboard-page .dashboard-panel-head {
-  background: #fff8f1;
+  background: #f4fbfc;
 }
 
 .super-admin-dashboard-page .dashboard-stat-icon,
@@ -648,21 +648,21 @@
 .super-admin-dashboard-page .tone-slate .dashboard-stat-icon,
 .super-admin-dashboard-page .tone-emerald .dashboard-stat-icon,
 .super-admin-dashboard-page .tone-amber .dashboard-stat-icon {
-  background: #fff1e6;
-  color: #f97316;
+  background: #e5f6f9;
+  color: #58b9ca;
 }
 
 .super-admin-dashboard-page .dashboard-refresh-button,
 .super-admin-dashboard-page .dashboard-refresh-button:hover:not(:disabled) {
   border: 1px solid #292929;
   border-radius: 10px;
-  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909);
-  color: #f97316;
+  background: linear-gradient(145deg, #d5f0f4 0%, #c8eaf0 54%, #b9e3ea 100%);
+  color: #58b9ca;
 }
 
 .super-admin-dashboard-page .dashboard-refresh-button i,
 .super-admin-dashboard-page .dashboard-refresh-button .spinner-border {
-  color: #f97316;
+  color: #58b9ca;
 }
 
 .super-admin-dashboard-page .dashboard-panel-card {
@@ -670,18 +670,18 @@
 }
 
 .super-admin-dashboard-page .dashboard-panel-head {
-  border-bottom-color: #eee3da;
+  border-bottom-color: #dceff3;
 }
 
 .super-admin-dashboard-page .dashboard-panel-tag,
 .super-admin-dashboard-page .dashboard-snapshot-item {
-  border-color: #eee3da;
-  background: #fff8f1;
+  border-color: #dceff3;
+  background: #f4fbfc;
 }
 
 .super-admin-dashboard-page .bar-restaurants,
 .super-admin-dashboard-page .bar-revenue {
-  background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
+  background: linear-gradient(180deg, #85d2de 0%, #45aabd 100%);
 }
 
 .super-admin-dashboard-page .dashboard-chart-track {

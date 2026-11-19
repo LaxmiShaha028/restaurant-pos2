@@ -9,7 +9,7 @@
 
     min-height:100%;
 
-    background:#f8f1e9;
+    background:#f7fafc;
 
 }
 
@@ -73,13 +73,13 @@
 
         linear-gradient(
             135deg,
-            #fff1e6,
-            #fff1e6
+            #e5f6f9,
+            #e5f6f9
         );
 
     box-shadow:
 
-        0 8px 20px rgba(249, 115, 22, .12);
+        0 8px 20px rgba(88, 185, 202, .12);
 
 }
 
@@ -146,7 +146,7 @@
 
     border-radius:10px;
 
-    background:#f97316;
+    background:#58b9ca;
 
     color:white;
 
@@ -165,7 +165,7 @@
 .refresh-btn:hover {
 
 
-    background:#c2410c;
+    background:#267f91;
 
     transform:translateY(-1px);
 
@@ -280,7 +280,7 @@
 
     border-radius:16px;
 
-    border:1px solid #eee3da;
+    border:1px solid #dceff3;
 
 
 }
@@ -297,7 +297,7 @@
 
     border-radius:10px;
 
-    border:1px solid #e7d8cb;
+    border:1px solid #cde9ee;
 
     outline:none;
 
@@ -327,11 +327,11 @@
 .filter-card select:focus {
 
 
-    border-color:#f97316;
+    border-color:#58b9ca;
 
     box-shadow:
 
-        0 0 0 3px rgba(249, 115, 22, .12);
+        0 0 0 3px rgba(88, 185, 202, .12);
 
 
 }
@@ -357,7 +357,7 @@
 
     overflow:hidden;
 
-    border:1px solid #eee3da;
+    border:1px solid #dceff3;
 
     box-shadow:
 
@@ -386,7 +386,7 @@
 
     padding:20px 24px;
 
-    border-bottom:1px solid #eee3da;
+    border-bottom:1px solid #dceff3;
 
 
 }
@@ -432,9 +432,9 @@
 
     border-radius:999px;
 
-    background:#fff1e6;
+    background:#e5f6f9;
 
-    color:#f97316;
+    color:#58b9ca;
 
     font-size:13px;
 
@@ -492,7 +492,7 @@
 
     text-align:left;
 
-    background:#f8f1e9;
+    background:#f7fafc;
 
     color:#475569;
 
@@ -512,7 +512,7 @@
 
     padding:16px 15px;
 
-    border-bottom:1px solid #eee3da;
+    border-bottom:1px solid #dceff3;
 
     vertical-align:middle;
 
@@ -537,7 +537,7 @@
 .user-table tbody tr:hover {
 
 
-    background:#f8f1e9;
+    background:#f7fafc;
 
 
 }
@@ -605,8 +605,8 @@
 
         linear-gradient(
             135deg,
-            #f97316,
-            #fb923c
+            #58b9ca,
+            #85d2de
         );
 
 
@@ -696,9 +696,9 @@
 
     border-radius:999px;
 
-    background:#fff1e6;
+    background:#e5f6f9;
 
-    color:#f97316;
+    color:#58b9ca;
 
     font-size:12px;
 
@@ -812,11 +812,11 @@
 
     padding:0;
 
-    border:1px solid #fed7aa;
+    border:1px solid #bfe5eb;
 
-    background:#fff1e6;
+    background:#e5f6f9;
 
-    color:#f97316;
+    color:#58b9ca;
 
 
     border-radius:8px;
@@ -841,11 +841,11 @@
 
     transform:translateY(-1px);
 
-    border-color:#fdba74;
+    border-color:#a6dce4;
 
-    background:#fff8f1;
+    background:#f4fbfc;
 
-    color:#c2410c;
+    color:#267f91;
 
 
 }
@@ -857,11 +857,11 @@
 
 
 
-    border-color:#fed7aa;
+    border-color:#bfe5eb;
 
-    background:#fff1e6;
+    background:#e5f6f9;
 
-    color:#f97316;
+    color:#58b9ca;
 
 
 }
@@ -873,11 +873,11 @@
 .edit-btn {
 
 
-    border-color:#fed7aa;
+    border-color:#bfe5eb;
 
-    background:#fff1e6;
+    background:#e5f6f9;
 
-    color:#f97316;
+    color:#58b9ca;
 
 
 }
@@ -889,11 +889,11 @@
 .status-btn {
 
 
-    border-color:#fed7aa;
+    border-color:#bfe5eb;
 
-    background:#fff1e6;
+    background:#e5f6f9;
 
-    color:#f97316;
+    color:#58b9ca;
 
 
 }
@@ -905,18 +905,18 @@
 .delete-btn {
 
 
-    border-color:#fed7aa;
+    border-color:#bfe5eb;
 
-    background:#fff1e6;
+    background:#e5f6f9;
 
-    color:#f97316;
+    color:#58b9ca;
 
 
 }
 
 .user-actions button:focus-visible {
 
-    outline:3px solid rgba(249,115,22,.24);
+    outline:3px solid rgba(88, 185, 202,.24);
 
     outline-offset:2px;
 
@@ -957,9 +957,9 @@
 
     margin:0 auto 12px;
 
-    border:3px solid #fff1e6;
+    border:3px solid #e5f6f9;
 
-    border-top-color:#f97316;
+    border-top-color:#58b9ca;
 
     border-radius:50%;
 
@@ -1010,7 +1010,7 @@
 
     border-radius:8px;
 
-    background:#f97316;
+    background:#58b9ca;
 
     color:white;
 

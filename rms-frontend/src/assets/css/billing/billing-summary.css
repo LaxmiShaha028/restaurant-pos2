@@ -161,7 +161,7 @@
   border: 1px solid #fde68a;
   border-radius: 8px;
 
-  background: #fffbeb;
+  background: #f4fbfc;
 
   color: #92400e;
 
@@ -260,9 +260,9 @@
 }
 
 .tax-card {
-  --card-accent: #f97316;
-  --card-border: #fed7aa;
-  --card-icon-background: #fff5eb;
+  --card-accent: #58b9ca;
+  --card-border: #bfe5eb;
+  --card-icon-background: #edf8fb;
 }
 
 .service-card {
@@ -272,9 +272,9 @@
 }
 
 .expense-card {
-  --card-accent: #d97706;
+  --card-accent: #3d94a7;
   --card-border: #fde68a;
-  --card-icon-background: #fffbeb;
+  --card-icon-background: #f4fbfc;
 }
 
 .cash-card {
@@ -290,9 +290,9 @@
 }
 
 .orders-card {
-  --card-accent: #ea580c;
-  --card-border: #fed7aa;
-  --card-icon-background: #fff7ed;
+  --card-accent: #45aabd;
+  --card-border: #bfe5eb;
+  --card-icon-background: #edf8fb;
 }
 
 

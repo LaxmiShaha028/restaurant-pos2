@@ -167,7 +167,7 @@ const chartData = computed(() => {
 
           props.profit >= 0
             ? '#0d6efd'
-            : '#fd7e14',
+            : '#45aabd',
 
         ],
 

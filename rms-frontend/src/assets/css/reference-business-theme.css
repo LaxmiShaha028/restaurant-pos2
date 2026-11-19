@@ -246,7 +246,7 @@
 ) {
   border-color: #dceff3 !important;
   background: #f7f9fb !important;
-  color: #9a3412 !important;
+  color: #327c8a !important;
 }
 
 :is(
@@ -947,7 +947,7 @@ body .raw-material-action-details > div {
 body .raw-material-action-notice-warning {
   border-color: #a6dce4 !important;
   background: #e5f6f9 !important;
-  color: #9a3412 !important;
+  color: #327c8a !important;
 }
 
 body .raw-material-action-cancel {
@@ -1249,7 +1249,7 @@ body .daily-transfer-remove-btn:disabled {
 [class*="pagination" i] :is(button, a, .page-link, [role="button"]) {
   border-color: #dceff3 !important;
   background-color: #ffffff !important;
-  color: #9a3412 !important;
+  color: #327c8a !important;
   box-shadow: none !important;
 }
 
@@ -1297,7 +1297,7 @@ body .daily-transfer-remove-btn:disabled {
 #app [class*="pagination" i] :is(button, a, .page-link, [role="button"]) {
   border-color: #dceff3 !important;
   background-color: #ffffff !important;
-  color: #9a3412 !important;
+  color: #327c8a !important;
   box-shadow: none !important;
 }
 
@@ -1352,7 +1352,7 @@ body .daily-transfer-remove-btn:disabled {
   border: 1px solid #dceff3 !important;
   border-radius: 8px !important;
   background: #ffffff !important;
-  color: #9a3412 !important;
+  color: #327c8a !important;
   box-shadow: none !important;
 }
 
@@ -1778,9 +1778,9 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
 
 #app .table-management-page .table-list-row__button:not(.table-list-row__button--delete):hover:not(:disabled) {
   border-color: #a6dce4 !important;
-  background: #ffe8d1 !important;
+  background: #def3f6 !important;
   color: #267f91 !important;
-  box-shadow: 0 3px 8px rgba(194, 65, 12, .12) !important;
+  box-shadow: 0 3px 8px rgba(38, 127, 145, .12) !important;
 }
 
 #app .table-management-page .table-list-row__button--delete {
@@ -2502,7 +2502,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
 #app .po-details-page .po-grn-pdf-btn:hover:not(:disabled) {
   border-color: #a6dce4 !important;
   background: #f7f9fb !important;
-  color: #9a3412 !important;
+  color: #327c8a !important;
 }
 
 #app .po-details-page .po-details-edit-btn,
@@ -2651,7 +2651,7 @@ body .po-line-total,
 body .po-number-with-unit > span,
 body .po-money-input > span {
   border-color: #dceff3 !important;
-  color: #9a3412 !important;
+  color: #327c8a !important;
   background: #fffaf5 !important;
 }
 
@@ -2887,7 +2887,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .staff-management-page .shift-duration-preview {
   border: 1px solid #bfe5eb !important;
   border-radius: 9px !important;
-  color: #9a3412 !important;
+  color: #327c8a !important;
   background: #e5f6f9 !important;
 }
 

@@ -194,12 +194,12 @@ button:disabled {
 }
 
 .coa-summary-warning {
-  border-color: #fed7aa;
-  background: #fff7ed;
+  border-color: #bfe5eb;
+  background: #edf8fb;
 }
 
 .coa-summary-warning strong {
-  color: #c2410c;
+  color: #267f91;
 }
 
 .coa-tabs {
@@ -453,13 +453,13 @@ button:disabled {
 }
 
 .coa-type-badge.type-liability {
-  background: #fff7ed;
-  color: #c2410c;
+  background: #edf8fb;
+  color: #267f91;
 }
 
 .coa-type-badge.type-equity {
-  background: #fff5eb;
-  color: #f97316;
+  background: #edf8fb;
+  color: #58b9ca;
 }
 
 .coa-type-badge.type-revenue {
@@ -754,7 +754,7 @@ button:disabled {
 
 .coa-modal-header p {
   margin: 0 0 1px;
-  color: #ff8000;
+  color: #58b9ca;
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;

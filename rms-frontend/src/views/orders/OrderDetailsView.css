@@ -14,14 +14,14 @@
   --order-success: #15803d;
   --order-success-soft: #f0fdf4;
 
-  --order-warning: #b45309;
-  --order-warning-soft: #fffbeb;
+  --order-warning: #267f91;
+  --order-warning-soft: #f4fbfc;
 
   --order-danger: #b91c1c;
   --order-danger-soft: #fef2f2;
 
-  --order-purple: #c2410c;
-  --order-purple-soft: #fff5eb;
+  --order-purple: #267f91;
+  --order-purple-soft: #edf8fb;
 
   --order-text: #172033;
   --order-text-secondary: #344054;
@@ -627,11 +627,11 @@
 }
 
 .status-preparing {
-  border-color: #fed7aa;
+  border-color: #bfe5eb;
 
-  background: #fff7ed;
+  background: #edf8fb;
 
-  color: #c2410c;
+  color: #267f91;
 }
 
 .status-ready {
@@ -643,7 +643,7 @@
 }
 
 .status-served {
-  border-color: #fdba74;
+  border-color: #a6dce4;
 
   background: var(--order-purple-soft);
 
@@ -1249,7 +1249,7 @@
 
   padding: 2px 4px;
 
-  border: 1px solid #fed7aa;
+  border: 1px solid #bfe5eb;
   border-radius: 3px;
 
   background: var(--order-purple-soft);

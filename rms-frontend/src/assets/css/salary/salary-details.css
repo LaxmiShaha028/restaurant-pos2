@@ -60,7 +60,7 @@
 
 .salary-details-eyebrow {
   display: block;
-  color: #f97316;
+  color: #58b9ca;
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
@@ -274,7 +274,7 @@
 }
 
 .salary-details-summary-overtime {
-  color: #c2410c;
+  color: #267f91;
 }
 
 .salary-details-total-card {
@@ -414,7 +414,7 @@
 .salary-details-auto-badge {
   padding: 3px 6px;
   border-radius: 999px;
-  background: #fef3c7;
+  background: #e7f6f8;
   color: #92400e;
   font-size: 9px;
   font-weight: 800;
@@ -435,7 +435,7 @@
 }
 
 .salary-details-overtime.active {
-  color: #c2410c;
+  color: #267f91;
 }
 
 .salary-details-type-control {
@@ -463,11 +463,11 @@
 }
 
 .salary-details-source.manual {
-  color: #f97316;
+  color: #58b9ca;
 }
 
 .salary-details-locked {
-  color: #b45309;
+  color: #267f91;
   font-size: 9px;
 }
 

@@ -499,10 +499,10 @@ button:disabled {
   align-items: center;
   justify-content: center;
   padding: 0;
-  border: 1px solid #fed7aa;
+  border: 1px solid #bfe5eb;
   border-radius: 8px;
-  background: #fff1e6;
-  color: #f97316;
+  background: #e5f6f9;
+  color: #58b9ca;
   font-size: 14px;
   transition:
     background-color 0.16s ease,
@@ -512,9 +512,9 @@ button:disabled {
 }
 
 .income-action-btn:hover:not(:disabled) {
-  border-color: #fdba74;
-  background: #fff8f1;
-  color: #c2410c;
+  border-color: #a6dce4;
+  background: #f4fbfc;
+  color: #267f91;
 }
 
 
@@ -663,7 +663,7 @@ button:disabled {
 .income-modal-header span {
   display: block;
   margin-bottom: 1px;
-  color: #ff8000;
+  color: #58b9ca;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.03em;
@@ -730,7 +730,7 @@ button:disabled {
   gap: 3px;
   border: 0;
   background: transparent;
-  color: #ff8c00;
+  color: #58b9ca;
   font-size: 10px;
   font-weight: 600;
   cursor: pointer;
@@ -760,7 +760,7 @@ button:disabled {
 
 .income-accounting-preview > i {
   margin-top: 1px;
-  color: #ff8000;
+  color: #58b9ca;
   font-size: 12px;
 }
 
@@ -771,7 +771,7 @@ button:disabled {
 }
 
 .income-accounting-preview strong {
-  color: #d8771d;
+  color: #45aabd;
   font-size: 11px;
 }
 

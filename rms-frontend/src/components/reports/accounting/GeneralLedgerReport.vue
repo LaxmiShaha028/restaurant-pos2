@@ -889,7 +889,7 @@ loadAccounts()
         12px;
 
     background:
-        #f8f1e9;
+        #f7fafc;
 
     text-align:
         center;
@@ -921,10 +921,10 @@ loadAccounts()
         12px;
 
     color:
-        #f97316;
+        #58b9ca;
 
     background:
-        #fff1e6;
+        #e5f6f9;
 
     font-size:
         20px;

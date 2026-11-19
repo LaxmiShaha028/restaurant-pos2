@@ -462,9 +462,9 @@ button:disabled {
 
 .journal-reverse-btn:hover:not(:disabled),
 .journal-line-delete-btn:hover:not(:disabled) {
-  border-color: #fed7aa;
-  background: #fff7ed;
-  color: #c2410c;
+  border-color: #bfe5eb;
+  background: #edf8fb;
+  color: #267f91;
 }
 
 .journal-state-cell {
@@ -766,12 +766,12 @@ button:disabled {
 }
 
 .journal-balance-status.unbalanced {
-  border-color: #fed7aa;
-  background: #fff7ed;
+  border-color: #bfe5eb;
+  background: #edf8fb;
 }
 
 .journal-balance-status.unbalanced strong {
-  color: #c2410c;
+  color: #267f91;
 }
 
 .journal-posting-warning {
@@ -792,12 +792,12 @@ button:disabled {
 }
 
 .journal-danger-warning {
-  border-color: #fed7aa;
-  background: #fff7ed;
+  border-color: #bfe5eb;
+  background: #edf8fb;
 }
 
 .journal-danger-warning i {
-  color: #c2410c;
+  color: #267f91;
 }
 
 .journal-modal-footer {
@@ -862,13 +862,13 @@ button:disabled {
   gap: 2px;
   margin-bottom: 8px;
   padding: 7px 8px;
-  border: 1px solid #fed7aa;
+  border: 1px solid #bfe5eb;
   border-radius: 5px;
-  background: #fff7ed;
+  background: #edf8fb;
 }
 
 .journal-reversal-note strong {
-  color: #c2410c;
+  color: #267f91;
   font-size: 10px;
 }
 

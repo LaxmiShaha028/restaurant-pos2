@@ -2677,15 +2677,15 @@ onBeforeUnmount(
   padding: 18px !important;
   border-radius: 24px;
   background:
-    radial-gradient(circle at 0 0, rgba(249, 115, 22, .055), transparent 28%),
-    radial-gradient(circle at 100% 8%, rgba(251, 146, 60, .045), transparent 25%),
-    #f4f1ed !important;
+    radial-gradient(circle at 0 0, rgba(88, 185, 202, .055), transparent 28%),
+    radial-gradient(circle at 100% 8%, rgba(133, 210, 222, .045), transparent 25%),
+    #f1f5f9 !important;
   color: #111827 !important;
 }
 
 .reservation-page-header,
 .reservation-form-card {
-  border: 1px solid #eee3da !important;
+  border: 1px solid #dceff3 !important;
   border-radius: 14px !important;
   background: #fff !important;
   box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
@@ -2704,8 +2704,8 @@ onBeforeUnmount(
   flex: 0 0 40px;
   place-items: center;
   border-radius: 12px;
-  background: #fff1e6;
-  color: #f97316;
+  background: #e5f6f9;
+  color: #58b9ca;
   font-size: 17px;
 }
 
@@ -2726,30 +2726,30 @@ onBeforeUnmount(
 .reservation-selected-customer-avatar,
 .reservation-table-icon {
   border-radius: 10px !important;
-  background: #fff1e6 !important;
-  color: #f97316 !important;
+  background: #e5f6f9 !important;
+  color: #58b9ca !important;
 }
 
 .reservation-form-page .form-control:focus,
 .reservation-form-page .form-select:focus,
 .reservation-form-page textarea:focus {
-  border-color: #fb923c !important;
-  box-shadow: 0 0 0 .2rem rgba(249, 115, 22, .14) !important;
+  border-color: #85d2de !important;
+  box-shadow: 0 0 0 .2rem rgba(88, 185, 202, .14) !important;
 }
 
 .reservation-customer-mode {
-  border-color: #eee3da !important;
-  background: #f8f1e9 !important;
+  border-color: #dceff3 !important;
+  background: #f7fafc !important;
 }
 
 .reservation-customer-mode button.active {
-  border-color: #fed7aa !important;
+  border-color: #bfe5eb !important;
   background: #fff !important;
-  color: #c2410c !important;
+  color: #267f91 !important;
 }
 
 .reservation-customer-mode button.active i {
-  color: #f97316 !important;
+  color: #58b9ca !important;
 }
 
 .reservation-check-button,
@@ -2758,35 +2758,35 @@ onBeforeUnmount(
 .reservation-primary-button:hover:not(:disabled) {
   border: 1px solid #292929 !important;
   border-radius: 10px !important;
-  background: linear-gradient(145deg, #191919 0%, #111 54%, #090909 100%) !important;
-  color: #f97316 !important;
+  background: linear-gradient(145deg, #d5f0f4 0%, #c8eaf0 54%, #b9e3ea 100%) !important;
+  color: #58b9ca !important;
 }
 
 .reservation-check-button i,
 .reservation-primary-button i {
-  color: #f97316 !important;
+  color: #58b9ca !important;
 }
 
 .reservation-back-button {
-  border-color: #eee3da !important;
+  border-color: #dceff3 !important;
   border-radius: 10px !important;
   background: #fff !important;
   color: #111827 !important;
 }
 
 .reservation-back-button i {
-  color: #f97316 !important;
+  color: #58b9ca !important;
 }
 
 .reservation-table-card.selected {
-  border-color: #f97316 !important;
-  background: #fff8f1 !important;
-  box-shadow: 0 0 0 1px rgba(249, 115, 22, .16) !important;
+  border-color: #58b9ca !important;
+  background: #f4fbfc !important;
+  box-shadow: 0 0 0 1px rgba(88, 185, 202, .16) !important;
 }
 
 .reservation-form-footer {
-  border-color: #eee3da !important;
-  background: #fff8f1 !important;
+  border-color: #dceff3 !important;
+  background: #f4fbfc !important;
 }
 
 @media (max-width: 560px) {
