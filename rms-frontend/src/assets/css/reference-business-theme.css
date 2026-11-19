@@ -3486,6 +3486,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .offers-header .table-management-add,
 #app .kitchen-page button.btn-outline-primary,
 #app .kitchen-page .kitchen-filter-button.search-button,
+#app .kitchen-page .kitchen-filter-button.clear-button,
 #app .kitchen-page .kitchen-empty-refresh-button,
 #app .kitchen-page .kitchen-action-button,
 #app .kitchen-page .compact-action-button {
@@ -3502,6 +3503,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .offers-header .table-management-add:hover:not(:disabled),
 #app .kitchen-page button.btn-outline-primary:hover:not(:disabled),
 #app .kitchen-page .kitchen-filter-button.search-button:hover:not(:disabled),
+#app .kitchen-page .kitchen-filter-button.clear-button:hover:not(:disabled),
 #app .kitchen-page .kitchen-empty-refresh-button:hover:not(:disabled),
 #app .kitchen-page .kitchen-action-button:hover:not(:disabled),
 #app .kitchen-page .compact-action-button:hover:not(:disabled) {
@@ -3516,6 +3518,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .table-management-add :is(span, i, svg),
 #app .kitchen-page button.btn-outline-primary :is(span, i, svg),
 #app .kitchen-page .kitchen-filter-button.search-button :is(span, i, svg),
+#app .kitchen-page .kitchen-filter-button.clear-button :is(span, i, svg),
 #app .kitchen-page .kitchen-empty-refresh-button :is(span, i, svg),
 #app .kitchen-page .kitchen-action-button :is(span, i, svg),
 #app .kitchen-page .compact-action-button :is(span, i, svg) {
