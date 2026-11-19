@@ -3292,3 +3292,149 @@ body .po-quick-add-supplier-button:disabled {
 #app .forecast-message.is-warning :is(i, strong, p, span) {
   color: #b91c1c !important;
 }
+
+/* Consistent, high-contrast button hierarchy across the application */
+#app :is(
+  button.btn-primary, a.btn-primary, button.btn-success, a.btn-success,
+  button[class*="primary-btn"], a[class*="primary-btn"],
+  button[class*="primary-button"], a[class*="primary-button"],
+  button[class*="submit-btn"], a[class*="submit-btn"],
+  button[class*="submit-button"], a[class*="submit-button"],
+  button[class*="save-btn"], a[class*="save-btn"],
+  button[class*="save-button"], a[class*="save-button"],
+  button[class*="create-btn"], a[class*="create-btn"],
+  button[class*="create-button"], a[class*="create-button"],
+  button[class*="add-btn"], a[class*="add-btn"],
+  button[class*="add-button"], a[class*="add-button"],
+  button[class*="apply-btn"], a[class*="apply-btn"],
+  button[class*="apply-button"], a[class*="apply-button"],
+  button[class*="generate-btn"], a[class*="generate-btn"],
+  button[class*="generate-button"], a[class*="generate-button"],
+  button[class*="confirm-btn"], a[class*="confirm-btn"],
+  button[class*="confirm-button"], a[class*="confirm-button"],
+  button[class*="complete-btn"], a[class*="complete-btn"],
+  button[class*="complete-button"], a[class*="complete-button"],
+  button[class*="recalculate-btn"], a[class*="recalculate-btn"]
+) {
+  border: 1px solid #267f91 !important;
+  background: #267f91 !important;
+  color: #ffffff !important;
+  box-shadow: 0 3px 10px rgba(38, 127, 145, .16) !important;
+  font-weight: 700 !important;
+}
+
+#app :is(
+  button.btn-primary, a.btn-primary, button.btn-success, a.btn-success,
+  button[class*="primary-btn"], a[class*="primary-btn"],
+  button[class*="primary-button"], a[class*="primary-button"],
+  button[class*="submit-btn"], a[class*="submit-btn"],
+  button[class*="submit-button"], a[class*="submit-button"],
+  button[class*="save-btn"], a[class*="save-btn"],
+  button[class*="save-button"], a[class*="save-button"],
+  button[class*="create-btn"], a[class*="create-btn"],
+  button[class*="create-button"], a[class*="create-button"],
+  button[class*="add-btn"], a[class*="add-btn"],
+  button[class*="add-button"], a[class*="add-button"],
+  button[class*="apply-btn"], a[class*="apply-btn"],
+  button[class*="apply-button"], a[class*="apply-button"],
+  button[class*="generate-btn"], a[class*="generate-btn"],
+  button[class*="generate-button"], a[class*="generate-button"],
+  button[class*="confirm-btn"], a[class*="confirm-btn"],
+  button[class*="confirm-button"], a[class*="confirm-button"],
+  button[class*="complete-btn"], a[class*="complete-btn"],
+  button[class*="complete-button"], a[class*="complete-button"],
+  button[class*="recalculate-btn"], a[class*="recalculate-btn"]
+):hover:not(:disabled) {
+  border-color: #1e7081 !important;
+  background: #1e7081 !important;
+  color: #ffffff !important;
+  box-shadow: 0 5px 14px rgba(38, 127, 145, .22) !important;
+}
+
+#app :is(
+  button.btn-secondary, a.btn-secondary, button.btn-light, a.btn-light,
+  button.btn-outline-primary, a.btn-outline-primary,
+  button[class*="secondary-btn"], a[class*="secondary-btn"],
+  button[class*="secondary-button"], a[class*="secondary-button"],
+  button[class*="cancel-btn"], a[class*="cancel-btn"],
+  button[class*="cancel-button"], a[class*="cancel-button"],
+  button[class*="clear-btn"], a[class*="clear-btn"],
+  button[class*="clear-button"], a[class*="clear-button"],
+  button[class*="reset-btn"], a[class*="reset-btn"],
+  button[class*="refresh-btn"], a[class*="refresh-btn"],
+  button[class*="refresh-button"], a[class*="refresh-button"],
+  button[class*="view-all"], a[class*="view-all"]
+) {
+  border: 1px solid #bfe5eb !important;
+  background: #e5f6f9 !important;
+  color: #267f91 !important;
+  box-shadow: none !important;
+  font-weight: 700 !important;
+}
+
+#app :is(
+  button.btn-secondary, a.btn-secondary, button.btn-light, a.btn-light,
+  button.btn-outline-primary, a.btn-outline-primary,
+  button[class*="secondary-btn"], a[class*="secondary-btn"],
+  button[class*="secondary-button"], a[class*="secondary-button"],
+  button[class*="cancel-btn"], a[class*="cancel-btn"],
+  button[class*="cancel-button"], a[class*="cancel-button"],
+  button[class*="clear-btn"], a[class*="clear-btn"],
+  button[class*="clear-button"], a[class*="clear-button"],
+  button[class*="reset-btn"], a[class*="reset-btn"],
+  button[class*="refresh-btn"], a[class*="refresh-btn"],
+  button[class*="refresh-button"], a[class*="refresh-button"],
+  button[class*="view-all"], a[class*="view-all"]
+):hover:not(:disabled) {
+  border-color: #91d0da !important;
+  background: #d6f0f4 !important;
+  color: #1e7081 !important;
+}
+
+#app :is(
+  button.btn-danger, a.btn-danger,
+  button[class*="danger-btn"], a[class*="danger-btn"],
+  button[class*="danger-button"], a[class*="danger-button"],
+  button[class*="delete-confirm"], a[class*="delete-confirm"],
+  button[class*="confirm-delete"], a[class*="confirm-delete"],
+  button[class*="remove-confirm"], a[class*="remove-confirm"],
+  button[class*="reject-btn"], a[class*="reject-btn"]
+) {
+  border-color: #dc3545 !important;
+  background: #dc3545 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+#app :is(
+  button.btn-danger, a.btn-danger,
+  button[class*="danger-btn"], a[class*="danger-btn"],
+  button[class*="danger-button"], a[class*="danger-button"],
+  button[class*="delete-confirm"], a[class*="delete-confirm"],
+  button[class*="confirm-delete"], a[class*="confirm-delete"],
+  button[class*="remove-confirm"], a[class*="remove-confirm"],
+  button[class*="reject-btn"], a[class*="reject-btn"]
+):hover:not(:disabled) {
+  border-color: #b42332 !important;
+  background: #b42332 !important;
+  color: #ffffff !important;
+}
+
+#app button:focus-visible,
+#app a[role="button"]:focus-visible {
+  outline: 3px solid rgba(88, 185, 202, .42) !important;
+  outline-offset: 2px !important;
+}
+
+#app button:disabled,
+#app a[aria-disabled="true"] {
+  cursor: not-allowed !important;
+  opacity: .58 !important;
+  box-shadow: none !important;
+}
+#app :is(
+  button:not(.btn-close), a.btn, a[role="button"],
+  input[type="button"], input[type="submit"], input[type="reset"]
+) {
+  font-weight: 700 !important;
+}
