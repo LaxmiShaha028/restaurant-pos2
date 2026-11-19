@@ -249,5 +249,16 @@ onMounted(loadOffers)
   background: #edf8fb !important;
   color: #267f91 !important;
 }
+
+.offers-header .table-management-add,
+.offers-header .table-management-add:hover {
+  border-color: #267f91 !important;
+  background: #267f91 !important;
+  color: #ffffff !important;
+}
+
+.offers-header .table-management-add i {
+  color: #ffffff !important;
+}
 </style>
 
