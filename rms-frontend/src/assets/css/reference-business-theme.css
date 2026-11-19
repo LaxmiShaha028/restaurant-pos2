@@ -3546,3 +3546,10 @@ body .po-quick-add-supplier-button:disabled {
 #app .kitchen-page .kitchen-filter-bar button.kitchen-filter-button.clear-button :is(i, span, svg) {
   color: #ffffff !important;
 }
+#app .kitchen-page .kitchen-filter-bar button.kitchen-filter-button.clear-button:disabled {
+  border-color: #267f91 !important;
+  background: #267f91 !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+  cursor: not-allowed;
+}
