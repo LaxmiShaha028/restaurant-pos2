@@ -978,7 +978,7 @@ onBeforeUnmount(() => {
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
-  background: #edf8fa;
+  background: #f1f5f9;
 }
 
 .main-wrapper {
@@ -986,7 +986,7 @@ onBeforeUnmount(() => {
   min-width: 0;
   min-height: 100vh;
   margin-left: var(--sidebar-width);
-  background: #edf8fa;
+  background: #f1f5f9;
   transition:
     margin-left .2s ease,
     width .2s ease;
@@ -1719,7 +1719,7 @@ onBeforeUnmount(() => {
 
 /* Dashboard-only light aqua shell to match the reference */
 .dashboard-layout.dashboard-route {
-  background: linear-gradient(145deg, #effbfd 0%, #e8f6f9 55%, #f3fbfc 100%);
+  background: linear-gradient(145deg, #f7f9fb 0%, #eef2f6 55%, #f5f7fa 100%);
 }
 
 .dashboard-layout.dashboard-route .main-wrapper {

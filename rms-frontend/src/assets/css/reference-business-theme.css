@@ -3,7 +3,7 @@
   --reference-accent: #58b9ca;
   --reference-accent-dark: #267f91;
   --reference-border: #dceff3;
-  --reference-canvas: #eaf8fb;
+  --reference-canvas: #f1f5f9;
   --reference-soft: #e5f6f9;
 }
 
@@ -109,7 +109,7 @@
   background:
     radial-gradient(circle at 0 0, rgba(88, 185, 202, .055), transparent 28%),
     radial-gradient(circle at 100% 8%, rgba(133, 210, 222, .045), transparent 25%),
-    #eaf8fb !important;
+    #f1f5f9 !important;
 }
 
 :is(
@@ -245,7 +245,7 @@
   .supplier-secondary-btn, .inventory-secondary-btn, .menu-secondary-btn
 ) {
   border-color: #dceff3 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
   color: #9a3412 !important;
 }
 
@@ -409,7 +409,7 @@
 
 .inventory-management-page .inventory-tab-button:hover {
   color: #267f91 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 .inventory-management-page .inventory-tab-button.inventory-tab-active,
@@ -550,7 +550,7 @@ button[class*="apply" i] > i,
 #app .inventory-management-page .warehouse-action-history:hover:not(:disabled),
 #app .inventory-management-page .restaurant-wastage-action-btn:hover:not(:disabled) {
   border-color: #a6dce4 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
   color: #267f91 !important;
 }
 
@@ -607,7 +607,7 @@ button[class*="apply" i] > i,
 
 .inventory-management-page .warehouse-view-tab:hover {
   border-color: #a6dce4 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
   color: #267f91 !important;
 }
 
@@ -684,7 +684,7 @@ button[class*="apply" i] > i,
 
 .inventory-management-page .warehouse-stock-table tbody tr:hover,
 .inventory-management-page .warehouse-lot-table tbody tr:hover {
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 .inventory-management-page .warehouse-pagination-active,
@@ -752,7 +752,7 @@ body .warehouse-adjustment-type-option {
 body .warehouse-adjustment-type-selected-in,
 body .warehouse-adjustment-type-selected-out {
   border-color: #85d2de !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 body .warehouse-adjustment-form-group input:focus,
@@ -771,7 +771,7 @@ body .warehouse-adjustment-readonly {
 body .warehouse-adjustment-preview-in,
 body .warehouse-adjustment-preview-out {
   border-color: #d2ebef !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 body .warehouse-adjustment-cancel {
@@ -1037,7 +1037,7 @@ body .restaurant-transfer-item,
 body .restaurant-transfer-item-header,
 body .restaurant-transfer-readonly-field > strong,
 body .restaurant-transfer-quantity-input > span {
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 body .restaurant-transfer-item-header,
@@ -1067,7 +1067,7 @@ body .restaurant-transfer-add-item {
 
 body .restaurant-transfer-add-item:hover:not(:disabled) {
   border-color: #a6dce4 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 body .restaurant-transfer-remove-item {
@@ -1078,7 +1078,7 @@ body .restaurant-transfer-remove-item {
 
 body .restaurant-transfer-remove-item:hover:not(:disabled) {
   border-color: #a6dce4 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
   color: #267f91 !important;
 }
 
@@ -1162,7 +1162,7 @@ body .daily-transfer-item {
 
 body .daily-transfer-item-warning {
   border-color: #a6dce4 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 body .daily-transfer-icon-btn,
@@ -1214,7 +1214,7 @@ body .daily-transfer-remove-btn {
 
 body .daily-transfer-remove-btn:hover:not(:disabled) {
   border-color: #a6dce4 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
   color: #267f91 !important;
 }
 
@@ -1459,7 +1459,7 @@ body .daily-transfer-remove-btn:disabled {
 
 .menu-management-page .menu-row-actions .btn:hover:not(:disabled) {
   border-color: #a6dce4 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
   color: #267f91 !important;
 }
 
@@ -1496,7 +1496,7 @@ body .daily-transfer-remove-btn:disabled {
 
 .menu-category-section .menu-category-actions .btn:hover:not(:disabled) {
   border-color: #a6dce4 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
   color: #267f91 !important;
 }
 
@@ -1527,7 +1527,7 @@ body .menu-category-modal-footer {
 
 body .menu-category-status-box {
   border-color: #d2ebef !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 body .menu-category-modal-body .form-control:focus {
@@ -1593,7 +1593,7 @@ body .menu-item-modal-footer {
 body .menu-item-switch-box,
 body .menu-item-image-preview {
   border-color: #d2ebef !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 body .menu-item-modal-body .form-control:focus,
@@ -1659,7 +1659,7 @@ body .variant-modal-footer {
 
 body .variant-switch-box {
   border-color: #d2ebef !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 body .variant-modal-body .form-control:focus,
@@ -1725,7 +1725,7 @@ body .add-on-modal-footer {
 
 body .add-on-availability-box {
   border-color: #d2ebef !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 body .add-on-modal-body .form-control:focus,
@@ -1843,7 +1843,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
   background:
     radial-gradient(circle at 0 0, rgba(88, 185, 202, .055), transparent 28%),
     radial-gradient(circle at 100% 8%, rgba(133, 210, 222, .045), transparent 25%),
-    #eaf8fb !important;
+    #f1f5f9 !important;
   color: #111827 !important;
 }
 
@@ -1915,7 +1915,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
 }
 
 #app .payment-methods-page .management-table tbody tr:hover {
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 #app .payment-methods-page .managed-method-name > span {
@@ -1996,7 +1996,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
 
 #app .payment-methods-page .management-action-group .btn-outline-primary:hover:not(:disabled) {
   border-color: #a6dce4;
-  background: #f4fbfc;
+  background: #f7f9fb;
   color: #267f91;
 }
 
@@ -2024,7 +2024,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
   background:
     radial-gradient(circle at 0 0, rgba(88, 185, 202, .055), transparent 28%),
     radial-gradient(circle at 100% 8%, rgba(133, 210, 222, .045), transparent 25%),
-    #eaf8fb !important;
+    #f1f5f9 !important;
   color: #111827 !important;
 }
 
@@ -2098,7 +2098,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
 }
 
 #app .payments-page .payments-table tbody tr:hover {
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 #app .payments-page .payments-count-badge,
@@ -2160,7 +2160,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
   background:
     radial-gradient(circle at 0 0, rgba(88, 185, 202, .055), transparent 28%),
     radial-gradient(circle at 100% 8%, rgba(133, 210, 222, .045), transparent 25%),
-    #eaf8fb !important;
+    #f1f5f9 !important;
   color: #111827 !important;
 }
 
@@ -2288,7 +2288,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
 }
 
 #app .subscriptions-page .subscriptions-table tbody tr:hover {
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 #app .subscriptions-page .subscriptions-count-badge,
@@ -2306,7 +2306,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
 
 #app .subscription-plans-page .managed-plan-top code {
   border: 1px solid #dceff3 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
   color: #9a5b2a !important;
 }
 
@@ -2370,7 +2370,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
 #app .subscriptions-page .subscriptions-alert,
 #app .subscriptions-page .subscriptions-alert-icon {
   border-color: #f0d9c8 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
   color: #267f91 !important;
 }
 
@@ -2413,7 +2413,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
 #app .purchase-order-actions > .action-btn:hover:not(:disabled),
 #app .purchase-order-actions .purchase-receive-action-button:hover:not(:disabled) {
   border-color: #a6dce4 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
   color: #267f91 !important;
 }
 
@@ -2462,7 +2462,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
 #app .po-details-page .po-detail-item,
 #app .po-details-page .po-payment-row,
 #app .po-details-page .po-details-notes {
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 #app .po-details-page .po-details-table th {
@@ -2476,7 +2476,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
 }
 
 #app .po-details-page .po-details-table tbody tr:hover {
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 #app .po-details-page .po-back-btn {
@@ -2487,7 +2487,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
 
 #app .po-details-page .po-back-btn:hover {
   border-color: #a6dce4 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
   color: #267f91 !important;
 }
 
@@ -2501,7 +2501,7 @@ body .add-on-modal-content .btn-outline-secondary:hover:not(:disabled) {
 #app .po-details-page .po-details-pdf-btn:hover:not(:disabled),
 #app .po-details-page .po-grn-pdf-btn:hover:not(:disabled) {
   border-color: #a6dce4 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
   color: #9a3412 !important;
 }
 
@@ -2723,7 +2723,7 @@ body .po-add-item-button:disabled,
 body .po-quick-add-supplier-button:disabled {
   border-color: #e7ded5 !important;
   color: #98a2b3 !important;
-  background: #eaf8fb !important;
+  background: #f1f5f9 !important;
 }
 
 /* Staff employee row actions match the compact All Restaurants controls. */
@@ -2753,7 +2753,7 @@ body .po-quick-add-supplier-button:disabled {
 
 #app .staff-management-page .employee-action-btn:hover:not(:disabled) {
   border-color: #a6dce4 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
   color: #267f91 !important;
 }
 
@@ -2787,7 +2787,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .staff-management-page .shift-action-btn:hover:not(:disabled) {
   border-color: #a6dce4 !important;
   color: #267f91 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 #app .staff-management-page .shift-action-btn:disabled {
@@ -2812,7 +2812,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .staff-management-page .attendance-sync-btn:disabled {
   border-color: #e7ded5 !important;
   color: #98a2b3 !important;
-  background: #eaf8fb !important;
+  background: #f1f5f9 !important;
 }
 
 /* Recurring shift schedule modal follows the restaurant warm theme. */
@@ -2974,7 +2974,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .salary-management-page .salary-action-btn:hover:not(:disabled) {
   border-color: #a6dce4 !important;
   color: #267f91 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 #app .salary-management-page .salary-action-btn:hover:not(:disabled) i {
@@ -3003,7 +3003,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .salary-management-page .salary-details-refresh-btn:disabled {
   border-color: #e7ded5 !important;
   color: #98a2b3 !important;
-  background: #eaf8fb !important;
+  background: #f1f5f9 !important;
 }
 
 #app .salary-management-page .salary-details-total-card {
@@ -3043,7 +3043,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .other-income-page .income-action-btn:hover:not(:disabled) {
   border-color: #a6dce4 !important;
   color: #267f91 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 #app .other-income-page .income-action-btn:hover:not(:disabled) i {
@@ -3084,7 +3084,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .coa-page .coa-action-btn:hover:not(:disabled) {
   border-color: #a6dce4 !important;
   color: #267f91 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 #app .coa-page .coa-action-btn:hover:not(:disabled) i {
@@ -3127,7 +3127,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .coa-page .coa-summary-primary,
 #app .coa-page .coa-info-banner {
   border-color: #bfe5eb !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 #app .coa-page .coa-tab-btn:hover,
@@ -3168,7 +3168,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .journal-page .journal-summary-primary,
 #app .journal-page .journal-info-banner {
   border-color: #bfe5eb !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 #app .journal-page .journal-actions {
@@ -3197,7 +3197,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .journal-page .journal-actions .journal-action-btn:hover:not(:disabled) {
   border-color: #a6dce4 !important;
   color: #267f91 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 #app .journal-page .journal-actions .journal-action-btn:hover:not(:disabled) i {
@@ -3238,7 +3238,7 @@ body .po-quick-add-supplier-button:disabled {
 #app .expense-management-page .expense-actions .action-btn:hover:not(:disabled) {
   border-color: #a6dce4 !important;
   color: #267f91 !important;
-  background: #f4fbfc !important;
+  background: #f7f9fb !important;
 }
 
 #app .expense-management-page .expense-actions .action-btn:hover:not(:disabled) i {
