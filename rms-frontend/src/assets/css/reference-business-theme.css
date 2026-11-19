@@ -3478,3 +3478,46 @@ body .po-quick-add-supplier-button:disabled {
 #app a[class*="refresh"] :is(span, i, svg) {
   color: #ffffff !important;
 }
+/* White labels on the primary actions shown in the dashboard and restaurant pages. */
+#app .dashboard-forecast-link,
+#app button[class*="add-order"],
+#app button[class*="apply" i],
+#app .table-management-add,
+#app .offers-header .table-management-add,
+#app .kitchen-page button.btn-outline-primary,
+#app .kitchen-page .kitchen-filter-button.search-button,
+#app .kitchen-page .kitchen-empty-refresh-button,
+#app .kitchen-page .kitchen-action-button,
+#app .kitchen-page .compact-action-button {
+  border-color: #267f91 !important;
+  background: #267f91 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+#app .dashboard-forecast-link:hover,
+#app button[class*="add-order"]:hover:not(:disabled),
+#app button[class*="apply" i]:hover:not(:disabled),
+#app .table-management-add:hover:not(:disabled),
+#app .offers-header .table-management-add:hover:not(:disabled),
+#app .kitchen-page button.btn-outline-primary:hover:not(:disabled),
+#app .kitchen-page .kitchen-filter-button.search-button:hover:not(:disabled),
+#app .kitchen-page .kitchen-empty-refresh-button:hover:not(:disabled),
+#app .kitchen-page .kitchen-action-button:hover:not(:disabled),
+#app .kitchen-page .compact-action-button:hover:not(:disabled) {
+  border-color: #206f7f !important;
+  background: #206f7f !important;
+  color: #ffffff !important;
+}
+
+#app .dashboard-forecast-link :is(span, i, svg),
+#app button[class*="add-order"] :is(span, i, svg),
+#app button[class*="apply" i] :is(span, i, svg),
+#app .table-management-add :is(span, i, svg),
+#app .kitchen-page button.btn-outline-primary :is(span, i, svg),
+#app .kitchen-page .kitchen-filter-button.search-button :is(span, i, svg),
+#app .kitchen-page .kitchen-empty-refresh-button :is(span, i, svg),
+#app .kitchen-page .kitchen-action-button :is(span, i, svg),
+#app .kitchen-page .compact-action-button :is(span, i, svg) {
+  color: #ffffff !important;
+}
