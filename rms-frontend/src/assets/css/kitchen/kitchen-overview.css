@@ -12,11 +12,11 @@
   --kitchen-primary-dark: #267f91;
   --kitchen-primary-soft: #edf8fb;
 
-  --kitchen-blue: #2563eb;
-  --kitchen-blue-soft: #eff6ff;
+  --kitchen-blue: #3d94a7;
+  --kitchen-blue-soft: #e5f6f9;
 
-  --kitchen-success: #15803d;
-  --kitchen-success-soft: #f0fdf4;
+  --kitchen-success: #267f91;
+  --kitchen-success-soft: #e5f6f9;
 
   --kitchen-warning: #267f91;
   --kitchen-warning-soft: #f4fbfc;
@@ -335,7 +335,7 @@
 }
 
 .accepted-card .summary-card-icon {
-  border: 1px solid #bfdbfe;
+  border: 1px solid #bfe5eb;
 
   background: var(--kitchen-blue-soft);
 
@@ -351,7 +351,7 @@
 }
 
 .ready-card .summary-card-icon {
-  border: 1px solid #bbf7d0;
+  border: 1px solid #bfe5eb;
 
   background: var(--kitchen-success-soft);
 
@@ -791,7 +791,7 @@
 }
 
 .compact-status-accepted {
-  border-color: #bfdbfe !important;
+  border-color: #bfe5eb !important;
 
   background: var(--kitchen-blue-soft) !important;
 
@@ -807,7 +807,7 @@
 }
 
 .compact-status-ready {
-  border-color: #bbf7d0 !important;
+  border-color: #bfe5eb !important;
 
   background: var(--kitchen-success-soft) !important;
 
@@ -1077,7 +1077,7 @@
   justify-content: center;
   padding : 2px;
 
-  border-color: #bfdbfe;
+  border-color: #bfe5eb;
 
   background: var(--kitchen-blue-soft);
 

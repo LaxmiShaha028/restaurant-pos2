@@ -314,8 +314,8 @@ onMounted(async () => {
 ========================================================= */
 
 .stat-preparing_orders .stat-icon {
-  background: #eff6ff;
-  color: #2563eb;
+  background: #e5f6f9;
+  color: #3d94a7;
 }
 
 
@@ -324,8 +324,8 @@ onMounted(async () => {
 ========================================================= */
 
 .stat-ready_orders .stat-icon {
-  background: #f0fdf4;
-  color: #15803d;
+  background: #e5f6f9;
+  color: #267f91;
 }
 
 

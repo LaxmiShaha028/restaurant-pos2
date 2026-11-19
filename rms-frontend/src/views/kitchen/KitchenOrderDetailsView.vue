@@ -679,11 +679,11 @@ onMounted(() => {
 
 .kitchen-details-extension-badge {
   border-color:
-    rgba(37, 99, 235, 0.18);
+    rgba(88, 185, 202, 0.18);
 
   background:
-    rgba(37, 99, 235, 0.07);
+    rgba(88, 185, 202, 0.07);
 
-  color: #2563eb;
+  color: #3d94a7;
 }
 </style>

@@ -47,11 +47,11 @@
 }
 
 .kitchen-order-ready::before {
-  background: #16a34a;
+  background: #58b9ca;
 }
 
 .kitchen-order-assigned {
-  border-color: #dbeafe;
+  border-color: #bfe5eb;
 }
 
 .kitchen-order-unassigned {
@@ -215,7 +215,7 @@
 }
 
 .kitchen-status-accepted {
-  border-color: #bfdbfe !important;
+  border-color: #bfe5eb !important;
 
   background: var(--kitchen-blue-soft) !important;
 
@@ -231,7 +231,7 @@
 }
 
 .kitchen-status-ready {
-  border-color: #bbf7d0 !important;
+  border-color: #bfe5eb !important;
 
   background: var(--kitchen-success-soft) !important;
 
@@ -806,7 +806,7 @@
 }
 
 .kitchen-item-status-ready {
-  border-color: #bbf7d0;
+  border-color: #bfe5eb;
 
   background: var(--kitchen-success-soft);
 
@@ -924,7 +924,7 @@
 }
 
 .kitchen-ingredient-chip {
-  border: 1px solid #bbf7d0;
+  border: 1px solid #bfe5eb;
 
   background: var(--kitchen-success-soft);
 
@@ -932,7 +932,7 @@
 }
 
 .kitchen-addon-chip {
-  border: 1px solid #bfdbfe;
+  border: 1px solid #bfe5eb;
 
   background: var(--kitchen-blue-soft);
 
@@ -1007,7 +1007,7 @@
 
   margin-bottom: 1px;
 
-  color: #92400e;
+  color: #267f91;
 
   font-size: 12px;
   font-weight: 700;
@@ -1016,7 +1016,7 @@
 .kitchen-item-note p {
   margin: 0;
 
-  color: #92400e;
+  color: #267f91;
 
   font-size: 12px;
 
@@ -1126,14 +1126,14 @@
 }
 
 .kitchen-timeline-step.completed {
-  border-color: #bbf7d0;
+  border-color: #bfe5eb;
 
   background: var(--kitchen-success-soft);
 }
 
 .kitchen-timeline-step.completed
 .kitchen-timeline-marker {
-  border-color: #86efac;
+  border-color: #91d0da;
 
   background: #ffffff;
 
@@ -1275,7 +1275,7 @@
 }
 
 .kitchen-assignment-avatar.assigned {
-  border-color: #bfdbfe;
+  border-color: #bfe5eb;
 
   background: var(--kitchen-blue-soft);
 
@@ -1413,7 +1413,7 @@
 }
 
 .kitchen-ready-message {
-  border: 1px solid #bbf7d0;
+  border: 1px solid #bfe5eb;
 
   background: var(--kitchen-success-soft);
 

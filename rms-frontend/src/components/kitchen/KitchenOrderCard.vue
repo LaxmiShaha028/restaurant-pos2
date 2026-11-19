@@ -1170,11 +1170,11 @@ function calculateElapsedTime(
   line-height: 1.2;
 }
 
-.kitchen-pickup-token{display:inline-flex;margin-top:5px;padding:3px 8px;border-radius:999px;background:#fff0df;color:#45aabd;font-size:.75rem;font-weight:800;}
+.kitchen-pickup-token{display:inline-flex;margin-top:5px;padding:3px 8px;border-radius:999px;background:#e5f6f9;color:#45aabd;font-size:.75rem;font-weight:800;}
 
 .kitchen-extension-badge {
-  border-color: rgba(13, 110, 253, 0.2);
-  background: rgba(13, 110, 253, 0.08);
+  border-color: rgba(88, 185, 202, 0.2);
+  background: rgba(88, 185, 202, 0.08);
 }
 
 @media (max-width: 575.98px) {

@@ -1221,13 +1221,13 @@ onBeforeUnmount(() => {
 
 .kitchen-alert-toggle:hover {
   border-color: #3d94a7;
-  color: #92400e;
+  color: #267f91;
 }
 
 .kitchen-alert-toggle-active {
-  border-color: #16a34a;
-  background: #f0fdf4;
-  color: #15803d;
+  border-color: #58b9ca;
+  background: #e5f6f9;
+  color: #267f91;
 }
 
 .kitchen-incoming-alert {
@@ -1266,7 +1266,7 @@ onBeforeUnmount(() => {
 }
 
 .kitchen-incoming-alert-content span {
-  color: #92400e;
+  color: #267f91;
   font-size: 0.86rem;
 }
 

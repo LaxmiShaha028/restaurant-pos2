@@ -541,13 +541,13 @@ function formatLabel(value) {
 
 .kitchen-extension-badge {
   border-color:
-    rgba(37, 99, 235, 0.18);
+    rgba(88, 185, 202, 0.18);
 
   background:
-    rgba(37, 99, 235, 0.07);
+    rgba(88, 185, 202, 0.07);
 
-  color: #2563eb;
+  color: #3d94a7;
 }
 
-.compact-pickup-token{display:inline-flex;margin-top:3px;padding:2px 6px;border-radius:999px;background:#fff0df;color:#45aabd;font-size:11px;font-weight:800;}
+.compact-pickup-token{display:inline-flex;margin-top:3px;padding:2px 6px;border-radius:999px;background:#e5f6f9;color:#45aabd;font-size:11px;font-weight:800;}
 </style>
