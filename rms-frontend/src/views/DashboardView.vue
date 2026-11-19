@@ -1220,7 +1220,7 @@
 
               <span>Paid</span>
 
-              <strong class="success-text">
+              <strong class="success-text accounting-paid-text">
 
                 {{ money(summary.paid_amount) }}
 
@@ -3065,6 +3065,10 @@ onBeforeUnmount(() => {
 
 .success-text {
   color: #059669 !important;
+}
+
+.accounting-paid-text {
+  color: #267f91 !important;
 }
 
 /* =========================================================
