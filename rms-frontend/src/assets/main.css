@@ -733,3 +733,13 @@ td a:has(i.bi-trash):hover,
   background: #ffd5da !important;
   color: #be123c !important;
 }
+
+/* Keep button labels bold and easy to scan across the application. */
+button,
+.btn,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  font-weight: 700 !important;
+}

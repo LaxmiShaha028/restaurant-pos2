@@ -4636,4 +4636,17 @@ onBeforeUnmount(() => {
 .status-dot.served { background: #64aec1; box-shadow: 0 0 0 3px rgba(100, 174, 193, .16); }
 .status-dot.completed { background: #c1e7ec; box-shadow: 0 0 0 3px rgba(193, 231, 236, .2); }
 .status-dot.canceled { background: #65b5c5; box-shadow: 0 0 0 3px rgba(101, 181, 197, .16); }
+
+/* High-contrast dashboard refresh action */
+.dashboard-refresh-button,
+.dashboard-refresh-button:hover:not(:disabled) {
+  border-color: #267f91;
+  background: #267f91;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.dashboard-refresh-button:hover:not(:disabled) {
+  background: #206f7f;
+}
 </style>
