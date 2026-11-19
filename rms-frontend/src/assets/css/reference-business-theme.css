@@ -3553,3 +3553,13 @@ body .po-quick-add-supplier-button:disabled {
   opacity: 1 !important;
   cursor: not-allowed;
 }
+/* Orders page Clear matches its Apply action. */
+#app .order-management-page button.clear-filter-button,
+#app .order-management-page button.clear-filter-button:hover:not(:disabled),
+#app .order-management-page button.clear-filter-button:disabled {
+  border: 1px solid #267f91 !important;
+  background: #267f91 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  opacity: 1 !important;
+}
