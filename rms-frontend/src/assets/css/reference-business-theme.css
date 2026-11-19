@@ -3455,3 +3455,26 @@ body .po-quick-add-supplier-button:disabled {
   background: #1e7081 !important;
   color: #ffffff !important;
 }
+/* Refresh actions: white labels with a high-contrast dashboard teal. */
+#app button[class*="refresh"],
+#app .btn[class*="refresh"],
+#app a[class*="refresh"] {
+  border-color: #267f91 !important;
+  background: #267f91 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+#app button[class*="refresh"]:hover:not(:disabled),
+#app .btn[class*="refresh"]:hover:not(:disabled),
+#app a[class*="refresh"]:hover {
+  border-color: #206f7f !important;
+  background: #206f7f !important;
+  color: #ffffff !important;
+}
+
+#app button[class*="refresh"] :is(span, i, svg),
+#app .btn[class*="refresh"] :is(span, i, svg),
+#app a[class*="refresh"] :is(span, i, svg) {
+  color: #ffffff !important;
+}
