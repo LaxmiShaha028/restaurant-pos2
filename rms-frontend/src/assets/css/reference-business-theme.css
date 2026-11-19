@@ -3438,3 +3438,20 @@ body .po-quick-add-supplier-button:disabled {
 ) {
   font-weight: 700 !important;
 }
+/* High contrast for table and offer creation actions */
+#app :is(button.table-management-add, a.table-management-add, .offers-header .table-management-add) {
+  border-color: #267f91 !important;
+  background: #267f91 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+#app :is(button.table-management-add, a.table-management-add, .offers-header .table-management-add) :is(i, svg) {
+  color: #ffffff !important;
+}
+
+#app :is(button.table-management-add, a.table-management-add, .offers-header .table-management-add):hover:not(:disabled) {
+  border-color: #1e7081 !important;
+  background: #1e7081 !important;
+  color: #ffffff !important;
+}
