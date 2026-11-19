@@ -257,7 +257,7 @@ onMounted(loadOffers)
   color: #ffffff !important;
 }
 
-.offers-header .table-management-add i {
+.offers-header .table-management-add :is(span, i, svg) {
   color: #ffffff !important;
 }
 </style>
