@@ -3521,3 +3521,14 @@ body .po-quick-add-supplier-button:disabled {
 #app .kitchen-page .compact-action-button :is(span, i, svg) {
   color: #ffffff !important;
 }
+/* Keep assigned-chef details readable on the teal kitchen action button. */
+#app .kitchen-page .chef-action .compact-chef-info,
+#app .kitchen-page .chef-action .compact-chef-info small,
+#app .kitchen-page .chef-action .compact-chef-info strong {
+  color: #ffffff !important;
+}
+
+#app .kitchen-page .chef-action .compact-chef-avatar {
+  background: #ffffff !important;
+  color: #267f91 !important;
+}
