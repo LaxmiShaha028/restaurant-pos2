@@ -102,7 +102,7 @@
 
                 <div v-if="order.pickup_token" class="pickup-order-token">
                   {{ order.pickup_token }}
-                  <span>{{ order.pickup_status === 'collected' ? 'Collected' : 'Uncollected' }}</span>
+                  <span :class="order.pickup_status === 'collected' ? 'is-collected' : 'is-uncollected'">{{ order.pickup_status === 'collected' ? 'Collected' : 'Uncollected' }}</span>
                 </div>
 
                 <div
@@ -1012,5 +1012,5 @@ const formatMoney = (amount) => {
   opacity: .6;
 }
 
-.pickup-order-token{display:flex;align-items:center;gap:6px;margin-top:3px;color:#45aabd;font-size:12px;font-weight:800}.pickup-order-token span{padding:2px 6px;border-radius:999px;background:#fff1e3;color:#a84e00;font-size:10px;text-transform:uppercase}.pickup-collected-action{border-color:#a8e5c4!important;background:#e7f8ee!important;color:#087c4a!important}
+.pickup-order-token{display:flex;align-items:center;gap:6px;margin-top:3px;color:#45aabd;font-size:12px;font-weight:800}.pickup-order-token span{padding:2px 6px;border-radius:999px;background:#e5f6f9;color:#267f91;font-size:10px;text-transform:uppercase}.pickup-order-token span.is-uncollected{background:#fef2f2;color:#b91c1c}.pickup-order-token span.is-collected{background:#e5f6f9;color:#267f91}.pickup-collected-action{border-color:#a8e5c4!important;background:#e7f8ee!important;color:#087c4a!important}
 </style>
