@@ -743,3 +743,19 @@ input[type="submit"],
 input[type="reset"] {
   font-weight: 700 !important;
 }
+
+/* Consistent high-contrast styling for Refresh actions across the app. */
+button[class*="refresh"],
+.btn[class*="refresh"] {
+  border-color: #267f91 !important;
+  background: #267f91 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+button[class*="refresh"]:hover:not(:disabled),
+.btn[class*="refresh"]:hover:not(:disabled) {
+  border-color: #206f7f !important;
+  background: #206f7f !important;
+  color: #ffffff !important;
+}
