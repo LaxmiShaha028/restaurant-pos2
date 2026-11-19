@@ -3535,3 +3535,14 @@ body .po-quick-add-supplier-button:disabled {
   background: #ffffff !important;
   color: #267f91 !important;
 }
+#app .kitchen-page .kitchen-filter-bar button.kitchen-filter-button.clear-button,
+#app .kitchen-page .kitchen-filter-bar button.kitchen-filter-button.clear-button:hover:not(:disabled) {
+  border: 1px solid #267f91 !important;
+  background: #267f91 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+#app .kitchen-page .kitchen-filter-bar button.kitchen-filter-button.clear-button :is(i, span, svg) {
+  color: #ffffff !important;
+}
