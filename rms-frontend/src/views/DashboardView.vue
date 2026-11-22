@@ -4662,11 +4662,16 @@ onBeforeUnmount(() => {
   }
 
   .dashboard-date {
-    flex: 1 1 auto;
-    width: auto;
+    flex: 0 1 auto;
+    width: max-content;
+    max-width: calc(100% - 98px);
     min-width: 0;
     gap: 8px;
     padding: 7px 9px;
+  }
+
+  .dashboard-date div {
+    flex: 0 1 auto;
   }
 
   .dashboard-date strong {
