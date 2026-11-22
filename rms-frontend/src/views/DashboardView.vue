@@ -4408,17 +4408,23 @@ onBeforeUnmount(() => {
 
   .dashboard-header-actions {
     width: 100%;
+    min-width: 0;
     align-items: center;
     flex-direction: row;
-    gap: 8px;
+    gap: 7px;
   }
 
   .dashboard-date {
     min-width: 0;
-    flex: 1 1 auto;
+    flex: 1 1 0;
+    width: 0;
     gap: 7px;
     padding: 6px 8px;
     border-radius: 10px;
+  }
+
+  .dashboard-date div {
+    flex: 1 1 auto;
   }
 
   .dashboard-date > i {
@@ -4448,24 +4454,15 @@ onBeforeUnmount(() => {
 }
 
   .dashboard-refresh-button {
-  display: inline-flex;
-  height: 43px;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  padding: 0 15px;
-  border: 1px solid #bfe5eb;
-  border-radius: 12px;
-  background: linear-gradient(145deg, #d5f0f4, #c8eaf0);
-  box-shadow: 0 6px 16px rgba(48, 130, 148, .12);
-  color: #267f91;
-  font-size: 11px;
-  font-weight: 750;
-  cursor: pointer;
-  transition:
-    transform .18s ease,
-    box-shadow .18s ease,
-    opacity .18s ease;
+    width: auto;
+    min-width: 76px;
+    height: 38px;
+    flex: 0 0 auto;
+    gap: 5px;
+    padding: 0 10px;
+    border-radius: 10px;
+    font-size: 10px;
+    white-space: nowrap;
 }
 
   .dashboard-kpi-grid,
@@ -4584,8 +4581,11 @@ onBeforeUnmount(() => {
 }
 @media (max-width: 560px) {
   .dashboard-heading h1 {
-    font-size: 18px;
-    white-space: nowrap;
+    max-width: 100%;
+    font-size: clamp(18px, 5vw, 24px);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+    white-space: normal;
   }
 
   .dashboard-date > i {
@@ -4598,6 +4598,9 @@ onBeforeUnmount(() => {
 
   .dashboard-date strong {
     font-size: 10px;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .dashboard-date span {
@@ -4606,12 +4609,14 @@ onBeforeUnmount(() => {
 
   .dashboard-refresh-button {
     width: auto;
+    min-width: 76px;
     height: 38px;
     flex: 0 0 auto;
     gap: 5px;
-    padding: 0 11px;
+    padding: 0 10px;
     border-radius: 10px;
     font-size: 10px;
+    white-space: nowrap;
   }
 }
 
