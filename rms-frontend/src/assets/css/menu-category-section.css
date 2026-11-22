@@ -696,7 +696,7 @@
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 4px;
@@ -717,7 +717,7 @@
 @media (max-width: 575.98px) {
   .menu-management-page .menu-category-pagination-controls {
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     flex-direction: row;
     flex-wrap: nowrap;
   }
