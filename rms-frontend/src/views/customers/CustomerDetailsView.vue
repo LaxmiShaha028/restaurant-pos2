@@ -199,91 +199,46 @@
       ================================================= -->
 
 
-      <section
-        class="customer-details-summary"
-      >
-
-
-        <article
-          class="customer-details-summary-card"
-        >
-
-          <span>
-            Total Visits
-          </span>
-
-
-          <strong>
-            {{ summary.visit_count || 0 }}
-          </strong>
-
-
+      <section class="customer-details-summary">
+        <article class="customer-details-summary-card">
+          <div class="customer-details-summary-top">
+            <span class="customer-details-summary-icon"><i class="bi bi-person-check"></i></span>
+            <span class="customer-details-summary-badge">VISITS</span>
+          </div>
+          <span class="customer-details-summary-label">Total Visits</span>
+          <strong>{{ summary.visit_count || 0 }}</strong>
+          <small class="customer-details-summary-note">Customer visits</small>
         </article>
 
-
-
-        <article
-          class="customer-details-summary-card"
-        >
-
-          <span>
-            Total Spend
-          </span>
-
-
-          <strong>
-            {{
-              summary.total_order_amount_formatted
-              || '৳ 0.00'
-            }}
-          </strong>
-
-
+        <article class="customer-details-summary-card">
+          <div class="customer-details-summary-top">
+            <span class="customer-details-summary-icon"><i class="bi bi-currency-exchange"></i></span>
+            <span class="customer-details-summary-badge">LIFETIME</span>
+          </div>
+          <span class="customer-details-summary-label">Total Spend</span>
+          <strong>{{ summary.total_order_amount_formatted || '৳ 0.00' }}</strong>
+          <small class="customer-details-summary-note">Orders total</small>
         </article>
 
-
-
-        <article
-          class="customer-details-summary-card"
-        >
-
-          <span>
-            Paid Amount
-          </span>
-
-
-          <strong>
-            {{
-              summary.total_paid_amount_formatted
-              || '৳ 0.00'
-            }}
-          </strong>
-
-
+        <article class="customer-details-summary-card">
+          <div class="customer-details-summary-top">
+            <span class="customer-details-summary-icon"><i class="bi bi-cash-coin"></i></span>
+            <span class="customer-details-summary-badge">PAID</span>
+          </div>
+          <span class="customer-details-summary-label">Paid Amount</span>
+          <strong>{{ summary.total_paid_amount_formatted || '৳ 0.00' }}</strong>
+          <small class="customer-details-summary-note">Payments received</small>
         </article>
 
-
-
-        <article
-          class="customer-details-summary-card"
-        >
-
-          <span>
-            Due Amount
-          </span>
-
-
-          <strong>
-            {{
-              summary.total_due_amount_formatted
-              || '৳ 0.00'
-            }}
-          </strong>
-
-
+        <article class="customer-details-summary-card">
+          <div class="customer-details-summary-top">
+            <span class="customer-details-summary-icon"><i class="bi bi-exclamation-circle"></i></span>
+            <span class="customer-details-summary-badge">DUE</span>
+          </div>
+          <span class="customer-details-summary-label">Due Amount</span>
+          <strong>{{ summary.total_due_amount_formatted || '৳ 0.00' }}</strong>
+          <small class="customer-details-summary-note">Outstanding balance</small>
         </article>
-
-
       </section>
 
 
