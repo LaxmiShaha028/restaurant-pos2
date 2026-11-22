@@ -4657,7 +4657,7 @@ onBeforeUnmount(() => {
 
 @media (max-width: 560px) {
   .dashboard-header-actions {
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: stretch;
     gap: 8px;
   }
