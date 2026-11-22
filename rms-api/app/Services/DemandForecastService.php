@@ -9,6 +9,7 @@ use App\Models\PurchaseOrder;
 use App\Models\RecipeMapping;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class DemandForecastService
 {
@@ -80,18 +81,21 @@ class DemandForecastService
             }
         }
 
-        $addonHistoryRows = OrderItemAddon::query()
-            ->join('order_items', 'order_items.id', '=', 'order_item_addons.order_item_id')
-            ->join('orders', 'orders.id', '=', 'order_items.order_id')
-            ->whereNull('orders.deleted_at')
-            ->whereIn('orders.status', [Order::STATUS_PENDING, Order::STATUS_PREPARING, Order::STATUS_READY, Order::STATUS_SERVED, Order::STATUS_COMPLETED])
-            ->whereBetween('orders.created_at', [$queryStart->copy()->startOfDay()->utc(), $historyEnd->copy()->utc()])
-            ->selectRaw("{$dateExpression} AS sold_on")
-            ->addSelect('order_item_addons.menu_addon_id')
-            ->selectRaw('SUM(order_item_addons.quantity) AS quantity_sold')
-            ->addSelect('order_item_addons.addon_name')
-            ->groupBy('sold_on', 'order_item_addons.menu_addon_id', 'order_item_addons.addon_name')
-            ->get();
+        $addonHistoryRows = collect();
+        if (Schema::connection()->hasTable('order_item_addons')) {
+            $addonHistoryRows = OrderItemAddon::query()
+                ->join('order_items', 'order_items.id', '=', 'order_item_addons.order_item_id')
+                ->join('orders', 'orders.id', '=', 'order_items.order_id')
+                ->whereNull('orders.deleted_at')
+                ->whereIn('orders.status', [Order::STATUS_PENDING, Order::STATUS_PREPARING, Order::STATUS_READY, Order::STATUS_SERVED, Order::STATUS_COMPLETED])
+                ->whereBetween('orders.created_at', [$queryStart->copy()->startOfDay()->utc(), $historyEnd->copy()->utc()])
+                ->selectRaw("{$dateExpression} AS sold_on")
+                ->addSelect('order_item_addons.menu_addon_id')
+                ->selectRaw('SUM(order_item_addons.quantity) AS quantity_sold')
+                ->addSelect('order_item_addons.addon_name')
+                ->groupBy('sold_on', 'order_item_addons.menu_addon_id', 'order_item_addons.addon_name')
+                ->get();
+        }
 
         foreach ($addonHistoryRows as $row) {
             $addonId = $row->menu_addon_id !== null ? (int) $row->menu_addon_id : null;
@@ -230,6 +234,10 @@ class DemandForecastService
 
     private function getHourlyTopRecipes(Carbon $today): array
     {
+        if (!Schema::connection()->hasTable('recipe_mappings')) {
+            return [];
+        }
+
         $driver = DB::connection()->getDriverName();
         $hourExpression = $this->businessHourExpression($driver);
         $start = $today->copy()->subDays(self::RECENT_DAYS)->startOfDay();
@@ -414,8 +422,21 @@ class DemandForecastService
             ];
         }
 
+        if (!Schema::connection()->hasTable('recipe_mappings')) {
+            return [
+                'items' => [],
+                'unmapped_menu_items' => [],
+                'unmapped_addons' => [],
+            ];
+        }
+
+        $hasRestaurantStock = Schema::connection()->hasTable('restaurant_stocks');
+        $materialRelations = $hasRestaurantStock
+            ? ['rawMaterial.restaurantStock']
+            : ['rawMaterial'];
+
         $mappings = RecipeMapping::query()
-            ->with(['rawMaterial.restaurantStock'])
+            ->with($materialRelations)
             ->whereNotNull('menu_item_id')
             ->whereNull('add_on_id')
             ->get();
@@ -423,7 +444,7 @@ class DemandForecastService
             $this->targetKey((int) $mapping->menu_item_id, $mapping->variant_id !== null ? (int) $mapping->variant_id : null)
         );
         $addonMappings = RecipeMapping::query()
-            ->with(['rawMaterial.restaurantStock'])
+            ->with($materialRelations)
             ->whereNotNull('add_on_id')
             ->get()
             ->groupBy(fn (RecipeMapping $mapping) => (int) $mapping->add_on_id);
@@ -466,7 +487,7 @@ class DemandForecastService
                     + ((float) $mapping->quantity * (float) $item['forecast_quantity']);
                 $ingredientNeeds[$id]['unit_mismatch'] =
                     ($ingredientNeeds[$id]['unit_mismatch'] ?? false) || !$unitMatches;
-                $ingredientNeeds[$id]['stock'] = $material->restaurantStock;
+                $ingredientNeeds[$id]['stock'] = $hasRestaurantStock ? $material->restaurantStock : null;
                 $ingredientNeeds[$id]['minimum_quantity'] = (float) $material->restaurant_minimum_quantity;
             }
         }
@@ -501,12 +522,15 @@ class DemandForecastService
                     + ((float) $mapping->quantity * (float) $addon['forecast_quantity']);
                 $ingredientNeeds[$id]['unit_mismatch'] = ($ingredientNeeds[$id]['unit_mismatch'] ?? false)
                     || $baseUnit === '' || $baseUnit !== $recipeUnit;
-                $ingredientNeeds[$id]['stock'] = $material->restaurantStock;
+                $ingredientNeeds[$id]['stock'] = $hasRestaurantStock ? $material->restaurantStock : null;
                 $ingredientNeeds[$id]['minimum_quantity'] = (float) $material->restaurant_minimum_quantity;
             }
         }
 
-        $pendingByMaterial = $this->getPendingPurchaseQuantities(array_keys($ingredientNeeds));
+        $pendingByMaterial = Schema::connection()->hasTable('purchase_orders')
+            && Schema::connection()->hasTable('purchase_order_items')
+                ? $this->getPendingPurchaseQuantities(array_keys($ingredientNeeds))
+                : [];
 
         $recommendations = collect($ingredientNeeds)
             ->map(function (array $need) use ($pendingByMaterial): array {
