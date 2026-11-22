@@ -216,55 +216,57 @@
             </div>
           </div>
 
-          <RouterLink
-            v-if="canOpenPosOrder"
-            :to="{ name: 'pos-order-tables' }"
-            class="topbar-icon-button pos-order-shortcut"
-            title="POS Order"
-            aria-label="Open POS Order"
-          >
-            <i class="bi bi-columns-gap" aria-hidden="true"></i>
-          </RouterLink>
+          <div class="topbar-shortcuts" aria-label="Quick links">
+            <RouterLink
+              v-if="canOpenPosOrder"
+              :to="{ name: 'pos-order-tables' }"
+              class="topbar-icon-button pos-order-shortcut"
+              title="POS Order"
+              aria-label="Open POS Order"
+            >
+              <i class="bi bi-columns-gap" aria-hidden="true"></i>
+            </RouterLink>
 
-          <RouterLink
-            v-if="canOpenSuppliers"
-            :to="{ name: 'suppliers' }"
-            class="topbar-icon-button pos-order-shortcut"
-            title="Suppliers"
-            aria-label="Open Suppliers"
-          >
-            <i class="bi bi-truck" aria-hidden="true"></i>
-          </RouterLink>
+            <RouterLink
+              v-if="canOpenSuppliers"
+              :to="{ name: 'suppliers' }"
+              class="topbar-icon-button pos-order-shortcut"
+              title="Suppliers"
+              aria-label="Open Suppliers"
+            >
+              <i class="bi bi-truck" aria-hidden="true"></i>
+            </RouterLink>
 
-          <RouterLink
-            v-if="canOpenStaff"
-            :to="{ name: 'staff' }"
-            class="topbar-icon-button pos-order-shortcut"
-            title="Staff"
-            aria-label="Open Staff"
-          >
-            <i class="bi bi-person-badge" aria-hidden="true"></i>
-          </RouterLink>
+            <RouterLink
+              v-if="canOpenStaff"
+              :to="{ name: 'staff' }"
+              class="topbar-icon-button pos-order-shortcut"
+              title="Staff"
+              aria-label="Open Staff"
+            >
+              <i class="bi bi-person-badge" aria-hidden="true"></i>
+            </RouterLink>
 
-          <RouterLink
-            v-if="canOpenReports"
-            :to="{ name: 'reports' }"
-            class="topbar-icon-button pos-order-shortcut"
-            title="Reports"
-            aria-label="Open Reports"
-          >
-            <i class="bi bi-bar-chart" aria-hidden="true"></i>
-          </RouterLink>
+            <RouterLink
+              v-if="canOpenReports"
+              :to="{ name: 'reports' }"
+              class="topbar-icon-button pos-order-shortcut"
+              title="Reports"
+              aria-label="Open Reports"
+            >
+              <i class="bi bi-bar-chart" aria-hidden="true"></i>
+            </RouterLink>
 
-          <RouterLink
-            v-if="canOpenReservations"
-            :to="{ name: 'reservations' }"
-            class="topbar-icon-button pos-order-shortcut"
-            title="Reservations"
-            aria-label="Open Reservations"
-          >
-            <i class="bi bi-calendar2-check" aria-hidden="true"></i>
-          </RouterLink>
+            <RouterLink
+              v-if="canOpenReservations"
+              :to="{ name: 'reservations' }"
+              class="topbar-icon-button pos-order-shortcut"
+              title="Reservations"
+              aria-label="Open Reservations"
+            >
+              <i class="bi bi-calendar2-check" aria-hidden="true"></i>
+            </RouterLink>
+          </div>
 
           <!-- User dropdown -->
           <div
@@ -1083,6 +1085,12 @@ onBeforeUnmount(() => {
   gap: 5px;
 }
 
+.topbar-shortcuts {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 .topbar-icon-button {
   position: relative;
   display: flex;
@@ -1757,52 +1765,69 @@ onBeforeUnmount(() => {
 
 @media (max-width: 575.98px) {
   .app-topbar {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 5px;
-    min-height: 0;
-    padding: 6px 8px;
+    flex-direction: row;
+    gap: 4px;
+    min-height: 44px;
+    padding: 0 5px;
   }
 
   .topbar-left {
-    display: grid;
-    width: 100%;
+    display: flex;
     min-width: 0;
-    grid-template-columns: 28px minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .topbar-left > .topbar-icon-button.d-lg-none {
-    grid-column: 1;
-    grid-row: 1;
+    flex: 1 1 auto;
+    gap: 4px;
   }
 
   .mobile-restaurant-brand {
-    width: 100%;
-    max-width: none;
-    grid-column: 2;
-    grid-row: 1;
-    flex: initial;
+    max-width: 88px;
+    flex: 0 1 88px;
+    gap: 4px;
+  }
+
+  .mobile-restaurant-logo,
+  .mobile-restaurant-logo-fallback {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
   }
 
   .page-heading {
     min-width: max-content;
-    grid-column: 3;
-    grid-row: 1;
-    text-align: right;
+    flex: 0 0 auto;
   }
 
   .page-heading-title {
-    font-size: 13px;
-    line-height: 1.25;
+    max-width: 84px;
+    font-size: 12px;
+    text-overflow: clip;
   }
 
   .topbar-right {
-    width: 100%;
     min-width: 0;
-    justify-content: flex-end;
+    max-width: 48%;
+    flex: 0 1 auto;
+    margin-left: auto;
     gap: 4px;
+    overflow: visible;
+  }
+
+  .topbar-shortcuts {
+    min-width: 0;
+    flex: 1 1 auto;
+    gap: 4px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .topbar-shortcuts::-webkit-scrollbar {
+    display: none;
+  }
+
+  .topbar-shortcuts .topbar-icon-button {
+    flex: 0 0 26px;
   }
 
   .topbar-right .topbar-icon-button {
@@ -1811,7 +1836,7 @@ onBeforeUnmount(() => {
   }
 
   .dashboard-content {
-    min-height: calc(100vh - 74px);
+    min-height: calc(100vh - 44px);
     padding: 6px;
   }
 
