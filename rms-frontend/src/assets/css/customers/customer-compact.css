@@ -1855,3 +1855,18 @@
     font-size: clamp(12px, 4vw, 16px);
   }
 }
+@media (max-width: 600px) {
+  .customer-details-page .customer-details-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px;
+  }
+
+  .customer-details-page .customer-details-summary-card {
+    min-height: 92px;
+    background: #fff !important;
+  }
+
+  .customer-details-page .customer-details-summary-card::after {
+    display: none;
+  }
+}
