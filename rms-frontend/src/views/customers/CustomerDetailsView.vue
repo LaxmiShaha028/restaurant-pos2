@@ -191,7 +191,7 @@
             <span class="customer-details-summary-badge">VISITS</span>
           </div>
           <span class="customer-details-summary-label">Total Visits</span>
-          <strong>{{ summary.visit_count || 0 }}</strong>
+          <strong>{{ String(summary.visit_count || 0).padStart(2, '0') }}</strong>
           <small class="customer-details-summary-note">Customer visits</small>
         </article>
 
