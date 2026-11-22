@@ -1369,3 +1369,49 @@
     padding: 14px;
   }
 }
+
+/* Keep the summary and filters compact on real phone widths. These rules sit
+   after the tablet overrides so they remain active below 600px. */
+@media (max-width: 600px) {
+  .reservation-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .reservation-summary-card {
+    min-height: 62px;
+    gap: 8px;
+    padding: 9px;
+  }
+
+  .reservation-summary-label {
+    font-size: 11px;
+  }
+
+  .reservation-summary-value {
+    font-size: 14px;
+  }
+
+  .reservation-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .reservation-filter-grid > .reservation-filter-field:first-child,
+  .reservation-filter-actions {
+    grid-column: 1 / -1;
+  }
+
+  .reservation-filter-card {
+    padding: 10px;
+  }
+
+  .reservation-filter-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .reservation-filter-actions .btn {
+    min-height: 38px;
+  }
+}
