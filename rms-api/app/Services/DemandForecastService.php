@@ -96,6 +96,8 @@ class DemandForecastService
         foreach ($addonHistoryRows as $row) {
             $addonId = $row->menu_addon_id !== null ? (int) $row->menu_addon_id : null;
             $addonName = (string) $row->addon_name;
+            // Legacy order add-ons can have no menu_addon_id. Keep those rows
+            // visible in forecasts, but do not treat them as recipe lookup IDs.
             $addonKey = $addonId !== null ? (string) $addonId : 'legacy:' . $addonName;
             $salesByAddon[$addonKey]['key'] = $addonKey;
             $salesByAddon[$addonKey]['add_on_id'] = $addonId;
@@ -405,7 +407,11 @@ class DemandForecastService
     private function getIngredientRecommendations(array $dailyItems, array $dailyAddons): array
     {
         if ($dailyItems === [] && $dailyAddons === []) {
-            return [];
+            return [
+                'items' => [],
+                'unmapped_menu_items' => [],
+                'unmapped_addons' => [],
+            ];
         }
 
         $mappings = RecipeMapping::query()
@@ -466,6 +472,14 @@ class DemandForecastService
         }
 
         foreach ($dailyAddons as $addon) {
+            if ($addon['add_on_id'] === null) {
+                $unmappedAddons[$addon['key']] = [
+                    'add_on_id' => null,
+                    'addon_name' => $addon['addon_name'],
+                ];
+                continue;
+            }
+
             $recipe = $addonMappings->get((int) $addon['add_on_id']);
             if (!$recipe || $recipe->isEmpty()) {
                 $unmappedAddons[$addon['key']] = [
