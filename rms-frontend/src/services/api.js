@@ -206,6 +206,13 @@ const isTenantRequest =
 
               tenantKey
 
+            // Keep tenant resolution reliable when a hosting proxy strips
+            // custom headers. ResolveTenant also accepts tenant_key input.
+            config.params = {
+              ...(config.params || {}),
+              tenant_key: config.params?.tenant_key || tenantKey,
+            }
+
 
           }
 
