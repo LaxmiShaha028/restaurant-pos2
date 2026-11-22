@@ -24,6 +24,8 @@ class DemandForecastService
         $historyStart = $today->copy()->subDays(self::HISTORY_DAYS);
         $queryStart = $today->copy()->subDays(self::HISTORY_DAYS + $chartDays);
         $historyEnd = $today->copy()->subDay()->endOfDay();
+        $tablePrefix = DB::connection()->getTablePrefix();
+        $itemAlias = $tablePrefix . 'oi';
         $historyDates = collect();
         for ($date = $historyStart->copy(); $date->lte($historyEnd); $date->addDay()) {
             $historyDates->push($date->toDateString());
@@ -44,8 +46,8 @@ class DemandForecastService
             ->whereBetween('o.created_at', [$queryStart->copy()->startOfDay()->utc(), $historyEnd->copy()->utc()])
             ->selectRaw("{$dateExpression} AS sold_on")
             ->addSelect('oi.menu_item_id', 'oi.menu_item_variant_id')
-            ->selectRaw('MAX(oi.item_name) AS item_name')
-            ->selectRaw('SUM(oi.quantity) AS quantity_sold')
+            ->selectRaw("MAX({$itemAlias}.item_name) AS item_name")
+            ->selectRaw("SUM({$itemAlias}.quantity) AS quantity_sold")
             ->groupBy('sold_on', 'oi.menu_item_id', 'oi.menu_item_variant_id')
             ->get();
 
@@ -84,6 +86,7 @@ class DemandForecastService
 
         $addonHistoryRows = collect();
         if (Schema::connection()->hasTable('order_item_addons')) {
+            $addonAlias = $tablePrefix . 'oia';
             $addonHistoryRows = OrderItemAddon::query()
                 ->from('order_item_addons as oia')
                 ->join('order_items as oi', 'oi.id', '=', 'oia.order_item_id')
@@ -93,7 +96,7 @@ class DemandForecastService
                 ->whereBetween('o.created_at', [$queryStart->copy()->startOfDay()->utc(), $historyEnd->copy()->utc()])
                 ->selectRaw("{$dateExpression} AS sold_on")
                 ->addSelect('oia.menu_addon_id')
-                ->selectRaw('SUM(oia.quantity) AS quantity_sold')
+                ->selectRaw("SUM({$addonAlias}.quantity) AS quantity_sold")
                 ->addSelect('oia.addon_name')
                 ->groupBy('sold_on', 'oia.menu_addon_id', 'oia.addon_name')
                 ->get();
@@ -204,6 +207,9 @@ class DemandForecastService
     private function getPeakHours(Carbon $today, int $chartDays): array
     {
         $driver = DB::connection()->getDriverName();
+        $tablePrefix = DB::connection()->getTablePrefix();
+        $orderAlias = $tablePrefix . 'o';
+        $itemAlias = $tablePrefix . 'oi';
         $hourExpression = $this->businessHourExpression($driver);
         $start = $today->copy()->subDays($chartDays)->startOfDay();
         $end = $today->copy()->subDay()->endOfDay();
@@ -221,8 +227,8 @@ class DemandForecastService
             ])
             ->whereBetween('o.created_at', [$start->utc(), $end->utc()])
             ->selectRaw("{$hourExpression} AS sales_hour")
-            ->selectRaw('SUM(oi.quantity) AS quantity_sold')
-            ->selectRaw('COUNT(DISTINCT o.id) AS order_count')
+            ->selectRaw("SUM({$itemAlias}.quantity) AS quantity_sold")
+            ->selectRaw("COUNT(DISTINCT {$orderAlias}.id) AS order_count")
             ->groupBy('sales_hour')
             ->orderByDesc('quantity_sold')
             ->limit(24)
@@ -242,6 +248,8 @@ class DemandForecastService
         }
 
         $driver = DB::connection()->getDriverName();
+        $tablePrefix = DB::connection()->getTablePrefix();
+        $itemAlias = $tablePrefix . 'oi';
         $hourExpression = $this->businessHourExpression($driver);
         $start = $today->copy()->subDays(self::RECENT_DAYS)->startOfDay();
         $end = $today->copy()->subDay()->endOfDay();
@@ -255,8 +263,8 @@ class DemandForecastService
             ->whereNotNull('oi.menu_item_id')
             ->selectRaw("{$hourExpression} AS sales_hour")
             ->addSelect('oi.menu_item_id', 'oi.menu_item_variant_id')
-            ->selectRaw('MAX(oi.item_name) AS item_name')
-            ->selectRaw('SUM(oi.quantity) AS quantity_sold')
+            ->selectRaw("MAX({$itemAlias}.item_name) AS item_name")
+            ->selectRaw("SUM({$itemAlias}.quantity) AS quantity_sold")
             ->groupBy('sales_hour', 'oi.menu_item_id', 'oi.menu_item_variant_id')
             ->get();
 
@@ -572,19 +580,23 @@ class DemandForecastService
 
     private function businessDateExpression(): string
     {
+        $orderAlias = DB::connection()->getTablePrefix() . 'o';
+
         return match (DB::connection()->getDriverName()) {
-            'sqlite' => "DATE(o.created_at, '+6 hours')",
-            'pgsql' => "DATE(o.created_at + INTERVAL '6 hours')",
-            default => 'DATE(DATE_ADD(o.created_at, INTERVAL 6 HOUR))',
+            'sqlite' => "DATE({$orderAlias}.created_at, '+6 hours')",
+            'pgsql' => "DATE({$orderAlias}.created_at + INTERVAL '6 hours')",
+            default => "DATE(DATE_ADD({$orderAlias}.created_at, INTERVAL 6 HOUR))",
         };
     }
 
     private function businessHourExpression(string $driver): string
     {
+        $orderAlias = DB::connection()->getTablePrefix() . 'o';
+
         return match ($driver) {
-            'sqlite' => "CAST(strftime('%H', o.created_at, '+6 hours') AS INTEGER)",
-            'pgsql' => "CAST(EXTRACT(HOUR FROM o.created_at + INTERVAL '6 hours') AS INTEGER)",
-            default => 'HOUR(DATE_ADD(o.created_at, INTERVAL 6 HOUR))',
+            'sqlite' => "CAST(strftime('%H', {$orderAlias}.created_at, '+6 hours') AS INTEGER)",
+            'pgsql' => "CAST(EXTRACT(HOUR FROM {$orderAlias}.created_at + INTERVAL '6 hours') AS INTEGER)",
+            default => "HOUR(DATE_ADD({$orderAlias}.created_at, INTERVAL 6 HOUR))",
         };
     }
 
