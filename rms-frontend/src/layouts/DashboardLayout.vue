@@ -1757,12 +1757,61 @@ onBeforeUnmount(() => {
 
 @media (max-width: 575.98px) {
   .app-topbar {
-    min-height: 44px;
-    padding: 0 6px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5px;
+    min-height: 0;
+    padding: 6px 8px;
+  }
+
+  .topbar-left {
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .topbar-left > .topbar-icon-button.d-lg-none {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .mobile-restaurant-brand {
+    width: 100%;
+    max-width: none;
+    grid-column: 2;
+    grid-row: 1;
+    flex: initial;
+  }
+
+  .page-heading {
+    min-width: max-content;
+    grid-column: 3;
+    grid-row: 1;
+    text-align: right;
+  }
+
+  .page-heading-title {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .topbar-right {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-end;
+    gap: 4px;
+  }
+
+  .topbar-right .topbar-icon-button {
+    width: 26px;
+    height: 26px;
   }
 
   .dashboard-content {
-    min-height: calc(100vh - 44px);
+    min-height: calc(100vh - 74px);
     padding: 6px;
   }
 
