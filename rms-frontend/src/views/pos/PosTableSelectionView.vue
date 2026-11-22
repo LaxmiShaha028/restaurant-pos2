@@ -100,7 +100,7 @@
         <span>{{ selectionError }}</span>
       </div>
 
-      <div v-if="filteredTables.length" class="pos-table-workspace">
+      <div v-if="tables.length" class="pos-table-workspace">
         <aside class="pos-table-list-panel">
           <div class="pos-floor-panel-heading">
             <div>
@@ -110,7 +110,7 @@
             <span class="pos-floor-count">{{ filteredTables.length }}</span>
           </div>
 
-          <div class="pos-table-list">
+          <div v-if="filteredTables.length" class="pos-table-list">
             <button
               v-for="table in paginatedTables"
               :key="table.id"
@@ -132,6 +132,11 @@
                 <small :class="{ reserved: table.has_seated_reservation, 'merged-link-text': table.is_merge_child }">{{ tableStatus(table) }}</small>
               </span>
             </button>
+          </div>
+
+          <div v-else class="pos-empty-state pos-section-empty-state">
+            <h2>No tables in {{ sections.find((section) => section.value === activeSection)?.label }}</h2>
+            <p>Choose another section to view its tables.</p>
           </div>
 
           <PaginationControls
@@ -168,7 +173,7 @@
             </div>
           </div>
 
-          <div class="pos-floor-map">
+          <div v-if="floorTables.length" class="pos-floor-map">
             <div v-for="{ table, seats } in floorTables" :key="table.id" class="pos-floor-table-position" :style="tableStyle(table)" :class="{ 'is-selected': isSelected(table.id), 'is-reserved': table.has_seated_reservation }">
               <div v-if="seats.top.length" class="pos-floor-seat-row is-top" aria-hidden="true">
                 <span v-for="seat in seats.top" :key="'top-' + seat"></span>
@@ -204,6 +209,11 @@
                 <span v-for="seat in seats.bottom" :key="'bottom-' + seat"></span>
               </div>
             </div>
+          </div>
+          <div v-else class="pos-empty-state pos-section-empty-state pos-floor-empty-state">
+            <span><i class="bi bi-grid-3x3-gap"></i></span>
+            <h2>No tables in {{ sections.find((section) => section.value === activeSection)?.label }}</h2>
+            <p>Choose another section to view its tables.</p>
           </div>
         </section>
       </div>

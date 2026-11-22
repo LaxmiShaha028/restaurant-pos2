@@ -2133,6 +2133,16 @@
   gap: 6px;
 }
 
+.pos-section-empty-state {
+  min-height: 180px;
+}
+
+.pos-floor-empty-state {
+  min-height: 300px;
+  border: 1px dashed var(--pos-border, #dce5ef);
+  border-radius: 12px;
+}
+
 .pos-table-list-item {
   display: flex;
   min-width: 0;
