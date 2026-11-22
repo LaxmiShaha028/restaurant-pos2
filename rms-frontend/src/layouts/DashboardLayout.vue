@@ -29,16 +29,23 @@
 
           <RouterLink
             :to="{ name: 'dashboard' }"
-            class="mobile-brand-logo d-lg-none"
-            aria-label="Go to dashboard"
+            class="mobile-restaurant-brand d-lg-none"
+            :title="systemSettingStore.restaurantName || 'Restaurant'"
+            aria-label="Restaurant dashboard"
           >
             <img
               v-if="mobileLogoUrl && !mobileLogoFailed"
               :src="mobileLogoUrl"
-              alt="Restaurant logo"
+              :alt="systemSettingStore.restaurantName || 'Restaurant logo'"
+              class="mobile-restaurant-logo"
               @error="mobileLogoFailed = true"
             />
-            <i v-else class="bi bi-shop" aria-hidden="true"></i>
+            <span v-else class="mobile-restaurant-logo-fallback" aria-hidden="true">
+              <i class="bi bi-shop"></i>
+            </span>
+            <span class="mobile-restaurant-name">
+              {{ systemSettingStore.restaurantName || 'Restaurant' }}
+            </span>
           </RouterLink>
 
           <button
@@ -1104,31 +1111,52 @@ onBeforeUnmount(() => {
   color: #45aabd;
 }
 
-.mobile-brand-logo {
+.mobile-restaurant-brand {
   display: flex;
-  width: 30px;
-  height: 30px;
-  flex: 0 0 30px;
+  min-width: 0;
+  max-width: 142px;
+  flex: 0 1 142px;
   align-items: center;
-  justify-content: center;
+  gap: 6px;
   overflow: hidden;
-  border: 1px solid #d5edf1;
-  border-radius: 7px;
-  background: #fff;
-  color: #3c9cad;
+  color: #28535e;
+  font-size: 10px;
+  font-weight: 700;
   text-decoration: none;
 }
 
-.mobile-brand-logo img {
+.mobile-restaurant-logo,
+.mobile-restaurant-logo-fallback {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #e6f6f8;
+}
+
+.mobile-restaurant-logo {
   padding: 2px;
   object-fit: contain;
 }
 
-.mobile-brand-logo i {
+.mobile-restaurant-logo-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3c9cad;
+}
+
+.mobile-restaurant-logo-fallback i {
   font-size: 16px;
+}
+
+.mobile-restaurant-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .pos-order-shortcut {
