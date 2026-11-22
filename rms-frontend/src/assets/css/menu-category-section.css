@@ -726,3 +726,8 @@
     width: auto !important;
   }
 }
+@media (max-width: 575.98px) {
+  .menu-management-page .menu-category-pagination-controls {
+    justify-content: flex-end;
+  }
+}
