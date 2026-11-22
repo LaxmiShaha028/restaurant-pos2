@@ -833,3 +833,26 @@
     flex: 1 1 0;
   }
 }
+@media (max-width: 575.98px) {
+  .table-modal-backdrop {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .table-modal-dialog {
+    height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    max-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  }
+
+  .table-modal-header,
+  .table-modal-footer {
+    flex: 0 0 auto;
+  }
+
+  .table-modal-footer {
+    position: relative;
+    z-index: 2;
+    background: #f8fcfd;
+  }
+}
