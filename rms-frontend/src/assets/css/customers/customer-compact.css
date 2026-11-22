@@ -1798,7 +1798,7 @@
 
 .customer-details-summary-note {
   margin-top: auto;
-  padding-top: 6px;
+  padding-top: 4px;
   color: #879da4;
   font-size: 8px;
 }
@@ -1810,19 +1810,19 @@
   }
 
   .customer-details-summary-card {
-    min-height: 118px;
-    padding: 9px;
+    min-height: 100px;
+    padding: 8px;
     border-radius: 12px;
   }
 
   .customer-details-summary-top {
-    margin-bottom: 7px;
+    margin-bottom: 5px;
   }
 
   .customer-details-summary-card .customer-details-summary-icon {
-    width: 27px;
-    height: 27px;
-    flex-basis: 27px;
+    width: 25px;
+    height: 25px;
+    flex-basis: 25px;
     font-size: 12px;
   }
 
