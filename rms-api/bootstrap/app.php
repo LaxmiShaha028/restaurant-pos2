@@ -37,38 +37,12 @@ return Application::configure(basePath: dirname(__DIR__))
         |
         */
 
-        $middleware->prependToPriorityList(
-
-            before: [
-
-                AuthenticateTenantApiToken::class,
-
-                SubstituteBindings::class,
-
-            ],
-
-            prepend:
-                ResolveTenant::class
-
-        );
-
-        // Keep tenant resolution ahead of the custom token middleware even
-        // when Laravel sorts nested route middleware by priority.
-        $middleware->prependToPriorityList(
-            before: AuthenticateTenantApiToken::class,
-            prepend: ResolveTenant::class
-        );
-
-
-        $middleware->prependToPriorityList(
-
-            before:
-                SubstituteBindings::class,
-
-            prepend:
-                AuthenticateTenantApiToken::class
-
-        );
+        $middleware->priority([
+            ResolveTenant::class,
+            AuthenticateTenantApiToken::class,
+            SubstituteBindings::class,
+            EnsureUserHasPermission::class,
+        ]);
         $middleware->alias([
             'permission' => EnsureUserHasPermission::class,
         ]);
