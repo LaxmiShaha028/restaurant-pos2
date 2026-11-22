@@ -4694,7 +4694,7 @@ onBeforeUnmount(() => {
 @media (max-width: 380px) {
   .dashboard-kpi-grid,
   .dashboard-footer-summary {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -4767,6 +4767,12 @@ onBeforeUnmount(() => {
 }
 
 @media (min-width: 381px) and (max-width: 560px) {
+  .dashboard-kpi-card:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 380px) {
   .dashboard-kpi-card:nth-child(5) {
     grid-column: 1 / -1;
   }

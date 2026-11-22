@@ -1779,16 +1779,16 @@ onBeforeUnmount(() => {
   }
 
   .mobile-restaurant-brand {
-    max-width: 88px;
-    flex: 0 1 88px;
-    gap: 4px;
+    max-width: 66px;
+    flex: 0 1 66px;
+    gap: 3px;
   }
 
   .mobile-restaurant-logo,
   .mobile-restaurant-logo-fallback {
-    width: 24px;
-    height: 24px;
-    flex-basis: 24px;
+    width: 21px;
+    height: 21px;
+    flex-basis: 21px;
   }
 
   .page-heading {
@@ -1797,14 +1797,13 @@ onBeforeUnmount(() => {
   }
 
   .page-heading-title {
-    max-width: 84px;
-    font-size: 12px;
-    text-overflow: clip;
+    max-width: 68px;
+    font-size: 11px;
   }
 
   .topbar-right {
     min-width: 0;
-    max-width: 48%;
+    max-width: 58%;
     flex: 0 1 auto;
     margin-left: auto;
     gap: 4px;
@@ -1814,7 +1813,7 @@ onBeforeUnmount(() => {
   .topbar-shortcuts {
     min-width: 0;
     flex: 1 1 auto;
-    gap: 4px;
+    gap: 2px;
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: none;
@@ -1827,12 +1826,15 @@ onBeforeUnmount(() => {
   }
 
   .topbar-shortcuts .topbar-icon-button {
-    flex: 0 0 26px;
+    width: 22px;
+    flex: 0 0 22px;
+    height: 24px;
+    font-size: 10px;
   }
 
   .topbar-right .topbar-icon-button {
-    width: 26px;
-    height: 26px;
+    width: 22px;
+    height: 24px;
   }
 
   .dashboard-content {
