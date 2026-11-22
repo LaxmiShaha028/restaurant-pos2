@@ -1074,3 +1074,25 @@
   }
 
 }
+@media (max-width: 560px) {
+  .inventory-management-page .inventory-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .inventory-management-page .inventory-summary-card {
+    min-height: 92px;
+    gap: 7px;
+    padding: 8px 9px;
+  }
+
+  .inventory-management-page .inventory-summary-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .inventory-management-page .inventory-summary-card-icon {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+}
