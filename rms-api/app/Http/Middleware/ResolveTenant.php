@@ -49,11 +49,10 @@ class ResolveTenant
             )
         );
 
-        $host = strtolower(
-            trim(
-                $request->getHost()
-            )
-        );
+        // Proxies can pass the original host separately from the backend host.
+        // Laravel's getHost() uses trusted proxy configuration where available.
+        $host = strtolower(trim($request->getHost()));
+        $host = preg_replace('/:\d+$/', '', $host) ?? $host;
 
 
         /*
@@ -92,7 +91,6 @@ class ResolveTenant
         */
 
         if (
-            ! $restaurant &&
             $host !== '' &&
             ! in_array(
                 $host,
@@ -107,13 +105,12 @@ class ResolveTenant
                 ->with([
                     'restaurant.tenantDatabase',
                 ])
-                ->where(
-                    'domain',
-                    $host
-                )
+                ->whereRaw('LOWER(domain) = ?', [$host])
                 ->first();
 
-            if ($domain) {
+            // A valid tenant key remains authoritative; only use its primary
+            // domain as a fallback when the supplied key cannot be resolved.
+            if ($domain && ! $restaurant) {
                 $restaurant = $domain->restaurant;
             }
         }
