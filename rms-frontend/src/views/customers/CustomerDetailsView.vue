@@ -134,9 +134,21 @@
 
           <div>
 
-            <h2>
-              {{ customer.name }}
-            </h2>
+            <div class="customer-profile-title-row">
+              <h2>
+                {{ customer.name }}
+              </h2>
+
+              <span
+                class="customer-status-badge"
+                :class="{
+                  active: customer.is_active,
+                  inactive: !customer.is_active
+                }"
+              >
+                {{ customer.is_active ? 'Active' : 'Inactive' }}
+              </span>
+            </div>
 
 
             <p>
@@ -160,33 +172,6 @@
 
         </div>
 
-
-
-        <div
-          class="customer-profile-actions"
-        >
-
-          <span
-            class="customer-status-badge"
-            :class="{
-              active:
-                customer.is_active,
-
-              inactive:
-                !customer.is_active
-            }"
-          >
-
-            {{
-              customer.is_active
-                ? 'Active'
-                : 'Inactive'
-            }}
-
-          </span>
-
-
-        </div>
 
 
       </section>
