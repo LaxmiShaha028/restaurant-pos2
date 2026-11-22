@@ -31,21 +31,22 @@ class DemandForecastService
         $dateExpression = $this->businessDateExpression();
 
         $historyRows = OrderItem::query()
-            ->join('orders', 'orders.id', '=', 'order_items.order_id')
-            ->whereNull('orders.deleted_at')
-            ->whereIn('orders.status', [
+            ->from('order_items as oi')
+            ->join('orders as o', 'o.id', '=', 'oi.order_id')
+            ->whereNull('o.deleted_at')
+            ->whereIn('o.status', [
                 Order::STATUS_PENDING,
                 Order::STATUS_PREPARING,
                 Order::STATUS_READY,
                 Order::STATUS_SERVED,
                 Order::STATUS_COMPLETED,
             ])
-            ->whereBetween('orders.created_at', [$queryStart->copy()->startOfDay()->utc(), $historyEnd->copy()->utc()])
+            ->whereBetween('o.created_at', [$queryStart->copy()->startOfDay()->utc(), $historyEnd->copy()->utc()])
             ->selectRaw("{$dateExpression} AS sold_on")
-            ->addSelect('order_items.menu_item_id', 'order_items.menu_item_variant_id')
-            ->selectRaw('MAX(order_items.item_name) AS item_name')
-            ->selectRaw('SUM(order_items.quantity) AS quantity_sold')
-            ->groupBy('sold_on', 'order_items.menu_item_id', 'order_items.menu_item_variant_id')
+            ->addSelect('oi.menu_item_id', 'oi.menu_item_variant_id')
+            ->selectRaw('MAX(oi.item_name) AS item_name')
+            ->selectRaw('SUM(oi.quantity) AS quantity_sold')
+            ->groupBy('sold_on', 'oi.menu_item_id', 'oi.menu_item_variant_id')
             ->get();
 
         $openSalesDates = $historyRows->pluck('sold_on')->map(fn ($date) => (string) $date)
@@ -84,16 +85,17 @@ class DemandForecastService
         $addonHistoryRows = collect();
         if (Schema::connection()->hasTable('order_item_addons')) {
             $addonHistoryRows = OrderItemAddon::query()
-                ->join('order_items', 'order_items.id', '=', 'order_item_addons.order_item_id')
-                ->join('orders', 'orders.id', '=', 'order_items.order_id')
-                ->whereNull('orders.deleted_at')
-                ->whereIn('orders.status', [Order::STATUS_PENDING, Order::STATUS_PREPARING, Order::STATUS_READY, Order::STATUS_SERVED, Order::STATUS_COMPLETED])
-                ->whereBetween('orders.created_at', [$queryStart->copy()->startOfDay()->utc(), $historyEnd->copy()->utc()])
+                ->from('order_item_addons as oia')
+                ->join('order_items as oi', 'oi.id', '=', 'oia.order_item_id')
+                ->join('orders as o', 'o.id', '=', 'oi.order_id')
+                ->whereNull('o.deleted_at')
+                ->whereIn('o.status', [Order::STATUS_PENDING, Order::STATUS_PREPARING, Order::STATUS_READY, Order::STATUS_SERVED, Order::STATUS_COMPLETED])
+                ->whereBetween('o.created_at', [$queryStart->copy()->startOfDay()->utc(), $historyEnd->copy()->utc()])
                 ->selectRaw("{$dateExpression} AS sold_on")
-                ->addSelect('order_item_addons.menu_addon_id')
-                ->selectRaw('SUM(order_item_addons.quantity) AS quantity_sold')
-                ->addSelect('order_item_addons.addon_name')
-                ->groupBy('sold_on', 'order_item_addons.menu_addon_id', 'order_item_addons.addon_name')
+                ->addSelect('oia.menu_addon_id')
+                ->selectRaw('SUM(oia.quantity) AS quantity_sold')
+                ->addSelect('oia.addon_name')
+                ->groupBy('sold_on', 'oia.menu_addon_id', 'oia.addon_name')
                 ->get();
         }
 
@@ -207,19 +209,20 @@ class DemandForecastService
         $end = $today->copy()->subDay()->endOfDay();
 
         return OrderItem::query()
-            ->join('orders', 'orders.id', '=', 'order_items.order_id')
-            ->whereNull('orders.deleted_at')
-            ->whereIn('orders.status', [
+            ->from('order_items as oi')
+            ->join('orders as o', 'o.id', '=', 'oi.order_id')
+            ->whereNull('o.deleted_at')
+            ->whereIn('o.status', [
                 Order::STATUS_PENDING,
                 Order::STATUS_PREPARING,
                 Order::STATUS_READY,
                 Order::STATUS_SERVED,
                 Order::STATUS_COMPLETED,
             ])
-            ->whereBetween('orders.created_at', [$start->utc(), $end->utc()])
+            ->whereBetween('o.created_at', [$start->utc(), $end->utc()])
             ->selectRaw("{$hourExpression} AS sales_hour")
-            ->selectRaw('SUM(order_items.quantity) AS quantity_sold')
-            ->selectRaw('COUNT(DISTINCT orders.id) AS order_count')
+            ->selectRaw('SUM(oi.quantity) AS quantity_sold')
+            ->selectRaw('COUNT(DISTINCT o.id) AS order_count')
             ->groupBy('sales_hour')
             ->orderByDesc('quantity_sold')
             ->limit(24)
@@ -244,16 +247,17 @@ class DemandForecastService
         $end = $today->copy()->subDay()->endOfDay();
 
         $rows = OrderItem::query()
-            ->join('orders', 'orders.id', '=', 'order_items.order_id')
-            ->whereNull('orders.deleted_at')
-            ->whereIn('orders.status', [Order::STATUS_PENDING, Order::STATUS_PREPARING, Order::STATUS_READY, Order::STATUS_SERVED, Order::STATUS_COMPLETED])
-            ->whereBetween('orders.created_at', [$start->copy()->utc(), $end->copy()->utc()])
-            ->whereNotNull('order_items.menu_item_id')
+            ->from('order_items as oi')
+            ->join('orders as o', 'o.id', '=', 'oi.order_id')
+            ->whereNull('o.deleted_at')
+            ->whereIn('o.status', [Order::STATUS_PENDING, Order::STATUS_PREPARING, Order::STATUS_READY, Order::STATUS_SERVED, Order::STATUS_COMPLETED])
+            ->whereBetween('o.created_at', [$start->copy()->utc(), $end->copy()->utc()])
+            ->whereNotNull('oi.menu_item_id')
             ->selectRaw("{$hourExpression} AS sales_hour")
-            ->addSelect('order_items.menu_item_id', 'order_items.menu_item_variant_id')
-            ->selectRaw('MAX(order_items.item_name) AS item_name')
-            ->selectRaw('SUM(order_items.quantity) AS quantity_sold')
-            ->groupBy('sales_hour', 'order_items.menu_item_id', 'order_items.menu_item_variant_id')
+            ->addSelect('oi.menu_item_id', 'oi.menu_item_variant_id')
+            ->selectRaw('MAX(oi.item_name) AS item_name')
+            ->selectRaw('SUM(oi.quantity) AS quantity_sold')
+            ->groupBy('sales_hour', 'oi.menu_item_id', 'oi.menu_item_variant_id')
             ->get();
 
         $byHour = [];
@@ -569,18 +573,18 @@ class DemandForecastService
     private function businessDateExpression(): string
     {
         return match (DB::connection()->getDriverName()) {
-            'sqlite' => "DATE(orders.created_at, '+6 hours')",
-            'pgsql' => "DATE(orders.created_at + INTERVAL '6 hours')",
-            default => 'DATE(DATE_ADD(orders.created_at, INTERVAL 6 HOUR))',
+            'sqlite' => "DATE(o.created_at, '+6 hours')",
+            'pgsql' => "DATE(o.created_at + INTERVAL '6 hours')",
+            default => 'DATE(DATE_ADD(o.created_at, INTERVAL 6 HOUR))',
         };
     }
 
     private function businessHourExpression(string $driver): string
     {
         return match ($driver) {
-            'sqlite' => "CAST(strftime('%H', orders.created_at, '+6 hours') AS INTEGER)",
-            'pgsql' => "CAST(EXTRACT(HOUR FROM orders.created_at + INTERVAL '6 hours') AS INTEGER)",
-            default => 'HOUR(DATE_ADD(orders.created_at, INTERVAL 6 HOUR))',
+            'sqlite' => "CAST(strftime('%H', o.created_at, '+6 hours') AS INTEGER)",
+            'pgsql' => "CAST(EXTRACT(HOUR FROM o.created_at + INTERVAL '6 hours') AS INTEGER)",
+            default => 'HOUR(DATE_ADD(o.created_at, INTERVAL 6 HOUR))',
         };
     }
 
