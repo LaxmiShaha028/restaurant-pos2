@@ -4759,4 +4759,10 @@ onBeforeUnmount(() => {
     table-layout: auto;
   }
 }
+
+@media (min-width: 381px) and (max-width: 560px) {
+  .dashboard-kpi-card:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+}
 </style>
