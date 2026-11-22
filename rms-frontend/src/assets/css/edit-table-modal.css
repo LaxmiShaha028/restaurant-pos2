@@ -835,13 +835,13 @@
 }
 @media (max-width: 575.98px) {
   .table-modal-backdrop {
-    padding-bottom: env(safe-area-inset-bottom);
+    align-items: center;
+    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
   }
 
   .table-modal-dialog {
-    height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    height: auto;
     max-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-    height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   }
 
@@ -853,6 +853,17 @@
   .table-modal-footer {
     position: relative;
     z-index: 2;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
     background: #f8fcfd;
+  }
+
+  .table-modal-footer .btn {
+    width: auto;
+    min-width: 0;
+    flex: 1 1 0;
   }
 }
