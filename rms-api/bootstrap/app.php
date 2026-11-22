@@ -52,6 +52,13 @@ return Application::configure(basePath: dirname(__DIR__))
 
         );
 
+        // Keep tenant resolution ahead of the custom token middleware even
+        // when Laravel sorts nested route middleware by priority.
+        $middleware->prependToPriorityList(
+            before: AuthenticateTenantApiToken::class,
+            prepend: ResolveTenant::class
+        );
+
 
         $middleware->prependToPriorityList(
 
