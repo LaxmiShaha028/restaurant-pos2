@@ -137,7 +137,26 @@
   }
 
   .billing-summary-section {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .billing-summary-card {
+    min-height: 96px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .billing-summary-card-content > span {
+    font-size: 11px !important;
+  }
+
+  .billing-summary-card-content > strong {
+    font-size: 15px !important;
+  }
+
+  .billing-summary-card-content > small {
+    font-size: 10px !important;
   }
 
   .billing-report-actions {
