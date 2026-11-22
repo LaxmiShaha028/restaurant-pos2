@@ -4746,4 +4746,17 @@ onBeforeUnmount(() => {
     flex-basis: 30px;
   }
 }
+
+@media (max-width: 560px) {
+  .orders-table-wrapper {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dashboard-orders-table {
+    min-width: 560px;
+    table-layout: auto;
+  }
+}
 </style>
