@@ -24,8 +24,7 @@ class DemandForecastService
         $historyStart = $today->copy()->subDays(self::HISTORY_DAYS);
         $queryStart = $today->copy()->subDays(self::HISTORY_DAYS + $chartDays);
         $historyEnd = $today->copy()->subDay()->endOfDay();
-        $tablePrefix = DB::connection()->getTablePrefix();
-        $itemAlias = $tablePrefix . 'oi';
+        $itemAlias = 'oi';
         $historyDates = collect();
         for ($date = $historyStart->copy(); $date->lte($historyEnd); $date->addDay()) {
             $historyDates->push($date->toDateString());
@@ -86,7 +85,7 @@ class DemandForecastService
 
         $addonHistoryRows = collect();
         if (Schema::connection()->hasTable('order_item_addons')) {
-            $addonAlias = $tablePrefix . 'oia';
+            $addonAlias = 'oia';
             $addonHistoryRows = OrderItemAddon::query()
                 ->from('order_item_addons as oia')
                 ->join('order_items as oi', 'oi.id', '=', 'oia.order_item_id')
@@ -207,9 +206,8 @@ class DemandForecastService
     private function getPeakHours(Carbon $today, int $chartDays): array
     {
         $driver = DB::connection()->getDriverName();
-        $tablePrefix = DB::connection()->getTablePrefix();
-        $orderAlias = $tablePrefix . 'o';
-        $itemAlias = $tablePrefix . 'oi';
+        $orderAlias = 'o';
+        $itemAlias = 'oi';
         $hourExpression = $this->businessHourExpression($driver);
         $start = $today->copy()->subDays($chartDays)->startOfDay();
         $end = $today->copy()->subDay()->endOfDay();
@@ -248,8 +246,7 @@ class DemandForecastService
         }
 
         $driver = DB::connection()->getDriverName();
-        $tablePrefix = DB::connection()->getTablePrefix();
-        $itemAlias = $tablePrefix . 'oi';
+        $itemAlias = 'oi';
         $hourExpression = $this->businessHourExpression($driver);
         $start = $today->copy()->subDays(self::RECENT_DAYS)->startOfDay();
         $end = $today->copy()->subDay()->endOfDay();
@@ -580,7 +577,7 @@ class DemandForecastService
 
     private function businessDateExpression(): string
     {
-        $orderAlias = DB::connection()->getTablePrefix() . 'o';
+        $orderAlias = 'o';
 
         return match (DB::connection()->getDriverName()) {
             'sqlite' => "DATE({$orderAlias}.created_at, '+6 hours')",
@@ -591,7 +588,7 @@ class DemandForecastService
 
     private function businessHourExpression(string $driver): string
     {
-        $orderAlias = DB::connection()->getTablePrefix() . 'o';
+        $orderAlias = 'o';
 
         return match ($driver) {
             'sqlite' => "CAST(strftime('%H', {$orderAlias}.created_at, '+6 hours') AS INTEGER)",
