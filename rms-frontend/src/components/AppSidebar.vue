@@ -384,7 +384,7 @@ import {
   useAuthStore,
 } from '@/stores/auth'
 
-import api from '@/services/api'
+import { normalizeRestaurantLogoUrl } from '@/utils/restaurantLogo'
 
 import '@/assets/css/app-sidebar.css'
 
@@ -462,80 +462,6 @@ const isLoadingRestaurantSettings =
 | Normalize Logo URL
 |--------------------------------------------------------------------------
 */
-
-function normalizeRestaurantLogoUrl(
-  logo
-) {
-
-  if (!logo) {
-    return ''
-  }
-
-  const value =
-    String(logo).trim()
-
-  if (!value) {
-    return ''
-  }
-
-
-  if (value.startsWith('data:')) return value
-
-  // Uploaded files are served by Laravel. Resolve their URLs against the
-  // configured API host, since the frontend and API commonly use different
-  // ports during local development.
-  const apiOrigin = new URL(
-    api.defaults.baseURL,
-    window.location.origin,
-  ).origin
-
-  if (/^https?:\/\//i.test(value)) {
-    const parsed = new URL(value)
-
-    if (parsed.pathname.includes('/storage/')) {
-      return `${apiOrigin}${parsed.pathname}${parsed.search}${parsed.hash}`
-    }
-
-    return value
-  }
-
-
-  /*
-  |--------------------------------------------------------------------------
-  | Already root-relative
-  |--------------------------------------------------------------------------
-  */
-
-  if (value.startsWith('/storage/')) return `${apiOrigin}${value}`
-
-  if (value.startsWith('/')) return value
-
-
-  /*
-  |--------------------------------------------------------------------------
-  | Laravel storage path
-  |--------------------------------------------------------------------------
-  */
-
-  if (
-    value.startsWith('storage/')
-  ) {
-
-    return `${apiOrigin}/${value}`
-
-  }
-
-
-  /*
-  |--------------------------------------------------------------------------
-  | Raw stored filename/path
-  |--------------------------------------------------------------------------
-  */
-
-  return `${apiOrigin}/storage/${value}`
-}
-
-
 
 /*
 |--------------------------------------------------------------------------

@@ -27,6 +27,20 @@
             <i class="bi bi-list"></i>
           </button>
 
+          <RouterLink
+            :to="{ name: 'dashboard' }"
+            class="mobile-brand-logo d-lg-none"
+            aria-label="Go to dashboard"
+          >
+            <img
+              v-if="mobileLogoUrl && !mobileLogoFailed"
+              :src="mobileLogoUrl"
+              alt="Restaurant logo"
+              @error="mobileLogoFailed = true"
+            />
+            <i v-else class="bi bi-shop" aria-hidden="true"></i>
+          </RouterLink>
+
           <button
             type="button"
             class="topbar-icon-button d-none d-lg-flex"
@@ -343,6 +357,7 @@ import {
   onBeforeUnmount,
   onMounted,
   ref,
+  watch,
 } from 'vue'
 import {
   RouterLink,
@@ -353,6 +368,8 @@ import {
 
 import AppSidebar from '@/components/AppSidebar.vue'
 import { useAuthStore } from '@/stores/auth'
+import { useSystemSettingStore } from '@/stores/systemSetting'
+import { normalizeRestaurantLogoUrl } from '@/utils/restaurantLogo'
 import api from '@/services/api'
 
 const SIDEBAR_STORAGE_KEY = 'rms_sidebar_collapsed'
@@ -360,6 +377,15 @@ const SIDEBAR_STORAGE_KEY = 'rms_sidebar_collapsed'
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
+const systemSettingStore = useSystemSettingStore()
+const mobileLogoFailed = ref(false)
+const mobileLogoUrl = computed(() =>
+  normalizeRestaurantLogoUrl(systemSettingStore.restaurantLogo),
+)
+
+watch(mobileLogoUrl, () => {
+  mobileLogoFailed.value = false
+})
 
 const isPickupKiosk = computed(() => route.name === 'pickup-display')
 
@@ -1076,6 +1102,33 @@ onBeforeUnmount(() => {
   border-color: #bde3e9;
   background: #e6f6f8;
   color: #45aabd;
+}
+
+.mobile-brand-logo {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #d5edf1;
+  border-radius: 7px;
+  background: #fff;
+  color: #3c9cad;
+  text-decoration: none;
+}
+
+.mobile-brand-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 2px;
+  object-fit: contain;
+}
+
+.mobile-brand-logo i {
+  font-size: 16px;
 }
 
 .pos-order-shortcut {
