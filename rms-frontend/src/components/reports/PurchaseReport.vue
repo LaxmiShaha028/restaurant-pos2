@@ -116,7 +116,7 @@
 
 
         <h4>
-            {{ purchases.length }}
+            {{ formatCount(purchases.length) }}
         </h4>
 
 
@@ -301,7 +301,7 @@
 
                     <td>
 
-                        {{ index + 1 }}
+                        {{ formatCount(index + 1) }}
 
                     </td>
 
@@ -546,7 +546,7 @@ purchase.status || '-'
     <span>
 
         Total:
-        {{ meta.total }}
+        {{ formatCount(meta.total) }}
 
     </span>
 
@@ -962,11 +962,15 @@ function money(value)
 
         )
 
-        .toLocaleString()
+        .toLocaleString(undefined, { minimumIntegerDigits: 2 })
 
     )
 
 
+}
+
+function formatCount(value) {
+    return String(Math.trunc(Number(value) || 0)).padStart(2, '0')
 }
 
 

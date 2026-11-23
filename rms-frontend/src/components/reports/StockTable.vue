@@ -100,7 +100,7 @@
 
                     <td>
 
-                        {{ index + 1 }}
+                        {{ formatCount(index + 1) }}
 
                     </td>
 
@@ -147,11 +147,7 @@
 
                         {{
 
-                            item.quantity
-
-                            ||
-
-                            0
+                            formatQuantity(item.quantity)
 
                         }}
 
@@ -391,11 +387,22 @@ function money(value)
 
         )
 
-        .toLocaleString()
+        .toLocaleString(undefined, { minimumIntegerDigits: 2 })
 
     )
 
 
+}
+
+function formatCount(value) {
+    return String(Math.trunc(Number(value) || 0)).padStart(2, '0')
+}
+
+function formatQuantity(value) {
+    return Number(value || 0).toLocaleString(undefined, {
+        minimumIntegerDigits: 2,
+        maximumFractionDigits: 2,
+    })
 }
 
 

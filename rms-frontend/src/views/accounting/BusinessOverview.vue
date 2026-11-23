@@ -1101,7 +1101,7 @@
                             >
 
                                 {{
-                                    overview.inventory?.low_stock || 0
+                                    formatCount(overview.inventory?.low_stock)
                                 }}
 
                             </h5>
@@ -1138,7 +1138,7 @@
                             >
 
                                 {{
-                                    overview.inventory?.out_of_stock || 0
+                                    formatCount(overview.inventory?.out_of_stock)
                                 }}
 
                             </h5>
@@ -1677,6 +1677,10 @@ function money(value) {
 
     )
 
+}
+
+function formatCount(value) {
+    return String(Math.trunc(Number(value) || 0)).padStart(2, '0')
 }
 
 </script>

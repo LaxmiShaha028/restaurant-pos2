@@ -80,7 +80,7 @@
                 <td>{{ formatDate(row.date) }}</td>
                 <td>{{ row.item_name }}</td>
                 <td>{{ number(row.forecast_quantity) }}</td>
-                <td>{{ row.history_days_used }}</td>
+                <td>{{ formatCount(row.history_days_used) }}</td>
               </tr>
               <tr v-if="!forecastRows.length"><td colspan="4" class="forecast-empty">No positive demand was forecast for this period.</td></tr>
             </tbody>
@@ -261,7 +261,11 @@ function setChartRange(days) {
 }
 
 function number(value) {
-  return Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })
+  return Number(value || 0).toLocaleString(undefined, { minimumIntegerDigits: 2, maximumFractionDigits: 2 })
+}
+
+function formatCount(value) {
+  return String(Math.trunc(Number(value) || 0)).padStart(2, '0')
 }
 
 function formatDate(value) {

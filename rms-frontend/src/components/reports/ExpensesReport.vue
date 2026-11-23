@@ -114,7 +114,7 @@
 
                     <h3>
 
-                        {{ summary.total_records || 0 }}
+                        {{ formatCount(summary.total_records) }}
 
                     </h3>
 
@@ -289,7 +289,7 @@
 
                             <span class="sl-number">
 
-                                {{ index + 1 }}
+                                {{ formatCount(index + 1) }}
 
                             </span>
 
@@ -506,7 +506,7 @@
         <span>
 
             Total:
-            {{ meta.total }}
+            {{ formatCount(meta.total) }}
 
         </span>
 
@@ -880,12 +880,16 @@ function money(value)
  
         ) 
  
-        .toLocaleString() 
+        .toLocaleString(undefined, { minimumIntegerDigits: 2 }) 
  
     ) 
  
  
 } 
+
+function formatCount(value) {
+    return String(Math.trunc(Number(value) || 0)).padStart(2, '0')
+}
  
  
  

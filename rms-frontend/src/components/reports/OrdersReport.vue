@@ -62,7 +62,7 @@
 
 
                     <h3>
-                        {{ meta.total || 0 }}
+                        {{ formatCount(meta.total) }}
                     </h3>
 
                 </div>
@@ -234,7 +234,7 @@
 
                         <span class="sl-number">
 
-                            {{ index + 1 }}
+                            {{ formatCount(index + 1) }}
 
                         </span>
 
@@ -404,7 +404,7 @@
         <span>
 
             Showing
-            {{ meta.total }}
+            {{ formatCount(meta.total) }}
             orders
 
         </span>
@@ -534,7 +534,11 @@ function formatDateTime(date) {
 }
 
 function money(value) {
-    return '৳ ' + Number(value || 0).toLocaleString()
+    return '৳ ' + Number(value || 0).toLocaleString(undefined, { minimumIntegerDigits: 2 })
+}
+
+function formatCount(value) {
+    return String(Math.trunc(Number(value) || 0)).padStart(2, '0')
 }
 
 watch(
