@@ -1983,7 +1983,10 @@
 }
 
 @media (max-width: 767.98px) {
-  .supplier-credit-summary-grid,
+  .supplier-credit-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .supplier-credit-accounting-grid,
   .supplier-credit-card-grid,
   .supplier-credit-apply-summary {
