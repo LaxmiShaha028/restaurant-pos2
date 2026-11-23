@@ -1797,7 +1797,7 @@ onBeforeUnmount(() => {
   }
 
   .page-heading-title {
-    max-width: 48px;
+    max-width: 68px;
     font-size: 11px;
   }
 
