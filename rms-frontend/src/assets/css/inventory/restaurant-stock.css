@@ -3008,6 +3008,14 @@
    ========================================================================== */
 
 @media (max-width: 640px) {
+  .restaurant-movement-detail-card {
+    position: sticky;
+    left: 0;
+    width: calc(100vw - 32px);
+    max-width: calc(100vw - 32px);
+    box-sizing: border-box;
+  }
+
   .restaurant-movement-history {
     gap: 13px;
   }

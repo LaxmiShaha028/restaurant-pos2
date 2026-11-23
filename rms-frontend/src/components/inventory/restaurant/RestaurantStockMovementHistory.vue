@@ -734,6 +734,7 @@
 <script setup>
 import {
   computed,
+  nextTick,
   onMounted,
   reactive,
   ref,
@@ -1321,6 +1322,19 @@ function toggleDetails(
 
   expandedMovementIds.value =
     next
+
+  if (next.has(id) && window.matchMedia('(max-width: 767.98px)').matches) {
+    nextTick(() => {
+      const detailRow = document.getElementById(detailsId(movement))
+      const tableScroll = detailRow?.closest('.restaurant-movement-history-table-scroll')
+
+      if (tableScroll) {
+        tableScroll.scrollLeft = 0
+      }
+
+      detailRow?.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' })
+    })
+  }
 }
 
 
