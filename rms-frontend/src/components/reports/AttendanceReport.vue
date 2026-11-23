@@ -1576,6 +1576,25 @@ onMounted(
 
 <style scoped>
 
+.btn.btn-primary,
+.btn.btn-primary:hover:not(:disabled),
+.btn.btn-primary:focus-visible {
+    border-color: #267f91 !important;
+    background: #267f91 !important;
+    color: #ffffff !important;
+}
+
+.btn.btn-primary i {
+    color: #ffffff !important;
+}
+
+.btn.btn-primary:disabled {
+    border-color: #7aaeba !important;
+    background: #7aaeba !important;
+    color: #ffffff !important;
+    opacity: 0.8;
+}
+
 @media (max-width: 600px) {
     .attendance-report-summary > [class*="col-"] {
         flex: 0 0 50%;
