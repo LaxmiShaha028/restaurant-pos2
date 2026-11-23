@@ -948,3 +948,27 @@ section > .d-flex.justify-content-between.mt-3 {
   opacity: 1;
   box-shadow: none;
 }
+
+@media (max-width: 700px) {
+  .reports-page .reports-filter-actions {
+    display: flex !important;
+    grid-column: 1 / -1 !important;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px !important;
+    width: 100%;
+  }
+
+  .reports-page .reports-primary-button,
+  .reports-page .reports-secondary-button {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: max-content;
+    white-space: nowrap;
+  }
+
+  .reports-page .reports-primary-button span,
+  .reports-page .reports-secondary-button {
+    white-space: nowrap;
+  }
+}
