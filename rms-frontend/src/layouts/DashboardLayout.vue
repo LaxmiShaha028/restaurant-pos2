@@ -1779,8 +1779,8 @@ onBeforeUnmount(() => {
   }
 
   .mobile-restaurant-brand {
-    max-width: 66px;
-    flex: 0 1 66px;
+    max-width: 40vw;
+    flex: 0 1 40vw;
     gap: 3px;
   }
 
@@ -1797,13 +1797,13 @@ onBeforeUnmount(() => {
   }
 
   .page-heading-title {
-    max-width: 68px;
+    max-width: 48px;
     font-size: 11px;
   }
 
   .topbar-right {
     min-width: 0;
-    max-width: 58%;
+    max-width: 42%;
     flex: 0 1 auto;
     margin-left: auto;
     gap: 4px;
@@ -1830,6 +1830,14 @@ onBeforeUnmount(() => {
     flex: 0 0 22px;
     height: 24px;
     font-size: 10px;
+  }
+
+  .mobile-restaurant-name {
+    overflow: visible;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+    white-space: normal;
+    line-height: 1.15;
   }
 
   .topbar-right .topbar-icon-button {
