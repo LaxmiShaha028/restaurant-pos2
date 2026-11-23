@@ -54,7 +54,7 @@
     <!-- Summary -->
 
 
-    <div class="row g-3 mb-4">
+    <div class="row g-3 mb-4 purchase-report-summary">
 
 
         <div class="col-md-4">
@@ -1427,6 +1427,42 @@ button.btn-outline-primary:hover{
     }
 
 
+
+}
+
+@media(max-width:600px){
+
+    .purchase-report-summary > [class*="col-"]{
+        flex:0 0 50%;
+        max-width:50%;
+    }
+
+    .purchase-report-summary .summary-card{
+        height:100%;
+        border-radius:12px;
+    }
+
+    .purchase-report-summary .summary-card .card-body{
+        min-height:82px;
+        padding:10px !important;
+    }
+
+    .purchase-report-summary .summary-icon{
+        width:30px;
+        height:30px;
+        margin-bottom:7px;
+        font-size:15px;
+    }
+
+    .purchase-report-summary .summary-card small{
+        font-size:11px !important;
+    }
+
+    .purchase-report-summary .summary-card h4{
+        margin-top:4px !important;
+        font-size:15px !important;
+        overflow-wrap:anywhere;
+    }
 
 }
 /* Summary Icon */
