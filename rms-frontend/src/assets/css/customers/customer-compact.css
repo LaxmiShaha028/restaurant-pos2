@@ -1760,7 +1760,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(145deg, transparent 62%, rgba(118, 199, 213, .13) 62%, rgba(118, 199, 213, .13) 82%, transparent 82%);
+  background: none;
   content: "";
   pointer-events: none;
 }
