@@ -1987,10 +1987,13 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .supplier-credit-accounting-grid,
   .supplier-credit-card-grid,
   .supplier-credit-apply-summary {
     grid-template-columns: 1fr;
+  }
+
+  .supplier-credit-accounting-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .supplier-credit-card > header,
