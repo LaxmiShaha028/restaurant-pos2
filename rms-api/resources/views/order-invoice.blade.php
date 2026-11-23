@@ -390,6 +390,15 @@
 
     }
 
+    .footer-brand {
+        display: block;
+        margin-top: 3px;
+        color: #267f91;
+        font-size: 7px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+    }
+
 
     .signature-line {
 
@@ -669,6 +678,7 @@
         <div class="footer-note">
             Thank you for your order!<br>
             Please keep this receipt for your records.
+            <span class="footer-brand">Developed by DineSync</span>
         </div>
 
     </main>
