@@ -972,7 +972,7 @@ onBeforeUnmount(() => {
         <span class="super-admin-brand-copy">
 
           <strong>
-            RMS
+            DineSync
           </strong>
 
           <small>
