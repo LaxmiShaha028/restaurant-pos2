@@ -81,6 +81,12 @@
   background: #f8d7da !important;
 }
 
+.warehouse-quick-summary .warehouse-quick-alert,
+.warehouse-quick-summary .warehouse-quick-danger {
+  border-color: var(--bs-border-color, #dee2e6) !important;
+  background: var(--bs-tertiary-bg, #f8f9fa) !important;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Filters
