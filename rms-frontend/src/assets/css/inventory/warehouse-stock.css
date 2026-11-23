@@ -647,10 +647,6 @@
     padding: 0.75rem 0.5rem;
   }
 
-  .warehouse-quick-summary article:nth-child(4) {
-    grid-column: 1 / -1;
-  }
-
   .warehouse-filter-card {
     margin: 1rem;
   }
