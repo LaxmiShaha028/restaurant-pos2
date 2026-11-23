@@ -1194,6 +1194,23 @@
 }
 
 @media (max-width: 650px) {
+    .staff-management-page .staff-header-content {
+        flex-direction: row !important;
+        align-items: center !important;
+    }
+
+    .staff-management-page .staff-header-actions {
+        width: auto !important;
+        flex: 0 0 auto;
+        margin-left: auto;
+    }
+
+    .staff-management-page .staff-refresh-btn {
+        width: 30px !important;
+        min-width: 30px !important;
+        flex: 0 0 30px;
+    }
+
     .staff-management-page .staff-header-text > p {
         display: block !important;
     }
