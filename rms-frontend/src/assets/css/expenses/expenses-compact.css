@@ -160,6 +160,16 @@
     font-size: 12px;
 }
 
+.expense-management-page .expense-filter-actions button.btn-primary > i {
+    display: inline-block !important;
+    color: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    font-family: "bootstrap-icons" !important;
+    font-style: normal !important;
+    line-height: 1 !important;
+}
+
 /* ==========================================================================
    TABLE
    ========================================================================== */
