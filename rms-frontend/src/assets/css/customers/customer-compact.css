@@ -1886,3 +1886,13 @@
     display: none;
   }
 }
+
+.customer-details-page .customer-profile-main > .customer-avatar {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  min-height: 46px;
+  flex: 0 0 46px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
