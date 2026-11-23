@@ -972,3 +972,28 @@ section > .d-flex.justify-content-between.mt-3 {
     white-space: nowrap;
   }
 }
+@media (max-width: 600px) {
+  .reports-page .report-export-actions {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .reports-page .report-export-actions > .btn {
+    display: inline-flex;
+    min-width: 0;
+    min-height: 30px;
+    flex: 1 1 0;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 4px 6px;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .reports-page .report-export-actions .report-export-button {
+    min-width: 0;
+  }
+}

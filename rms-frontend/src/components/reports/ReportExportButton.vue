@@ -1,6 +1,6 @@
 <template>
 
-<div class="d-flex gap-2">
+<div class="report-export-actions">
 
 
     <!-- Print -->
