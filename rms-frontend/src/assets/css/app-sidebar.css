@@ -845,6 +845,10 @@
 ========================================================= */
 
 @media (max-width: 991.98px) {
+  .user-options-button {
+    display: none;
+  }
+
   .app-sidebar,
   .app-sidebar.sidebar-collapsed {
     width: 210px;
