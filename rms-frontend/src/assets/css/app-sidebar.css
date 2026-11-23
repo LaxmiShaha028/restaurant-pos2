@@ -845,6 +845,19 @@
 ========================================================= */
 
 @media (max-width: 991.98px) {
+  .sidebar-scroll {
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sidebar-header,
+  .sidebar-user {
+    flex-shrink: 0;
+  }
+
   .user-options-button {
     display: none;
   }
