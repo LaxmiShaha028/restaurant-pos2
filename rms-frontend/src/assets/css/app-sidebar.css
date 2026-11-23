@@ -924,6 +924,10 @@
   }
 }
 
+.app-sidebar.sidebar-mobile-open .user-options-button {
+  display: none !important;
+}
+
 /* Shared light aqua navigation theme */
 .app-sidebar {
   background: linear-gradient(180deg, #d8f0f4 0%, #e5f6f8 54%, #effafb 100%);
