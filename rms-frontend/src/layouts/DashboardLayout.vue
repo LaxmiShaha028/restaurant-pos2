@@ -1001,6 +1001,11 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+:global(body.sidebar-mobile-active) {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 /* =========================================================
    LAYOUT
 ========================================================= */
