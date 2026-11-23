@@ -369,6 +369,9 @@ async function resolveCurrentTenant() {
     sessionStorage.setItem(
       'rms_tenant_context',
       JSON.stringify({
+        tenant_entry_key:
+          tenantKey,
+
         tenant_key:
           tenantData.restaurant.tenant_key,
 

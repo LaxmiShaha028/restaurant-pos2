@@ -241,17 +241,18 @@ const isKeithKnoxRestaurant = computed(() => {
   const identifiers = [
     route.query?.tenant_key,
     authStore.tenantKey,
+    route.fullPath,
   ]
 
   try {
     const context = JSON.parse(sessionStorage.getItem('rms_tenant_context') || '{}')
-    identifiers.push(context.tenant_key, context.slug)
+    identifiers.push(context.tenant_entry_key, context.tenant_key, context.slug)
   } catch {
     // Ignore invalid or unavailable tenant context and use the existing Admin row.
   }
 
   return identifiers.some((identifier) =>
-    String(identifier || '').trim().toLowerCase() === 'keith-knox-dexfn0rt'
+    String(identifier || '').trim().toLowerCase().includes('keith-knox-dexfn0rt')
   )
 })
 
