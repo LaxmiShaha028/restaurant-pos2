@@ -161,21 +161,32 @@ function refresh() {
 /* Responsive */
 @media (max-width: 767.98px) {
   .staff-header-card {
-    align-items: flex-start;
+    align-items: center;
   }
 
   .staff-header-content {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
     gap: 8px;
   }
 
+  .staff-header-left {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
   .staff-header-actions {
-    width: 100%;
+    width: auto !important;
+    flex: 0 0 auto;
+    margin-left: auto;
   }
 
   .staff-refresh-btn {
-    width: 100%;
+    width: 30px !important;
+    min-width: 30px !important;
+    max-width: 30px;
+    flex: 0 0 30px;
+    padding: 0;
   }
 
   .staff-header-text p {
