@@ -231,7 +231,7 @@
         </span>
 
         <strong>
-          {{ meta.total }}
+          {{ formatCount(meta.total) }}
         </strong>
       </article>
 
@@ -241,7 +241,7 @@
         </span>
 
         <strong>
-          {{ wastages.length }}
+          {{ formatCount(wastages.length) }}
         </strong>
       </article>
 
@@ -1416,6 +1416,13 @@ function moneyText(
       maximumFractionDigits,
     },
   )}`
+}
+
+
+function formatCount(value) {
+  const count = Number(value)
+  return String(Number.isFinite(count) ? Math.max(0, Math.trunc(count)) : 0)
+    .padStart(2, '0')
 }
 
 

@@ -787,10 +787,13 @@
   .restaurant-wastage-material-card,
   .restaurant-wastage-form-grid,
   .restaurant-wastage-preview-grid,
-  .restaurant-wastage-history-summary,
   .restaurant-wastage-history-filter-grid,
   .restaurant-wastage-history-metrics {
     grid-template-columns: 1fr;
+  }
+
+  .restaurant-wastage-history-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .restaurant-wastage-form-group-wide {
