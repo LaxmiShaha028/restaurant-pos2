@@ -1607,6 +1607,22 @@
 
 @media (max-width: 600px) {
 
+  .customer-table-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 8px;
+  }
+
+  .customer-table-header > div {
+    min-width: 0;
+  }
+
+  .customer-record-count {
+    justify-self: end;
+    white-space: nowrap;
+  }
+
   .customer-management-page,
   .customer-details-page,
   .customer-edit-page {
