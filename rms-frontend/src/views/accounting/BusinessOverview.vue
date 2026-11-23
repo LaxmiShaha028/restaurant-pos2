@@ -1,6 +1,6 @@
 <template>
 
-<section>
+<section class="business-overview">
 
     <!-- Header -->
 
@@ -44,7 +44,7 @@
         <!-- KPI SUMMARY -->
         <!-- ========================================================= -->
 
-        <div class="row g-3 mb-4">
+        <div class="row g-3 mb-4 business-metric-grid">
 
 
             <!-- Sales -->
@@ -239,7 +239,7 @@
         <!-- FINANCIAL SUMMARY -->
         <!-- ========================================================= -->
 
-        <div class="row g-3 mb-4">
+        <div class="row g-3 mb-4 business-metric-grid">
 
 
             <!-- Food Cost -->
@@ -751,7 +751,7 @@
 
                 <!-- Supplier Summary -->
 
-                <div class="row g-3 mb-4">
+                <div class="row g-3 mb-4 business-metric-grid business-supplier-grid">
 
 
                     <!-- Purchase Order -->
@@ -1695,6 +1695,33 @@ function money(value) {
 }
 .hello{
     font-size:12px;
+}
+
+@media (max-width: 575.98px) {
+    .business-overview .business-metric-grid > [class*="col-"] {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .business-overview .business-metric-grid .card-body {
+        padding: 0.7rem;
+    }
+
+    .business-overview .business-metric-grid h4,
+    .business-overview .business-metric-grid h5 {
+        font-size: 1rem;
+        overflow-wrap: anywhere;
+    }
+
+    .business-overview .business-metric-grid small {
+        font-size: 0.72rem;
+        line-height: 1.3;
+    }
+
+    .business-overview .business-supplier-grid > [class*="col-"] > div {
+        height: 100%;
+        padding: 0.65rem !important;
+    }
 }
 
 </style>
