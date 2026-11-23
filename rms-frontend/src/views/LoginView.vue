@@ -187,11 +187,11 @@
               <button
                 type="button"
                 class="account-item"
-                @click="fillCredentials('chef', 'Chef@12345')"
+                @click="fillCredentials('shraboniakter554@gmail.com', 'chef1234')"
               >
                 <span class="account-role">Chef</span>
                 <span class="account-info">
-                  chef / Chef@12345
+                  shraboniakter554@gmail.com / chef1234
                 </span>
               </button>
 
