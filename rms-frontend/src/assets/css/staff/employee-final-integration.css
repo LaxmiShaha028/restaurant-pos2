@@ -389,3 +389,49 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
+
+#app .employee-attendance-notice {
+    align-items: flex-start;
+    border-color: #bfe5eb !important;
+    color: #267f91 !important;
+    background-color: #e5f6f9 !important;
+}
+
+#app .employee-attendance-notice > i,
+#app .employee-attendance-notice :is(strong, p, button, button i) {
+    color: #267f91 !important;
+}
+
+.employee-attendance-notice-content {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.employee-attendance-flow-toggle {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.employee-attendance-flow-toggle strong {
+    margin: 0;
+}
+
+.employee-attendance-flow-toggle > i {
+    flex: 0 0 auto;
+    font-size: 12px;
+}
+
+#app .employee-attendance-notice p {
+    display: block !important;
+    margin: 6px 0 0;
+    color: #527783 !important;
+}

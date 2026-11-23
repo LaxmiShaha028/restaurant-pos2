@@ -71,13 +71,27 @@
 
         <i class="bi bi-info-circle"></i>
 
-        <div>
+        <div class="employee-attendance-notice-content">
 
-            <strong>
-                Attendance Status Flow
-            </strong>
+            <button
+                type="button"
+                class="employee-attendance-flow-toggle"
+                :aria-expanded="showAttendanceFlow"
+                aria-controls="attendance-status-flow-details"
+                @click="showAttendanceFlow = !showAttendanceFlow"
+            >
+                <strong>Attendance Status Flow</strong>
+                <i
+                    class="bi"
+                    :class="showAttendanceFlow ? 'bi-chevron-up' : 'bi-chevron-down'"
+                    aria-hidden="true"
+                ></i>
+            </button>
 
-            <p>
+            <p
+                v-if="showAttendanceFlow"
+                id="attendance-status-flow-details"
+            >
                 Working creates check-in, On Break starts a break, Working ends
                 the break, and Check Out records the current checkout time.
             </p>
@@ -601,6 +615,8 @@ const employees = ref([])
 const loading = ref(false)
 
 const errorMessage = ref('')
+
+const showAttendanceFlow = ref(false)
 
 const statusLoadingId = ref(null)
 
