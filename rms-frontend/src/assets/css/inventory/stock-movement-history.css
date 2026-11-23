@@ -773,6 +773,32 @@
 }
 
 @media (max-width: 767.98px) {
+  /* Keep movement columns readable on phones instead of squeezing each word
+     into a narrow fixed-width cell. The table remains horizontally scrollable. */
+  .movement-table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .stock-movement-table {
+    min-width: 900px;
+    table-layout: auto;
+  }
+
+  .stock-movement-table th,
+  .stock-movement-table td {
+    white-space: nowrap;
+    word-break: normal;
+  }
+
+  .stock-movement-table td:nth-child(8) {
+    min-width: 180px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
   .movement-history-panel {
     margin: 1rem;
   }
