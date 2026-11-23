@@ -70,7 +70,7 @@
 
             <h1 class="brand-title">
   {{
-    restaurantName || "RMS"
+    restaurantName || "DineSync"
   }}
 </h1>
 

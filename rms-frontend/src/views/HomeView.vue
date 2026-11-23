@@ -16,7 +16,7 @@ const applicationName = 'Restaurant Management System'
           </span>
 
           <span class="brand-text">
-            RMS
+            DineSync
           </span>
         </a>
 

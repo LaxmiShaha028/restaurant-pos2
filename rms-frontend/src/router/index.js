@@ -2492,7 +2492,7 @@ router.beforeEach(
 
     const applicationName =
       import.meta.env.VITE_APP_NAME ||
-      'RMS'
+      'DineSync'
 
 
     const pageTitle =

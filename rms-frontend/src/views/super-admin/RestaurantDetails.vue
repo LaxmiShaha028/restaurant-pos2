@@ -435,7 +435,7 @@
                 <span>
                   This localhost URL is for development only.
                   After deployment, the same tenant path will automatically use
-                  your live RMS domain.
+                  your live DineSync domain.
                 </span>
               </div>
 
@@ -2465,7 +2465,7 @@ const handoverText = computed(() => {
 
 
   return [
-    `${restaurantName} — RMS Access`,
+    `${restaurantName} — DineSync Access`,
     '',
     `Login URL: ${getTenantUrl()}`,
     `Username: ${adminCredentials.value.username}`,
@@ -4392,7 +4392,7 @@ async function shareHandover() {
 
     await navigator.share({
       title:
-        `${restaurant.value?.name || 'Restaurant'} RMS Access`,
+        `${restaurant.value?.name || 'Restaurant'} DineSync Access`,
 
       text:
         handoverText.value,
