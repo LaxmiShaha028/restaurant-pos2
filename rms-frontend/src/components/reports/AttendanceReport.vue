@@ -175,7 +175,7 @@
                     </small>
 
                     <h4>
-                        {{ summary.total }}
+                        {{ formatCount(summary.total) }}
                     </h4>
 
                 </div>
@@ -198,7 +198,7 @@
                     </small>
 
                     <h4>
-                        {{ summary.present }}
+                        {{ formatCount(summary.present) }}
                     </h4>
 
                 </div>
@@ -221,7 +221,7 @@
                     </small>
 
                     <h4>
-                        {{ summary.absent }}
+                        {{ formatCount(summary.absent) }}
                     </h4>
 
                 </div>
@@ -244,7 +244,7 @@
                     </small>
 
                     <h4>
-                        {{ summary.leave }}
+                        {{ formatCount(summary.leave) }}
                     </h4>
 
                 </div>
@@ -614,17 +614,17 @@
 
                     Showing
                     <strong>
-                        {{ meta.from || 0 }}
+                        {{ formatCount(meta.from) }}
                     </strong>
 
                     —
                     <strong>
-                        {{ meta.to || 0 }}
+                        {{ formatCount(meta.to) }}
                     </strong>
 
                     of
                     <strong>
-                        {{ meta.total }}
+                        {{ formatCount(meta.total) }}
                     </strong>
 
                 </span>
@@ -666,13 +666,13 @@
 
                         Page
                         <strong>
-                            {{ meta.current_page }}
+                            {{ formatCount(meta.current_page) }}
                         </strong>
 
                         of
 
                         <strong>
-                            {{ meta.last_page }}
+                            {{ formatCount(meta.last_page) }}
                         </strong>
 
                     </span>
@@ -1310,7 +1310,7 @@ function serialNumber(
     index
 ) {
 
-    return (
+    return formatCount(
 
         (
             Number(
@@ -1340,6 +1340,11 @@ function serialNumber(
 
     )
 
+}
+
+function formatCount(value) {
+    const count = Math.trunc(Number(value) || 0)
+    return String(count).padStart(2, '0')
 }
 
 
@@ -1417,7 +1422,7 @@ function minutesToHour(
         totalMinutes <= 0
     ) {
 
-        return '0h'
+        return '00h'
 
     }
 
@@ -1436,13 +1441,13 @@ function minutesToHour(
         remainingMinutes === 0
     ) {
 
-        return `${hours}h`
+        return `${String(hours).padStart(2, '0')}h`
 
     }
 
 
     return (
-        `${hours}h ${remainingMinutes}m`
+        `${String(hours).padStart(2, '0')}h ${String(remainingMinutes).padStart(2, '0')}m`
     )
 
 }

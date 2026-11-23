@@ -315,7 +315,7 @@
                     </span>
 
                     <strong class="reports-summary-value">
-                        {{ summary.total_orders || 0 }}
+                        {{ formatCount(summary.total_orders) }}
                     </strong>
 
                 </div>
@@ -1813,6 +1813,11 @@ function money(
 
     )
 
+}
+
+function formatCount(value) {
+    const count = Math.trunc(Number(value) || 0)
+    return String(count).padStart(2, '0')
 }
 
 
