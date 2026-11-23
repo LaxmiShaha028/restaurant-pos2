@@ -50,6 +50,29 @@
 ========================================================= */
 
 @media (max-width: 700px) {
+  .kitchen-filter-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: end;
+  }
+
+  .kitchen-search-field,
+  .kitchen-filter-actions {
+    grid-column: 1 / -1;
+  }
+
+  .kitchen-filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+
+  .kitchen-filter-button {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 34px;
+    padding: 0 8px;
+  }
+
   .kitchen-summary-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
