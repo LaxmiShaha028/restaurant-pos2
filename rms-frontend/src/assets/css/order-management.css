@@ -1048,8 +1048,8 @@
   display: inline-flex;
   max-width: 100%;
   overflow: hidden;
-  padding: 2px 3px;
-  border-radius: 3px;
+  padding: 3px 7px;
+  border-radius: 5px;
   font-size: 12px;
   font-weight: 700;
   text-overflow: ellipsis;
@@ -1057,7 +1057,7 @@
 }
 
 .payment-due {
-  background: #fef3f2;
+  background: #fee4e2;
   color: #b42318;
 }
 
@@ -1067,7 +1067,7 @@
 }
 
 .payment-paid {
-  background: #ecfdf3;
+  background: #d1fadf;
   color: #027a48;
 }
 
