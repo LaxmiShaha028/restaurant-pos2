@@ -149,33 +149,62 @@
             </div>
 
             <div class="account-list">
-              <div class="account-item">
+              <button
+                v-if="isKeithKnoxRestaurant"
+                type="button"
+                class="account-item"
+                @click="fillCredentials('rycesonef', 'ub1KM8hkrDcSdt')"
+              >
+                <span class="account-role">Admin</span>
+                <span class="account-info">
+                  rycesonef / ub1KM8hkrDcSdt
+                </span>
+              </button>
+
+              <button
+                v-else
+                type="button"
+                class="account-item"
+                @click="fillCredentials('admin', 'Admin@12345')"
+              >
                 <span class="account-role">Admin</span>
                 <span class="account-info">
                   admin / Admin@12345
                 </span>
-              </div>
+              </button>
 
-              <div class="account-item">
+              <button
+                type="button"
+                class="account-item"
+                @click="fillCredentials('manager', 'Manager@12345')"
+              >
                 <span class="account-role">Manager</span>
                 <span class="account-info">
                   manager / Manager@12345
                 </span>
-              </div>
+              </button>
 
-              <div class="account-item">
+              <button
+                type="button"
+                class="account-item"
+                @click="fillCredentials('chef', 'Chef@12345')"
+              >
                 <span class="account-role">Chef</span>
                 <span class="account-info">
                   chef / Chef@12345
                 </span>
-              </div>
+              </button>
 
-              <div class="account-item">
+              <button
+                type="button"
+                class="account-item"
+                @click="fillCredentials('waiter12', 'Waiter@12345')"
+              >
                 <span class="account-role">Waiter</span>
                 <span class="account-info">
                   waiter12 / Waiter@12345
                 </span>
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -208,6 +237,30 @@ const form = reactive({
 })
 
 const currentYear = computed(() => new Date().getFullYear())
+const isKeithKnoxRestaurant = computed(() => {
+  const identifiers = [
+    route.query?.tenant_key,
+    authStore.tenantKey,
+  ]
+
+  try {
+    const context = JSON.parse(sessionStorage.getItem('rms_tenant_context') || '{}')
+    identifiers.push(context.tenant_key, context.slug)
+  } catch {
+    // Ignore invalid or unavailable tenant context and use the existing Admin row.
+  }
+
+  return identifiers.some((identifier) =>
+    String(identifier || '').trim().toLowerCase() === 'keith-knox-dexfn0rt'
+  )
+})
+
+function fillCredentials(login, password) {
+  form.login = login
+  form.password = password
+  fieldErrors.value = {}
+  errorMessage.value = ''
+}
 
 async function handleLogin() {
 
@@ -622,11 +675,22 @@ async function handleLogin() {
 
 .account-item {
   display: flex;
+  width: 100%;
   align-items: center;
   gap: 8px;
   padding: 7px 9px;
+  border: 0;
   border-bottom: 1px solid #dceff3;
+  background: transparent;
+  font: inherit;
   font-size: 11.5px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.account-item:hover,
+.account-item:focus-visible {
+  background: #e5f6f9;
 }
 
 .account-item:last-child {
