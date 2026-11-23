@@ -956,6 +956,13 @@
   color: #267f91;
 }
 
+.order-management-page .order-status-select.status-pending {
+  border-color: #f5a742 !important;
+  background-color: #fff1db !important;
+  background-image: var(--bs-form-select-bg-img) !important;
+  color: #b45309 !important;
+}
+
 .status-preparing {
   border-color: #b2ddff;
   background-color: #eff8ff;
