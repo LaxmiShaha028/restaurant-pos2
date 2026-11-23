@@ -160,7 +160,7 @@
 
     <!-- Summary -->
 
-    <div class="row g-3 mb-4">
+    <div class="row g-3 mb-4 attendance-report-summary">
 
         <!-- Total -->
 
@@ -1575,6 +1575,36 @@ onMounted(
 
 
 <style scoped>
+
+@media (max-width: 600px) {
+    .attendance-report-summary > [class*="col-"] {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .attendance-report-summary .summary-card,
+    .attendance-report-summary .summary-card .card-body {
+        height: 100%;
+        min-height: 58px;
+    }
+
+    .attendance-report-summary .summary-card .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 8px !important;
+    }
+
+    .attendance-report-summary .summary-card small {
+        font-size: 10px !important;
+        line-height: 1.25;
+    }
+
+    .attendance-report-summary .summary-card h4 {
+        margin-top: 3px !important;
+        font-size: 14px !important;
+    }
+}
 
 .summary-card {
 
