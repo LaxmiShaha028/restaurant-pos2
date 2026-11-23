@@ -1038,7 +1038,7 @@
                 </div>
 
 
-                <div class="row g-3">
+                <div class="row g-3 business-detail-grid">
 
 
                     <!-- Stock Value -->
@@ -1191,7 +1191,7 @@
                 </div>
 
 
-                <div class="row g-3">
+                <div class="row g-3 business-detail-grid">
 
 
                     <!-- Cash -->
@@ -1721,6 +1721,28 @@ function money(value) {
     .business-overview .business-supplier-grid > [class*="col-"] > div {
         height: 100%;
         padding: 0.65rem !important;
+    }
+
+    .business-overview .business-detail-grid > [class*="col-"] {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .business-overview .business-detail-grid > [class*="col-"] > .border {
+        height: 100%;
+        padding: 0.65rem !important;
+    }
+
+    .business-overview .business-detail-grid small {
+        font-size: 0.68rem;
+        line-height: 1.25;
+    }
+
+    .business-overview .business-detail-grid h4,
+    .business-overview .business-detail-grid h5,
+    .business-overview .business-detail-grid h6 {
+        font-size: 0.9rem;
+        overflow-wrap: anywhere;
     }
 }
 
