@@ -393,7 +393,21 @@ function handleRefresh() {
   .inventory-page-header {
     width: 100%;
     min-width: 0;
-    padding: 7px 8px;
+    min-height: 76px;
+    align-items: center;
+    padding: 12px 16px;
+    border-color: #dceff3;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(38, 112, 130, .07);
+  }
+
+  .inventory-header-icon {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+    border-radius: 10px;
+    background: #e5f6f9;
+    color: #45aabd;
   }
 
   .inventory-header-content {
@@ -402,6 +416,27 @@ function handleRefresh() {
 
   .inventory-header-actions {
     flex: 0 0 auto;
+  }
+
+  .inventory-page-eyebrow {
+    font-size: 9px;
+    color: #45aabd;
+  }
+
+  .inventory-header-text h1 {
+    font-size: 20px;
+  }
+
+  .inventory-header-text p {
+    font-size: 11px;
+  }
+
+  .inventory-low-stock-alert,
+  .inventory-refresh-button {
+    min-height: 36px;
+    padding: 0 11px;
+    border-radius: 7px;
+    font-size: 12px;
   }
 }
 </style>
