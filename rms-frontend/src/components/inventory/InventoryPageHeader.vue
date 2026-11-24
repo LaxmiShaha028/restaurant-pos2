@@ -391,10 +391,12 @@ function handleRefresh() {
 /* Keep the inventory title and actions on one compact row in phone desktop view. */
 @media (min-width: 768px) and (max-width: 1100px) {
   .inventory-page-header {
+    display: flex;
     width: 100%;
     min-width: 0;
     min-height: 76px;
     align-items: center;
+    flex-direction: row;
     padding: 12px 16px;
     border-color: #dceff3;
     border-radius: 14px;
@@ -416,6 +418,8 @@ function handleRefresh() {
 
   .inventory-header-actions {
     flex: 0 0 auto;
+    justify-content: flex-end;
+    width: auto;
   }
 
   .inventory-page-eyebrow {
