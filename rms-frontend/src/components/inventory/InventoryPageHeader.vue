@@ -355,18 +355,36 @@ function handleRefresh() {
 /* Responsive */
 @media (max-width: 767.98px) {
   .inventory-page-header {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 6px;
   }
 
   .inventory-header-actions {
-    width: 100%;
-    justify-content: space-between;
+    display: grid;
+    grid-column: 2;
+    grid-row: 1;
+    justify-items: end;
+    gap: 5px;
+    width: auto;
+    max-width: 100%;
   }
 
   .inventory-header-text p {
     white-space: normal;
+  }
+
+  .inventory-header-content {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+  }
+
+  .inventory-low-stock-alert,
+  .inventory-refresh-button {
+    max-width: 100%;
+    font-size: 10px;
   }
 }
 </style>

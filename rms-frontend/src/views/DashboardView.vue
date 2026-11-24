@@ -4777,4 +4777,32 @@ onBeforeUnmount(() => {
     grid-column: 1 / -1;
   }
 }
+
+/* Keep dashboard panels compact when a phone browser requests desktop layout. */
+@media (min-width: 768px) and (max-width: 1100px) {
+  .restaurant-dashboard {
+    width: min(100%, 900px);
+    margin-inline: auto;
+  }
+
+  .dashboard-main-grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(250px, .75fr);
+  }
+
+  .dashboard-main-grid .dashboard-panel:last-child {
+    grid-column: auto;
+  }
+
+  .dashboard-bottom-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .accounting-panel {
+    grid-column: 1 / -1;
+  }
+
+  .sales-panel {
+    min-height: 270px;
+  }
+}
 </style>
