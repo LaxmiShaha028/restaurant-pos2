@@ -30,6 +30,7 @@ export default {
       */
 
       isLoading: true,
+      showOrderForm: false,
       isSubmitting: false,
       isSearchingCustomers: false,
       offerPreview: null,
@@ -1345,6 +1346,11 @@ watch: {
   */
 
   methods: {
+
+    toggleOrderForm() {
+      if (this.isSubmitting || this.isLoading) return;
+      this.showOrderForm = !this.showOrderForm;
+    },
 
     syncPosFulfillmentMode() {
       if (this.$route.name !== "pos-order-create") return;

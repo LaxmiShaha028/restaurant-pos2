@@ -26,15 +26,29 @@
 
         </div>
 
-        <button
-          type="button"
-          class="close-order-button"
-          aria-label="Close"
-          :disabled="isSubmitting"
-          @click="goBack"
-        >
-          <i class="bi bi-x-lg"></i>
-        </button>
+        <div class="new-order-header-actions">
+          <button
+            v-if="$route.name === 'pos-order-create'"
+            type="button"
+            class="order-form-toggle-button"
+            :aria-expanded="showOrderForm"
+            :disabled="isSubmitting || isLoading"
+            @click="toggleOrderForm"
+          >
+            <i class="bi bi-ui-checks-grid" aria-hidden="true"></i>
+            {{ showOrderForm ? 'Hide Form' : 'Order Form' }}
+          </button>
+
+          <button
+            type="button"
+            class="close-order-button"
+            aria-label="Close"
+            :disabled="isSubmitting"
+            @click="goBack"
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
 
       </div>
 
@@ -64,6 +78,14 @@
     <!-- =====================================================
          MAIN FORM
     ====================================================== -->
+    <div
+      v-else-if="$route.name === 'pos-order-create' && !showOrderForm"
+      class="order-form-collapsed"
+    >
+      <i class="bi bi-ui-checks-grid" aria-hidden="true"></i>
+      <span>Click <strong>Order Form</strong> to start this order.</span>
+    </div>
+
     <form
       v-else
       class="new-order-form"
