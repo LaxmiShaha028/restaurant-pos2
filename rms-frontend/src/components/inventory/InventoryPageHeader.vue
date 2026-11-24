@@ -387,4 +387,21 @@ function handleRefresh() {
     font-size: 10px;
   }
 }
+
+/* Keep the inventory title and actions on one compact row in phone desktop view. */
+@media (min-width: 768px) and (max-width: 1100px) {
+  .inventory-page-header {
+    width: 100%;
+    min-width: 0;
+    padding: 7px 8px;
+  }
+
+  .inventory-header-content {
+    flex: 1 1 auto;
+  }
+
+  .inventory-header-actions {
+    flex: 0 0 auto;
+  }
+}
 </style>
