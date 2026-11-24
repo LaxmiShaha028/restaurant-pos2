@@ -975,11 +975,6 @@ grandTotal() {
     */
 
     canSubmit() {
-      const hasTable =
-        Boolean(
-          this.form.restaurant_table_id
-        ) || this.isTakeawayOrder;
-
       const hasItems =
         this.form.items.length > 0;
 
@@ -1016,7 +1011,6 @@ grandTotal() {
         this.completionReadyWithoutPayment;
 
       return (
-        hasTable &&
         hasItems &&
         allItemsValid &&
         paymentNotReduced &&
@@ -1030,10 +1024,6 @@ grandTotal() {
     submitBlockedReason() {
       if (this.isSubmitting || this.canSubmit) {
         return "";
-      }
-
-      if (!this.form.restaurant_table_id && !this.isTakeawayOrder) {
-        return "Select an available table above to create this order.";
       }
 
       if (
@@ -4105,10 +4095,14 @@ clearReservationSelection() {
           this.form.customer_name || null,
 
         customer_phone:
-          this.form.customer_phone || null,
+          this.isTakeawayOrder
+            ? null
+            : this.form.customer_phone || null,
 
         customer_email:
-          this.form.customer_email || null,
+          this.isTakeawayOrder
+            ? null
+            : this.form.customer_email || null,
 
         date_of_birth:
           this.form.date_of_birth || null,

@@ -3947,43 +3947,27 @@ public function completeOrder(
             return null;
         }
 
-        $existingCustomer =
-            Customer::query()
-                ->where(
-                    function (
-                        Builder $query
-                    ) use (
-                        $phone,
-                        $email
-                    ): void {
-                        if ($phone) {
-                            $query->where(
-                                'phone',
-                                $phone
-                            );
-                        }
+        $existingCustomer = null;
 
-                        if (
-                            $phone &&
-                            $email
-                        ) {
-                            $query->orWhere(
-                                'email',
-                                $email
-                            );
-                        } elseif (
-                            !$phone &&
-                            $email
-                        ) {
-                            $query->where(
-                                'email',
-                                $email
-                            );
-                        }
+        // A name is not a unique identifier. Only match a saved customer when
+        // a phone number or email address is available, avoiding an empty query
+        // that could attach a walk-in order to an unrelated customer.
+        if ($phone || $email) {
+            $existingCustomer = Customer::query()
+                ->where(function (Builder $query) use ($phone, $email): void {
+                    if ($phone) {
+                        $query->where('phone', $phone);
                     }
-                )
+
+                    if ($email) {
+                        $phone
+                            ? $query->orWhere('email', $email)
+                            : $query->where('email', $email);
+                    }
+                })
                 ->lockForUpdate()
                 ->first();
+        }
 
         if ($existingCustomer) {
             $existingCustomer->update([
