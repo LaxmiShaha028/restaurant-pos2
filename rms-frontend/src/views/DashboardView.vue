@@ -4778,19 +4778,20 @@ onBeforeUnmount(() => {
   }
 }
 
-/* Keep dashboard panels compact when a phone browser requests desktop layout. */
+/* Fill the available width when a phone browser requests desktop layout. */
 @media (min-width: 768px) and (max-width: 1100px) {
   .restaurant-dashboard {
-    width: min(100%, 900px);
-    margin-inline: auto;
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
   }
 
   .dashboard-main-grid {
     grid-template-columns: minmax(0, 1.25fr) minmax(250px, .75fr);
   }
 
-  .dashboard-main-grid .dashboard-panel:last-child {
-    grid-column: auto;
+  .dashboard-main-grid > .dashboard-panel:nth-child(3) {
+    grid-column: 1 / -1;
   }
 
   .dashboard-bottom-grid {
