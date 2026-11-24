@@ -30,7 +30,7 @@ export default {
       */
 
       isLoading: true,
-      showOrderForm: false,
+      posOrderFormExpanded: false,
       isSubmitting: false,
       isSearchingCustomers: false,
       offerPreview: null,
@@ -1349,7 +1349,8 @@ watch: {
 
     toggleOrderForm() {
       if (this.isSubmitting || this.isLoading) return;
-      this.showOrderForm = !this.showOrderForm;
+      this.posOrderFormExpanded = true;
+      this.form.fulfillment_type = "dine_in";
     },
 
     syncPosFulfillmentMode() {

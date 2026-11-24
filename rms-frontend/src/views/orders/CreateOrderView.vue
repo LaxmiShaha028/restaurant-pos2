@@ -28,15 +28,15 @@
 
         <div class="new-order-header-actions">
           <button
-            v-if="$route.name === 'pos-order-create'"
+            v-if="$route.name === 'pos-order-create' && isTakeawayOrder"
             type="button"
             class="order-form-toggle-button"
-            :aria-expanded="showOrderForm"
+            :aria-expanded="posOrderFormExpanded"
             :disabled="isSubmitting || isLoading"
             @click="toggleOrderForm"
           >
             <i class="bi bi-ui-checks-grid" aria-hidden="true"></i>
-            {{ showOrderForm ? 'Hide Form' : 'Order Form' }}
+            Order Form
           </button>
 
           <button
@@ -78,14 +78,6 @@
     <!-- =====================================================
          MAIN FORM
     ====================================================== -->
-    <div
-      v-else-if="$route.name === 'pos-order-create' && !showOrderForm"
-      class="order-form-collapsed"
-    >
-      <i class="bi bi-ui-checks-grid" aria-hidden="true"></i>
-      <span>Click <strong>Order Form</strong> to start this order.</span>
-    </div>
-
     <form
       v-else
       class="new-order-form"
@@ -173,7 +165,7 @@
       <section class="customer-details-card">
 
         <div
-          v-if="$route.name !== 'pos-order-create'"
+          v-if="$route.name !== 'pos-order-create' || !isTakeawayOrder"
           class="section-heading"
         >
 
