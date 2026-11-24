@@ -36,7 +36,7 @@
             @click="toggleOrderForm"
           >
             <i class="bi bi-ui-checks-grid" aria-hidden="true"></i>
-            Hide Form
+            Order Form
           </button>
 
           <button
