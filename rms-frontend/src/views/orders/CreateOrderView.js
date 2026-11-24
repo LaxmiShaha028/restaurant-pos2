@@ -30,7 +30,7 @@ export default {
       */
 
       isLoading: true,
-      showOrderForm: false,
+      showOrderForm: true,
       isSubmitting: false,
       isSearchingCustomers: false,
       offerPreview: null,
