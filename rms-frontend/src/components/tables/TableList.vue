@@ -552,6 +552,16 @@ const handleSplit = (
 ) => {
   emit("split", table);
 };
+
+const handleActionSelection = (table, event) => {
+  const action = event.target.value;
+  event.target.value = "";
+
+  if (action === "edit") handleEdit(table);
+  if (action === "delete") handleDelete(table);
+  if (action === "combine") handleMerge(table);
+  if (action === "split") handleSplit(table);
+};
 </script>
 
 <template>
@@ -887,57 +897,27 @@ const handleSplit = (
           class="table-list-row__actions"
           data-label="Actions"
         >
-          <button
-            type="button"
-            class="table-list-row__button table-list-row__button--edit"
-            title="Edit table"
-            aria-label="Edit table"
-            @click="handleEdit(table)"
+          <select
+            class="form-select table-list-row__action-select"
+            :aria-label="`Actions for table ${formatTableName(table.table_name)}`"
+            @change="handleActionSelection(table, $event)"
           >
-            <i class="bi bi-pencil" aria-hidden="true"></i>
-          </button>
-
-          <button
-            type="button"
-            class="table-list-row__button table-list-row__button--delete"
-            title="Delete table"
-            aria-label="Delete table"
-            @click="
-              handleDelete(table)
-            "
-          >
-            <i class="bi bi-x-circle" aria-hidden="true"></i>
-          </button>
-
-          <button
-            v-if="
-              canMergeTable(table)
-            "
-            type="button"
-            class="table-list-row__button table-list-row__button--merge"
-            title="Combine table"
-            aria-label="Combine table"
-            @click="
-              handleMerge(table)
-            "
-          >
-            <i class="bi bi-arrow-left-right" aria-hidden="true"></i>
-          </button>
-
-          <button
-            v-if="
-              isMergedTable(table)
-            "
-            type="button"
-            class="table-list-row__button table-list-row__button--split"
-            title="Split combined group"
-            aria-label="Split combined group"
-            @click="
-              handleSplit(table)
-            "
-          >
-            <i class="bi bi-distribute-horizontal" aria-hidden="true"></i>
-          </button>
+            <option value="" selected disabled>Actions</option>
+            <option value="edit">Edit table</option>
+            <option value="delete">Delete table</option>
+            <option
+              v-if="canMergeTable(table)"
+              value="combine"
+            >
+              Combine table
+            </option>
+            <option
+              v-if="isMergedTable(table)"
+              value="split"
+            >
+              Split combined group
+            </option>
+          </select>
         </div>
       </article>
     </div>
