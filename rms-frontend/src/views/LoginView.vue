@@ -174,6 +174,19 @@
               </button>
 
               <button
+                v-if="isKeithKnoxRestaurant"
+                type="button"
+                class="account-item"
+                @click="fillCredentials('manager', 'manager1234')"
+              >
+                <span class="account-role">Manager</span>
+                <span class="account-info">
+                  manager / manager1234
+                </span>
+              </button>
+
+              <button
+                v-else
                 type="button"
                 class="account-item"
                 @click="fillCredentials('manager', 'Manager@12345')"
@@ -196,6 +209,19 @@
               </button>
 
               <button
+                v-if="isKeithKnoxRestaurant"
+                type="button"
+                class="account-item"
+                @click="fillCredentials('waiter', 'waiter1234')"
+              >
+                <span class="account-role">Waiter</span>
+                <span class="account-info">
+                  waiter / waiter1234
+                </span>
+              </button>
+
+              <button
+                v-else
                 type="button"
                 class="account-item"
                 @click="fillCredentials('waiter12', 'Waiter@12345')"
