@@ -393,7 +393,7 @@
     .footer-brand {
         display: block;
         margin-top: 3px;
-        color: #267f91;
+        color: #000000;
         font-size: 7px;
         font-weight: 700;
         letter-spacing: 0.2px;
