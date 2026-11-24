@@ -204,8 +204,49 @@
 
           <div v-if="isTakeawayOrder" class="walkin-customer-badge">
             <i class="bi bi-person-walking"></i>
-            <span><strong>Walk-in Customer</strong><small>No customer or table details are needed for takeaway.</small></span>
+            <span><strong>Walk-in Customer</strong><small>Optional guest details. This order will not be linked to a saved customer or table.</small></span>
           </div>
+
+          <template v-if="isTakeawayOrder">
+            <div class="order-form-group customer-name-group">
+              <label for="walkin_customer_name" class="order-form-label">Customer Name <small>(Optional)</small></label>
+              <input
+                id="walkin_customer_name"
+                v-model.trim="form.customer_name"
+                type="text"
+                class="order-form-control"
+                placeholder="Enter walk-in customer name"
+                autocomplete="off"
+                :disabled="isSubmitting"
+              />
+            </div>
+
+            <div class="order-form-group">
+              <label for="walkin_customer_phone" class="order-form-label">Customer Phone <small>(Optional)</small></label>
+              <input
+                id="walkin_customer_phone"
+                v-model.trim="form.customer_phone"
+                type="tel"
+                class="order-form-control"
+                placeholder="Phone number"
+                autocomplete="off"
+                :disabled="isSubmitting"
+              />
+            </div>
+
+            <div class="order-form-group">
+              <label for="walkin_customer_email" class="order-form-label">Customer Email <small>(Optional)</small></label>
+              <input
+                id="walkin_customer_email"
+                v-model.trim="form.customer_email"
+                type="email"
+                class="order-form-control"
+                placeholder="Email address"
+                autocomplete="off"
+                :disabled="isSubmitting"
+              />
+            </div>
+          </template>
 
           <!-- =============================================
                CUSTOMER NAME
