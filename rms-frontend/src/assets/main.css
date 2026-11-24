@@ -659,6 +659,60 @@ a {
     --bs-gutter-y: 10px;
   }
 }
+
+/* App-wide phone layout safety net for pages with local component styles. */
+@media (max-width: 767.98px) {
+  html,
+  body,
+  #app {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  .dashboard-layout,
+  .main-wrapper,
+  .dashboard-content {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .dashboard-content {
+    overflow-x: clip;
+  }
+
+  .dashboard-content > *,
+  .dashboard-content :where(.container, .container-fluid, .row, [class^="col-"]) {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .dashboard-content :where(input, select, textarea, button) {
+    max-width: 100%;
+  }
+
+  .dashboard-content :where(.table-responsive, [class*="table-wrap"], [class*="table-wrapper"]) {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dashboard-content :where(.page-header, .section-header, .card-header, .page-actions, .toolbar, .filter-toolbar) {
+    flex-wrap: wrap;
+  }
+
+  .dashboard-content :where(.stats-grid, .stat-grid, .summary-grid, .metrics-grid, .metric-grid, .cards-grid, .card-grid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 380px) {
+  .dashboard-content :where(.stats-grid, .stat-grid, .summary-grid, .metrics-grid, .metric-grid, .cards-grid, .card-grid) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
 /* Consistent edit and delete row actions */
 td button:has(i.bi-pencil),
 td a:has(i.bi-pencil),
