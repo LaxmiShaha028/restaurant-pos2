@@ -59,7 +59,7 @@
          LOADING
     ====================================================== -->
     <div
-      v-if="isLoading"
+      v-if="isLoading && !isTakeawayOrder"
       class="order-page-loading"
     >
 

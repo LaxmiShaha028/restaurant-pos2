@@ -270,6 +270,13 @@ export default {
     },
 
     isTakeawayOrder() {
+      if (
+        this.$route.name === "pos-order-create" &&
+        !this.posOrderFormExpanded
+      ) {
+        return this.$route.query?.fulfillment_type === "takeaway";
+      }
+
       return this.form.fulfillment_type === "takeaway";
     },
 
