@@ -24,7 +24,7 @@ class DemandForecastService
         $historyStart = $today->copy()->subDays(self::HISTORY_DAYS);
         $queryStart = $today->copy()->subDays(self::HISTORY_DAYS + $chartDays);
         $historyEnd = $today->copy()->subDay()->endOfDay();
-        $itemAlias = 'oi';
+        $itemAlias = $this->queryAlias('oi');
         $historyDates = collect();
         for ($date = $historyStart->copy(); $date->lte($historyEnd); $date->addDay()) {
             $historyDates->push($date->toDateString());
@@ -85,7 +85,7 @@ class DemandForecastService
 
         $addonHistoryRows = collect();
         if (Schema::connection()->hasTable('order_item_addons')) {
-            $addonAlias = 'oia';
+            $addonAlias = $this->queryAlias('oia');
             $addonHistoryRows = OrderItemAddon::query()
                 ->from('order_item_addons as oia')
                 ->join('order_items as oi', 'oi.id', '=', 'oia.order_item_id')
@@ -206,8 +206,8 @@ class DemandForecastService
     private function getPeakHours(Carbon $today, int $chartDays): array
     {
         $driver = DB::connection()->getDriverName();
-        $orderAlias = 'o';
-        $itemAlias = 'oi';
+        $orderAlias = $this->queryAlias('o');
+        $itemAlias = $this->queryAlias('oi');
         $hourExpression = $this->businessHourExpression($driver);
         $start = $today->copy()->subDays($chartDays)->startOfDay();
         $end = $today->copy()->subDay()->endOfDay();
@@ -246,7 +246,7 @@ class DemandForecastService
         }
 
         $driver = DB::connection()->getDriverName();
-        $itemAlias = 'oi';
+        $itemAlias = $this->queryAlias('oi');
         $hourExpression = $this->businessHourExpression($driver);
         $start = $today->copy()->subDays(self::RECENT_DAYS)->startOfDay();
         $end = $today->copy()->subDay()->endOfDay();
@@ -577,7 +577,7 @@ class DemandForecastService
 
     private function businessDateExpression(): string
     {
-        $orderAlias = 'o';
+        $orderAlias = $this->queryAlias('o');
 
         return match (DB::connection()->getDriverName()) {
             'sqlite' => "DATE({$orderAlias}.created_at, '+6 hours')",
@@ -588,13 +588,23 @@ class DemandForecastService
 
     private function businessHourExpression(string $driver): string
     {
-        $orderAlias = 'o';
+        $orderAlias = $this->queryAlias('o');
 
         return match ($driver) {
             'sqlite' => "CAST(strftime('%H', {$orderAlias}.created_at, '+6 hours') AS INTEGER)",
             'pgsql' => "CAST(EXTRACT(HOUR FROM {$orderAlias}.created_at + INTERVAL '6 hours') AS INTEGER)",
             default => "HOUR(DATE_ADD({$orderAlias}.created_at, INTERVAL 6 HOUR))",
         };
+    }
+
+    /**
+     * Tenant connections prefix both table names and their generated aliases.
+     * Raw select expressions bypass Laravel's identifier wrapping, so include
+     * the active connection prefix explicitly when referring to those aliases.
+     */
+    private function queryAlias(string $alias): string
+    {
+        return DB::connection()->getTablePrefix() . $alias;
     }
 
     private function getPendingPurchaseQuantities(array $rawMaterialIds): array
