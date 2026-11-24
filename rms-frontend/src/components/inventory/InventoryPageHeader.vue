@@ -302,9 +302,9 @@ function handleRefresh() {
 }
 
 .inventory-alert-active {
-  border-color: #fde68a;
-  color: #267f91;
-  background: #f4fbfc;
+  border-color: #fecaca !important;
+  color: #b91c1c !important;
+  background: #fef2f2 !important;
 }
 
 .inventory-alert-clear {
