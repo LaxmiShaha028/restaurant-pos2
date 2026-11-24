@@ -127,7 +127,8 @@
         <img
 
           v-if="
-            restaurantLogoPreview
+            restaurantLogoPreview &&
+            !restaurantLogoPreviewFailed
           "
 
           :src="
@@ -135,6 +136,8 @@
           "
 
           alt="Restaurant Logo"
+
+          @error="restaurantLogoPreviewFailed = true"
 
         />
 

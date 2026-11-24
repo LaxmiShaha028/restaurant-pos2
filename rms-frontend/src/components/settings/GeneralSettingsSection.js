@@ -39,6 +39,7 @@ export default {
             },
 
             restaurantLogoPreview: null,
+            restaurantLogoPreviewFailed: false,
 
             ownerNidPreview: null,
             ownerTradeLicensePreview: null,
@@ -109,8 +110,10 @@ export default {
                     this.normalizeFileUrl(
                         value.restaurant_logo
                     );
+                this.restaurantLogoPreviewFailed = false;
             } else {
                 this.restaurantLogoPreview = null;
+                this.restaurantLogoPreviewFailed = false;
             }
 
             /*
@@ -238,6 +241,7 @@ export default {
 
             this.restaurantLogoPreview =
                 URL.createObjectURL(file);
+            this.restaurantLogoPreviewFailed = false;
 
             this.clearValidationField(
                 "restaurant_logo"
