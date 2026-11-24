@@ -31,7 +31,7 @@ class DemandForecastService
         }
         $dateExpression = $this->businessDateExpression();
 
-        $historyRows = OrderItem::query()
+        $historyRows = OrderItem::on('tenant')
             ->from('order_items as oi')
             ->join('orders as o', 'o.id', '=', 'oi.order_id')
             ->whereNull('o.deleted_at')
@@ -84,9 +84,9 @@ class DemandForecastService
         }
 
         $addonHistoryRows = collect();
-        if (Schema::connection()->hasTable('order_item_addons')) {
+        if (Schema::connection('tenant')->hasTable('order_item_addons')) {
             $addonAlias = $this->queryAlias('oia');
-            $addonHistoryRows = OrderItemAddon::query()
+            $addonHistoryRows = OrderItemAddon::on('tenant')
                 ->from('order_item_addons as oia')
                 ->join('order_items as oi', 'oi.id', '=', 'oia.order_item_id')
                 ->join('orders as o', 'o.id', '=', 'oi.order_id')
@@ -205,14 +205,14 @@ class DemandForecastService
 
     private function getPeakHours(Carbon $today, int $chartDays): array
     {
-        $driver = DB::connection()->getDriverName();
+        $driver = DB::connection('tenant')->getDriverName();
         $orderAlias = $this->queryAlias('o');
         $itemAlias = $this->queryAlias('oi');
         $hourExpression = $this->businessHourExpression($driver);
         $start = $today->copy()->subDays($chartDays)->startOfDay();
         $end = $today->copy()->subDay()->endOfDay();
 
-        return OrderItem::query()
+        return OrderItem::on('tenant')
             ->from('order_items as oi')
             ->join('orders as o', 'o.id', '=', 'oi.order_id')
             ->whereNull('o.deleted_at')
@@ -241,17 +241,17 @@ class DemandForecastService
 
     private function getHourlyTopRecipes(Carbon $today): array
     {
-        if (!Schema::connection()->hasTable('recipe_mappings')) {
+        if (!Schema::connection('tenant')->hasTable('recipe_mappings')) {
             return [];
         }
 
-        $driver = DB::connection()->getDriverName();
+        $driver = DB::connection('tenant')->getDriverName();
         $itemAlias = $this->queryAlias('oi');
         $hourExpression = $this->businessHourExpression($driver);
         $start = $today->copy()->subDays(self::RECENT_DAYS)->startOfDay();
         $end = $today->copy()->subDay()->endOfDay();
 
-        $rows = OrderItem::query()
+        $rows = OrderItem::on('tenant')
             ->from('order_items as oi')
             ->join('orders as o', 'o.id', '=', 'oi.order_id')
             ->whereNull('o.deleted_at')
@@ -279,7 +279,7 @@ class DemandForecastService
             ];
         }
 
-        $mappings = RecipeMapping::query()
+        $mappings = RecipeMapping::on('tenant')
             ->with('rawMaterial')
             ->whereNotNull('menu_item_id')
             ->whereNull('add_on_id')
@@ -431,7 +431,7 @@ class DemandForecastService
             ];
         }
 
-        if (!Schema::connection()->hasTable('recipe_mappings')) {
+        if (!Schema::connection('tenant')->hasTable('recipe_mappings')) {
             return [
                 'items' => [],
                 'unmapped_menu_items' => [],
@@ -439,12 +439,12 @@ class DemandForecastService
             ];
         }
 
-        $hasRestaurantStock = Schema::connection()->hasTable('restaurant_stocks');
+        $hasRestaurantStock = Schema::connection('tenant')->hasTable('restaurant_stocks');
         $materialRelations = $hasRestaurantStock
             ? ['rawMaterial.restaurantStock']
             : ['rawMaterial'];
 
-        $mappings = RecipeMapping::query()
+        $mappings = RecipeMapping::on('tenant')
             ->with($materialRelations)
             ->whereNotNull('menu_item_id')
             ->whereNull('add_on_id')
@@ -452,7 +452,7 @@ class DemandForecastService
         $mappingsByTarget = $mappings->groupBy(fn (RecipeMapping $mapping) =>
             $this->targetKey((int) $mapping->menu_item_id, $mapping->variant_id !== null ? (int) $mapping->variant_id : null)
         );
-        $addonMappings = RecipeMapping::query()
+        $addonMappings = RecipeMapping::on('tenant')
             ->with($materialRelations)
             ->whereNotNull('add_on_id')
             ->get()
@@ -536,8 +536,8 @@ class DemandForecastService
             }
         }
 
-        $pendingByMaterial = Schema::connection()->hasTable('purchase_orders')
-            && Schema::connection()->hasTable('purchase_order_items')
+        $pendingByMaterial = Schema::connection('tenant')->hasTable('purchase_orders')
+            && Schema::connection('tenant')->hasTable('purchase_order_items')
                 ? $this->getPendingPurchaseQuantities(array_keys($ingredientNeeds))
                 : [];
 
@@ -579,7 +579,7 @@ class DemandForecastService
     {
         $orderAlias = $this->queryAlias('o');
 
-        return match (DB::connection()->getDriverName()) {
+        return match (DB::connection('tenant')->getDriverName()) {
             'sqlite' => "DATE({$orderAlias}.created_at, '+6 hours')",
             'pgsql' => "DATE({$orderAlias}.created_at + INTERVAL '6 hours')",
             default => "DATE(DATE_ADD({$orderAlias}.created_at, INTERVAL 6 HOUR))",
@@ -604,7 +604,7 @@ class DemandForecastService
      */
     private function queryAlias(string $alias): string
     {
-        return DB::connection()->getTablePrefix() . $alias;
+        return DB::connection('tenant')->getTablePrefix() . $alias;
     }
 
     private function getPendingPurchaseQuantities(array $rawMaterialIds): array
@@ -613,7 +613,7 @@ class DemandForecastService
             return [];
         }
 
-        $orders = PurchaseOrder::query()
+        $orders = PurchaseOrder::on('tenant')
             ->whereIn('status', [PurchaseOrder::STATUS_ORDERED, PurchaseOrder::STATUS_PARTIAL])
             ->with(['items' => fn ($query) => $query->whereIn('raw_material_id', $rawMaterialIds)])
             ->get();
