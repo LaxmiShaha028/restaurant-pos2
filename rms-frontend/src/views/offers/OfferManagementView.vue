@@ -18,9 +18,9 @@
     <div v-if="errorMessage" class="offer-alert error">{{ errorMessage }}</div>
 
     <section class="offer-metrics">
-      <article><span><i class="bi bi-tags"></i></span><div><small>Total offers</small><strong>{{ summary.total_offers || 0 }}</strong></div></article>
-      <article><span class="green"><i class="bi bi-lightning-charge"></i></span><div><small>Active offers</small><strong>{{ summary.active_offers || 0 }}</strong></div></article>
-      <article><span class="blue"><i class="bi bi-ticket-perforated"></i></span><div><small>Redemptions</small><strong>{{ summary.redemptions || 0 }}</strong></div></article>
+      <article><span><i class="bi bi-tags"></i></span><div><small>Total offers</small><strong>{{ twoDigit(summary.total_offers) }}</strong></div></article>
+      <article><span class="green"><i class="bi bi-lightning-charge"></i></span><div><small>Active offers</small><strong>{{ twoDigit(summary.active_offers) }}</strong></div></article>
+      <article><span class="blue"><i class="bi bi-ticket-perforated"></i></span><div><small>Redemptions</small><strong>{{ twoDigit(summary.redemptions) }}</strong></div></article>
       <article><span class="purple"><i class="bi bi-cash-stack"></i></span><div><small>Discount given</small><strong>{{ money(summary.discount_total) }}</strong></div></article>
     </section>
 
@@ -98,6 +98,8 @@ const summary = ref({})
 const loading = ref(false)
 const saving = ref(false)
 const showForm = ref(false)
+
+const twoDigit = value => String(Math.max(0, Math.trunc(Number(value) || 0))).padStart(2, '0')
 const editingId = ref(null)
 const successMessage = ref('')
 const errorMessage = ref('')
