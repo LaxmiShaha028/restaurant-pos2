@@ -24,7 +24,12 @@ class SeedRealMenuCatalogs extends Command
     public function handle(): int
     {
         DB::setDefaultConnection('central');
-        $restaurants = Restaurant::on('central')->with('tenantDatabase')->whereHas('tenantDatabase')->orderBy('id')->get();
+        try {
+            $restaurants = Restaurant::on('central')->with('tenantDatabase')->whereHas('tenantDatabase')->orderBy('id')->get();
+        } catch (Throwable $exception) {
+            $this->error('Could not load restaurant tenants: ' . $exception->getMessage());
+            return self::FAILURE;
+        }
         $failures = 0;
 
         foreach ($restaurants as $restaurant) {
@@ -53,6 +58,7 @@ class SeedRealMenuCatalogs extends Command
             }
         }
 
+        $this->info('Tenant menu seeding finished.');
         return $failures === 0 ? self::SUCCESS : self::FAILURE;
     }
 }

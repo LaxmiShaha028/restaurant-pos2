@@ -38,7 +38,9 @@ php artisan db:seed --database=central --class='Database\Seeders\Central\Subscri
 php artisan db:seed --database=central --class='Database\Seeders\Central\PaymentMethodSeeder' --force
 php artisan db:seed --database=central --class='Database\Seeders\Central\StripePaymentMethodSeeder' --force
 php artisan db:seed --database=central --class='Database\Seeders\Central\SuperAdminSeeder' --force
-php artisan tenants:seed-real-menus
+if ! php artisan tenants:seed-real-menus; then
+  echo "WARNING: tenant menu seeding failed; continuing web startup. See the error above and run tenants:seed-real-menus again after checking tenant database connections." >&2
+fi
 
 php artisan queue:work database --queue=default --sleep=1 --tries=1 --timeout=1800 --memory=256 &
 QUEUE_WORKER_PID=$!
