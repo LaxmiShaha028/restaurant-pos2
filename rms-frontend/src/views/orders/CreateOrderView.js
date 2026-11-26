@@ -648,6 +648,25 @@ selectedReservationTables() {
       return this.filteredMenuItems.slice(start, start + this.menuPageSize);
     },
 
+    menuImageAssignments() {
+      const usedImages = new Set();
+      const assignments = new Map();
+      this.menuItems.forEach((item) => {
+        const baseUrl = this.getMenuItemImageUrl(item);
+        if (!baseUrl) return;
+
+        let imageUrl = baseUrl;
+        let variant = 0;
+        while (usedImages.has(imageUrl)) {
+          variant += 1;
+          imageUrl = this.getMenuItemImageVariant(baseUrl, variant);
+        }
+        usedImages.add(imageUrl);
+        assignments.set(String(item.id), imageUrl);
+      });
+      return assignments;
+    },
+
     /*
     |--------------------------------------------------------------------------
     | Summary items
@@ -2461,6 +2480,9 @@ this.selectedReservationId =
 */
 
 getMenuItemImageUrl(menuItem) {
+      const assignedImage = this.menuImageAssignments?.get(String(menuItem?.id));
+      if (assignedImage) return assignedImage;
+
   if (!menuItem) {
     return "";
   }
@@ -2564,6 +2586,29 @@ getMenuItemImageUrl(menuItem) {
   */
 
   return `${BACKEND_URL}/storage/${image}`;
+},
+
+getMenuItemImageVariant(imageUrl, variant) {
+  const photoNames = [
+    "chicken-burger.jpg", "beef-burger.jpg", "chicken-pizza.jpg", "pepperoni-pizza.jpg",
+    "chicken-biryani.jpg", "beef-tehari.jpg", "french-fries.jpg", "chicken-wings.jpg",
+    "cold-coffee.jpg", "lemon-juice.jpg", "soft-drink.jpg", "chocolate-brownie.jpg",
+    "vanilla-ice-cream.jpg",
+  ];
+  const originalPhoto = photoNames.find((name) => imageUrl.endsWith(`/food-photos/${name}`));
+  if (originalPhoto) {
+    const photoIndex = photoNames.indexOf(originalPhoto);
+    const nextPhoto = photoNames[(photoIndex + variant) % photoNames.length];
+    return imageUrl.slice(0, imageUrl.lastIndexOf(originalPhoto)) + nextPhoto;
+  }
+
+  try {
+    const url = new URL(imageUrl, window.location.origin);
+    url.searchParams.set("menu_image_variant", String(variant));
+    return url.toString();
+  } catch {
+    return `${imageUrl}${imageUrl.includes("?") ? "&" : "?"}menu_image_variant=${variant}`;
+  }
 },
 
 /*
