@@ -85,4 +85,5 @@ class RealMenuCatalogSeeder extends Seeder
             return $added;
         });
     }
+
 }

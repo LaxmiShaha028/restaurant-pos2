@@ -38,6 +38,7 @@ php artisan db:seed --database=central --class='Database\Seeders\Central\Subscri
 php artisan db:seed --database=central --class='Database\Seeders\Central\PaymentMethodSeeder' --force
 php artisan db:seed --database=central --class='Database\Seeders\Central\StripePaymentMethodSeeder' --force
 php artisan db:seed --database=central --class='Database\Seeders\Central\SuperAdminSeeder' --force
+php artisan tenants:seed-real-menus
 
 php artisan queue:work database --queue=default --sleep=1 --tries=1 --timeout=1800 --memory=256 &
 QUEUE_WORKER_PID=$!

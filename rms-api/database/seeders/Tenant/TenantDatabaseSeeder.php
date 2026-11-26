@@ -71,5 +71,7 @@ class TenantDatabaseSeeder extends Seeder
                     $restaurant,
             ]
         );
+
+        $this->call(RealMenuCatalogSeeder::class);
     }
 }
