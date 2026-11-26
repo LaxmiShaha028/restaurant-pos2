@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Central\Restaurant;
 use App\Services\Tenant\TenantConnectionManager;
 use Database\Seeders\MenuManagementSeeder;
+use Database\Seeders\Tenant\RealMenuCatalogSeeder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -68,8 +69,9 @@ class SeedTenantMenu extends Command
             }
 
             app(MenuManagementSeeder::class)->run();
+            $addedDishes = app(RealMenuCatalogSeeder::class)->run();
 
-            $this->info("Starter menu seeded for {$restaurant->name} in {$actualDatabase}.");
+            $this->info("Menu seeded for {$restaurant->name} in {$actualDatabase}; {$addedDishes} real dishes added.");
             $this->line('Menu categories and non-beef items are ready; beef items, variants, and add-ons are hidden.');
 
             return self::SUCCESS;
