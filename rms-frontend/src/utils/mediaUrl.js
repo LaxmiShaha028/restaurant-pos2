@@ -6,6 +6,10 @@ const DEFAULT_API_BASE_URL =
       ? `${window.location.origin}/api`
       : "http://127.0.0.1:8000/api");
 
+const DEFAULT_MEDIA_ORIGIN = import.meta.env.PROD
+  ? window.location.origin
+  : "http://127.0.0.1:8000";
+
 export const getApiOrigin = () => {
   const apiBase = String(
     import.meta.env.VITE_API_BASE_URL ||
@@ -65,7 +69,15 @@ export const resolveMediaUrl = (value) => {
     return rawValue;
   }
 
-  const apiOrigin = getApiOrigin();
+  // API requests can be proxied through the frontend host while uploaded
+  // media still lives on the Laravel host. Prefer an explicit media/backend
+  // origin when configured, then fall back to the API origin.
+  const apiOrigin = String(
+    import.meta.env.VITE_BACKEND_URL ||
+      import.meta.env.VITE_API_ORIGIN ||
+      getApiOrigin() ||
+      DEFAULT_MEDIA_ORIGIN
+  ).trim().replace(/\/+$/, "");
 
   /*
    * Absolute URL

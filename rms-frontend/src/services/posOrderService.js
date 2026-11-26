@@ -4,6 +4,7 @@ import systemSettingService from '@/services/systemSettingService'
 
 const BACKEND_URL = (
   import.meta.env.VITE_BACKEND_URL ||
+  import.meta.env.VITE_API_ORIGIN ||
   (import.meta.env.PROD ? window.location.origin : 'http://127.0.0.1:8000')
 ).replace(/\/+$/, '')
 
@@ -69,7 +70,7 @@ function resolveMenuImage(menuItem) {
   // the API model also exposes them as /storage/food-photos/... URLs.
   // Point those seeded assets at the frontend's public directory.
   const foodPhotoMatch = value.match(/(?:^|\/)food-photos\/(.+)$/i)
-  if (foodPhotoMatch) {
+  if (foodPhotoMatch && !value.includes('/storage/')) {
     return `${window.location.origin}/food-photos/${foodPhotoMatch[1]}`
   }
 
@@ -78,6 +79,10 @@ function resolveMenuImage(menuItem) {
     value.startsWith('https://') ||
     value.startsWith('data:')
   ) {
+    if (value.includes('/storage/')) {
+      const storagePath = value.slice(value.indexOf('/storage/'))
+      return `${BACKEND_URL}${storagePath}`
+    }
     return value
   }
 

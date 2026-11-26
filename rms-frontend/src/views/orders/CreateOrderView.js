@@ -4,6 +4,7 @@ import PaginationControls from "@/components/shared/PaginationControls.vue";
 import OrderFilterSelect from "@/components/orders/OrderFilterSelect.vue";
 const BACKEND_URL = (
   import.meta.env.VITE_BACKEND_URL ||
+  import.meta.env.VITE_API_ORIGIN ||
   (import.meta.env.PROD ? window.location.origin : "http://127.0.0.1:8000")
 ).replace(/\/+$/, "");
 
@@ -2474,7 +2475,7 @@ getMenuItemImageUrl(menuItem) {
   image = String(image).trim();
 
   const foodPhotoMatch = image.match(/(?:^|\/)food-photos\/(.+)$/i);
-  if (foodPhotoMatch) {
+  if (foodPhotoMatch && !image.includes("/storage/")) {
     return `${window.location.origin}/food-photos/${foodPhotoMatch[1]}`;
   }
 
@@ -2514,6 +2515,9 @@ getMenuItemImageUrl(menuItem) {
     image.startsWith("data:") ||
     image.startsWith("blob:")
   ) {
+    if (image.includes("/storage/")) {
+      return `${BACKEND_URL}${image.slice(image.indexOf("/storage/"))}`;
+    }
     return image;
   }
 
