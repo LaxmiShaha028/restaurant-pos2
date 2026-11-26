@@ -71,6 +71,7 @@ class RealMenuCatalogSeeder extends Seeder
                         'menu_name' => $name,
                         'item_type' => 'regular',
                         'price' => $price,
+                        'image_path' => $this->imageFor($name),
                         'description' => $name . ' freshly prepared to order.',
                         'is_available' => true,
                         'is_featured' => false,
@@ -84,6 +85,24 @@ class RealMenuCatalogSeeder extends Seeder
 
             return $added;
         });
+    }
+
+    private function imageFor(string $name): string
+    {
+        $name = strtolower($name);
+        if (str_contains($name, 'pizza')) return 'food-photos/' . (str_contains($name, 'pepperoni') ? 'pepperoni-pizza.jpg' : 'chicken-pizza.jpg');
+        if (str_contains($name, 'burger')) return 'food-photos/' . (str_contains($name, 'beef') ? 'beef-burger.jpg' : 'chicken-burger.jpg');
+        if (str_contains($name, 'momo') || str_contains($name, 'wings') || str_contains($name, 'nugget')) return 'food-photos/chicken-wings.jpg';
+        if (str_contains($name, 'shawarma')) return 'food-photos/beef-burger.jpg';
+        if (str_contains($name, 'khichuri') || str_contains($name, 'tehari') || str_contains($name, 'beef kala') || str_contains($name, 'steak')) return 'food-photos/beef-tehari.jpg';
+        if (str_contains($name, 'rice') || str_contains($name, 'biryani') || str_contains($name, 'polao')) return 'food-photos/chicken-biryani.jpg';
+        if (str_contains($name, 'coffee') || str_contains($name, 'americano')) return 'food-photos/cold-coffee.jpg';
+        if (str_contains($name, 'juice') || str_contains($name, 'lemonade') || str_contains($name, 'lassi')) return 'food-photos/lemon-juice.jpg';
+        if (str_contains($name, 'chai')) return 'food-photos/soft-drink.jpg';
+        if (str_contains($name, 'custard') || str_contains($name, 'mousse') || str_contains($name, 'sundae')) return 'food-photos/vanilla-ice-cream.jpg';
+        if (str_contains($name, 'cake') || str_contains($name, 'tiramisu') || str_contains($name, 'cheesecake')) return 'food-photos/chocolate-brownie.jpg';
+
+        return 'food-photos/french-fries.jpg';
     }
 
 }

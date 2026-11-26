@@ -2488,17 +2488,23 @@ getMenuItemImageUrl(menuItem) {
     let photo = "chicken-biryani.jpg";
     if (name.includes("pepperoni")) photo = "pepperoni-pizza.jpg";
     else if (name.includes("pizza") || category.includes("pizza")) photo = "chicken-pizza.jpg";
+    else if (name.includes("momo")) photo = "chicken-wings.jpg";
+    else if (name.includes("shawarma")) photo = "beef-burger.jpg";
+    else if (name.includes("khichuri")) photo = "beef-tehari.jpg";
+    else if (name.includes("fried rice")) photo = "chicken-biryani.jpg";
+    else if (name.includes("kala bhuna") || name.includes("steak")) photo = "beef-tehari.jpg";
     else if (name.includes("burger") && name.includes("beef")) photo = "beef-burger.jpg";
     else if (name.includes("burger") || category.includes("burger")) photo = "chicken-burger.jpg";
     else if (name.includes("fries")) photo = "french-fries.jpg";
     else if (name.includes("wing") || name.includes("nugget")) photo = "chicken-wings.jpg";
-    else if (name.includes("biryani") || name.includes("rice") || name.includes("polao") || name.includes("khichuri") || name.includes("tehari") || name.includes("kacchi")) photo = "chicken-biryani.jpg";
+    else if (name.includes("biryani") || name.includes("rice") || name.includes("polao") || name.includes("tehari") || name.includes("kacchi")) photo = "chicken-biryani.jpg";
     else if (name.includes("beef")) photo = "beef-tehari.jpg";
     else if (name.includes("coffee") || name.includes("cappuccino") || name.includes("macchiato") || name.includes("americano")) photo = "cold-coffee.jpg";
     else if (name.includes("lemon") || name.includes("juice") || name.includes("lassi")) photo = "lemon-juice.jpg";
     else if (name.includes("drink") || name.includes("chai")) photo = "soft-drink.jpg";
     else if (name.includes("ice cream") || name.includes("sundae")) photo = "vanilla-ice-cream.jpg";
-    else if (name.includes("brownie") || name.includes("cake") || name.includes("tiramisu") || name.includes("custard") || name.includes("mousse") || name.includes("cheesecake")) photo = "chocolate-brownie.jpg";
+    else if (name.includes("custard") || name.includes("mousse") || name.includes("ice cream") || name.includes("sundae")) photo = "vanilla-ice-cream.jpg";
+    else if (name.includes("brownie") || name.includes("cake") || name.includes("tiramisu") || name.includes("cheesecake")) photo = "chocolate-brownie.jpg";
 
     return `${window.location.origin}/food-photos/${photo}`;
   }
