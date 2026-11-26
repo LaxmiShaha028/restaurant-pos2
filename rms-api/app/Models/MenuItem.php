@@ -146,11 +146,12 @@ class MenuItem extends Model
             return $this->image_path;
         }
 
-        return url(
-            Storage::disk('public')->url(
-                $this->image_path
-            )
-        );
+        $path = ltrim(str_replace('\\', '/', $this->image_path), '/');
+
+        // Menu uploads are stored under the public disk. Build the public
+        // URL from APP_URL instead of relying on a host-relative URL; the
+        // frontend may be served from a different Render service.
+        return rtrim(config('app.url'), '/') . '/storage/' . $path;
     }
 
 
